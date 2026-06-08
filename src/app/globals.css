@@ -1,0 +1,257 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Fonts */
+@font-face {
+  font-family: 'Bitcount_Prop_Single_Ink';
+  src: url('/Bitcount_Prop_Single_Ink/BitcountPropSingleInk-VariableFont_CRSV,ELSH,ELXP,SZP1,SZP2,XPN1,XPN2,YPN1,YPN2,slnt,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Custom Styles */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Fix iOS Safari scrolling issues */
+    -webkit-overflow-scrolling: touch;
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    /* Fix iOS Safari scrolling issues */
+    overflow-x: hidden;
+    /* Prevent iOS Safari bounce effect */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Ensure proper scrolling */
+  #__next {
+    min-height: 100vh;
+  }
+
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+    --primary: 354 85% 54%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 214 65% 40%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 214 22% 85%;
+    --muted-foreground: 0 0% 30%;
+    --accent: 354 85% 54%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 22% 85%;
+    --input: 214 22% 85%;
+    --ring: 354 85% 54%;
+    --radius: 0.5rem;
+    --chart-1: 354 85% 54%;
+    --chart-2: 214 65% 40%;
+    --chart-3: 214 22% 85%;
+    --chart-4: 0 0% 0%;
+    --chart-5: 0 0% 100%;
+  }
+
+  .dark {
+    --background: 0 0% 5%;
+    --foreground: 0 0% 95%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 354 85% 54%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 214 65% 50%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 354 85% 54%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 95%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 354 85% 54%;
+    --chart-1: 354 85% 54%;
+    --chart-2: 214 65% 50%;
+    --chart-3: 214 22% 30%;
+    --chart-4: 0 0% 100%;
+    --chart-5: 0 0% 0%;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary hover:bg-primary-600 text-white px-4 py-2.5 mobile:px-6 mobile:py-3 rounded-lg font-semibold transition-colors duration-200 text-sm mobile:text-base;
+  }
+
+  .btn-secondary {
+    @apply border-2 border-primary text-primary hover:bg-primary hover:text-white px-4 py-2.5 mobile:px-6 mobile:py-3 rounded-lg font-semibold transition-colors duration-200 text-sm mobile:text-base;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-4 mobile:p-6 lg:p-8;
+  }
+
+  .gradient-bg {
+    @apply bg-gradient-to-br from-gray-900 via-primary-700 to-gray-900;
+  }
+}
+
+/* Wallet Button Customization */
+.wallet-adapter-button {
+  background: #ee2737 !important;
+  color: #fff !important;
+  border-radius: 0.5rem !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  transition: all 0.2s !important;
+}
+
+.wallet-adapter-button:hover {
+  background: #d11f2d !important;
+}
+
+.wallet-adapter-button-trigger {
+  background: #ee2737 !important;
+  color: #fff !important;
+  border-radius: 0.5rem !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+}
+
+.wallet-adapter-button-trigger:hover {
+  background: #d11f2d !important;
+}
+
+.wallet-adapter-modal-wrapper {
+  z-index: 50 !important;
+}
+
+.wallet-adapter-modal {
+  background: #fff !important;
+  border-radius: 1rem !important;
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25) !important;
+}
+
+.wallet-adapter-modal-title {
+  color: #111 !important;
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+}
+
+.wallet-adapter-modal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.wallet-adapter-modal-list-item {
+  background: #f9fafb !important;
+  border-radius: 0.5rem !important;
+  padding: 1rem !important;
+  transition: all 0.2s !important;
+}
+
+.wallet-adapter-modal-list-item:hover {
+  background: #f3f4f6 !important;
+}
+
+.wallet-adapter-modal-list-item button {
+  width: 100% !important;
+  text-align: left !important;
+  color: #111 !important;
+  font-weight: 500 !important;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #235ba8;
+  border-radius: 5px;
+  border: 2px solid #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ee2737;
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  body {
+    /* Fix iOS Safari viewport issues */
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  /* Prevent iOS Safari bounce */
+  .overflow-y-auto {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  /* Fix iOS safe area issues */
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-area-left {
+    padding-left: env(safe-area-inset-left);
+  }
+
+  .safe-area-right {
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}

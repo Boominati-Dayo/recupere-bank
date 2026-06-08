@@ -1,0 +1,224 @@
+import { NextResponse } from 'next/server';
+import { requireAuth, AuthenticatedRequest } from '@/middleware/auth';
+import { getDb } from '@/lib/mongodb';
+import { ObjectId } from 'mongodb';
+
+interface InvestmentSnapshot {
+  _id: string;
+  planName: string;
+  amount: number;
+  status: 'active' | 'completed' | 'pending';
+  plan: {
+    name: string;
+    dailyRate: number; // percent per day
+    duration: number;  // days
+  };
+  createdAt: Date;
+  endDate: Date;
+}
+
+interface UserBalances {
+  main?: number;
+  investment?: number;
+  referral?: number;
+  total?: number;
+}
+
+interface UserDoc {
+  _id: ObjectId;
+  email: string;
+  balances?: UserBalances;
+  investments?: InvestmentSnapshot[];
+  currentInvestment?: number;
+  investmentPlan?: string;
+  totalInvested?: number;
+  activityLog?: Array<{ action: string; timestamp: string }>;
+  transactions?: Array<{
+    type: string;
+    amount: number;
+    planName: string;
+    date: Date;
+    status: string;
+    description: string;
+  }>;
+}
+
+export const POST = requireAuth(async (request: AuthenticatedRequest) => {
+  try {
+    const { planId, planName, amount } = await request.json();
+    const userId = request.user!.id;
+
+    if (!planId || !planName || !amount || amount <= 0) {
+      return NextResponse.json({ success: false, error: 'planId, planName and positive amount are required' }, { status: 400 });
+    }
+
+    const db = await getDb();
+    const users = db.collection('users');
+    const plans = db.collection('investmentPlans');
+
+    const user = (await users.findOne({ _id: new ObjectId(userId) })) as UserDoc | null;
+    if (!user) {
+      return NextResponse.json({ success: false, error: 'User not found' }, { status: 404 });
+    }
+
+    const plan = await plans.findOne({ _id: new ObjectId(planId) });
+    if (!plan) {
+      return NextResponse.json({ success: false, error: 'Plan not found' }, { status: 404 });
+    }
+
+    const mainBalance = user.balances?.main || 0;
+    if (mainBalance < amount) {
+      return NextResponse.json({ success: false, error: 'Insufficient balance' }, { status: 400 });
+    }
+
+    const now = new Date();
+
+    // Check if user has an active investment that hasn't finished yet
+    let prevActiveIndex = -1;
+    let prevInvestmentAmount = 0;
+    let prevInvestment: InvestmentSnapshot | null = null;
+    if (Array.isArray(user.investments)) {
+      prevActiveIndex = user.investments.findIndex((inv) => inv?.status === 'active');
+      if (prevActiveIndex >= 0) {
+        prevInvestment = user.investments[prevActiveIndex] as InvestmentSnapshot;
+        prevInvestmentAmount = prevInvestment?.amount || 0;
+        
+        // Check if the previous investment has finished (endDate < now)
+        if (prevInvestment?.endDate) {
+          const endDate = new Date(prevInvestment.endDate);
+          if (endDate > now) {
+            // Investment hasn't finished yet - user must wait
+            const daysRemaining = Math.ceil((endDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+            return NextResponse.json({ 
+              success: false, 
+              error: `You cannot upgrade your plan yet. Your current plan will finish in ${daysRemaining} day(s). Please wait for your current plan to complete before upgrading.` 
+            }, { status: 400 });
+          }
+        }
+      }
+    }
+
+    const updatedInvestments: InvestmentSnapshot[] = Array.isArray(user.investments)
+      ? [...user.investments]
+      : [];
+    if (prevActiveIndex >= 0) {
+      const prev = updatedInvestments[prevActiveIndex];
+      updatedInvestments[prevActiveIndex] = {
+        ...prev,
+        status: 'completed',
+        endDate: now
+      };
+    }
+
+    // Compute duration
+    let durationDays = 30;
+    if (typeof plan.duration === 'string') {
+      const m = plan.duration.match(/\d+/);
+      durationDays = m ? parseInt(m[0]) : 30;
+    } else if (typeof plan.duration === 'number') {
+      durationDays = plan.duration;
+    }
+
+    const roi = typeof plan.roi === 'number' ? plan.roi : parseFloat(plan.roi || '0');
+    const dailyRate = durationDays > 0 ? roi / durationDays : 0; // percent per day
+
+    const newInvestment: InvestmentSnapshot = {
+      _id: new ObjectId().toString(),
+      planName,
+      amount: Number(amount),
+      status: 'active',
+      plan: {
+        name: planName,
+        dailyRate,
+        duration: durationDays
+      },
+      createdAt: now,
+      endDate: new Date(now.getTime() + durationDays * 24 * 60 * 60 * 1000)
+    };
+
+    // Apply balance updates
+    // Compute new balances and totals
+    // When upgrading, we complete the previous investment and create a new one
+    // The previous investment's principal goes back to main balance
+    // Then we deduct the new investment amount from main balance
+    const prevPrincipal = prevInvestmentAmount || 0;
+    const returnedPrincipal = prevPrincipal; // Return the principal to main balance
+    const newMain = mainBalance + returnedPrincipal - Number(amount);
+    const newInvestmentBal = (user.balances?.investment || 0) - prevPrincipal + Number(amount);
+    const referralBal = user.balances?.referral || 0;
+    const newTotal = newMain + newInvestmentBal + referralBal;
+
+    // Calculate totalInvested correctly:
+    // - If there was a previous investment, subtract its principal and add the new amount
+    // - This ensures totalInvested reflects the actual cumulative investment amount
+    const currentTotalInvested = user.totalInvested || 0;
+    const newTotalInvested = prevActiveIndex >= 0
+      ? currentTotalInvested - prevInvestmentAmount + Number(amount)
+      : currentTotalInvested + Number(amount);
+
+    // Update core fields and investments array
+    await users.updateOne(
+      { _id: new ObjectId(userId) },
+      {
+        $set: {
+          investmentPlan: planName,
+          currentInvestment: Number(amount),
+          'balances.main': newMain,
+          'balances.investment': newInvestmentBal,
+          'balances.total': newTotal,
+          totalInvested: newTotalInvested,
+          updatedAt: now,
+          investments:
+            prevActiveIndex >= 0
+              ? updatedInvestments.map((inv, idx) => (idx === prevActiveIndex ? inv : inv)).concat(newInvestment)
+              : updatedInvestments.concat(newInvestment)
+        }
+      }
+    );
+
+    // Push transaction entry
+    await users.updateOne(
+      { _id: new ObjectId(userId) },
+      {
+        $push: {
+          transactions: {
+            $each: [
+              {
+                type: 'investment',
+                amount: Number(amount),
+                planName,
+                date: now,
+                status: 'completed',
+                description: `Upgraded investment by $${Number(amount)} to ${planName}`
+              }
+            ]
+          }
+        }
+      } as unknown as Record<string, unknown>
+    );
+
+    // Push activity log entry
+    await users.updateOne(
+      { _id: new ObjectId(userId) },
+      {
+        $push: {
+          activityLog: {
+            $each: [
+              {
+                action: `Upgraded plan to ${planName} with $${Number(amount)}`,
+                timestamp: now.toISOString()
+              }
+            ]
+          }
+        }
+      } as unknown as Record<string, unknown>
+    );
+
+    return NextResponse.json({ success: true, data: { investment: newInvestment } });
+  } catch (error) {
+    console.error('Upgrade investment error:', error);
+    return NextResponse.json({ success: false, error: error instanceof Error ? error.message : 'Upgrade failed' }, { status: 500 });
+  }
+});
+
+
