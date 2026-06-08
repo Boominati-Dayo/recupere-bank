@@ -7,7 +7,7 @@ export default function FinalCTA() {
             <div className="absolute inset-0 bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900" />
 
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#ee2737]/10 text-[#ee2737] mb-8 border border-[#ee2737]/20">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-500/10 text-primary-500 mb-8 border border-primary-500/20">
                     <ShieldAlert className="w-8 h-8" />
                 </div>
 

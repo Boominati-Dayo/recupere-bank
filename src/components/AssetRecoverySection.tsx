@@ -106,7 +106,7 @@ const AssetRecoverySection = () => {
                             viewport={{ once: true }}
                             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-navy-900/5 text-navy-900 text-[10px] font-black uppercase tracking-widest mb-6"
                         >
-                            <ShieldAlert className="w-4 h-4 text-burgundy-600" />
+                            <ShieldAlert className="w-4 h-4 text-primary-600" />
                             Asset Repatriation & Fraud Mitigation
                         </motion.div>
 

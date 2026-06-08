@@ -183,7 +183,7 @@ const CaseReportPage = () => {
                             animate={{ opacity: 1, y: 0 }}
                             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-navy-900/5 text-navy-900 text-[10px] font-black uppercase tracking-widest"
                         >
-                            <ShieldAlert className="w-4 h-4 text-burgundy-600" />
+                            <ShieldAlert className="w-4 h-4 text-primary-600" />
                             Forensic Intake Division
                         </motion.div>
                         <motion.h1

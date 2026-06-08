@@ -787,7 +787,7 @@ const DashboardContent = () => {
 
                           {/* Loan Action */}
                           <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:border-[#800020] transition-all group overflow-hidden relative">
-                            <div className="absolute -right-4 -top-4 w-20 h-20 bg-burgundy-50/10 rounded-full group-hover:bg-burgundy-50/20 transition-colors"></div>
+                            <div className="absolute -right-4 -top-4 w-20 h-20 bg-primary-50/10 rounded-full group-hover:bg-primary-50/20 transition-colors"></div>
                             <Briefcase className="relative z-10 w-8 h-8 text-[#800020] mb-4" />
                             <h4 className="relative z-10 font-bold text-navy-900 mb-1 text-sm mobile:text-base uppercase tracking-tighter">Loan Services</h4>
                             <p className="relative z-10 text-[10px] text-gray-400 mb-4 font-black uppercase tracking-widest">Instant financial assistance</p>

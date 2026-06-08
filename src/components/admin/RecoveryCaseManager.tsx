@@ -395,7 +395,7 @@ const RecoveryCaseManager = () => {
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-[9px] font-black text-burgundy-500 uppercase tracking-widest ml-1">Agency Service Fee ($)</label>
+                        <label className="text-[9px] font-black text-primary-500 uppercase tracking-widest ml-1">Agency Service Fee ($)</label>
                         <input
                           type="number"
                           className="w-full h-12 bg-gray-50 border border-gray-100 rounded-xl px-4 font-black text-xs text-navy-900 focus:outline-none focus:ring-2 focus:ring-primary-500"
