@@ -5,7 +5,8 @@
   "installCommand": "npm install",
   "framework": "nextjs",
   "env": {
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "NODE_OPTIONS": "--max-old-space-size=4096"
   },
   "crons": [
     {
