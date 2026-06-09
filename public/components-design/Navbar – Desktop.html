@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="en"><head><base href="https://forge.moonchild.ai/site/3c01df6459447871169da3f1e7820e2107dd490a8627bf59a4474f58c9aa7d00/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus Banking — Navigation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #ffffff;
+      font-family: 'Inter', sans-serif;
+      min-height: 120px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      width: 1728px;
+    }
+
+    /* ── OUTER WRAPPER ── */
+    .navbar-wrapper {
+      width: 100%;
+      padding: 24px 24px 0 24px;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* ── PILL NAV ── */
+    .navbar {
+      width: 100%;
+      max-width: 1400px;
+      height: 68px;
+      background: #0d1b2e;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px 0 24px;
+      position: relative;
+      box-shadow:
+        0 8px 32px rgba(238, 39, 55, 0.12),
+        0 4px 16px rgba(35, 91, 168, 0.14),
+        0 2px 8px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    /* ── LOGO ── */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      text-decoration: none;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+      gap: 2px;
+    }
+
+    .logo-nexus {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: 0.20em;
+      color: #ffffff;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .logo-banking {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.36em;
+      color: #cfd6e0;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    /* ── NAV LINKS ── */
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 38px;
+      list-style: none;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-links li {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .nav-links li a {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.78);
+      text-decoration: none;
+      padding-bottom: 2px;
+      position: relative;
+      transition: color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-links li a:hover {
+      color: #ffffff;
+    }
+
+    /* Active dot indicator */
+    .nav-links li.active-item a {
+      color: #ffffff;
+    }
+
+    .active-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #ee2737;
+      margin-top: 4px;
+      display: block;
+      box-shadow: 0 0 6px rgba(238, 39, 55, 0.6);
+    }
+
+    /* Hover underline for non-active items */
+    .nav-links li a::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: rgba(255, 255, 255, 0.4);
+      transition: width 0.25s ease;
+    }
+
+    .nav-links li:not(.active-item) a:hover::after {
+      width: 100%;
+    }
+
+    /* ── CTA BUTTONS ── */
+    .nav-ctas {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      padding: 0 22px;
+      height: 40px;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, opacity 0.18s ease;
+      text-decoration: none;
+      white-space: nowrap;
+      outline: none;
+    }
+
+    /* Ghost button */
+    .btn-ghost {
+      background: transparent;
+      border: 1.5px solid rgba(255, 255, 255, 0.55);
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.85);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-ghost:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    /* Solid red button */
+    .btn-red {
+      background: #ee2737;
+      border: 1.5px solid #ee2737;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .btn-red:hover {
+      background: #f5404f;
+      border-color: #f5404f;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(238, 39, 55, 0.40);
+    }
+
+    .btn-red:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar-wrapper">
+    <nav class="navbar" role="navigation" aria-label="Primary navigation">
+
+      <!-- LOGO -->
+      <a href="#" class="logo" aria-label="Nexus Banking Home">
+        <!-- Shield split red/blue -->
+        <svg class="logo-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <clipPath id="shield-clip">
+              <path d="M18 2L4 7.8V17.5C4 25.8 10.3 33.4 18 35.2C25.7 33.4 32 25.8 32 17.5V7.8L18 2Z"></path>
+            </clipPath>
+          </defs>
+          <!-- Shield background left half — red -->
+          <rect x="4" y="2" width="14" height="34" clip-path="url(#shield-clip)" fill="rgba(238,39,55,0.15)"></rect>
+          <!-- Shield background right half — blue -->
+          <rect x="18" y="2" width="14" height="34" clip-path="url(#shield-clip)" fill="rgba(35,91,168,0.15)"></rect>
+          <!-- Shield outline left — red -->
+          <path d="M18 2L4 7.8V17.5C4 25.8 10.3 33.4 18 35.2" fill="none" stroke="#ee2737" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"></path>
+          <!-- Shield outline right — blue -->
+          <path d="M18 2L32 7.8V17.5C32 25.8 25.7 33.4 18 35.2" fill="none" stroke="#235ba8" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"></path>
+          <!-- Center dividing line -->
+          <line x1="18" y1="2" x2="18" y2="35.2" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"></line>
+          <!-- Scale beam -->
+          <line x1="11" y1="15" x2="25" y2="15" stroke="rgba(255,255,255,0.85)" stroke-width="1.2" stroke-linecap="round"></line>
+          <!-- Center post -->
+          <line x1="18" y1="12.5" x2="18" y2="25" stroke="rgba(255,255,255,0.85)" stroke-width="1.2" stroke-linecap="round"></line>
+          <!-- Left hang -->
+          <line x1="11" y1="15" x2="11" y2="19.5" stroke="rgba(255,255,255,0.7)" stroke-width="0.9" stroke-linecap="round"></line>
+          <!-- Right hang -->
+          <line x1="25" y1="15" x2="25" y2="19.5" stroke="rgba(255,255,255,0.7)" stroke-width="0.9" stroke-linecap="round"></line>
+          <!-- Left pan arc -->
+          <path d="M8.5 19.5 Q11 22.5 13.5 19.5" stroke="rgba(255,255,255,0.7)" stroke-width="0.9" fill="none" stroke-linecap="round"></path>
+          <!-- Right pan arc -->
+          <path d="M22.5 19.5 Q25 22.5 27.5 19.5" stroke="rgba(255,255,255,0.7)" stroke-width="0.9" fill="none" stroke-linecap="round"></path>
+          <!-- Base -->
+          <line x1="15.5" y1="25" x2="20.5" y2="25" stroke="rgba(255,255,255,0.85)" stroke-width="1.2" stroke-linecap="round"></line>
+          <!-- Top gem -->
+          <circle cx="18" cy="12" r="1.1" fill="#ffffff"></circle>
+        </svg>
+
+        <div class="logo-text">
+          <span class="logo-nexus">Nexus</span>
+          <span class="logo-banking">Banking</span>
+        </div>
+      </a>
+
+      <!-- CENTER NAV LINKS -->
+      <ul class="nav-links" role="list">
+        <li class="active-item">
+          <a href="#" aria-current="page">Home</a>
+          <span class="active-dot" aria-hidden="true"></span>
+        </li>
+        <li><a href="#">Asset Recovery</a></li>
+        <li><a href="#">Banking</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+
+      <!-- RIGHT CTA BUTTONS -->
+      <div class="nav-ctas">
+        <a href="#" class="btn btn-ghost" role="button">Client Login</a>
+        <a href="#" class="btn btn-red" role="button">Open Account</a>
+      </div>
+
+    </nav>
+  </div>
+
+
+</body></html>

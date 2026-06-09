@@ -1,0 +1,657 @@
+<!DOCTYPE html><html lang="en"><head><base href="https://forge.moonchild.ai/site/fe7ab8c34afb4b15a6355a05e41e0a5b40740c05e6ea29cd16c318b2d685caba/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus Banking — Footer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #ffffff;
+      font-family: 'Inter', sans-serif;
+      width: 1728px;
+      min-height: 480px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
+
+    /* ── DIAGONAL TRANSITION ── */
+    .footer-transition {
+      width: 100%;
+      line-height: 0;
+      display: block;
+      overflow: hidden;
+    }
+
+    .footer-transition svg {
+      display: block;
+      width: 100%;
+    }
+
+    /* ── FOOTER WRAPPER ── */
+    .footer {
+      width: 100%;
+      background: #0d1b2e;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── WATERMARK ── */
+    .footer-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 220px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.028);
+      text-transform: uppercase;
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+      z-index: 0;
+    }
+
+    /* ── FOOTER INNER ── */
+    .footer-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 64px 40px 0 40px;
+    }
+
+    /* ── FOUR-COLUMN GRID ── */
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1.3fr 1.5fr 1.5fr;
+      gap: 60px;
+      padding-bottom: 56px;
+    }
+
+    /* ── COLUMN 1: BRAND ── */
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      text-decoration: none;
+    }
+
+    .footer-logo-icon {
+      width: 42px;
+      height: 42px;
+      flex-shrink: 0;
+    }
+
+    .footer-logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+      gap: 3px;
+    }
+
+    .footer-logo-nexus {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 0.22em;
+      color: #ffffff;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .footer-logo-banking {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.38em;
+      color: #cfd6e0;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .footer-brand-desc {
+      font-size: 13.5px;
+      font-weight: 400;
+      line-height: 1.78;
+      color: rgba(207, 214, 224, 0.75);
+      max-width: 295px;
+      margin-bottom: 28px;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 10px;
+    }
+
+    .social-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: rgba(207, 214, 224, 0.7);
+      font-size: 12px;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .social-btn:hover {
+      background: rgba(238, 39, 55, 0.12);
+      border-color: rgba(238, 39, 55, 0.5);
+      color: #ee2737;
+      transform: translateY(-2px);
+    }
+
+    /* ── COLUMN HEADINGS ── */
+    .footer-col-heading {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: #ee2737;
+      margin-bottom: 24px;
+    }
+
+    /* ── COLUMN 2: LINKS ── */
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-links li a {
+      font-size: 13.5px;
+      font-weight: 400;
+      color: #cfd6e0;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.2s ease, padding-left 0.2s ease;
+      position: relative;
+      display: inline-block;
+    }
+
+    .footer-links li a::before {
+      content: '';
+      position: absolute;
+      left: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #ee2737;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .footer-links li a:hover {
+      color: #ffffff;
+      padding-left: 16px;
+    }
+
+    .footer-links li a:hover::before {
+      opacity: 1;
+    }
+
+    /* ── COLUMN 3: CONTACT ── */
+    .contact-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .contact-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(238, 39, 55, 0.10);
+      border: 1px solid rgba(238, 39, 55, 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .contact-icon i {
+      font-size: 12px;
+      color: #ee2737;
+    }
+
+    .contact-text {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .contact-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: rgba(207, 214, 224, 0.55);
+      line-height: 1;
+    }
+
+    .contact-value {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .contact-value:hover {
+      color: #ee2737;
+    }
+
+    .contact-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.07);
+      margin: 22px 0;
+    }
+
+    .emergency-label {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(207, 214, 224, 0.55);
+      margin-bottom: 14px;
+    }
+
+    .btn-emergency {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      border-radius: 999px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      padding: 0 22px;
+      height: 38px;
+      cursor: pointer;
+      border: 1.5px solid rgba(238, 39, 55, 0.55);
+      background: rgba(238, 39, 55, 0.08);
+      color: #ee2737;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-emergency i {
+      font-size: 11px;
+    }
+
+    .btn-emergency:hover {
+      background: rgba(238, 39, 55, 0.16);
+      border-color: rgba(238, 39, 55, 0.85);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 18px rgba(238, 39, 55, 0.20);
+    }
+
+    .btn-emergency:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    /* ── COLUMN 4: CTA CARD ── */
+    .footer-cta-card {
+      background: #235ba8;
+      border-radius: 18px;
+      padding: 34px 30px 32px 30px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .footer-cta-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 48px rgba(35, 91, 168, 0.45);
+    }
+
+    /* Card decorative circles */
+    .footer-cta-card::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .footer-cta-card::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      left: -30px;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(238, 39, 55, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-card-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      border-radius: 999px;
+      padding: 5px 13px;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-card-badge i {
+      font-size: 9px;
+    }
+
+    .cta-card-heading {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      line-height: 1.25;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-card-sub {
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.65;
+      color: rgba(207, 214, 224, 0.85);
+      margin-bottom: 26px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-white {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 999px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      padding: 0 28px;
+      height: 42px;
+      cursor: pointer;
+      background: #ffffff;
+      border: 1.5px solid #ffffff;
+      color: #235ba8;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-white:hover {
+      background: #f0f4ff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.20);
+    }
+
+    .btn-white:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    /* ── BOTTOM BAR ── */
+    .footer-bottom-divider {
+      height: 1px;
+      background: rgba(207, 214, 224, 0.10);
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .footer-bottom {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px 40px 24px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-copyright {
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(207, 214, 224, 0.50);
+      letter-spacing: 0.01em;
+    }
+
+    .footer-legal-links {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      list-style: none;
+    }
+
+    .footer-legal-links li {
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-legal-links li + li::before {
+      content: '·';
+      color: rgba(207, 214, 224, 0.25);
+      margin: 0 12px;
+      font-size: 13px;
+    }
+
+    .footer-legal-links li a {
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(207, 214, 224, 0.50);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.2s ease;
+    }
+
+    .footer-legal-links li a:hover {
+      color: #ffffff;
+    }
+
+    /* ── ACCENT LINE ON COL HEADINGS ── */
+    .footer-col-heading-wrap {
+      margin-bottom: 24px;
+    }
+
+    .footer-col-heading-wrap .footer-col-heading {
+      margin-bottom: 10px;
+    }
+
+    .heading-accent-line {
+      width: 28px;
+      height: 2px;
+      background: linear-gradient(90deg, #ee2737, transparent);
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DIAGONAL TRANSITION FROM WHITE TO DARK NAVY -->
+  <div class="footer-transition">
+    <svg viewBox="0 0 1728 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" height="80">
+      <polygon points="0,0 1728,0 1728,80 0,30" fill="#0d1b2e"></polygon>
+    </svg>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+
+    <!-- WATERMARK -->
+    <div class="footer-watermark" aria-hidden="true">NEXUS</div>
+
+    <div class="footer-inner">
+
+      <!-- FOUR-COLUMN GRID -->
+      <div class="footer-grid">
+
+        <!-- COLUMN 1: BRAND -->
+        <div>
+          <a href="#" class="footer-logo" aria-label="Nexus Banking Home">
+            <!-- Shield icon red/blue matching nav -->
+            <svg class="footer-logo-icon" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <clipPath id="footer-shield-clip">
+                  <path d="M21 2.5L4.5 8.8V19.5C4.5 29.2 11.8 37.8 21 39.8C30.2 37.8 37.5 29.2 37.5 19.5V8.8L21 2.5Z"></path>
+                </clipPath>
+              </defs>
+              <rect x="4.5" y="2.5" width="16.5" height="38" clip-path="url(#footer-shield-clip)" fill="rgba(238,39,55,0.15)"></rect>
+              <rect x="21" y="2.5" width="16.5" height="38" clip-path="url(#footer-shield-clip)" fill="rgba(35,91,168,0.15)"></rect>
+              <path d="M21 2.5L4.5 8.8V19.5C4.5 29.2 11.8 37.8 21 39.8" fill="none" stroke="#ee2737" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"></path>
+              <path d="M21 2.5L37.5 8.8V19.5C37.5 29.2 30.2 37.8 21 39.8" fill="none" stroke="#235ba8" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"></path>
+              <line x1="21" y1="2.5" x2="21" y2="39.8" stroke="rgba(255,255,255,0.10)" stroke-width="0.8"></line>
+              <!-- Scale -->
+              <line x1="13" y1="17" x2="29" y2="17" stroke="rgba(255,255,255,0.85)" stroke-width="1.3" stroke-linecap="round"></line>
+              <line x1="21" y1="14" x2="21" y2="28" stroke="rgba(255,255,255,0.85)" stroke-width="1.3" stroke-linecap="round"></line>
+              <line x1="13" y1="17" x2="13" y2="22" stroke="rgba(255,255,255,0.7)" stroke-width="1" stroke-linecap="round"></line>
+              <line x1="29" y1="17" x2="29" y2="22" stroke="rgba(255,255,255,0.7)" stroke-width="1" stroke-linecap="round"></line>
+              <path d="M10 22 Q13 25.5 16 22" stroke="rgba(255,255,255,0.7)" stroke-width="1" fill="none" stroke-linecap="round"></path>
+              <path d="M26 22 Q29 25.5 32 22" stroke="rgba(255,255,255,0.7)" stroke-width="1" fill="none" stroke-linecap="round"></path>
+              <line x1="18.5" y1="28" x2="23.5" y2="28" stroke="rgba(255,255,255,0.85)" stroke-width="1.3" stroke-linecap="round"></line>
+              <circle cx="21" cy="13.5" r="1.2" fill="#ffffff"></circle>
+            </svg>
+            <div class="footer-logo-text">
+              <span class="footer-logo-nexus">Nexus</span>
+              <span class="footer-logo-banking">Banking</span>
+            </div>
+          </a>
+
+          <p class="footer-brand-desc">We are the bridge between financial loss and legal recovery. Nexus combines the power of a specialized law firm with the security of a chartered bank to fight for what belongs to you.</p>
+
+          <div class="footer-socials">
+            <a href="#" class="social-btn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="social-btn" aria-label="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+            <a href="#" class="social-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          </div>
+        </div>
+
+        <!-- COLUMN 2: SERVICES & SUPPORT -->
+        <div>
+          <div class="footer-col-heading-wrap">
+            <h3 class="footer-col-heading">Services &amp; Support</h3>
+            <div class="heading-accent-line"></div>
+          </div>
+          <ul class="footer-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Asset Recovery</a></li>
+            <li><a href="#">Banking Services</a></li>
+            <li><a href="#">Track My Case</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Legal Contact</a></li>
+            <li><a href="#">Direct Intake</a></li>
+          </ul>
+        </div>
+
+        <!-- COLUMN 3: CONTACT -->
+        <div>
+          <div class="footer-col-heading-wrap">
+            <h3 class="footer-col-heading">Contact</h3>
+            <div class="heading-accent-line"></div>
+          </div>
+
+          <!-- Email -->
+          <div class="contact-row">
+            <div class="contact-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="contact-text">
+              <span class="contact-label">Email</span>
+              <a href="mailto:admin@nexusbanking.com.au" class="contact-value">admin@nexusbanking.com.au</a>
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div class="contact-row">
+            <div class="contact-icon">
+              <i class="fas fa-phone"></i>
+            </div>
+            <div class="contact-text">
+              <span class="contact-label">Global Switchboard</span>
+              <a href="tel:+14093342911" class="contact-value">+1 (409) 334-2911</a>
+            </div>
+          </div>
+
+          <div class="contact-divider"></div>
+
+          <!-- Emergency -->
+          <p class="emergency-label">Emergency Services</p>
+          <a href="#" class="btn-emergency" role="button">
+            <i class="fas fa-triangle-exclamation"></i>
+            Urgent Bank Freeze
+          </a>
+        </div>
+
+        <!-- COLUMN 4: CTA CARD -->
+        <div>
+          <div class="footer-cta-card">
+            <div class="cta-card-badge">
+              <i class="fas fa-scale-balanced"></i>
+              Legal &amp; Financial
+            </div>
+            <h4 class="cta-card-heading">Start Your Recovery Today</h4>
+            <p class="cta-card-sub">Our legal-banking specialists will evaluate your case and begin recovery proceedings within 24 hours of contact.</p>
+            <a href="#" class="btn-white" role="button">
+              Open Account
+              <i class="fas fa-arrow-right" style="font-size: 10px;"></i>
+            </a>
+          </div>
+        </div>
+
+      </div><!-- /.footer-grid -->
+    </div><!-- /.footer-inner -->
+
+    <!-- BOTTOM BAR -->
+    <div class="footer-bottom-divider"></div>
+    <div class="footer-bottom">
+      <p class="footer-copyright">© 2026 Nexus Banking. Authorized Financial Institution &amp; Legal Representative.</p>
+      <ul class="footer-legal-links">
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Legal Disclaimer</a></li>
+      </ul>
+    </div>
+
+  </footer>
+
+
+</body></html>

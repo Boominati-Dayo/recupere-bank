@@ -1,0 +1,521 @@
+<!DOCTYPE html><html lang="en"><head><base href="https://forge.moonchild.ai/site/256af25a4a9b5c31366cc653058012d8e799c5bfdce6fbef15a2d525ce751ff2/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus Banking — Mobile Navigation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #ffffff;
+      font-family: 'Inter', sans-serif;
+      width: 430px;
+      min-height: 600px;
+      overflow-x: hidden;
+    }
+
+    /* ── PAGE WRAPPER ── */
+    .page {
+      padding: 16px 24px 32px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* ── NAVBAR PILL ── */
+    .navbar {
+      width: 100%;
+      height: 60px;
+      background: #0d1b2e;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px 0 18px;
+      box-shadow:
+        0 8px 32px rgba(238, 39, 55, 0.10),
+        0 4px 16px rgba(35, 91, 168, 0.12),
+        0 2px 12px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ── LOGO ── */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      text-decoration: none;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .logo-icon {
+      width: 30px;
+      height: 30px;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+      gap: 2px;
+    }
+
+    .logo-nexus {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.20em;
+      color: #ffffff;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .logo-banking {
+      font-size: 7.5px;
+      font-weight: 500;
+      letter-spacing: 0.36em;
+      color: #cfd6e0;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    /* ── HAMBURGER BUTTON ── */
+    .hamburger-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      align-items: flex-end;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+      outline: none;
+    }
+
+    .hamburger-btn:focus-visible {
+      outline: 2px solid rgba(238, 39, 55, 0.5);
+      outline-offset: 2px;
+    }
+
+    .hamburger-btn:hover {
+      background: rgba(238, 39, 55, 0.10);
+    }
+
+    .hamburger-line {
+      height: 2px;
+      background: #ee2737;
+      border-radius: 2px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: center;
+    }
+
+    .hamburger-line:nth-child(1) { width: 22px; }
+    .hamburger-line:nth-child(2) { width: 16px; }
+    .hamburger-line:nth-child(3) { width: 20px; }
+
+    /* Animated X state */
+    .hamburger-btn.open .hamburger-line:nth-child(1) {
+      width: 20px;
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger-btn.open .hamburger-line:nth-child(2) {
+      opacity: 0;
+      width: 0;
+    }
+
+    .hamburger-btn.open .hamburger-line:nth-child(3) {
+      width: 20px;
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* ── MENU CARD ── */
+    .menu-card {
+      width: 100%;
+      background: #0d1b2e;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow:
+        0 16px 48px rgba(13, 27, 46, 0.20),
+        0 6px 20px rgba(238, 39, 55, 0.08),
+        0 2px 8px rgba(0, 0, 0, 0.12);
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.42s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateY(-8px) scale(0.98);
+      transform-origin: top center;
+    }
+
+    .menu-card.open {
+      max-height: 600px;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .menu-inner {
+      padding: 8px 0 24px 0;
+    }
+
+    /* ── NAV LINKS ── */
+    .nav-list {
+      list-style: none;
+      padding: 4px 0 0 0;
+    }
+
+    .nav-list li {
+      position: relative;
+    }
+
+    .nav-list li a {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 16px 22px;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      position: relative;
+      transition: background 0.2s ease, color 0.2s ease, padding-left 0.2s ease;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-list li:last-child a {
+      border-bottom: none;
+    }
+
+    .nav-list li a:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #ffffff;
+      padding-left: 28px;
+    }
+
+    /* Active state */
+    .nav-list li.active-item a {
+      color: #ee2737;
+      padding-left: 28px;
+    }
+
+    .nav-list li.active-item a:hover {
+      color: #f5404f;
+    }
+
+    /* Red dot indicator */
+    .active-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #ee2737;
+      flex-shrink: 0;
+      margin-right: 12px;
+      box-shadow: 0 0 8px rgba(238, 39, 55, 0.65);
+    }
+
+    /* Arrow chevron */
+    .nav-arrow {
+      margin-left: auto;
+      opacity: 0.25;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .nav-list li a:hover .nav-arrow {
+      opacity: 0.55;
+      transform: translateX(3px);
+    }
+
+    .nav-list li.active-item a .nav-arrow {
+      opacity: 0.55;
+      color: #ee2737;
+    }
+
+    /* ── DIVIDER ── */
+    .menu-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.07);
+      margin: 4px 22px;
+    }
+
+    /* ── CTA BUTTONS ── */
+    .menu-ctas {
+      padding: 20px 22px 0 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      height: 48px;
+      width: 100%;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+      text-decoration: none;
+      white-space: nowrap;
+      outline: none;
+      border: 1.5px solid transparent;
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid rgba(238, 39, 55, 0.5);
+      outline-offset: 2px;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: rgba(255, 255, 255, 0.40);
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.75);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    .btn-ghost:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    .btn-red {
+      background: #ee2737;
+      border-color: #ee2737;
+      color: #ffffff;
+    }
+
+    .btn-red:hover {
+      background: #f5404f;
+      border-color: #f5404f;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(238, 39, 55, 0.45);
+    }
+
+    .btn-red:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    /* ── TAGLINE ── */
+    .menu-tagline {
+      padding: 20px 22px 0 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tagline-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .tagline-text {
+      font-size: 8.5px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(207, 214, 224, 0.35);
+      white-space: nowrap;
+    }
+
+    /* ── PAGE CONTENT PREVIEW (behind menu) ── */
+    .page-hint {
+      margin-top: 8px;
+      padding: 0 4px;
+      opacity: 0.25;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .page-hint-line {
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    .page-hint-line:nth-child(1) { width: 65%; }
+    .page-hint-line:nth-child(2) { width: 80%; height: 8px; }
+    .page-hint-line:nth-child(3) { width: 50%; height: 8px; }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+
+    <!-- ── NAVBAR PILL ── -->
+    <nav class="navbar" role="navigation" aria-label="Primary navigation">
+
+      <!-- LOGO -->
+      <a href="#" class="logo" aria-label="Nexus Banking Home">
+        <svg class="logo-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <clipPath id="shield-clip-m">
+              <path d="M18 2L4 7.8V17.5C4 25.8 10.3 33.4 18 35.2C25.7 33.4 32 25.8 32 17.5V7.8L18 2Z"></path>
+            </clipPath>
+          </defs>
+          <rect x="4" y="2" width="14" height="34" clip-path="url(#shield-clip-m)" fill="rgba(238,39,55,0.18)"></rect>
+          <rect x="18" y="2" width="14" height="34" clip-path="url(#shield-clip-m)" fill="rgba(35,91,168,0.18)"></rect>
+          <path d="M18 2L4 7.8V17.5C4 25.8 10.3 33.4 18 35.2" fill="none" stroke="#ee2737" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"></path>
+          <path d="M18 2L32 7.8V17.5C32 25.8 25.7 33.4 18 35.2" fill="none" stroke="#235ba8" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"></path>
+          <line x1="18" y1="2" x2="18" y2="35.2" stroke="rgba(255,255,255,0.10)" stroke-width="0.8"></line>
+          <line x1="11" y1="15" x2="25" y2="15" stroke="rgba(255,255,255,0.85)" stroke-width="1.2" stroke-linecap="round"></line>
+          <line x1="18" y1="12.5" x2="18" y2="25" stroke="rgba(255,255,255,0.85)" stroke-width="1.2" stroke-linecap="round"></line>
+          <line x1="11" y1="15" x2="11" y2="19.5" stroke="rgba(255,255,255,0.70)" stroke-width="0.9" stroke-linecap="round"></line>
+          <line x1="25" y1="15" x2="25" y2="19.5" stroke="rgba(255,255,255,0.70)" stroke-width="0.9" stroke-linecap="round"></line>
+          <path d="M8.5 19.5 Q11 22.5 13.5 19.5" stroke="rgba(255,255,255,0.70)" stroke-width="0.9" fill="none" stroke-linecap="round"></path>
+          <path d="M22.5 19.5 Q25 22.5 27.5 19.5" stroke="rgba(255,255,255,0.70)" stroke-width="0.9" fill="none" stroke-linecap="round"></path>
+          <line x1="15.5" y1="25" x2="20.5" y2="25" stroke="rgba(255,255,255,0.85)" stroke-width="1.2" stroke-linecap="round"></line>
+          <circle cx="18" cy="12" r="1.1" fill="#ffffff"></circle>
+        </svg>
+
+        <div class="logo-text">
+          <span class="logo-nexus">Nexus</span>
+          <span class="logo-banking">Banking</span>
+        </div>
+      </a>
+
+      <!-- HAMBURGER -->
+      <button class="hamburger-btn open" id="hamburgerBtn" aria-label="Toggle navigation menu" aria-expanded="true" aria-controls="mobileMenu">
+        <div class="hamburger-line"></div>
+        <div class="hamburger-line"></div>
+        <div class="hamburger-line"></div>
+      </button>
+
+    </nav>
+
+    <!-- ── MENU CARD ── -->
+    <div class="menu-card open" id="mobileMenu" role="dialog" aria-label="Navigation menu">
+      <div class="menu-inner">
+
+        <!-- NAV LINKS -->
+        <ul class="nav-list" role="list">
+          <li class="active-item">
+            <a href="#" aria-current="page">
+              <span class="active-dot" aria-hidden="true"></span>
+              Home
+              <svg class="nav-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M6 4l4 4-4 4" stroke="#ee2737" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Asset Recovery
+              <svg class="nav-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M6 4l4 4-4 4" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Banking
+              <svg class="nav-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M6 4l4 4-4 4" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              About
+              <svg class="nav-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M6 4l4 4-4 4" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              Contact
+              <svg class="nav-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M6 4l4 4-4 4" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </a>
+          </li>
+        </ul>
+
+        <!-- DIVIDER -->
+        <div class="menu-divider" aria-hidden="true"></div>
+
+        <!-- CTA BUTTONS -->
+        <div class="menu-ctas">
+          <a href="#" class="btn btn-ghost" role="button">Client Login</a>
+          <a href="#" class="btn btn-red" role="button">Open Account</a>
+        </div>
+
+        <!-- TAGLINE -->
+        <div class="menu-tagline" aria-hidden="true">
+          <div class="tagline-line"></div>
+          <span class="tagline-text">Trusted. Secure. Confidential.</span>
+          <div class="tagline-line"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PAGE CONTENT HINT -->
+    <div class="page-hint" aria-hidden="true">
+      <div class="page-hint-line"></div>
+      <div class="page-hint-line"></div>
+      <div class="page-hint-line"></div>
+    </div>
+
+  </div>
+
+  <script>
+    const btn = document.getElementById('hamburgerBtn');
+    const menu = document.getElementById('mobileMenu');
+
+    btn.addEventListener('click', () => {
+      const isOpen = menu.classList.contains('open');
+      if (isOpen) {
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      } else {
+        menu.classList.add('open');
+        btn.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    document.querySelectorAll('.nav-list a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Remove active from all
+        document.querySelectorAll('.nav-list li').forEach(li => li.classList.remove('active-item'));
+        // Add active to clicked
+        link.closest('li').classList.add('active-item');
+        // Update dot color and arrow color
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
+
+
+</body></html>
