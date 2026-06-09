@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import ImagePlaceholder from './ImagePlaceholder';
 
 const cases = [
   {
@@ -48,10 +49,14 @@ export default function RecentCases() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {cases.map((c, idx) => (
-            <div key={idx} className="bg-navy-800 border border-navy-700/50 px-8 py-9 hover:bg-navy-800/80 transition-colors">
-              <span className="inline-block text-[10px] font-bold text-primary-400 uppercase tracking-wider bg-primary-400/10 px-3 py-1 mb-6">
-                {c.type}
-              </span>
+            <div key={idx} className="bg-navy-800 border border-navy-700/50 hover:bg-navy-800/80 transition-colors">
+              <div className="px-8 pt-9 pb-0">
+                <ImagePlaceholder label={`Case: ${c.scam}`} aspectRatio="aspect-[16/10]" className="mb-6" />
+                <span className="inline-block text-[10px] font-bold text-primary-400 uppercase tracking-wider bg-primary-400/10 px-3 py-1">
+                  {c.type}
+                </span>
+              </div>
+              <div className="px-8 pb-9 pt-6">
               <h3 className="text-xl font-bold text-white mb-1">{c.scam}</h3>
               <p className="text-xs text-white/40 mb-6">Jurisdiction: {c.location}</p>
 
@@ -68,6 +73,7 @@ export default function RecentCases() {
               </div>
 
               <p className="text-sm text-white/60 leading-relaxed font-light">{c.description}</p>
+              </div>
             </div>
           ))}
         </div>

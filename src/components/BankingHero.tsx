@@ -23,10 +23,11 @@ const BankingHero = () => {
           src={HeroBg}
           alt="Nexus Banking Background"
           fill
-          className="object-cover opacity-20"
+          className="object-cover opacity-35"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-950 via-navy-950/70 to-navy-950" />
+        <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-navy-950 via-navy-950/60 to-navy-950" />
       </div>
 
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-600/10 rounded-full blur-[120px] -mr-64 -mt-32 pointer-events-none" />

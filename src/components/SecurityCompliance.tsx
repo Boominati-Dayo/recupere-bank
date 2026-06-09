@@ -1,3 +1,5 @@
+import ImagePlaceholder from './ImagePlaceholder';
+
 export default function SecurityCompliance() {
   const badges = [
     { title: 'APRA Regulated', desc: 'Authorised Deposit-taking Institution' },
@@ -28,6 +30,10 @@ export default function SecurityCompliance() {
               </div>
             ))}
           </div>
+        </div>
+
+        <div className="mt-8">
+          <ImagePlaceholder label="Security Operations Centre" aspectRatio="aspect-[21/4]" dark={false} />
         </div>
       </div>
     </section>

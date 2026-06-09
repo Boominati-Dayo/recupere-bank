@@ -1,10 +1,16 @@
 import Link from 'next/link';
 import { ArrowRight, ShieldAlert } from 'lucide-react';
+import ImagePlaceholder from './ImagePlaceholder';
 
 export default function FinalCTA() {
     return (
-        <section className="py-24 bg-navy-900 relative">
+        <section className="py-24 bg-navy-900 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900" />
+            <div className="absolute inset-0 opacity-[0.06] pointer-events-none">
+              <div className="w-full h-full bg-navy-800 relative overflow-hidden">
+                <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
+              </div>
+            </div>
 
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-500/10 text-primary-500 mb-8 border border-primary-500/20">

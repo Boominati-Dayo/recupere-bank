@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import ImagePlaceholder from './ImagePlaceholder';
 
 const services = [
   {
@@ -50,9 +51,13 @@ const ServiceSplit = () => {
           <span className="w-7 h-0.5 bg-primary-500" />
           <span className="text-primary-500 text-xs font-bold tracking-[0.22em] uppercase">Our Capabilities</span>
         </div>
-        <h2 className="text-3xl md:text-5xl font-bold text-navy-900 font-playfair mb-16 max-w-2xl leading-tight">
+        <h2 className="text-3xl md:text-5xl font-bold text-navy-900 font-playfair mb-8 max-w-2xl leading-tight">
           Institutional Grade Banking Services
         </h2>
+
+        <div className="mb-12 max-w-4xl">
+          <ImagePlaceholder label="Private Banking Suite" aspectRatio="aspect-[21/7]" />
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-muted-400">
           {services.map((s) => (

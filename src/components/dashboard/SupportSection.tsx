@@ -81,7 +81,7 @@ const SupportSection = () => {
                   name="fullName"
                   value={formData.fullName}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 mobile:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ee2737] focus:border-transparent text-sm mobile:text-base"
+                  className="w-full px-4 py-2.5 mobile:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm mobile:text-base"
                   placeholder="Your full name"
                   required
                 />
@@ -96,7 +96,7 @@ const SupportSection = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 mobile:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ee2737] focus:border-transparent text-sm mobile:text-base"
+                  className="w-full px-4 py-2.5 mobile:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm mobile:text-base"
                   placeholder="your.email@example.com"
                   required
                 />
@@ -111,7 +111,7 @@ const SupportSection = () => {
                   name="subject"
                   value={formData.subject}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 mobile:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ee2737] focus:border-transparent text-sm mobile:text-base"
+                  className="w-full px-4 py-2.5 mobile:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm mobile:text-base"
                   placeholder="What can we help you with?"
                   required
                 />
@@ -126,7 +126,7 @@ const SupportSection = () => {
                   value={formData.message}
                   onChange={handleInputChange}
                   rows={4}
-                  className="w-full px-4 py-2.5 mobile:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ee2737] focus:border-transparent text-sm mobile:text-base"
+                  className="w-full px-4 py-2.5 mobile:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm mobile:text-base"
                   placeholder="Please describe your issue or question in detail..."
                   required
                 ></textarea>
@@ -135,7 +135,7 @@ const SupportSection = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-[#ee2737] hover:bg-[#d11f2d] disabled:bg-gray-400 text-white py-2.5 mobile:py-3 px-6 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center space-x-2 text-sm mobile:text-base"
+                className="w-full bg-primary-500 hover:bg-primary-600 disabled:bg-gray-400 text-white py-2.5 mobile:py-3 px-6 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center space-x-2 text-sm mobile:text-base"
               >
                 {isSubmitting ? (
                   <>
@@ -157,11 +157,11 @@ const SupportSection = () => {
               <div className="space-y-3 mobile:space-y-4">
                 <div className="flex items-center space-x-3 p-2.5 mobile:p-3 bg-gray-50 rounded-lg">
                   <div className="w-9 h-9 mobile:w-10 mobile:h-10 bg-red-100 rounded-full flex items-center justify-center shrink-0">
-                    <Mail className="w-4 h-4 mobile:w-5 mobile:h-5 text-[#ee2737]" />
+                    <Mail className="w-4 h-4 mobile:w-5 mobile:h-5 text-primary-500" />
                   </div>
                   <div>
                     <p className="font-medium text-gray-900 text-sm mobile:text-base">Email Support</p>
-                    <p className="text-xs mobile:text-sm text-gray-600">support@tesla-capital.com</p>
+                    <p className="text-xs mobile:text-sm text-gray-600">support@nexusbanking.com</p>
                     <p className="text-[10px] mobile:text-xs text-gray-500">Response within 24 hours</p>
                   </div>
                 </div>
@@ -247,7 +247,7 @@ const SupportSection = () => {
             {/* Response Times */}
             <div className="bg-gradient-to-r from-red-50 to-blue-50 rounded-lg p-3.5 mobile:p-4">
               <h5 className="font-semibold text-gray-900 mb-1.5 mobile:mb-2 flex items-center text-sm mobile:text-base">
-                <Zap className="w-3.5 h-3.5 mobile:w-4 mobile:h-4 mr-1.5 mobile:mr-2 text-[#ee2737]" />
+                <Zap className="w-3.5 h-3.5 mobile:w-4 mobile:h-4 mr-1.5 mobile:mr-2 text-primary-500" />
                 Response Times
               </h5>
               <div className="space-y-1.5 mobile:space-y-2 text-[10px] mobile:text-xs">

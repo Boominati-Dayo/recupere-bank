@@ -1,27 +1,32 @@
 'use client';
 
 import Link from 'next/link';
+import ImagePlaceholder from './ImagePlaceholder';
 
 const accounts = [
   {
     name: 'Checking',
     desc: 'Day-to-day transactional account with zero fees and unlimited transfers.',
     bar: 'bg-primary-500',
+    img: 'Checking Account Dashboard',
   },
   {
     name: 'Savings',
     desc: 'High-yield interest account with flexible deposit and withdrawal terms.',
     bar: 'bg-emerald-600',
+    img: 'Savings Growth Chart',
   },
   {
     name: 'Fixed Deposit',
     desc: 'Locked-term deposits offering guaranteed returns at competitive rates.',
     bar: 'bg-primary-500',
+    img: 'Fixed Deposit Term Sheet',
   },
   {
     name: 'Business',
     desc: 'Corporate-grade account with multi-user access and integrated treasury tools.',
     bar: 'bg-navy-900',
+    img: 'Business Treasury Console',
   },
 ];
 
@@ -53,13 +58,12 @@ export default function WhyChooseUs() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
           {accounts.map((a) => (
             <div key={a.name} className="border border-muted-400 overflow-hidden hover:-translate-y-1 hover:shadow-lg transition-all">
-              <div className="bg-navy-900 px-5 py-5">
-                <h3 className="text-sm font-bold text-white tracking-wide">{a.name}</h3>
-              </div>
-              <div className="px-5 pt-4 pb-0 bg-white">
-                <p className="text-xs leading-relaxed text-gray-400">{a.desc}</p>
-                <div className={`h-1 mt-6 ${a.bar}`} />
-              </div>
+                <ImagePlaceholder label={a.img} aspectRatio="aspect-[3/2]" />
+                <div className="px-5 pt-3 pb-4">
+                  <h3 className="text-sm font-bold text-navy-900 tracking-wide mb-2">{a.name}</h3>
+                  <p className="text-xs leading-relaxed text-gray-400">{a.desc}</p>
+                  <div className={`h-1 mt-4 ${a.bar}`} />
+                </div>
             </div>
           ))}
         </div>

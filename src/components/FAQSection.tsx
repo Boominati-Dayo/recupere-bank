@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ImagePlaceholder from './ImagePlaceholder';
 
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -109,6 +110,9 @@ const FAQSection = () => {
               Contact Legal Support
             </a>
           </div>
+        </div>
+        <div className="mt-12">
+          <ImagePlaceholder label="Legal Support Team" aspectRatio="aspect-[21/5]" />
         </div>
       </div>
     </section>

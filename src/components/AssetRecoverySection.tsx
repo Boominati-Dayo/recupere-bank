@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import ImagePlaceholder from './ImagePlaceholder';
 
 const features = [
   {
@@ -44,14 +45,19 @@ const AssetRecoverySection = () => {
         </Link>
       </div>
 
-      <div className="w-full lg:w-[45%] bg-muted-400 px-8 py-16 lg:px-16 lg:py-24 flex items-center">
-        <div className="grid grid-cols-2 gap-px bg-muted-300 w-full">
-          {features.map((f) => (
-            <div key={f.title} className="bg-muted-400 p-7 lg:p-9 hover:bg-muted-200 transition-colors">
-              <h3 className="text-sm font-bold text-navy-900 mb-2 tracking-tight">{f.title}</h3>
-              <p className="text-xs leading-relaxed text-gray-500">{f.desc}</p>
-            </div>
-          ))}
+      <div className="w-full lg:w-[45%] bg-muted-400 flex flex-col">
+        <div className="px-8 py-16 lg:px-16 lg:pt-24 lg:pb-10">
+          <div className="grid grid-cols-2 gap-px bg-muted-300 w-full">
+            {features.map((f) => (
+              <div key={f.title} className="bg-muted-400 p-7 lg:p-9 hover:bg-muted-200 transition-colors">
+                <h3 className="text-sm font-bold text-navy-900 mb-2 tracking-tight">{f.title}</h3>
+                <p className="text-xs leading-relaxed text-gray-500">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="px-8 pb-16 lg:px-16 lg:pb-24">
+          <ImagePlaceholder label="Forensic Analysis Lab" dark={false} aspectRatio="aspect-[16/9]" />
         </div>
       </div>
     </section>

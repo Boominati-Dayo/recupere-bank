@@ -1,5 +1,7 @@
 'use client';
 
+import ImagePlaceholder from './ImagePlaceholder';
+
 const steps = [
   {
     num: '01',
@@ -51,6 +53,10 @@ const ProcessSteps = () => {
               )}
             </div>
           ))}
+        </div>
+
+        <div className="mt-16 max-w-5xl mx-auto">
+          <ImagePlaceholder label="Account Verification Dashboard" aspectRatio="aspect-[21/6]" />
         </div>
       </div>
     </section>
