@@ -7,6 +7,10 @@ const BankingHero = dynamic(() => import('@/components/BankingHero'), {
   loading: () => <div className="h-[90vh] bg-[#0a0f1a] animate-pulse" />
 });
 
+const ReportScamSection = dynamic(() => import('@/components/ReportScamSection'), {
+  loading: () => <div className="h-[500px] bg-navy-900 animate-pulse" />
+});
+
 const ServiceSplit = dynamic(() => import('@/components/ServiceSplit'), {
   loading: () => <div className="h-96 bg-white animate-pulse" />
 });
@@ -48,6 +52,7 @@ export default function Home() {
     <PublicRoute>
       <div className="min-h-screen bg-white">
         <BankingHero />
+        <ReportScamSection />
         <ServiceSplit />
         <WhyChooseUs />
         <ProcessSteps />
