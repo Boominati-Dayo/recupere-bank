@@ -76,7 +76,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-gray-50 pt-[76px] mobile:pt-[84px]">
+      <body className="min-h-screen bg-gray-50">
         <LoadingProvider>
           <AuthProvider>
             <WalletContextProvider>
