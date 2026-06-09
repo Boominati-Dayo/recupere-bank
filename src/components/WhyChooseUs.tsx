@@ -33,14 +33,17 @@ const accounts = [
 ];
 
 export default function WhyChooseUs() {
-  const [current, setCurrent] = useState(0);
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrent(prev => (prev + 1) % accounts.length);
+      setPage(prev => (prev + 1) % 2);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
+
+  const topIdx = page === 0 ? 0 : 2;
+  const bottomIdx = page === 0 ? 1 : 3;
 
   return (
     <section className="flex flex-col lg:flex-row min-h-[560px]">
@@ -66,22 +69,39 @@ export default function WhyChooseUs() {
       </div>
 
       <div className="w-full lg:w-[65%] bg-white px-8 py-16 lg:px-14 lg:py-20 flex flex-col justify-center">
-        {/* Mobile: vertical carousel */}
-        <div className="relative lg:hidden min-h-[420px] flex items-center justify-center">
+        {/* Mobile: 2 rows, swipe animation */}
+        <div className="lg:hidden space-y-5">
           <AnimatePresence mode="wait">
             <motion.div
-              key={current}
-              initial={{ opacity: 0, y: 80 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 80 }}
-              transition={{ duration: 0.35, ease: 'easeOut' }}
-              className="w-full border border-muted-400 overflow-hidden"
+              key={`top-${page}`}
+              initial={{ opacity: 0, x: -60 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 60 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              className="border border-muted-400 overflow-hidden"
             >
-              <ImagePlaceholder label={accounts[current].img} aspectRatio="aspect-[3/2]" />
+              <ImagePlaceholder label={accounts[topIdx].img} aspectRatio="aspect-[3/2]" />
               <div className="px-5 pt-3 pb-4">
-                <h3 className="text-sm font-bold text-navy-900 tracking-wide mb-2">{accounts[current].name}</h3>
-                <p className="text-xs leading-relaxed text-gray-400">{accounts[current].desc}</p>
-                <div className={`h-1 mt-4 ${accounts[current].bar}`} />
+                <h3 className="text-sm font-bold text-navy-900 tracking-wide mb-2">{accounts[topIdx].name}</h3>
+                <p className="text-xs leading-relaxed text-gray-400">{accounts[topIdx].desc}</p>
+                <div className={`h-1 mt-4 ${accounts[topIdx].bar}`} />
+              </div>
+            </motion.div>
+          </AnimatePresence>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`bot-${page}`}
+              initial={{ opacity: 0, x: 60 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -60 }}
+              transition={{ duration: 0.3, ease: 'easeOut', delay: 0.05 }}
+              className="border border-muted-400 overflow-hidden"
+            >
+              <ImagePlaceholder label={accounts[bottomIdx].img} aspectRatio="aspect-[3/2]" />
+              <div className="px-5 pt-3 pb-4">
+                <h3 className="text-sm font-bold text-navy-900 tracking-wide mb-2">{accounts[bottomIdx].name}</h3>
+                <p className="text-xs leading-relaxed text-gray-400">{accounts[bottomIdx].desc}</p>
+                <div className={`h-1 mt-4 ${accounts[bottomIdx].bar}`} />
               </div>
             </motion.div>
           </AnimatePresence>
