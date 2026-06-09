@@ -55,8 +55,6 @@ const servicesLinks = [
   { name: 'Track My Case', href: '/track-claim' },
   { name: 'About Us', href: '/about' },
   { name: 'Contact', href: '/contact' },
-  { name: 'Legal Contact', href: '/contact' },
-  { name: 'Direct Intake', href: '/contact' },
 ];
 
 const currentYear = new Date().getFullYear();

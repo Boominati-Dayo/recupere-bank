@@ -49,6 +49,7 @@ const Header = () => {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const { user, userProfile, logout, loading } = useAuth();
   const userMenuRef = useRef<HTMLDivElement>(null);
@@ -79,6 +80,12 @@ const Header = () => {
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const fetchNotifications = useCallback(async () => {
@@ -118,7 +125,10 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-4 pt-4">
-      <nav className="max-w-[1400px] mx-auto h-[60px] mobile:h-[68px] bg-[#0d1b2e] rounded-full flex items-center justify-between px-[18px] mobile:px-[28px] mobile:pl-[24px] shadow-[0_8px_32px_rgba(238,39,55,0.12),0_4px_16px_rgba(35,91,168,0.14),0_2px_8px_rgba(0,0,0,0.18)] inset-shadow-[0_1px_0_rgba(255,255,255,0.06)]">
+      <nav className={`max-w-[1400px] mx-auto h-[60px] mobile:h-[68px] rounded-full flex items-center justify-between px-[18px] mobile:px-[28px] mobile:pl-[24px] transition-all duration-300 ${isScrolled
+          ? 'bg-[#0d1b2e] shadow-[0_8px_32px_rgba(238,39,55,0.12),0_4px_16px_rgba(35,91,168,0.14),0_2px_8px_rgba(0,0,0,0.18)]'
+          : 'bg-[#0d1b2e]/70 backdrop-blur-[2px] shadow-none'
+        }`}>
         <Link href="/" className="flex items-center gap-[9px] mobile:gap-[11px] shrink-0" aria-label="Nexus Banking Home">
           <ShieldLogo className="w-[30px] h-[30px] mobile:w-[36px] mobile:h-[36px] shrink-0" />
           <div className="flex flex-col leading-none gap-[2px]">
@@ -132,7 +142,7 @@ const Header = () => {
             <li key={item.name} className="flex flex-col items-center relative">
               <Link
                 href={item.href}
-                className={`text-[11px] font-semibold tracking-[0.15em] uppercase no-underline pb-[2px] transition-colors duration-200 ${isActive(item.href) ? 'text-white' : 'text-white/78 hover:text-white'
+                className={`text-[11px] font-semibold tracking-[0.15em] uppercase no-underline pb-[2px] transition-colors duration-200 ${isActive(item.href) ? 'text-primary-500' : 'text-white/80 hover:text-white'
                   }`}
               >
                 {item.name}
