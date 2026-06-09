@@ -1,0 +1,1148 @@
+<!DOCTYPE html><html lang="en"><head><base href="https://forge.moonchild.ai/site/e61629befa8fcf1936a9522223db2823c7c2ae99590d137e46065d3c4ebfebda/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus Global — Private Banking &amp; Asset Recovery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;display=swap" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #ee2737;
+      --blue: #235ba8;
+      --light-grey: #cfd6e0;
+      --white: #ffffff;
+      --black: #000000;
+      --dark-navy: #0a1628;
+    }
+
+    html { font-size: 16px; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    /* ─── SECTION 1: HERO ─────────────────────────────────────────────── */
+    .hero {
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      width: 55%;
+      padding: 100px 80px 80px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--white);
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 28px;
+    }
+
+    .hero-headline {
+      font-size: 72px;
+      font-weight: 900;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      color: var(--black);
+      margin-bottom: 28px;
+    }
+
+    .hero-sub {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.65;
+      color: #4a5568;
+      max-width: 480px;
+      margin-bottom: 44px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 60px;
+    }
+
+    .btn-red {
+      background: var(--red);
+      color: var(--white);
+      border: 2px solid var(--red);
+      padding: 15px 32px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    }
+    .btn-red:hover {
+      background: #c91f2d;
+      border-color: #c91f2d;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(238,39,55,0.3);
+    }
+    .btn-red:active { transform: translateY(0); box-shadow: none; }
+
+    .btn-blue-outline {
+      background: transparent;
+      color: var(--blue);
+      border: 2px solid var(--blue);
+      padding: 15px 32px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    }
+    .btn-blue-outline:hover {
+      background: var(--blue);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(35,91,168,0.25);
+    }
+    .btn-blue-outline:active { transform: translateY(0); box-shadow: none; }
+
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+    }
+
+    .stat-item {}
+    .stat-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #9aa4b2;
+      margin-bottom: 6px;
+    }
+    .stat-value {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--black);
+    }
+
+    .hero-right {
+      width: 45%;
+      background: var(--dark-navy);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 50px;
+    }
+
+    /* Dashboard Mockup */
+    .dashboard {
+      width: 100%;
+      max-width: 460px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .dash-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .dash-logo {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+    .dash-time {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.05em;
+    }
+
+    .dash-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 24px 28px;
+      position: relative;
+    }
+
+    .dash-card-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 8px;
+    }
+
+    .dash-total-wealth {
+      font-size: 44px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .dash-wealth-change {
+      font-size: 13px;
+      font-weight: 600;
+      color: #4ade80;
+      margin-top: 8px;
+    }
+
+    .dash-graph-container {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      padding: 20px 24px;
+    }
+    .dash-graph-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 14px;
+    }
+
+    .dash-allocation {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      padding: 20px 24px;
+    }
+    .dash-alloc-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 14px;
+    }
+    .alloc-bar {
+      height: 8px;
+      display: flex;
+      gap: 2px;
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+    .alloc-bar-seg-blue { background: var(--blue); }
+    .alloc-bar-seg-red { background: var(--red); }
+    .alloc-bar-seg-grey { background: rgba(255,255,255,0.15); }
+    .alloc-legend {
+      display: flex;
+      gap: 20px;
+    }
+    .alloc-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .alloc-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+    .alloc-item-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.04em;
+    }
+    .alloc-item-pct {
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.75);
+      margin-left: 2px;
+    }
+
+    .dash-accounts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .dash-acct {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      padding: 14px 16px;
+    }
+    .dash-acct-name {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 6px;
+    }
+    .dash-acct-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+    .dash-acct-change {
+      font-size: 10px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .pos { color: #4ade80; }
+    .neg { color: #f87171; }
+
+    /* ─── SECTION 2: TRUST BAND ───────────────────────────────────────── */
+    .trust-band {
+      background: var(--blue);
+      padding: 36px 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .trust-stat {
+      text-align: center;
+      flex: 1;
+    }
+    .trust-stat-value {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+    .trust-stat-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-top: 4px;
+    }
+
+    .trust-divider {
+      width: 1px;
+      height: 52px;
+      background: rgba(255,255,255,0.2);
+      flex-shrink: 0;
+    }
+
+    /* ─── SECTION 3: SERVICES SPLIT ───────────────────────────────────── */
+    .services-split {
+      display: flex;
+      width: 100%;
+    }
+
+    .service-col {
+      flex: 1;
+      padding: 80px 70px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-col-red { background: var(--red); }
+    .service-col-blue { background: var(--blue); }
+
+    .service-number {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      font-size: 120px;
+      font-weight: 900;
+      color: rgba(255,255,255,0.07);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      user-select: none;
+    }
+
+    .service-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 20px;
+    }
+
+    .service-heading {
+      font-size: 46px;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 36px;
+    }
+
+    .service-features {
+      list-style: none;
+      margin-bottom: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .service-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .service-dash {
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.5);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .service-feature-text {
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.5;
+    }
+
+    .btn-white-outline {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.6);
+      padding: 14px 30px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    }
+    .btn-white-outline:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.9);
+      transform: translateY(-2px);
+    }
+    .btn-white-outline:active { transform: translateY(0); }
+
+    /* ─── SECTION 4: HOW IT WORKS + GLOBAL NETWORK ────────────────────── */
+    .how-split {
+      display: flex;
+      width: 100%;
+      min-height: 560px;
+    }
+
+    .how-left {
+      width: 40%;
+      padding: 80px 60px;
+      background: var(--white);
+      border-right: 1px solid var(--light-grey);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .section-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 18px;
+    }
+
+    .section-heading-lg {
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      color: var(--black);
+      line-height: 1.08;
+      margin-bottom: 20px;
+    }
+
+    .section-body {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #6b7280;
+      max-width: 340px;
+    }
+
+    .world-map-container {
+      margin-top: 36px;
+      position: relative;
+    }
+
+    .how-right {
+      width: 60%;
+      padding: 80px 60px;
+      background: #f7f8fa;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .steps-header {
+      margin-bottom: 40px;
+    }
+
+    .steps-heading {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--black);
+    }
+
+    .steps-row {
+      display: flex;
+      gap: 0;
+      position: relative;
+    }
+
+    .steps-connector {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--light-grey);
+      z-index: 0;
+    }
+
+    .steps-connector-red {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: var(--red);
+      width: 66%;
+      z-index: 1;
+    }
+
+    .step-card {
+      flex: 1;
+      padding: 36px 28px 36px 28px;
+      background: var(--white);
+      border: 1px solid var(--light-grey);
+      border-top: 3px solid transparent;
+      position: relative;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+      cursor: default;
+      margin-right: 1px;
+      overflow: hidden;
+    }
+    .step-card:last-child { margin-right: 0; }
+
+    .step-card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+      transform: translateY(-2px);
+    }
+
+    .step-card-active {
+      border-top-color: var(--red);
+    }
+
+    .step-bg-number {
+      position: absolute;
+      bottom: -20px;
+      right: 10px;
+      font-size: 100px;
+      font-weight: 900;
+      color: var(--light-grey);
+      opacity: 0.5;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      user-select: none;
+    }
+
+    .step-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--red);
+      margin-bottom: 14px;
+    }
+
+    .step-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--black);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .step-body {
+      font-size: 13px;
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    /* ─── SECTION 5: FEATURE ROW ──────────────────────────────────────── */
+    .feature-row {
+      display: flex;
+      width: 100%;
+      padding: 100px 80px;
+      gap: 80px;
+      background: var(--white);
+      align-items: center;
+    }
+
+    .feature-left {
+      flex: 0 0 42%;
+    }
+
+    .pull-quote-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 24px;
+    }
+
+    .pull-quote {
+      font-size: 38px;
+      font-weight: 900;
+      font-style: italic;
+      color: var(--blue);
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+    }
+
+    .pull-quote-source {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: #9aa4b2;
+      margin-top: 24px;
+      text-transform: uppercase;
+    }
+
+    .feature-right {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .feature-block {
+      padding: 32px 32px 32px 0;
+      border-top: 2px solid var(--light-grey);
+      transition: border-color 0.2s ease;
+    }
+    .feature-block:nth-child(even) {
+      padding-left: 32px;
+      padding-right: 0;
+      border-left: 1px solid var(--light-grey);
+    }
+    .feature-block:nth-child(3),
+    .feature-block:nth-child(4) {
+      border-top: 1px solid var(--light-grey);
+    }
+    .feature-block:hover {
+      border-top-color: var(--red);
+    }
+    .feature-block:nth-child(even):hover {
+      border-top-color: var(--red);
+    }
+
+    .feature-block-num {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 12px;
+    }
+
+    .feature-block-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--black);
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+    }
+
+    .feature-block-desc {
+      font-size: 13px;
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    /* ─── SECTION 6: CTA STRIP ────────────────────────────────────────── */
+    .cta-strip {
+      display: flex;
+      width: 100%;
+      min-height: 300px;
+    }
+
+    .cta-left {
+      flex: 1;
+      background: var(--black);
+      padding: 80px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .cta-left-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 20px;
+    }
+
+    .cta-left-heading {
+      font-size: 40px;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      margin-bottom: 36px;
+      max-width: 460px;
+    }
+
+    .cta-right {
+      flex: 1;
+      background: var(--light-grey);
+      padding: 80px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .cta-right-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #6b7280;
+      margin-bottom: 20px;
+    }
+
+    .cta-right-heading {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--black);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .cta-right-sub {
+      font-size: 14px;
+      color: #4a5568;
+      line-height: 1.6;
+      margin-bottom: 36px;
+      max-width: 380px;
+    }
+
+    .btn-blue-solid {
+      background: var(--blue);
+      color: var(--white);
+      border: 2px solid var(--blue);
+      padding: 14px 30px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-block;
+      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    }
+    .btn-blue-solid:hover {
+      background: #1a4a8e;
+      border-color: #1a4a8e;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(35,91,168,0.3);
+    }
+    .btn-blue-solid:active { transform: translateY(0); box-shadow: none; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero-headline { font-size: 52px; }
+      .hero-left { padding: 70px 50px; }
+      .hero-right { padding: 50px 36px; }
+      .service-heading { font-size: 36px; }
+      .service-col { padding: 60px 50px; }
+      .pull-quote { font-size: 30px; }
+      .cta-left-heading { font-size: 32px; }
+      .cta-right-heading { font-size: 26px; }
+    }
+
+    @media (max-width: 768px) {
+      .hero { flex-direction: column; }
+      .hero-left { width: 100%; padding: 60px 30px; }
+      .hero-right { width: 100%; min-height: 400px; }
+      .hero-headline { font-size: 40px; }
+      .hero-stats { flex-wrap: wrap; gap: 28px; }
+      .trust-band { flex-direction: column; gap: 28px; padding: 40px 30px; }
+      .trust-divider { width: 60px; height: 1px; }
+      .services-split { flex-direction: column; }
+      .how-split { flex-direction: column; }
+      .how-left, .how-right { width: 100%; padding: 60px 30px; }
+      .steps-row { flex-direction: column; gap: 16px; }
+      .feature-row { flex-direction: column; padding: 60px 30px; gap: 40px; }
+      .feature-left { flex: none; }
+      .cta-strip { flex-direction: column; }
+      .cta-left, .cta-right { padding: 60px 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 1 — HERO
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Nexus Global — Private Banking</p>
+      <h1 class="hero-headline">Secure Your Wealth.<br>Master Your Future.</h1>
+      <p class="hero-sub">Australia's premier private banking platform combining Swiss-level security with forensic asset protection.</p>
+      <div class="hero-buttons">
+        <button class="btn-red">Open Private Account</button>
+        <button class="btn-blue-outline">Secure Client Portal</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-label">Assets Under Management</div>
+          <div class="stat-value">$2.8B+</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Active Accounts</div>
+          <div class="stat-value">14,200+</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Recovery Rate</div>
+          <div class="stat-value">94%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="dashboard">
+        <div class="dash-header">
+          <span class="dash-logo">Nexus Global</span>
+          <span class="dash-time">Portfolio Overview — Live</span>
+        </div>
+
+        <div class="dash-card">
+          <div class="dash-card-label">Total Wealth</div>
+          <div class="dash-total-wealth">$4,287,510</div>
+          <div class="dash-wealth-change">↑ +2.34% this month</div>
+        </div>
+
+        <div class="dash-graph-container">
+          <div class="dash-graph-label">Portfolio Performance — 12 months</div>
+          <svg id="perfChart" width="100%" height="90" viewBox="0 0 400 90"></svg>
+        </div>
+
+        <div class="dash-allocation">
+          <div class="dash-alloc-label">Asset Allocation</div>
+          <div class="alloc-bar">
+            <div class="alloc-bar-seg-blue" style="width:52%"></div>
+            <div class="alloc-bar-seg-red" style="width:28%"></div>
+            <div class="alloc-bar-seg-grey" style="width:20%"></div>
+          </div>
+          <div class="alloc-legend">
+            <div class="alloc-item">
+              <div class="alloc-dot" style="background:var(--blue)"></div>
+              <span class="alloc-item-label">Fixed Income</span>
+              <span class="alloc-item-pct">52%</span>
+            </div>
+            <div class="alloc-item">
+              <div class="alloc-dot" style="background:var(--red)"></div>
+              <span class="alloc-item-label">Equities</span>
+              <span class="alloc-item-pct">28%</span>
+            </div>
+            <div class="alloc-item">
+              <div class="alloc-dot" style="background:rgba(255,255,255,0.3)"></div>
+              <span class="alloc-item-label">Alternatives</span>
+              <span class="alloc-item-pct">20%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-accounts">
+          <div class="dash-acct">
+            <div class="dash-acct-name">Private Banking</div>
+            <div class="dash-acct-value">$2,180,000</div>
+            <div class="dash-acct-change pos">↑ +1.8%</div>
+          </div>
+          <div class="dash-acct">
+            <div class="dash-acct-name">Recovery Trust</div>
+            <div class="dash-acct-value">$1,340,000</div>
+            <div class="dash-acct-change pos">↑ +3.1%</div>
+          </div>
+          <div class="dash-acct">
+            <div class="dash-acct-name">Term Deposits</div>
+            <div class="dash-acct-value">$520,000</div>
+            <div class="dash-acct-change pos">↑ +0.5%</div>
+          </div>
+          <div class="dash-acct">
+            <div class="dash-acct-name">FX Reserve</div>
+            <div class="dash-acct-value">$247,510</div>
+            <div class="dash-acct-change neg">↓ -0.3%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 2 — TRUST BAND
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="trust-band">
+    <div class="trust-stat">
+      <div class="trust-stat-value">$2.8B+</div>
+      <div class="trust-stat-label">Assets Under Management</div>
+    </div>
+    <div class="trust-divider"></div>
+    <div class="trust-stat">
+      <div class="trust-stat-value">14,200+</div>
+      <div class="trust-stat-label">Active Accounts</div>
+    </div>
+    <div class="trust-divider"></div>
+    <div class="trust-stat">
+      <div class="trust-stat-value">94%</div>
+      <div class="trust-stat-label">Recovery Rate</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 3 — SERVICES SPLIT
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="services-split">
+    <div class="service-col service-col-red">
+      <div class="service-number">01</div>
+      <p class="service-tag">Nexus Recovery Division</p>
+      <h2 class="service-heading">Asset<br>Recovery</h2>
+      <ul class="service-features">
+        <li class="service-feature">
+          <span class="service-dash">—</span>
+          <span class="service-feature-text">Forensic-level tracing of misappropriated funds across 60+ jurisdictions</span>
+        </li>
+        <li class="service-feature">
+          <span class="service-dash">—</span>
+          <span class="service-feature-text">24/7 dedicated case management with real-time progress reporting</span>
+        </li>
+        <li class="service-feature">
+          <span class="service-dash">—</span>
+          <span class="service-feature-text">No win, no fee structure — zero upfront legal commitment</span>
+        </li>
+      </ul>
+      <button class="btn-white-outline">Start a New Case</button>
+    </div>
+    <div class="service-col service-col-blue">
+      <div class="service-number">02</div>
+      <p class="service-tag">Nexus Private Bank</p>
+      <h2 class="service-heading">Banking<br>Services</h2>
+      <ul class="service-features">
+        <li class="service-feature">
+          <span class="service-dash">—</span>
+          <span class="service-feature-text">Swiss-grade encryption with multi-layer biometric authentication</span>
+        </li>
+        <li class="service-feature">
+          <span class="service-dash">—</span>
+          <span class="service-feature-text">Bespoke wealth management from a dedicated relationship director</span>
+        </li>
+        <li class="service-feature">
+          <span class="service-dash">—</span>
+          <span class="service-feature-text">Global FX and cross-border asset structuring with tax efficiency</span>
+        </li>
+      </ul>
+      <button class="btn-white-outline">Open an Account</button>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 4 — HOW IT WORKS + GLOBAL NETWORK
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="how-split">
+    <div class="how-left">
+      <p class="section-eyebrow">Our Reach</p>
+      <h2 class="section-heading-lg">Global<br>Network</h2>
+      <p class="section-body">Our intelligence network spans 60+ financial centers. From London to Singapore, Hong Kong to Zurich — we operate where your assets move.</p>
+
+      <div class="world-map-container">
+        <img src="https://storage.googleapis.com/forge-sites/67f287a6f7385e842ed322b8259623288c8c06030542d0eb928021ce19874357.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&amp;X-Goog-Credential=164061697651-compute%40developer.gserviceaccount.com%2F20260609%2Fauto%2Fstorage%2Fgoog4_request&amp;X-Goog-Date=20260609T074940Z&amp;X-Goog-Expires=86400&amp;X-Goog-SignedHeaders=host&amp;response-access-control-allow-origin=https%3A%2F%2Fforge.moonchild.ai&amp;X-Goog-Signature=1348cad124674a7ea9ac12815f2516b20176bb86ad9fb1dc225929415340b644b9bd41a3c7aeabf7146b019993ad0cb26c8302ac4ed3b20bc5e0537a6549815a47e9d7f492514b6a021b085b2f1701777ad84e017afb7a8869f4b856332a172fbc639d78afdbcaebcd80ce6d837c14e724c11bb0a0d3ef30013dfe6f8c781cb2dd28d7c9e404398b3ec92b6ed4ed4db16372a9b814b2c2feec507cfaa571d1dacd467047be5a72b6c260568ecfe0ef384b1328ebf7931f280c90dbaf6b061ef7dee9c58eeb8752acf1a85c01fbe30ebc6d62318b3bbda624c01a5be79f74cf24106e13c68cd82888706c89fd3dac61b826663ffd5d9e219bb7919ce5baeb8f9c" alt="A minimal flat world map outline in light grey on white background, with three small blue filled circular dots marking London, Singapore, and Sydney as key global financial centers, clean editorial style" width="440" height="220" style="width:100%; height:auto; display:block;">
+      </div>
+
+      <div style="display:flex; gap:32px; margin-top:24px;">
+        <div>
+          <div style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#9aa4b2;margin-bottom:4px;">Jurisdictions</div>
+          <div style="font-size:22px;font-weight:800;color:var(--black);">60+</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#9aa4b2;margin-bottom:4px;">Partner Institutions</div>
+          <div style="font-size:22px;font-weight:800;color:var(--black);">280+</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#9aa4b2;margin-bottom:4px;">Avg. Trace Time</div>
+          <div style="font-size:22px;font-weight:800;color:var(--black);">30 days</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="how-right">
+      <div class="steps-header">
+        <p class="section-eyebrow">The Process</p>
+        <p class="steps-heading">How Nexus Global Works</p>
+      </div>
+
+      <div style="position:relative; margin-top: 4px;">
+        <div class="steps-connector"></div>
+        <div class="steps-connector-red"></div>
+        <div class="steps-row" style="position:relative; z-index:2; gap:12px; margin-top:0;">
+          <div class="step-card step-card-active">
+            <div class="step-bg-number">01</div>
+            <div class="step-num">Step 01</div>
+            <div class="step-title">Choose Your Service</div>
+            <div class="step-body">Select private banking, asset recovery, or wealth management. Our advisors align the right solution to your profile.</div>
+          </div>
+          <div class="step-card step-card-active">
+            <div class="step-bg-number">02</div>
+            <div class="step-num">Step 02</div>
+            <div class="step-title">Secure Verification</div>
+            <div class="step-body">Multi-factor identity verification with biometric checks ensures your account is protected from the first contact.</div>
+          </div>
+          <div class="step-card">
+            <div class="step-bg-number">03</div>
+            <div class="step-num">Step 03</div>
+            <div class="step-title">Asset Protection &amp; Recovery</div>
+            <div class="step-body">Our global task force activates. Real-time intelligence tracking begins with full case transparency throughout.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 5 — FEATURE ROW
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="feature-row">
+    <div class="feature-left">
+      <p class="pull-quote-tag">Our Track Record</p>
+      <blockquote class="pull-quote">"94% of recovered assets are traced within 30 days."</blockquote>
+      <p class="pull-quote-source">Nexus Global Intelligence Division — 2024 Annual Report</p>
+    </div>
+    <div class="feature-right">
+      <div class="feature-block">
+        <div class="feature-block-num">01</div>
+        <div class="feature-block-title">Recovery Rate</div>
+        <div class="feature-block-desc">Industry-leading 94% success rate across all case types, from fraud to misappropriated estate assets.</div>
+      </div>
+      <div class="feature-block">
+        <div class="feature-block-num">02</div>
+        <div class="feature-block-title">Real-Time Intelligence</div>
+        <div class="feature-block-desc">Proprietary financial surveillance technology monitors fund movement across 60+ jurisdictions, 24 hours a day.</div>
+      </div>
+      <div class="feature-block">
+        <div class="feature-block-num">03</div>
+        <div class="feature-block-title">Global Task Force</div>
+        <div class="feature-block-desc">A dedicated multi-disciplinary team combining legal, forensic, and financial intelligence professionals worldwide.</div>
+      </div>
+      <div class="feature-block">
+        <div class="feature-block-num">04</div>
+        <div class="feature-block-title">Forensic Expertise</div>
+        <div class="feature-block-desc">Deep-chain blockchain analysis, dark web monitoring, and cross-border legal coordination in a single mandate.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 6 — CTA STRIP
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="cta-strip">
+    <div class="cta-left">
+      <p class="cta-left-eyebrow">Act Now</p>
+      <h2 class="cta-left-heading">Time is Your Biggest Enemy in Asset Recovery</h2>
+      <button class="btn-red">Start Your Claim Now</button>
+    </div>
+    <div class="cta-right">
+      <p class="cta-right-tag">Nexus Private Evaluation</p>
+      <h3 class="cta-right-heading">No upfront legal fees.<br>No win, no fee.</h3>
+      <p class="cta-right-sub">Book a confidential evaluation with a Nexus senior advisor. We assess your case within 48 hours — with absolute discretion and no financial obligation.</p>
+      <button class="btn-blue-solid">Free Evaluation</button>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       D3 PERFORMANCE CHART
+  ═══════════════════════════════════════════════════════════ -->
+  <script>
+    const data = [
+      3820000, 3940000, 3870000, 4050000, 3990000, 4120000,
+      4200000, 4080000, 4310000, 4250000, 4390000, 4287510
+    ];
+
+    const chartEl = document.getElementById('perfChart');
+    if (chartEl) {
+      const w = 400, h = 90;
+      const margin = { top: 8, right: 8, bottom: 4, left: 0 };
+
+      const svg = d3.select('#perfChart')
+        .attr('viewBox', `0 0 ${w} ${h}`)
+        .attr('preserveAspectRatio', 'xMidYMid meet');
+
+      const x = d3.scaleLinear().domain([0, data.length - 1]).range([margin.left, w - margin.right]);
+      const y = d3.scaleLinear().domain([d3.min(data) * 0.97, d3.max(data) * 1.01]).range([h - margin.bottom, margin.top]);
+
+      const area = d3.area()
+        .x((d, i) => x(i))
+        .y0(h - margin.bottom)
+        .y1(d => y(d))
+        .curve(d3.curveCatmullRom.alpha(0.5));
+
+      const line = d3.line()
+        .x((d, i) => x(i))
+        .y(d => y(d))
+        .curve(d3.curveCatmullRom.alpha(0.5));
+
+      const defs = svg.append('defs');
+      const grad = defs.append('linearGradient')
+        .attr('id', 'areaGrad')
+        .attr('x1', '0').attr('y1', '0')
+        .attr('x2', '0').attr('y2', '1');
+      grad.append('stop').attr('offset', '0%').attr('stop-color', '#ee2737').attr('stop-opacity', 0.25);
+      grad.append('stop').attr('offset', '100%').attr('stop-color', '#ee2737').attr('stop-opacity', 0.0);
+
+      svg.append('path')
+        .datum(data)
+        .attr('fill', 'url(#areaGrad)')
+        .attr('d', area);
+
+      svg.append('path')
+        .datum(data)
+        .attr('fill', 'none')
+        .attr('stroke', '#ee2737')
+        .attr('stroke-width', 2.2)
+        .attr('d', line);
+
+      // Last point dot
+      svg.append('circle')
+        .attr('cx', x(data.length - 1))
+        .attr('cy', y(data[data.length - 1]))
+        .attr('r', 4)
+        .attr('fill', '#ee2737')
+        .attr('stroke', '#0a1628')
+        .attr('stroke-width', 2);
+    }
+  </script>
+
+
+</body></html>

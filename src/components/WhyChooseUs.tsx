@@ -1,54 +1,69 @@
-import { ShieldCheck, Globe, Scale, Clock } from 'lucide-react';
+'use client';
 
-const reasons = [
-    {
-        icon: ShieldCheck,
-        title: 'Bank-Grade Security',
-        description: 'We protect your data with AES-256 encryption and follow strict financial sector compliance protocols.'
-    },
-    {
-        icon: Globe,
-        title: 'Global Legal Network',
-        description: 'Our partners span across 40+ jurisdictions, allowing us to pursue offshore accounts and international brokers.'
-    },
-    {
-        icon: Scale,
-        title: 'Forensic Expertise',
-        description: 'Our team consists of ex-prosecutors and forensic accountants who understand the complex movement of illicit funds.'
-    },
-    {
-        icon: Clock,
-        title: '24/7 Case Tracking',
-        description: 'Clients receive access to a secure portal for real-time updates on their asset recovery process and legal filings.'
-    }
+import Link from 'next/link';
+
+const accounts = [
+  {
+    name: 'Checking',
+    desc: 'Day-to-day transactional account with zero fees and unlimited transfers.',
+    bar: 'bg-primary-500',
+  },
+  {
+    name: 'Savings',
+    desc: 'High-yield interest account with flexible deposit and withdrawal terms.',
+    bar: 'bg-emerald-600',
+  },
+  {
+    name: 'Fixed Deposit',
+    desc: 'Locked-term deposits offering guaranteed returns at competitive rates.',
+    bar: 'bg-primary-500',
+  },
+  {
+    name: 'Business',
+    desc: 'Corporate-grade account with multi-user access and integrated treasury tools.',
+    bar: 'bg-navy-900',
+  },
 ];
 
 export default function WhyChooseUs() {
-    return (
-        <section className="py-24 bg-gray-50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center max-w-3xl mx-auto mb-16">
-                    <h2 className="text-sm font-bold tracking-widest text-primary-500 uppercase mb-3">The Nexus Advantage</h2>
-                    <h3 className="text-4xl font-bold text-navy-900 mb-6">Why Choose Us</h3>
-                    <p className="text-gray-600 text-lg">
-                        We bridge the gap between law enforcement and banking to recover what is rightfully yours. Our specialized approach yields industry-leading retrieval rates.
-                    </p>
-                </div>
+  return (
+    <section className="flex flex-col lg:flex-row min-h-[560px]">
+      <div className="w-full lg:w-[35%] bg-secondary-500 px-8 py-16 lg:px-14 lg:py-20 flex flex-col justify-center">
+        <span className="text-[10px] font-semibold tracking-[0.22em] uppercase text-white/50 mb-6">
+          Account Portfolio
+        </span>
+        <h2 className="font-playfair text-3xl lg:text-4xl font-bold text-white leading-tight tracking-tight mb-3">
+          Customised Financial Solutions
+        </h2>
+        <p className="text-sm font-semibold text-white/70 mb-5">
+          Tailored Account Types
+        </p>
+        <p className="text-sm leading-relaxed text-white/60 mb-10">
+          Every client financial landscape is unique. Nexus designs account structures that align with your goals — whether personal wealth preservation, corporate treasury, or international diversification.
+        </p>
+        <Link
+          href="/signup"
+          className="inline-block text-xs font-semibold tracking-[0.1em] uppercase text-white px-8 py-4 border-2 border-white/60 hover:border-white hover:bg-white/10 transition-colors w-fit"
+        >
+          View All Accounts
+        </Link>
+      </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {reasons.map((reason, index) => (
-                        <div key={index} className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                            <div className="w-14 h-14 bg-navy-900/5 rounded-lg flex items-center justify-center mb-6">
-                                <reason.icon className="w-8 h-8 text-primary-500" />
-                            </div>
-                            <h4 className="text-xl font-bold text-navy-900 mb-4">{reason.title}</h4>
-                            <p className="text-gray-600 leading-relaxed">
-                                {reason.description}
-                            </p>
-                        </div>
-                    ))}
-                </div>
+      <div className="w-full lg:w-[65%] bg-white px-8 py-16 lg:px-14 lg:py-20 flex flex-col justify-center">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+          {accounts.map((a) => (
+            <div key={a.name} className="border border-muted-400 overflow-hidden hover:-translate-y-1 hover:shadow-lg transition-all">
+              <div className="bg-navy-900 px-5 py-5">
+                <h3 className="text-sm font-bold text-white tracking-wide">{a.name}</h3>
+              </div>
+              <div className="px-5 pt-4 pb-0 bg-white">
+                <p className="text-xs leading-relaxed text-gray-400">{a.desc}</p>
+                <div className={`h-1 mt-6 ${a.bar}`} />
+              </div>
             </div>
-        </section>
-    );
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }

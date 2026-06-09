@@ -1,76 +1,60 @@
 'use client';
 
-import React from 'react';
-import { FileText, Gavel, HandCoins, ArrowRight } from 'lucide-react';
+const steps = [
+  {
+    num: '01',
+    title: 'Submit Documents',
+    desc: 'Upload government-issued identification and proof of address securely through our encrypted client portal.',
+  },
+  {
+    num: '02',
+    title: 'KYC Verification',
+    desc: 'Our compliance team conducts fast, thorough identity verification in line with international AML standards.',
+  },
+  {
+    num: '03',
+    title: 'Deposit & Grow',
+    desc: 'Fund your account and immediately access the full suite of Nexus banking, investment, and security services.',
+  },
+];
 
 const ProcessSteps = () => {
-    const steps = [
-        {
-            id: 1,
-            title: 'Submit Your Evidence',
-            description: 'Upload screenshots, transaction IDs, and chat logs. Our AI legal tool instantly analyzes your case for eligibility.',
-            icon: FileText,
-            color: 'bg-navy-700',
-        },
-        {
-            id: 2,
-            title: 'We File Legal Action',
-            description: 'Our specialized lawyers file court orders to freeze the assets of the scammer or force the bank to reverse the charge.',
-            icon: Gavel,
-            color: 'bg-primary-500',
-        },
-        {
-            id: 3,
-            title: 'Funds Recovered',
-            description: 'Once the court order is granted, the money is legally seized and returned to your account (minus our success fee).',
-            icon: HandCoins,
-            color: 'bg-navy-700',
-        },
-    ];
+  return (
+    <section className="py-24 bg-muted-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="w-7 h-0.5 bg-primary-500" />
+            <span className="text-primary-500 text-xs font-bold tracking-[0.22em] uppercase">How It Works</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold text-navy-900 font-playfair leading-tight">
+            Open an Account in 5 Minutes
+          </h2>
+        </div>
 
-    return (
-        <section className="py-24 bg-white">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-20">
-                    <span className="text-primary-500 font-bold tracking-wider uppercase text-sm">How It Works</span>
-                    <h2 className="text-3xl md:text-5xl font-bold text-navy-900 mt-2 font-playfair">
-                        The Legal Recovery Process
-                    </h2>
-                    <p className="text-gray-500 mt-4 max-w-xl mx-auto">
-                        We don't just "ask" for your money back. We use the full force of the law to demand it.
-                    </p>
+        <div className="flex flex-col lg:flex-row items-stretch gap-0 max-w-5xl mx-auto">
+          {steps.map((s, i) => (
+            <div key={s.num} className="flex items-stretch flex-1">
+              <div className="flex-1 bg-white border-l-4 border-secondary-500 px-8 lg:px-9 py-10 lg:py-11 hover:shadow-lg hover:-translate-y-1 transition-all">
+                <span className="font-playfair text-5xl font-black text-muted-300 leading-none block mb-4">
+                  {s.num}
+                </span>
+                <h3 className="text-lg font-bold text-navy-900 mb-3 tracking-tight">{s.title}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed">{s.desc}</p>
+              </div>
+              {i < steps.length - 1 && (
+                <div className="hidden lg:flex items-center px-1 flex-shrink-0">
+                  <svg width="32" height="24" viewBox="0 0 32 24" fill="none" className="text-primary-500">
+                    <path d="M2 12H30M20 4L30 12L20 20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </div>
-
-                <div className="relative grid grid-cols-1 md:grid-cols-3 gap-12">
-                    {/* Connector Line (Desktop only) */}
-                    <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-gray-200 z-0"></div>
-
-                    {steps.map((step, index) => (
-                        <div key={step.id} className="relative z-10 flex flex-col items-center text-center group">
-                            <div className={`w-24 h-24 rounded-full ${step.color} flex items-center justify-center shadow-xl mb-8 transform transition-transform group-hover:scale-110 border-4 border-white`}>
-                                <step.icon className={`w-10 h-10 ${step.color === 'bg-primary-500' ? 'text-navy-900' : 'text-primary-500'}`} />
-                            </div>
-
-                            <div className="bg-navy-50 w-8 h-8 rounded-full flex items-center justify-center font-bold text-navy-800 mb-6 border border-navy-100">
-                                {step.id}
-                            </div>
-
-                            <h3 className="text-xl font-bold text-navy-900 mb-3">{step.title}</h3>
-                            <p className="text-gray-500 leading-relaxed px-4">
-                                {step.description}
-                            </p>
-                        </div>
-                    ))}
-                </div>
-
-                <div className="mt-20 text-center">
-                    <a href="/start-claim" className="inline-flex items-center gap-2 bg-navy-900 text-white px-8 py-4 rounded-full font-bold hover:bg-primary-500 hover:text-navy-900 transition-all shadow-lg hover:shadow-xl">
-                        Check Your Case Eligibility <ArrowRight className="w-5 h-5" />
-                    </a>
-                </div>
+              )}
             </div>
-        </section>
-    );
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default ProcessSteps;

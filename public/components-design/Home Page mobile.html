@@ -1,0 +1,923 @@
+<!DOCTYPE html><html lang="en"><head><base href="https://forge.moonchild.ai/site/64a159784c3b5d3f334f5a43990f7745955882322d84be04a10506b1761c9494/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus Global — Secure Your Wealth</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #ee2737;
+      --blue: #235ba8;
+      --grey: #cfd6e0;
+      --black: #000000;
+      --white: #ffffff;
+      --navy: #0a1628;
+      --text-grey: #6b7280;
+      --light-bg: #f5f7fa;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: var(--black);
+      max-width: 430px;
+      margin: 0 auto;
+      overflow-x: hidden;
+    }
+
+    /* ─── SECTION 1: HERO ─── */
+    .hero {
+      background: var(--white);
+      padding: 56px 28px 44px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 20px;
+    }
+
+    .hero-eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+      display: inline-block;
+    }
+
+    .hero-headline {
+      font-size: 44px;
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--black);
+      margin-bottom: 18px;
+    }
+
+    .hero-headline span {
+      color: var(--red);
+    }
+
+    .hero-subtext {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.65;
+      color: #5a6475;
+      margin-bottom: 28px;
+    }
+
+    /* Buttons */
+    .btn-full {
+      display: block;
+      width: 100%;
+      padding: 16px 24px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      text-align: center;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, opacity 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+      text-decoration: none;
+    }
+
+    .btn-full:hover { transform: translateY(-2px); }
+    .btn-full:active { transform: translateY(0px); }
+
+    .btn-red {
+      background: var(--red);
+      color: var(--white);
+      border: 2px solid var(--red);
+      box-shadow: 0 4px 16px rgba(238,39,55,0.25);
+      margin-bottom: 12px;
+    }
+    .btn-red:hover { background: #d41f2e; box-shadow: 0 6px 20px rgba(238,39,55,0.38); }
+
+    .btn-blue-outline {
+      background: transparent;
+      color: var(--blue);
+      border: 2px solid var(--blue);
+    }
+    .btn-blue-outline:hover { background: var(--blue); color: var(--white); box-shadow: 0 4px 14px rgba(35,91,168,0.22); }
+
+    .btn-white-outline {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.6);
+    }
+    .btn-white-outline:hover { background: rgba(255,255,255,0.12); border-color: var(--white); }
+
+    /* Hero Stats */
+    .hero-stats {
+      display: flex;
+      align-items: stretch;
+      margin: 28px 0 24px;
+      border: 1px solid var(--grey);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .hero-stat {
+      flex: 1;
+      padding: 14px 6px;
+      text-align: center;
+      border-right: 1px solid var(--grey);
+    }
+    .hero-stat:last-child { border-right: none; }
+
+    .hero-stat-value {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--black);
+      letter-spacing: -0.02em;
+      display: block;
+    }
+
+    .hero-stat-label {
+      font-size: 9.5px;
+      font-weight: 500;
+      color: var(--text-grey);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: block;
+      margin-top: 3px;
+    }
+
+    /* Image Placeholder — Cinematic */
+    .image-placeholder {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .image-placeholder img {
+      display: block;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .image-placeholder-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .image-caption {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+    }
+
+    .image-caption-sub {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .image-red-bar {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--red);
+    }
+
+    /* Dashboard Card */
+    .dashboard-card {
+      background: var(--navy);
+      border-radius: 0 0 16px 16px;
+      padding: 22px 20px 20px;
+      position: relative;
+    }
+
+    .dashboard-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 4px;
+    }
+
+    .dashboard-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+
+    .dashboard-badge {
+      font-size: 10px;
+      font-weight: 600;
+      color: #22c55e;
+      background: rgba(34,197,94,0.12);
+      border-radius: 4px;
+      padding: 2px 7px;
+      letter-spacing: 0.04em;
+    }
+
+    .dashboard-total {
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+
+    .chart-area {
+      height: 64px;
+      margin-bottom: 16px;
+    }
+    .chart-area svg { width: 100%; height: 100%; }
+
+    .allocation-section { margin-bottom: 16px; }
+
+    .allocation-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 6px;
+      letter-spacing: 0.03em;
+    }
+
+    .allocation-bar {
+      height: 5px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .allocation-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--blue) 0%, var(--blue) 60%, var(--red) 60%, var(--red) 100%);
+    }
+
+    .account-rows {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .account-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .account-row-left { display: flex; align-items: center; gap: 10px; }
+
+    .account-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+    .account-name { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.75); }
+    .account-type { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 1px; }
+    .account-amount { font-size: 13px; font-weight: 700; color: var(--white); }
+    .account-change { font-size: 10px; font-weight: 600; color: #22c55e; text-align: right; margin-top: 1px; }
+
+    /* ─── SECTION 2: TRUST BAND ─── */
+    .trust-band {
+      background: var(--blue);
+      padding: 40px 28px;
+    }
+
+    .trust-stats { display: flex; flex-direction: column; gap: 0; }
+
+    .trust-stat {
+      padding: 22px 0;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+    .trust-stat:first-child { border-top: 1px solid rgba(255,255,255,0.15); }
+
+    .trust-stat-value {
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -0.03em;
+      display: block;
+    }
+
+    .trust-stat-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      display: block;
+      margin-top: 5px;
+    }
+
+    /* ─── SECTION 3: SERVICES ─── */
+    .services { display: flex; flex-direction: column; }
+
+    .service-card { padding: 44px 28px; }
+    .service-card-red { background: var(--red); }
+    .service-card-blue { background: var(--blue); }
+
+    .service-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 14px;
+    }
+
+    .service-heading {
+      font-size: 30px;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      line-height: 1.08;
+      margin-bottom: 22px;
+    }
+
+    .service-features {
+      list-style: none;
+      margin-bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .service-features li {
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.85);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      line-height: 1.5;
+    }
+
+    .feature-dash {
+      display: inline-block;
+      width: 14px;
+      min-width: 14px;
+      height: 2px;
+      background: rgba(255,255,255,0.5);
+      margin-top: 10px;
+    }
+
+    /* ─── SECTION 4: HOW IT WORKS ─── */
+    .how-it-works {
+      background: var(--white);
+      padding: 56px 28px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 10px;
+    }
+
+    .section-heading {
+      font-size: 30px;
+      font-weight: 900;
+      color: var(--black);
+      letter-spacing: -0.02em;
+      line-height: 1.12;
+      margin-bottom: 40px;
+    }
+
+    .steps { display: flex; flex-direction: column; gap: 0; }
+
+    .step {
+      position: relative;
+      padding-bottom: 36px;
+      margin-bottom: 0;
+    }
+
+    .step:last-child { padding-bottom: 0; }
+
+    .step-number-bg {
+      font-size: 80px;
+      font-weight: 900;
+      color: #f0f2f5;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      position: absolute;
+      top: -18px;
+      left: -6px;
+      z-index: 0;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .step-inner { position: relative; z-index: 1; }
+
+    .step-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--blue);
+      background: rgba(35,91,168,0.08);
+      border-radius: 4px;
+      padding: 3px 10px;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+
+    .step-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--black);
+      letter-spacing: -0.01em;
+      margin-bottom: 9px;
+    }
+
+    .step-desc {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-grey);
+      line-height: 1.65;
+    }
+
+    .step-divider {
+      height: 1px;
+      background: #eef0f4;
+      margin: 36px 0 0;
+    }
+
+    /* ─── SECTION 5: IMAGE + FEATURES ─── */
+    .feature-block {
+      background: var(--white);
+      padding: 0 28px 56px;
+    }
+
+    .pull-quote {
+      font-size: 19px;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--blue);
+      line-height: 1.45;
+      border-left: 3px solid var(--blue);
+      padding: 18px 0 18px 20px;
+      margin-bottom: 36px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .feature-item {
+      padding: 22px 16px 22px 0;
+      border-top: 2px solid var(--grey);
+    }
+
+    .feature-item:nth-child(even) {
+      padding-left: 16px;
+      padding-right: 0;
+      border-left: 1px solid #eef0f4;
+    }
+
+    .feature-icon {
+      width: 32px;
+      height: 32px;
+      margin-bottom: 12px;
+    }
+
+    .feature-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--black);
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    .feature-desc {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-grey);
+      line-height: 1.6;
+    }
+
+    /* ─── SECTION 6: CTA ─── */
+    .cta-block {
+      background: var(--black);
+      padding: 52px 28px 0;
+    }
+
+    .cta-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 14px;
+    }
+
+    .cta-heading {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -0.025em;
+      line-height: 1.08;
+      margin-bottom: 16px;
+    }
+
+    .cta-heading span { color: var(--red); }
+
+    .cta-subtext {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.65;
+      margin-bottom: 28px;
+    }
+
+    .btn-cta-red {
+      display: block;
+      width: 100%;
+      padding: 17px 24px;
+      background: var(--red);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      text-align: center;
+      border-radius: 6px;
+      border: 2px solid var(--red);
+      cursor: pointer;
+      letter-spacing: 0.01em;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      box-shadow: 0 4px 20px rgba(238,39,55,0.32);
+      text-decoration: none;
+    }
+
+    .btn-cta-red:hover { transform: translateY(-2px); background: #d41f2e; box-shadow: 0 8px 28px rgba(238,39,55,0.42); }
+    .btn-cta-red:active { transform: translateY(0); }
+
+    .cta-footer {
+      background: #111827;
+      margin: 0 -28px;
+      margin-top: 40px;
+      padding: 32px 28px 40px;
+    }
+
+    .cta-no-fee {
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 5px;
+    }
+
+    .cta-no-fee-sub {
+      font-size: 12px;
+      color: rgba(255,255,255,0.38);
+      margin-bottom: 22px;
+      line-height: 1.5;
+    }
+
+    .btn-portal {
+      display: block;
+      width: 100%;
+      padding: 14px 24px;
+      background: transparent;
+      color: rgba(255,255,255,0.7);
+      border: 2px solid rgba(255,255,255,0.2);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      border-radius: 6px;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+    }
+    .btn-portal:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.4); color: rgba(255,255,255,0.9); transform: translateY(-1px); }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #f5f7fa; }
+    ::-webkit-scrollbar-thumb { background: var(--grey); border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+  <!-- ─── SECTION 1: HERO ─── -->
+  <section class="hero">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot"></span>
+      Institutional Wealth Management
+    </div>
+    <h1 class="hero-headline">Secure Your Wealth.<br>Master Your <span>Future.</span></h1>
+    <p class="hero-subtext">Nexus Global delivers institutional-grade asset protection, recovery, and banking services — built for high-net-worth individuals and families.</p>
+
+    <a href="#" class="btn-full btn-red">Open Private Account</a>
+    <a href="#" class="btn-full btn-blue-outline">Secure Client Portal</a>
+
+    <!-- Stats row -->
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-value">$2.8B+</span>
+        <span class="hero-stat-label">Assets</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-value">14,200+</span>
+        <span class="hero-stat-label">Accounts</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-value">94%</span>
+        <span class="hero-stat-label">Recovery</span>
+      </div>
+    </div>
+
+    <!-- Cinematic Image Placeholder -->
+    <div class="image-placeholder" style="border-radius: 12px 12px 0 0; overflow: hidden;">
+      <div class="image-red-bar"></div>
+      <img src="https://storage.googleapis.com/forge-sites/e37661232ea3b1d0c3984aa3e5f594be7210ed58d526d3c79a220b0a37247047.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&amp;X-Goog-Credential=164061697651-compute%40developer.gserviceaccount.com%2F20260609%2Fauto%2Fstorage%2Fgoog4_request&amp;X-Goog-Date=20260609T090415Z&amp;X-Goog-Expires=86400&amp;X-Goog-SignedHeaders=host&amp;response-access-control-allow-origin=https%3A%2F%2Fforge.moonchild.ai&amp;X-Goog-Signature=9a1d1db24d593b6228d7860d140cc19add529c88d90dc7836fee98f6634cd0ad931770b48187b9fb4985f8d3b81b2a11a2b3149a5b2d2bd655d0305699506bd1da3d0814ca47b4e89ba15db9d2cf98cc20b1773e30ead7df35a3fca835d8a439a38367010bc24d697dee2802738f5aa2d112b7adaa75acbaea05678e7559127cf510dc427703da402af408f6cc3332420b5e26c84ac58c5c13d7818ce3658be6b7939fe7538e832939a7d7d13d9009ecb4770d56edf90c92aa8521c52649484dc4fb457493b13eebba4a398c353139b3a2c037f3de2a90753ef1069f41b457365dc64bb948dffff4c9bfce6e0610a887acf00649b605ccd9e7ebdea8c9fc7118" alt="Cinematic overhead shot of a sophisticated financial trading floor at dusk with multiple glowing monitors displaying portfolio charts and wealth data, deep charcoal and navy tones with warm amber accent lighting, premium institutional atmosphere" width="374" height="180" style="width:100%; height:180px; object-fit:cover; display:block;">
+      <div class="image-placeholder-overlay">
+        <span class="image-caption">Wealth Intelligence Dashboard</span>
+        <span class="image-caption-sub">Nexus Global Platform</span>
+      </div>
+    </div>
+
+    <!-- Dashboard Card -->
+    <div class="dashboard-card">
+      <div class="dashboard-card-header">
+        <span class="dashboard-label">Total Wealth</span>
+        <span class="dashboard-badge">↑ +4.2%</span>
+      </div>
+      <div class="dashboard-total">$4,287,510</div>
+
+      <div class="chart-area" id="heroChart"></div>
+
+      <div class="allocation-section">
+        <div class="allocation-label">
+          <span>Allocation</span>
+          <span>Equities 60% · Bonds 40%</span>
+        </div>
+        <div class="allocation-bar">
+          <div class="allocation-fill" style="width: 100%;"></div>
+        </div>
+      </div>
+
+      <div class="account-rows">
+        <div class="account-row">
+          <div class="account-row-left">
+            <div class="account-dot" style="background: var(--blue);"></div>
+            <div>
+              <div class="account-name">Private Equity Fund</div>
+              <div class="account-type">Growth Portfolio</div>
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div class="account-amount">$2,572,500</div>
+            <div class="account-change">+6.1%</div>
+          </div>
+        </div>
+        <div class="account-row">
+          <div class="account-row-left">
+            <div class="account-dot" style="background: var(--red);"></div>
+            <div>
+              <div class="account-name">Fixed Income Reserve</div>
+              <div class="account-type">Conservative</div>
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div class="account-amount">$1,715,010</div>
+            <div class="account-change">+2.4%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 2: TRUST BAND ─── -->
+  <section class="trust-band">
+    <div class="trust-stats">
+      <div class="trust-stat">
+        <span class="trust-stat-value">$2.8B+</span>
+        <span class="trust-stat-label">Assets Under Management</span>
+      </div>
+      <div class="trust-stat">
+        <span class="trust-stat-value">14,200+</span>
+        <span class="trust-stat-label">Active Client Accounts</span>
+      </div>
+      <div class="trust-stat">
+        <span class="trust-stat-value">94%</span>
+        <span class="trust-stat-label">Successful Recovery Rate</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 3: SERVICES ─── -->
+  <section class="services">
+    <div class="service-card service-card-red">
+      <div class="service-tag">Service 01</div>
+      <h2 class="service-heading">Asset Recovery</h2>
+      <ul class="service-features">
+        <li><span class="feature-dash"></span>Offshore and domestic asset tracing</li>
+        <li><span class="feature-dash"></span>Frozen account liberation strategies</li>
+        <li><span class="feature-dash"></span>Legal enforcement across 40+ jurisdictions</li>
+      </ul>
+      <a href="#" class="btn-full btn-white-outline">Begin Recovery Process</a>
+    </div>
+
+    <div class="service-card service-card-blue">
+      <div class="service-tag">Service 02</div>
+      <h2 class="service-heading">Banking Services</h2>
+      <ul class="service-features">
+        <li><span class="feature-dash"></span>Multi-currency private accounts</li>
+        <li><span class="feature-dash"></span>SWIFT international wire transfers</li>
+        <li><span class="feature-dash"></span>Zero-fee global transactions</li>
+      </ul>
+      <a href="#" class="btn-full btn-white-outline">Open Private Account</a>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 4: HOW IT WORKS ─── -->
+  <section class="how-it-works">
+    <div class="section-label">Process</div>
+    <h2 class="section-heading">How It Works</h2>
+
+    <div class="steps">
+      <div class="step">
+        <span class="step-number-bg">01</span>
+        <div class="step-inner">
+          <span class="step-badge">Step 01</span>
+          <h3 class="step-title">Confidential Consultation</h3>
+          <p class="step-desc">Book a private, zero-obligation call with a Nexus Global specialist. We assess your situation and identify the fastest path to recovery or account security.</p>
+        </div>
+        <div class="step-divider"></div>
+      </div>
+
+      <div class="step">
+        <span class="step-number-bg">02</span>
+        <div class="step-inner">
+          <span class="step-badge">Step 02</span>
+          <h3 class="step-title">Custom Strategy Developed</h3>
+          <p class="step-desc">Our legal and financial team builds a bespoke action plan — whether asset tracing, regulatory engagement, or account structuring — with clear milestones.</p>
+        </div>
+        <div class="step-divider"></div>
+      </div>
+
+      <div class="step">
+        <span class="step-number-bg">03</span>
+        <div class="step-inner">
+          <span class="step-badge">Step 03</span>
+          <h3 class="step-title">Execution &amp; Resolution</h3>
+          <p class="step-desc">We execute with precision across jurisdictions. You receive real-time updates and full transparency until your wealth is secured and accessible.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 5: IMAGE + FEATURES ─── -->
+  <!-- Full-width image placeholder — no horizontal padding -->
+  <div class="image-placeholder" style="position:relative;">
+    <div class="image-red-bar"></div>
+    <img src="https://storage.googleapis.com/forge-sites/3303621779d90bade3ca1cbb7d1d5a81f2c3b40fc46ee848627533e84c5ce5d6.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&amp;X-Goog-Credential=164061697651-compute%40developer.gserviceaccount.com%2F20260609%2Fauto%2Fstorage%2Fgoog4_request&amp;X-Goog-Date=20260609T090416Z&amp;X-Goog-Expires=86400&amp;X-Goog-SignedHeaders=host&amp;response-access-control-allow-origin=https%3A%2F%2Fforge.moonchild.ai&amp;X-Goog-Signature=c591e46c675f5c7cb8277e53f8f12ae17a0bb0e15a909fadbe762f2699d70d3111d34b2f76496bdf321b54c013d5e9c3254ccc45771fea510d21b6180a9c6b8244b9bf0079a38c0d1a2efd8ba8d68a220e6a2d0c75598deba9204185325b13f96331d4c1965f1433011fb15e135418cd4de816de75761750ea9a8befc535a393c4a148b251c5f94646af7a17424bcd688e6ce0c929776a7bb13854646e86ea5509aea6b7d21fee72ba23e12d2ae13ae29be3f7494d62f775e160d965e6cdc5b8601e49a42455593972573bf1f0ee4989d28a92dd814d330706060aab38126623065bf2e98f21859dc0c84722c00bf95090bd762b2f58aa60537e1a7a4c67e575" alt="Dark dramatic wide-angle photograph of a sophisticated forensic financial operations center with analysts working at multiple screens displaying global transaction maps and data forensics, deep charcoal tones with blue ambient lighting and red accent indicators" width="430" height="160" style="width:100%; height:160px; object-fit:cover; display:block;">
+    <div class="image-placeholder-overlay">
+      <span class="image-caption">Forensic Operations Center</span>
+      <span class="image-caption-sub">Global Intelligence Network</span>
+    </div>
+  </div>
+
+  <section class="feature-block" style="padding-top: 44px;">
+    <blockquote class="pull-quote">
+      "We don't just recover assets — we protect the financial futures of families across six continents."
+    </blockquote>
+
+    <div class="features-grid">
+      <div class="feature-item">
+        <svg class="feature-icon" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="14" fill="#f0f4fa"></circle>
+          <path d="M10 16l4 4 8-8" stroke="#235ba8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <div class="feature-title">Regulatory Compliance</div>
+        <p class="feature-desc">Fully licensed and regulated across 40+ global jurisdictions.</p>
+      </div>
+
+      <div class="feature-item">
+        <svg class="feature-icon" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="14" fill="#fff0f1"></circle>
+          <rect x="10" y="13" width="12" height="9" rx="1.5" stroke="#ee2737" stroke-width="1.8"></rect>
+          <path d="M13 13V11a3 3 0 016 0v2" stroke="#ee2737" stroke-width="1.8" stroke-linecap="round"></path>
+        </svg>
+        <div class="feature-title">Bank-Grade Security</div>
+        <p class="feature-desc">256-bit encryption and multi-factor authentication on all accounts.</p>
+      </div>
+
+      <div class="feature-item">
+        <svg class="feature-icon" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="14" fill="#f0f4fa"></circle>
+          <circle cx="16" cy="16" r="5" stroke="#235ba8" stroke-width="1.8"></circle>
+          <path d="M16 8V6M16 26v-2M24 16h2M6 16H8M21.66 10.34l1.41-1.41M8.93 22.07l1.41-1.41M21.66 21.66l1.41 1.41M8.93 9.93l1.41 1.41" stroke="#235ba8" stroke-width="1.5" stroke-linecap="round"></path>
+        </svg>
+        <div class="feature-title">Global Reach</div>
+        <p class="feature-desc">Operations spanning North America, Europe, Asia, and MENA.</p>
+      </div>
+
+      <div class="feature-item">
+        <svg class="feature-icon" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="14" fill="#fff0f1"></circle>
+          <path d="M10 20l3-3 2.5 2.5L20 14" stroke="#ee2737" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M10 12h12" stroke="#ee2737" stroke-width="1.5" stroke-linecap="round" opacity=".4"></path>
+        </svg>
+        <div class="feature-title">No Win, No Fee</div>
+        <p class="feature-desc">Asset recovery on pure contingency — zero upfront cost to you.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 6: CTA ─── -->
+  <section class="cta-block">
+    <div class="cta-eyebrow">Act Now</div>
+    <h2 class="cta-heading">Time is Your Biggest <span>Enemy.</span></h2>
+    <p class="cta-subtext">Every day of delay reduces recovery probability. Our specialists are standing by to begin your case immediately — at zero initial cost.</p>
+    <a href="#" class="btn-cta-red">Speak to a Specialist Today</a>
+
+    <div class="cta-footer">
+      <div class="cta-no-fee">No upfront fees. No win, no fee.</div>
+      <div class="cta-no-fee-sub">100% contingency-based recovery service.</div>
+      <a href="#" class="btn-portal">Access Secure Client Portal</a>
+    </div>
+  </section>
+
+  <script>
+    // ─── D3 Line Chart inside Dashboard Card ───
+    (function() {
+      const container = document.getElementById('heroChart');
+      if (!container) return;
+      const W = container.offsetWidth || 374;
+      const H = 64;
+      const data = [0, 10, 6, 20, 15, 28, 20, 35, 30, 46, 40, 55, 48, 62];
+
+      const xScale = d3.scaleLinear().domain([0, data.length - 1]).range([0, W]);
+      const yScale = d3.scaleLinear().domain([0, 70]).range([H - 4, 4]);
+
+      const svg = d3.select(container).append('svg')
+        .attr('width', W).attr('height', H);
+
+      const defs = svg.append('defs');
+      const grad = defs.append('linearGradient')
+        .attr('id', 'lineGrad')
+        .attr('x1', '0%').attr('y1', '0%')
+        .attr('x2', '0%').attr('y2', '100%');
+      grad.append('stop').attr('offset', '0%').attr('stop-color', '#ee2737').attr('stop-opacity', 0.28);
+      grad.append('stop').attr('offset', '100%').attr('stop-color', '#ee2737').attr('stop-opacity', 0);
+
+      const area = d3.area()
+        .x((d, i) => xScale(i))
+        .y0(H)
+        .y1(d => yScale(d))
+        .curve(d3.curveCatmullRom.alpha(0.5));
+
+      svg.append('path')
+        .datum(data)
+        .attr('d', area)
+        .attr('fill', 'url(#lineGrad)');
+
+      const line = d3.line()
+        .x((d, i) => xScale(i))
+        .y(d => yScale(d))
+        .curve(d3.curveCatmullRom.alpha(0.5));
+
+      svg.append('path')
+        .datum(data)
+        .attr('d', line)
+        .attr('fill', 'none')
+        .attr('stroke', '#ee2737')
+        .attr('stroke-width', 2)
+        .attr('stroke-linecap', 'round');
+
+      const lastX = xScale(data.length - 1);
+      const lastY = yScale(data[data.length - 1]);
+      svg.append('circle').attr('cx', lastX).attr('cy', lastY).attr('r', 4).attr('fill', '#ee2737');
+      svg.append('circle').attr('cx', lastX).attr('cy', lastY).attr('r', 7)
+        .attr('fill', 'none').attr('stroke', '#ee2737').attr('stroke-width', 1).attr('opacity', 0.4);
+    })();
+  </script>
+
+
+</body></html>

@@ -16,7 +16,11 @@ const DisclaimerPage = () => {
               transition={{ duration: 0.8 }}
               className="text-center"
             >
-              <h1 className="text-5xl lg:text-6xl font-bold mb-6">
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <span className="w-7 h-0.5 bg-primary-400" />
+                <span className="text-primary-400 text-xs font-bold tracking-[0.22em] uppercase">Legal</span>
+              </div>
+              <h1 className="text-5xl lg:text-6xl font-bold mb-6 font-playfair">
                 Legal Disclaimer
               </h1>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">

@@ -208,11 +208,11 @@ const SignupForm = () => {
 
             <form onSubmit={handleSubmit} className="space-y-6">
               {errors.length > 0 && (
-                <div ref={errorRef} className="bg-[#fde8ea] border border-red-200 rounded-md p-4">
+                <div ref={errorRef} className="bg-primary-50 border border-primary-200 rounded-md p-4">
                   <div className="flex">
                     <div className="ml-3">
-                      <h3 className="text-sm font-medium text-[#d11f2d]">Please fix the following errors:</h3>
-                      <div className="mt-2 text-sm text-[#d11f2d]">
+                      <h3 className="text-sm font-medium text-primary-600">Please fix the following errors:</h3>
+                      <div className="mt-2 text-sm text-primary-600">
                         <ul className="list-disc pl-5 space-y-1">
                           {errors.map((error, index) => (
                             <li key={index}>{error}</li>
@@ -309,10 +309,10 @@ const SignupForm = () => {
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     >
                       <option value="">Select your country</option>
-                      <option value="US">Australia</option>
+                      <option value="AU">Australia</option>
                       <option value="CA">Canada</option>
                       <option value="GB">United Kingdom</option>
-                      <option value="AU">Australia</option>
+                      <option value="US">United States</option>
                       <option value="DE">Germany</option>
                       <option value="FR">France</option>
                       <option value="IT">Italy</option>
@@ -523,7 +523,9 @@ const SignupForm = () => {
               transition={{ delay: 0.2 }}
               className="mt-auto"
             >
-              <img src="https://placehold.co/800x600/0b1626/1e293b?text=Secure+Global+Infrastructure" alt="Bank Infrastructure" className="w-full h-48 object-cover rounded-xl shadow-lg border border-gray-100" />
+              <div className="w-full h-48 bg-navy-900 flex items-center justify-center rounded-xl border border-navy-800">
+                <span className="text-primary-500/30 text-xs font-bold uppercase tracking-widest">Nexus Secure Infrastructure</span>
+              </div>
             </motion.div>
           </div>
         </div>

@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, ChevronUp } from 'lucide-react';
 
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -41,38 +40,42 @@ const FAQSection = () => {
   return (
     <section className="py-20 bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10 mobile:mb-16">
-          <span className="text-navy-600 font-bold tracking-wider uppercase text-xs mobile:text-sm">Common Questions</span>
-          <h2 className="text-2xl mobile:text-3xl lg:text-5xl font-bold text-navy-900 mt-2 font-playfair">
+        <div className="text-center mb-16">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="w-7 h-0.5 bg-primary-500" />
+            <span className="text-primary-500 text-xs font-bold tracking-[0.22em] uppercase">Common Questions</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold text-navy-900 font-playfair">
             Frequently Asked Questions
           </h2>
-          <p className="text-base mobile:text-xl text-gray-600 max-w-3xl mx-auto mt-3 mobile:mt-4">
-            Everything you need to know about our legal recovery and banking services.
-          </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           {faqs.map((faq, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.05 }}
-              className="bg-navy-50 rounded-2xl overflow-hidden border border-navy-100"
+              className="border border-muted-300 overflow-hidden"
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full px-5 py-4 mobile:px-8 mobile:py-6 text-left flex items-center justify-between hover:bg-navy-100 transition-colors duration-200"
+                className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-muted-100 transition-colors"
               >
-                <h3 className="text-base mobile:text-lg font-bold text-navy-900 pr-4 font-playfair">
+                <h3 className="text-base font-bold text-navy-900 pr-4">
                   {faq.question}
                 </h3>
                 <div className="flex-shrink-0">
-                  {openIndex === index ? (
-                    <ChevronUp className="w-5 h-5 mobile:w-6 mobile:h-6 text-primary-600" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 mobile:w-6 mobile:h-6 text-navy-400" />
-                  )}
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    className={`transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''} text-primary-500`}
+                  >
+                    <path d="M5 8l5 5 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </div>
               </button>
 
@@ -85,10 +88,8 @@ const FAQSection = () => {
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
                   >
-                    <div className="px-5 pb-4 mobile:px-8 mobile:pb-6 bg-white border-t border-navy-100">
-                      <p className="text-gray-600 leading-relaxed pt-3 mobile:pt-4 text-sm mobile:text-base">
-                        {faq.answer}
-                      </p>
+                    <div className="px-6 pb-5 border-t border-muted-300">
+                      <p className="text-gray-500 leading-relaxed pt-4 text-sm">{faq.answer}</p>
                     </div>
                   </motion.div>
                 )}
@@ -97,24 +98,16 @@ const FAQSection = () => {
           ))}
         </div>
 
-        {/* Contact CTA */}
-        <div className="mt-12 mobile:mt-16 text-center">
-          <div className="bg-navy-900 rounded-2xl p-6 mobile:p-8 text-white relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-primary-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-            <h3 className="text-xl mobile:text-2xl font-bold mb-3 mobile:mb-4 font-playfair relative z-10">
-              Still have questions?
-            </h3>
-            <p className="text-sm mobile:text-base text-navy-100 mb-5 mobile:mb-6 relative z-10">
-              Our legal team is ready to review your case for free.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
-              <a
-                href="/contact"
-                className="bg-primary-500 text-navy-900 px-5 py-2.5 mobile:px-6 mobile:py-3 rounded-lg font-bold hover:bg-primary-400 transition-colors duration-200 text-sm mobile:text-base"
-              >
-                Contact Legal Support
-              </a>
-            </div>
+        <div className="mt-12 text-center">
+          <div className="bg-secondary-500 px-8 py-8 text-white relative overflow-hidden">
+            <h3 className="text-xl font-bold mb-3 relative z-10">Still have questions?</h3>
+            <p className="text-sm text-white/70 mb-5 relative z-10">Our legal team is ready to review your case for free.</p>
+            <a
+              href="/contact"
+              className="inline-block bg-white text-secondary-500 px-6 py-3 text-xs font-bold uppercase tracking-widest hover:bg-white/90 transition-colors relative z-10"
+            >
+              Contact Legal Support
+            </a>
           </div>
         </div>
       </div>

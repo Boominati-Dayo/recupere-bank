@@ -16,7 +16,11 @@ const TermsPage = () => {
               transition={{ duration: 0.8 }}
               className="text-center"
             >
-              <h1 className="text-5xl lg:text-6xl font-bold mb-6">
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <span className="w-7 h-0.5 bg-primary-400" />
+                <span className="text-primary-400 text-xs font-bold tracking-[0.22em] uppercase">Legal</span>
+              </div>
+              <h1 className="text-5xl lg:text-6xl font-bold mb-6 font-playfair">
                 Terms of Service
               </h1>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -109,10 +113,10 @@ const TermsPage = () => {
                   changes. Continued use of the platform constitutes acceptance of modified terms.
                 </p>
 
-                <div className="mt-12 p-6 bg-[#fde8ea] rounded-lg border border-red-200">
-                  <p className="text-[#d11f2d]">
+                <div className="mt-12 p-6 bg-primary-50 border border-primary-200">
+                  <p className="text-primary-600">
                     <strong>Contact Us:</strong> If you have questions about these terms, please contact our support team
-                    through the <Link href="/contact" className="text-[#ee2737] underline">contact page</Link>.
+                    through the <Link href="/contact" className="text-primary-500 underline">contact page</Link>.
                   </p>
                 </div>
               </div>

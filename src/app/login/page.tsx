@@ -111,13 +111,13 @@ const LoginPage = () => {
             {!showForgotPassword ? (
               <form onSubmit={handleSubmit} className="space-y-6">
                 {errors.length > 0 && (
-                  <div ref={errorRef} className="bg-[#fde8ea] border border-red-200 rounded-md p-4">
+                  <div ref={errorRef} className="bg-primary-50 border border-primary-200 rounded-md p-4">
                     <div className="flex">
                       <div className="ml-3">
-                        <h3 className="text-sm font-medium text-[#d11f2d]">
+                        <h3 className="text-sm font-medium text-primary-600">
                           Please fix the following errors:
                         </h3>
-                        <div className="mt-2 text-sm text-[#d11f2d]">
+                        <div className="mt-2 text-sm text-primary-600">
                           <ul className="list-disc pl-5 space-y-1">
                             {errors.map((error, index) => (
                               <li key={index}>{error}</li>
@@ -382,7 +382,7 @@ const LoginPage = () => {
                   <div className="w-8 h-8 rounded-full bg-navy-50 flex items-center justify-center">
                     <Phone className="h-4 w-4 text-navy-600" />
                   </div>
-                  <span className="text-sm font-medium text-gray-700">+1 (800) 123-4567</span>
+                  <span className="text-sm font-medium text-gray-700">+61 2 8310 6000</span>
                 </div>
               </div>
             </motion.div>

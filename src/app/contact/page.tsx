@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import type { Metadata } from 'next';
-import { Mail, Phone, MapPin, ShieldAlert, Lock, Send, CheckCircle2 } from 'lucide-react';
+import { Mail, Phone, ShieldAlert, Lock, CheckCircle2 } from 'lucide-react';
 import PublicRoute from '@/components/PublicRoute';
 import { showError, showSuccess } from '@/utils/toast';
 
@@ -54,10 +54,14 @@ export default function ContactPage() {
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-navy-800 mb-8 border border-navy-700">
               <Lock className="w-8 h-8 text-primary-500" />
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">Secure Communication.</h1>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              All communications are protected by end-to-end legal privilege and military-grade encryption. Your case details are safe.
-            </p>
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <span className="w-7 h-0.5 bg-primary-400" />
+            <span className="text-primary-400 text-xs font-bold tracking-[0.22em] uppercase">Secure Communications</span>
+          </div>
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 font-playfair">Secure Communication.</h1>
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            All communications are protected by end-to-end legal privilege and military-grade encryption. Your case details are safe.
+          </p>
           </div>
         </section>
 
@@ -170,17 +174,17 @@ export default function ContactPage() {
             {/* Contact Info container */}
             <div className="space-y-10">
               {/* Emergency Line */}
-              <div className="bg-[#fde8ea] p-8 rounded-xl border border-red-100 flex items-start gap-6">
-                <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+              <div className="bg-primary-50 p-8 border border-primary-200 flex items-start gap-6">
+                <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                   <ShieldAlert className="w-6 h-6 text-primary-600" />
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold text-red-900 mb-2">Urgent Bank Freeze Line</h4>
-                  <p className="text-[#d11f2d] mb-4 text-sm leading-relaxed font-medium">
+                  <h4 className="text-xl font-bold text-navy-900 mb-2">Urgent Bank Freeze Line</h4>
+                  <p className="text-primary-600 mb-4 text-sm leading-relaxed font-medium">
                     If you transferred funds within the last 48 hours, immediate action is critical. Call our emergency response team.
                   </p>
-                  <a href="tel:+61 2 8310 6000" className="text-3xl font-black text-[#ee2737] hover:text-[#d11f2d] transition-colors">
-                    +1 (409) 334-2911
+                  <a href="tel:+61 2 8310 6000" className="text-3xl font-black text-primary-500 hover:text-primary-600 transition-colors">
+                    +61 2 8310 6000
                   </a>
                 </div>
               </div>
@@ -203,7 +207,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-500">Global Switchboard</p>
-                    <a href="tel:+61 2 8310 6000" className="text-lg font-bold text-navy-900 hover:text-primary-500 transition-colors">+1 (409) 334-2911</a>
+                    <a href="tel:+61 2 8310 6000" className="text-lg font-bold text-navy-900 hover:text-primary-500 transition-colors">+61 2 8310 6000</a>
                   </div>
                 </div>
               </div>

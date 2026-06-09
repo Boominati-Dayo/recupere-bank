@@ -1,0 +1,1122 @@
+<!DOCTYPE html><html lang="en"><head><base href="https://forge.moonchild.ai/site/b8d51682575e24e5e04a737b160ca20356ae7dc590d36760624ee74da1aff451/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus Global — Digital Private Banking</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&amp;display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #ee2737;
+      --blue: #235ba8;
+      --lgrey: #cfd6e0;
+      --white: #ffffff;
+      --black: #000000;
+      --font-body: 'Inter', sans-serif;
+      --font-display: 'Playfair Display', serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--black);
+      background: var(--white);
+      width: 430px;
+      margin: 0 auto;
+      overflow-x: hidden;
+    }
+
+    /* ─── SECTION 1: HERO ─────────────────────────────────── */
+    .hero {
+      background: var(--white);
+      padding: 52px 28px 0;
+    }
+
+    .hero-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--blue);
+      flex-shrink: 0;
+    }
+
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--black);
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .hero-subheadline {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 400;
+      font-style: italic;
+      color: #888;
+      line-height: 1.35;
+      margin-bottom: 18px;
+    }
+
+    .hero-body {
+      font-size: 13.5px;
+      font-weight: 400;
+      line-height: 1.7;
+      color: #555;
+      margin-bottom: 28px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .btn-blue {
+      background: var(--blue);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 17px 24px;
+      border: 2px solid var(--blue);
+      cursor: pointer;
+      width: 100%;
+      text-align: center;
+      transition: background 0.2s, transform 0.18s, box-shadow 0.18s, border-color 0.2s;
+    }
+
+    .btn-blue:hover {
+      background: #1a4a8a;
+      border-color: #1a4a8a;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(35,91,168,0.3);
+    }
+
+    .btn-blue:active { transform: translateY(0); }
+
+    .btn-outline-black {
+      background: transparent;
+      color: var(--black);
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 17px 24px;
+      border: 2px solid var(--black);
+      cursor: pointer;
+      width: 100%;
+      text-align: center;
+      transition: background 0.2s, color 0.2s, transform 0.18s;
+    }
+
+    .btn-outline-black:hover {
+      background: var(--black);
+      color: var(--white);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline-black:active { transform: translateY(0); }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--lgrey);
+      border-left: 1px solid var(--lgrey);
+      margin-bottom: 0;
+    }
+
+    .trust-item {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: #666;
+      text-transform: uppercase;
+      padding: 13px 14px;
+      border-right: 1px solid var(--lgrey);
+      border-bottom: 1px solid var(--lgrey);
+      line-height: 1.4;
+    }
+
+    /* ─── IMAGE PLACEHOLDER ─────────────────────────── */
+    .img-placeholder {
+      width: calc(100% + 56px);
+      margin-left: -28px;
+      margin-right: -28px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 32px;
+    }
+
+    .img-placeholder img {
+      width: 100%;
+      display: block;
+    }
+
+    /* Phone Mockup Block */
+    .hero-mockup {
+      background: var(--blue);
+      width: calc(100% + 56px);
+      margin-left: -28px;
+      margin-right: -28px;
+      padding: 36px 28px 36px;
+      position: relative;
+      overflow: hidden;
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-mockup::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .hero-mockup::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      left: -60px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .phone-wrap {
+      position: relative;
+      z-index: 2;
+    }
+
+    .phone-frame {
+      width: 232px;
+      background: #0d1117;
+      border-radius: 28px;
+      border: 2px solid #2a2a2a;
+      padding: 22px 18px 20px;
+      box-shadow: 0 32px 64px rgba(0,0,0,0.55), 0 0 0 5px #1a1d22;
+    }
+
+    .phone-notch {
+      width: 60px;
+      height: 8px;
+      background: #1a1d22;
+      border-radius: 8px;
+      margin: 0 auto 18px;
+    }
+
+    .phone-bank-label {
+      font-size: 9px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .phone-balance {
+      font-family: var(--font-body);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-bottom: 3px;
+    }
+
+    .phone-balance-sub {
+      font-size: 10px;
+      color: rgba(255,255,255,0.38);
+      margin-bottom: 16px;
+    }
+
+    .phone-graph {
+      height: 48px;
+      width: 100%;
+      margin-bottom: 16px;
+    }
+
+    .phone-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.07);
+      margin-bottom: 10px;
+    }
+
+    .phone-account-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .phone-account-row:last-child { border-bottom: none; }
+
+    .phone-acct-name {
+      font-size: 10px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .phone-acct-type {
+      font-size: 8.5px;
+      color: rgba(255,255,255,0.3);
+      margin-top: 2px;
+    }
+
+    .phone-acct-amount {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--white);
+      text-align: right;
+    }
+
+    .phone-acct-change {
+      font-size: 8.5px;
+      color: #4ade80;
+      text-align: right;
+    }
+
+    /* Floating cards */
+    .float-card {
+      position: absolute;
+      background: #1a1d22;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 9px 13px;
+      z-index: 10;
+    }
+
+    .float-card-1 {
+      top: 24px;
+      right: 10px;
+      min-width: 158px;
+    }
+
+    .float-card-2 {
+      bottom: 28px;
+      left: 4px;
+      min-width: 148px;
+    }
+
+    .float-card-label {
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
+      margin-bottom: 3px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .float-card-dot {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #4ade80;
+      flex-shrink: 0;
+    }
+
+    .float-card-value {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    /* ─── SECTION 2: SERVICES ─────────────────────────────── */
+    .services {
+      background: var(--white);
+      padding: 56px 28px;
+    }
+
+    .section-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-eyebrow::before {
+      content: '';
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--red);
+      flex-shrink: 0;
+    }
+
+    .services-heading {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 36px;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .services-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--lgrey);
+    }
+
+    .service-block {
+      background: var(--white);
+      padding: 28px 0;
+      border-bottom: 1px solid var(--lgrey);
+      position: relative;
+      cursor: default;
+      transition: background 0.2s;
+    }
+
+    .service-block-inner {
+      position: relative;
+    }
+
+    .service-block::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: var(--red);
+      transition: width 0.35s ease;
+      z-index: 1;
+    }
+
+    .service-block:first-child::after { width: 100%; }
+    .service-block:hover::after { width: 100%; }
+
+    .service-num {
+      font-family: var(--font-display);
+      font-size: 52px;
+      font-weight: 900;
+      color: #e8ebef;
+      line-height: 1;
+      position: absolute;
+      top: 0;
+      right: 0;
+      user-select: none;
+    }
+
+    .service-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+      position: relative;
+      z-index: 1;
+      padding-right: 56px;
+    }
+
+    .service-desc {
+      font-size: 13px;
+      line-height: 1.65;
+      color: #777;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── SECTION 3: ACCOUNT TYPES ────────────────────────── */
+    .accounts-heading-block {
+      background: var(--blue);
+      padding: 52px 28px 48px;
+    }
+
+    .accounts-eyebrow {
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 18px;
+    }
+
+    .accounts-heading {
+      font-family: var(--font-display);
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .accounts-sub {
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 16px;
+    }
+
+    .accounts-body {
+      font-size: 13px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 32px;
+    }
+
+    .btn-outline-white {
+      background: transparent;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border: 2px solid rgba(255,255,255,0.55);
+      cursor: pointer;
+      display: inline-block;
+      transition: background 0.2s, border-color 0.2s, transform 0.18s;
+    }
+
+    .btn-outline-white:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: var(--white);
+      transform: translateY(-1px);
+    }
+
+    .accounts-cards {
+      background: var(--white);
+      padding: 32px 28px 52px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .account-card {
+      border: 1px solid var(--lgrey);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .account-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.1);
+    }
+
+    .account-card-header {
+      background: var(--black);
+      padding: 18px 18px 14px;
+    }
+
+    .account-card-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+
+    .account-card-body {
+      padding: 14px 18px 0;
+      background: var(--white);
+    }
+
+    .account-card-desc {
+      font-size: 11.5px;
+      line-height: 1.6;
+      color: #888;
+    }
+
+    .account-card-bar {
+      height: 4px;
+      margin-top: 18px;
+    }
+
+    .bar-checking { background: var(--blue); }
+    .bar-savings { background: #1a7a5e; }
+    .bar-fixed { background: var(--red); }
+    .bar-business { background: var(--black); }
+
+    /* ─── SECTION 4: PROCESS ──────────────────────────────── */
+    .process {
+      background: #f7f8fb;
+      padding: 56px 28px;
+    }
+
+    .process-heading-wrap {
+      margin-bottom: 36px;
+    }
+
+    .process-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .process-eyebrow::before {
+      content: '';
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--red);
+      flex-shrink: 0;
+    }
+
+    .process-heading {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--black);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .process-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .process-step {
+      background: var(--white);
+      border-left: 4px solid var(--blue);
+      padding: 28px 24px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .process-step:hover {
+      box-shadow: 0 8px 28px rgba(35,91,168,0.12);
+      transform: translateX(2px);
+    }
+
+    .process-step-num {
+      font-family: var(--font-display);
+      font-size: 38px;
+      font-weight: 900;
+      color: var(--lgrey);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .process-step-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .process-step-desc {
+      font-size: 13px;
+      line-height: 1.7;
+      color: #777;
+    }
+
+    .process-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 14px 0 14px 28px;
+    }
+
+    /* ─── SECTION 5: CONVERGENCE ──────────────────────────── */
+    .convergence-left {
+      background: var(--black);
+      padding: 56px 28px 52px;
+    }
+
+    .convergence-eyebrow {
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .convergence-eyebrow::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1px;
+      background: rgba(255,255,255,0.3);
+      flex-shrink: 0;
+    }
+
+    .convergence-heading {
+      font-family: var(--font-display);
+      font-size: 34px;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      margin-bottom: 20px;
+    }
+
+    .convergence-body {
+      font-size: 13.5px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 36px;
+    }
+
+    .btn-red {
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 15px 28px;
+      border: 2px solid var(--red);
+      cursor: pointer;
+      display: inline-block;
+      transition: background 0.2s, transform 0.18s, box-shadow 0.18s, border-color 0.2s;
+    }
+
+    .btn-red:hover {
+      background: #cc1e2c;
+      border-color: #cc1e2c;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(238,39,55,0.35);
+    }
+
+    /* Convergence image placeholder */
+    .convergence-img-placeholder {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      display: block;
+    }
+
+    .convergence-features {
+      background: #bcc5d3;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+    .feature-block {
+      background: var(--lgrey);
+      padding: 28px 22px;
+      transition: background 0.2s;
+    }
+
+    .feature-block:hover { background: #dde2ea; }
+
+    .feature-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+
+    .feature-desc {
+      font-size: 11.5px;
+      line-height: 1.65;
+      color: #555;
+    }
+
+    /* ─── SECTION 6: CTA ──────────────────────────────────── */
+    .final-cta {
+      background: var(--red);
+      padding: 60px 28px 64px;
+      text-align: center;
+    }
+
+    .final-cta-heading {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .final-cta-sub {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.78);
+      margin-bottom: 36px;
+      line-height: 1.6;
+      letter-spacing: 0.01em;
+    }
+
+    .final-cta-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn-white-filled {
+      background: var(--white);
+      color: var(--red);
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 18px 24px;
+      border: 2px solid var(--white);
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s, transform 0.18s, box-shadow 0.18s;
+    }
+
+    .btn-white-filled:hover {
+      background: rgba(255,255,255,0.9);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 22px rgba(0,0,0,0.18);
+    }
+
+    .btn-white-outline {
+      background: transparent;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 18px 24px;
+      border: 2px solid rgba(255,255,255,0.65);
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s, border-color 0.2s, transform 0.18s;
+    }
+
+    .btn-white-outline:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--white);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 430px) {
+      body { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SECTION 1: HERO -->
+  <section class="hero">
+    <span class="hero-label">Private Banking</span>
+    <h1 class="hero-headline">Welcome to<br>Nexus Finance</h1>
+    <p class="hero-subheadline">A Modern, Digital-Only Private Bank.</p>
+    <p class="hero-body">Built for sustainable commercial growth, secure wealth management, and recovery of funds lost to financial crime.</p>
+
+    <div class="hero-buttons">
+      <button class="btn-blue">Open An Account</button>
+      <button class="btn-outline-black">Contact Private Advisor</button>
+    </div>
+
+    <div class="trust-grid">
+      <div class="trust-item">Licensed Financial Services</div>
+      <div class="trust-item">AES-256 Security</div>
+      <div class="trust-item">Multi-Currency Banking</div>
+      <div class="trust-item">Wealth Management Experts</div>
+    </div>
+
+    <!-- Full-width image placeholder -->
+    <div class="img-placeholder">
+      <img src="https://storage.googleapis.com/forge-sites/25f83ada18d96eb3e8843e9c2bc332832bdd1fb5984faa6c878e5147cca2b874.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&amp;X-Goog-Credential=164061697651-compute%40developer.gserviceaccount.com%2F20260609%2Fauto%2Fstorage%2Fgoog4_request&amp;X-Goog-Date=20260609T090416Z&amp;X-Goog-Expires=86400&amp;X-Goog-SignedHeaders=host&amp;response-access-control-allow-origin=https%3A%2F%2Fforge.moonchild.ai&amp;X-Goog-Signature=47170de58d5305d482869786b09585b922f63d283d8919121d1a475ebcf282f1e422abee7d70545da1f5e6bf007627495148465a4f07c79e003825ece5dc6367ebda99928f99d8446e73645dee3a6d20b7063d1715c64e683d9952b85403818a263af1351e9d69696fef2b930821d436fb30cfc3949cbcff0c5bca9af7ae12cfc9d18f803116cd8a042a9a029d24532f84a3524f1142c6c8a3405370f0dbe42f5d976ead906277879302ff600eb5c2e1e28b82f19fd156c5409b8913ac0dc7473a915c14e4f3e88d605788b515b03234022fb7da2ff1fcfbff229de3e1f6237c3d1e48b694ba32124a43bac058faeef063a5c1ec3d9e74db4a5845aaa209c1c6" alt="Premium digital banking experience — a sleek dark navy office environment with a professional banker at a modern workstation, multiple screens displaying financial dashboards, subtle grid line texture overlay, sophisticated and institutional atmosphere" width="430" height="160" style="display:block; width:100%; height:160px; object-fit:cover;">
+    </div>
+
+    <!-- Phone Mockup Block -->
+    <div class="hero-mockup">
+      <div class="phone-wrap">
+        <!-- Float Card 1 -->
+        <div class="float-card float-card-1">
+          <div class="float-card-label"><span class="float-card-dot"></span>FX Transfer Complete</div>
+          <div class="float-card-value">+$12,400.00</div>
+        </div>
+
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-bank-label">Total Portfolio Balance</div>
+          <div class="phone-balance">$2,847,300</div>
+          <div class="phone-balance-sub">+$48,220 this month</div>
+
+          <svg class="phone-graph" viewBox="0 0 196 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="graphGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ee2737" stop-opacity="0.28"></stop>
+                <stop offset="100%" stop-color="#ee2737" stop-opacity="0"></stop>
+              </linearGradient>
+            </defs>
+            <path d="M0 40 L23 35 L42 30 L59 34 L78 24 L97 18 L115 22 L132 11 L152 8 L173 5 L196 2" stroke="#ee2737" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M0 40 L23 35 L42 30 L59 34 L78 24 L97 18 L115 22 L132 11 L152 8 L173 5 L196 2 L196 48 L0 48 Z" fill="url(#graphGrad)"></path>
+          </svg>
+
+          <div class="phone-divider"></div>
+
+          <div class="phone-account-row">
+            <div>
+              <div class="phone-acct-name">Private Savings</div>
+              <div class="phone-acct-type">Wealth Account</div>
+            </div>
+            <div>
+              <div class="phone-acct-amount">$1,240,000</div>
+              <div class="phone-acct-change">+2.3%</div>
+            </div>
+          </div>
+          <div class="phone-account-row">
+            <div>
+              <div class="phone-acct-name">Fixed Deposit</div>
+              <div class="phone-acct-type">Term Account</div>
+            </div>
+            <div>
+              <div class="phone-acct-amount">$800,000</div>
+              <div class="phone-acct-change">+1.8%</div>
+            </div>
+          </div>
+          <div class="phone-account-row">
+            <div>
+              <div class="phone-acct-name">FX Multi-Currency</div>
+              <div class="phone-acct-type">Business Account</div>
+            </div>
+            <div>
+              <div class="phone-acct-amount">$807,300</div>
+              <div class="phone-acct-change">+3.7%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Float Card 2 -->
+        <div class="float-card float-card-2">
+          <div class="float-card-label">Weekly Performance</div>
+          <div class="float-card-value" style="color:#4ade80">Portfolio +4.2%</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: SERVICES -->
+  <section class="services">
+    <div class="section-eyebrow">Our Capabilities</div>
+    <h2 class="services-heading">Institutional Grade Banking Services</h2>
+    <div class="services-list">
+      <div class="service-block">
+        <div class="service-block-inner">
+          <span class="service-num">01</span>
+          <div class="service-title">Digital Private Banking</div>
+          <div class="service-desc">Full-spectrum private banking entirely online. Secure, compliant, and built for high-net-worth individuals.</div>
+        </div>
+      </div>
+      <div class="service-block">
+        <div class="service-block-inner">
+          <span class="service-num">02</span>
+          <div class="service-title">Commercial Property &amp; Investment</div>
+          <div class="service-desc">Access institutional-grade property financing and structured investment vehicles for portfolio growth.</div>
+        </div>
+      </div>
+      <div class="service-block">
+        <div class="service-block-inner">
+          <span class="service-num">03</span>
+          <div class="service-title">Nexus Safe Vault</div>
+          <div class="service-desc">Encrypted digital vault for sensitive assets, documents, and high-value holdings with multi-layer authentication.</div>
+        </div>
+      </div>
+      <div class="service-block">
+        <div class="service-block-inner">
+          <span class="service-num">04</span>
+          <div class="service-title">Multi-Currency Accounts</div>
+          <div class="service-desc">Hold, convert and transact in 40+ currencies with competitive FX rates and real-time global settlements.</div>
+        </div>
+      </div>
+      <div class="service-block">
+        <div class="service-block-inner">
+          <span class="service-num">05</span>
+          <div class="service-title">Wealth Management</div>
+          <div class="service-desc">Dedicated advisors delivering bespoke investment strategies, estate planning, and long-term capital preservation.</div>
+        </div>
+      </div>
+      <div class="service-block">
+        <div class="service-block-inner">
+          <span class="service-num">06</span>
+          <div class="service-title">Bank-Grade Cyber Security</div>
+          <div class="service-desc">AES-256 encryption, biometric authentication, real-time fraud detection, and 24/7 threat monitoring.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: ACCOUNT TYPES -->
+  <section>
+    <div class="accounts-heading-block">
+      <div class="accounts-eyebrow">Account Portfolio</div>
+      <h2 class="accounts-heading">Customised Financial Solutions</h2>
+      <div class="accounts-sub">Tailored Account Types</div>
+      <p class="accounts-body">Every client's financial landscape is unique. Nexus Global designs account structures that align with your goals — whether personal wealth preservation, corporate treasury, or international diversification.</p>
+      <button class="btn-outline-white">View All Accounts</button>
+    </div>
+
+    <div class="accounts-cards">
+      <div class="account-card">
+        <div class="account-card-header">
+          <div class="account-card-name">Checking</div>
+        </div>
+        <div class="account-card-body">
+          <div class="account-card-desc">Day-to-day transactional account with zero fees and unlimited transfers.</div>
+          <div class="account-card-bar bar-checking"></div>
+        </div>
+      </div>
+      <div class="account-card">
+        <div class="account-card-header">
+          <div class="account-card-name">Savings</div>
+        </div>
+        <div class="account-card-body">
+          <div class="account-card-desc">High-yield interest account with flexible deposit and withdrawal terms.</div>
+          <div class="account-card-bar bar-savings"></div>
+        </div>
+      </div>
+      <div class="account-card">
+        <div class="account-card-header">
+          <div class="account-card-name">Fixed Deposit</div>
+        </div>
+        <div class="account-card-body">
+          <div class="account-card-desc">Locked-term deposits offering guaranteed returns at competitive rates.</div>
+          <div class="account-card-bar bar-fixed"></div>
+        </div>
+      </div>
+      <div class="account-card">
+        <div class="account-card-header">
+          <div class="account-card-name">Business</div>
+        </div>
+        <div class="account-card-body">
+          <div class="account-card-desc">Corporate-grade account with multi-user access and integrated treasury tools.</div>
+          <div class="account-card-bar bar-business"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: PROCESS -->
+  <section class="process">
+    <div class="process-heading-wrap">
+      <div class="process-eyebrow">How It Works</div>
+      <h2 class="process-heading">Open an Account in 5 Minutes</h2>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="process-step-num">01</div>
+        <div class="process-step-title">Submit Documents</div>
+        <div class="process-step-desc">Upload government-issued identification and proof of address securely through our encrypted client portal.</div>
+      </div>
+      <div class="process-arrow">
+        <svg width="24" height="32" viewBox="0 0 24 32" fill="none">
+          <path d="M12 2V30M4 22L12 30L20 22" stroke="#ee2737" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">02</div>
+        <div class="process-step-title">KYC Verification</div>
+        <div class="process-step-desc">Our compliance team conducts fast, thorough identity verification in line with international AML standards.</div>
+      </div>
+      <div class="process-arrow">
+        <svg width="24" height="32" viewBox="0 0 24 32" fill="none">
+          <path d="M12 2V30M4 22L12 30L20 22" stroke="#ee2737" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">03</div>
+        <div class="process-step-title">Deposit &amp; Grow</div>
+        <div class="process-step-desc">Fund your account and immediately access the full suite of Nexus banking, investment, and security services.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: CONVERGENCE -->
+  <section>
+    <div class="convergence-left">
+      <div class="convergence-eyebrow">Unique Proposition</div>
+      <h2 class="convergence-heading">Banking Meets<br>Cyber Recovery.</h2>
+      <p class="convergence-body">Nexus uniquely combines private banking infrastructure with a forensic recovery division — protecting your wealth and restoring it if compromised. No other institution offers this convergence of financial security and digital forensics.</p>
+      <button class="btn-red">Explore Recovery Services</button>
+    </div>
+
+    <!-- Convergence image placeholder -->
+    <div class="convergence-img-placeholder">
+      <img src="https://storage.googleapis.com/forge-sites/306780aadb6fe23c9d3f440b4042140fbbb62a19fd5da30c46f47abc0ff53a29.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&amp;X-Goog-Credential=164061697651-compute%40developer.gserviceaccount.com%2F20260609%2Fauto%2Fstorage%2Fgoog4_request&amp;X-Goog-Date=20260609T090416Z&amp;X-Goog-Expires=86400&amp;X-Goog-SignedHeaders=host&amp;response-access-control-allow-origin=https%3A%2F%2Fforge.moonchild.ai&amp;X-Goog-Signature=36a1d84985f1c47077c255a01e5ffef5fb8ff4316f4d33e0cf75f6058a9b82feb44ca73183fcd7fb2ccc9d35b89f6d0da92183636ed005d0d30d8692d54b1ced080a535f0b1dd304aeadaad9142230da0ffd152c45b74cedd7e810eced5082f5033603825e0092e73d05ced1d131537f763e138cb8787e4556b47609438b118fcc40fc2479ab5241dcbf42784f560c77099e57ffe116f758a2d8144816e6107ce3f62fdc397bd51adebc0dae8b0ffbb5e4267ca62d873b4f8af2f42b367dc4de03a60406e6d586c26b755b1a923a17e4f7aa3ebf6293cc36a4a14a48869fae92a9a51e74a7a9e15fb11ef50fa4d5bd52ca3ebbd62bc57b4b491dba6f0e63d1fe" alt="Cyber recovery operations center — dark charcoal environment with analysts monitoring multiple screens displaying blockchain transaction maps, network forensic diagrams, and data recovery interfaces, subtle grid texture overlay, high-tech institutional atmosphere" width="430" height="140" style="display:block; width:100%; height:140px; object-fit:cover;">
+    </div>
+
+    <div class="convergence-features">
+      <div class="feature-block">
+        <div class="feature-title">Forensic Crypto Tracing</div>
+        <div class="feature-desc">Blockchain-level transaction analysis to identify and trace stolen or lost digital assets.</div>
+      </div>
+      <div class="feature-block">
+        <div class="feature-title">Offshore Legal Recovery</div>
+        <div class="feature-desc">International legal frameworks deployed to recover assets held across jurisdictions.</div>
+      </div>
+      <div class="feature-block">
+        <div class="feature-title">Safe Vault Protection</div>
+        <div class="feature-desc">Military-grade encrypted storage for digital assets, credentials, and sensitive documentation.</div>
+      </div>
+      <div class="feature-block">
+        <div class="feature-title">No Upfront Fees</div>
+        <div class="feature-desc">Our recovery division operates on a success-based model. You pay only when we deliver results.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: FINAL CTA -->
+  <section class="final-cta">
+    <h2 class="final-cta-heading">Protect Your Capital Today.</h2>
+    <p class="final-cta-sub">Join thousands of clients who trust Nexus Global with their most valuable financial assets.</p>
+    <div class="final-cta-buttons">
+      <button class="btn-white-filled">Open a Secure Account</button>
+      <button class="btn-white-outline">Speak With an Advisor</button>
+    </div>
+  </section>
+
+
+</body></html>

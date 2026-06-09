@@ -1,0 +1,1158 @@
+<!DOCTYPE html><html lang="en"><head><base href="https://forge.moonchild.ai/site/f0444e9a4cb62da53e7910d1e0ac8ad74c9e6c12f6578dd1f6418b7e5888b17b/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus Global — Asset Recovery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #000000;
+      max-width: 430px;
+      margin: 0 auto;
+      overflow-x: hidden;
+    }
+
+    /* ── SECTION 1: HERO ── */
+    .hero {
+      background: #ffffff;
+      padding: 52px 24px 0;
+    }
+
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: #ee2737;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      border-left: 3px solid #ee2737;
+      padding-left: 9px;
+    }
+
+    .hero-headline {
+      font-size: 38px;
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: #000000;
+      margin-bottom: 16px;
+    }
+
+    .hero-sub {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.65;
+      color: #7a8494;
+      margin-bottom: 30px;
+    }
+
+    .btn-red {
+      display: block;
+      width: 100%;
+      background: #ee2737;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 17px 24px;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 11px;
+      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    }
+    .btn-red:hover {
+      background: #c41e2a;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(238,39,55,0.35);
+    }
+    .btn-red:active { transform: translateY(0); box-shadow: none; }
+
+    .btn-blue-outline {
+      display: block;
+      width: 100%;
+      background: transparent;
+      color: #235ba8;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 16px 24px;
+      border: 2px solid #235ba8;
+      cursor: pointer;
+      margin-bottom: 30px;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+    }
+    .btn-blue-outline:hover {
+      background: #235ba8;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+    .btn-blue-outline:active { transform: translateY(0); }
+
+    .trust-lines {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-bottom: 36px;
+    }
+
+    .trust-line {
+      font-size: 12px;
+      font-weight: 500;
+      color: #9aa3af;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .trust-line::before {
+      content: '';
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      background: #ee2737;
+      flex-shrink: 0;
+    }
+
+    /* ── IMAGE PLACEHOLDER ── */
+    .img-placeholder {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      background: #0d1520;
+    }
+
+    .img-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0.85;
+    }
+
+    .img-placeholder-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(13,21,32,0.35) 0%, rgba(13,21,32,0.65) 100%);
+      pointer-events: none;
+    }
+
+    /* Grid texture overlay */
+    .img-placeholder-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+
+    .img-placeholder-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .img-caption-bar {
+      width: 3px;
+      height: 28px;
+      background: #ee2737;
+      flex-shrink: 0;
+    }
+
+    .img-caption-text {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #ffffff;
+      line-height: 1.4;
+    }
+
+    .img-caption-sub {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: rgba(207,214,224,0.75);
+      margin-top: 1px;
+    }
+
+    /* ── DASHBOARD CARD ── */
+    .dashboard-wrap {
+      padding: 0 24px 52px;
+      background: #ffffff;
+    }
+
+    .dashboard-card {
+      background: #0d1b2e;
+      width: 100%;
+      padding: 22px 20px 26px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dashboard-card::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(35,91,168,0.3) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .dashboard-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+
+    .dash-inner { position: relative; z-index: 1; }
+
+    .dash-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .dash-case {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #cfd6e0;
+      text-transform: uppercase;
+    }
+
+    .dash-status {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: #ee2737;
+      text-transform: uppercase;
+      background: rgba(238,39,55,0.1);
+      padding: 3px 9px;
+      border: 1px solid rgba(238,39,55,0.28);
+    }
+
+    .dash-progress-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: #6a7d92;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 7px;
+    }
+
+    .progress-bar-track {
+      background: rgba(255,255,255,0.08);
+      height: 6px;
+      width: 100%;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ee2737, #ff6b7a);
+      position: relative;
+      transition: width 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .progress-bar-fill::after {
+      content: '';
+      position: absolute;
+      right: -4px;
+      top: -4px;
+      width: 14px;
+      height: 14px;
+      background: #ee2737;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(238,39,55,0.8), 0 0 20px rgba(238,39,55,0.4);
+    }
+
+    .node-diagram {
+      margin-bottom: 20px;
+    }
+
+    .node-diagram svg {
+      width: 100%;
+      height: 64px;
+    }
+
+    .dash-probability {
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    .prob-number {
+      font-size: 52px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    .prob-stack {
+      padding-bottom: 8px;
+    }
+
+    .prob-label {
+      font-size: 11px;
+      font-weight: 400;
+      color: #6a7d92;
+      line-height: 1.4;
+    }
+
+    .prob-label strong {
+      display: block;
+      font-size: 12px;
+      color: #cfd6e0;
+      font-weight: 700;
+      margin-bottom: 1px;
+    }
+
+    .dash-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.07);
+      margin: 18px 0 14px;
+    }
+
+    .dash-meta-row {
+      display: flex;
+      gap: 0;
+    }
+
+    .dash-meta-item {
+      flex: 1;
+    }
+
+    .dash-meta-item + .dash-meta-item {
+      border-left: 1px solid rgba(255,255,255,0.07);
+      padding-left: 14px;
+    }
+
+    .dash-meta-label {
+      font-size: 9px;
+      font-weight: 600;
+      color: #4a5f74;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 3px;
+    }
+
+    .dash-meta-value {
+      font-size: 13px;
+      font-weight: 700;
+      color: #cfd6e0;
+    }
+
+    .dash-meta-value.red { color: #ee2737; }
+
+    /* ── SECTION 2: CATEGORIES ── */
+    .section-2 {
+      background: #ffffff;
+      padding: 52px 24px 44px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: #235ba8;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .section-heading {
+      font-size: 26px;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #000000;
+      margin-bottom: 28px;
+    }
+
+    .cat-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .cat-card {
+      background: #ffffff;
+      border: 1px solid #e8eaee;
+      border-left: 4px solid #ee2737;
+      padding: 18px 16px 18px 20px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 0.22s ease, transform 0.22s ease;
+    }
+
+    .cat-card:nth-child(even) { border-left-color: #235ba8; }
+
+    .cat-card:hover {
+      box-shadow: 0 6px 24px rgba(0,0,0,0.09);
+      transform: translateY(-2px);
+    }
+
+    .cat-num {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      font-size: 68px;
+      font-weight: 900;
+      color: #f0f2f5;
+      line-height: 1;
+      pointer-events: none;
+      letter-spacing: -0.04em;
+    }
+
+    .cat-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #000000;
+      margin-bottom: 5px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cat-desc {
+      font-size: 12px;
+      font-weight: 400;
+      color: #7a8494;
+      line-height: 1.55;
+      position: relative;
+      z-index: 1;
+      max-width: 265px;
+    }
+
+    /* ── SECTION 3: PROCESS ── */
+    .section-3 {
+      background: #f7f8fa;
+      padding: 52px 24px 52px;
+    }
+
+    .steps-container {
+      position: relative;
+      margin-top: 32px;
+    }
+
+    .steps-line {
+      position: absolute;
+      left: 19px;
+      top: 20px;
+      bottom: 20px;
+      width: 2px;
+      background: linear-gradient(180deg, #ee2737 0%, rgba(238,39,55,0.15) 100%);
+      z-index: 0;
+    }
+
+    .step {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step:last-child { margin-bottom: 0; }
+
+    .step-circle {
+      width: 40px;
+      height: 40px;
+      background: #ee2737;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 900;
+      color: #ffffff;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(238,39,55,0.4);
+    }
+
+    .step-content { padding-top: 8px; }
+
+    .step-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #000000;
+      margin-bottom: 5px;
+    }
+
+    .step-desc {
+      font-size: 12px;
+      font-weight: 400;
+      color: #7a8494;
+      line-height: 1.55;
+    }
+
+    /* ── SECTION 4: NO WIN NO FEE ── */
+    .section-4 {
+      background: #ffffff;
+      padding: 52px 0 0;
+    }
+
+    .section-4-inner {
+      padding: 0 24px;
+    }
+
+    .nwnf-headline {
+      font-size: 56px;
+      font-weight: 900;
+      font-style: italic;
+      color: #000000;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+
+    .nwnf-underline {
+      width: 72px;
+      height: 4px;
+      background: #ee2737;
+      margin-bottom: 22px;
+    }
+
+    .nwnf-body {
+      font-size: 14px;
+      font-weight: 400;
+      color: #7a8494;
+      line-height: 1.65;
+      margin-bottom: 40px;
+    }
+
+    .section-4-imgwrap {
+      width: 100%;
+      height: 165px;
+      position: relative;
+      margin-bottom: 0;
+    }
+
+    .nwnf-red-block {
+      background: #ee2737;
+      padding: 32px 24px 36px;
+    }
+
+    .nwnf-quote {
+      font-size: 18px;
+      font-weight: 700;
+      font-style: italic;
+      color: #ffffff;
+      line-height: 1.38;
+      margin-bottom: 8px;
+    }
+
+    .nwnf-quote-attr {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 26px;
+    }
+
+    .btn-white-outline {
+      display: block;
+      width: 100%;
+      background: transparent;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 16px 24px;
+      border: 2px solid rgba(255,255,255,0.8);
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+    }
+    .btn-white-outline:hover {
+      background: #ffffff;
+      color: #ee2737;
+      transform: translateY(-1px);
+    }
+    .btn-white-outline:active { transform: translateY(0); }
+
+    /* ── SECTION 5: URGENCY ── */
+    .section-5-top {
+      background: #000000;
+      padding: 52px 24px 50px;
+    }
+
+    .urgency-heading {
+      font-size: 40px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      margin-bottom: 14px;
+    }
+
+    .urgency-red-line {
+      width: 44px;
+      height: 3px;
+      background: #ee2737;
+      margin-bottom: 18px;
+    }
+
+    .urgency-body {
+      font-size: 14px;
+      font-weight: 400;
+      color: #7a8494;
+      line-height: 1.65;
+      margin-bottom: 30px;
+    }
+
+    .btn-red-full {
+      display: block;
+      width: 100%;
+      background: #ee2737;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 17px 24px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    }
+    .btn-red-full:hover {
+      background: #c41e2a;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(238,39,55,0.4);
+    }
+    .btn-red-full:active { transform: translateY(0); }
+
+    .section-5-bottom {
+      background: #235ba8;
+      padding: 52px 24px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-5-bottom::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .stat-block {
+      margin-bottom: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat-number {
+      font-size: 62px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: 7px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      line-height: 1.4;
+    }
+
+    .stat-divider {
+      width: 36px;
+      height: 2px;
+      background: rgba(255,255,255,0.2);
+      margin: 30px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .investigators-row {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .inv-icons {
+      display: flex;
+      margin-right: 6px;
+    }
+
+    .inv-dot {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.12);
+      margin-right: -10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: rgba(255,255,255,0.8);
+      font-weight: 800;
+    }
+
+    .inv-dot.more { font-size: 9px; }
+
+    .inv-text {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      padding-left: 20px;
+      line-height: 1.35;
+    }
+
+    .inv-text strong {
+      display: block;
+      font-size: 16px;
+      color: #ffffff;
+      font-weight: 800;
+    }
+
+    /* Pulse animation for node */
+    @keyframes pulse-ring {
+      0% { transform: scale(0.85); opacity: 0.6; }
+      50% { transform: scale(1); opacity: 0.2; }
+      100% { transform: scale(0.85); opacity: 0.6; }
+    }
+
+    .pulse-node { animation: pulse-ring 2.2s ease-in-out infinite; }
+
+    /* Scan line animation */
+    @keyframes scanline {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(400%); }
+    }
+
+    .scan-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(238,39,55,0.4), transparent);
+      animation: scanline 4s linear infinite;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════
+       SECTION 1 — HERO
+  ══════════════════════════════════════ -->
+  <section class="hero">
+    <span class="hero-label">Asset Recovery</span>
+    <h1 class="hero-headline">We Follow The Money. You Get Your Cash Back.</h1>
+    <p class="hero-sub">Nexus Global deploys forensic intelligence to trace, freeze, and recover stolen funds — across jurisdictions, blockchains, and shell structures.</p>
+
+    <button class="btn-red">Report a Scam Now</button>
+    <button class="btn-blue-outline">Call Emergency Desk</button>
+
+    <div class="trust-lines">
+      <span class="trust-line">Licensed in 14 jurisdictions worldwide</span>
+      <span class="trust-line">Average case response time under 4 hours</span>
+      <span class="trust-line">Regulated under FCA, FINRA &amp; AUSTRAC compliance</span>
+    </div>
+  </section>
+
+  <!-- Image Placeholder 1 — Forensic Cyber -->
+  <div style="padding: 0 24px 0; background: #ffffff;">
+    <div class="img-placeholder" style="height: 162px;">
+      <img src="https://storage.googleapis.com/forge-sites/e7c5475d92af478ff1472af4bb8516771cbaedde380d4deef28a29b19aee5199.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&amp;X-Goog-Credential=164061697651-compute%40developer.gserviceaccount.com%2F20260609%2Fauto%2Fstorage%2Fgoog4_request&amp;X-Goog-Date=20260609T090415Z&amp;X-Goog-Expires=86400&amp;X-Goog-SignedHeaders=host&amp;response-access-control-allow-origin=https%3A%2F%2Fforge.moonchild.ai&amp;X-Goog-Signature=5d79fdef10898d63bacd12750b7969d1971ec2bedcaf6c841fe6cf38fb50b15cb4078250ff1a4626a26b03579372d34286a01a09929d6e81f4267741baa07f72c9e64f2fb4e841f14055f0678f0b83d761726524a55a1c94b7c16872ac71555c5932fec179131b064954b13724edb657c51d2bb84a4546ef45e1fec15b10c10ba0638cf4ba6f572304d0c7974c66cdc1b411fe656ab52694a350b12e814e782d2389c7a4c6109d82bc2d89be3b1662f13bb784043c3e3d38c34f217166242addb0e5ea678bea56eaa3cf69bd6c59edca5b454cb15dee6af949f5dfe9275f4fe99cdc017bf07294cc6f84fafd230181455414bf307c76f1513ffaf910b0942542" alt="Forensic cyber intelligence analysts working in a dark operations room with multiple monitors showing data streams, network maps, and transaction traces in blue and red light" width="382" height="162">
+      <div class="img-placeholder-overlay"></div>
+      <div class="img-placeholder-grid"></div>
+      <div class="scan-line"></div>
+      <div class="img-placeholder-caption">
+        <div class="img-caption-bar"></div>
+        <div>
+          <div class="img-caption-text">Forensic Cyber Intelligence</div>
+          <div class="img-caption-sub">Global Operations Centre · Active 24/7</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Card -->
+  <div class="dashboard-wrap" style="padding-top: 0;">
+    <div style="height: 1px; background: rgba(13,27,46,0.06);"></div>
+    <div class="dashboard-card">
+      <div class="dash-inner">
+        <div class="dash-top">
+          <span class="dash-case">Case #NX-2041</span>
+          <span class="dash-status">● Trace in Progress</span>
+        </div>
+
+        <div class="dash-progress-label">Fund Recovery Trace</div>
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" id="progressFill"></div>
+        </div>
+
+        <!-- Node Diagram SVG -->
+        <div class="node-diagram">
+          <svg viewBox="0 0 370 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Connector lines -->
+            <line x1="38" y1="32" x2="92" y2="14" stroke="#235ba8" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.7"></line>
+            <line x1="38" y1="32" x2="92" y2="50" stroke="#235ba8" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.5"></line>
+            <line x1="108" y1="14" x2="162" y2="32" stroke="#ee2737" stroke-width="1.5" opacity="0.9"></line>
+            <line x1="108" y1="50" x2="162" y2="32" stroke="#7a8494" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.4"></line>
+            <line x1="178" y1="32" x2="232" y2="18" stroke="#ee2737" stroke-width="1.5" opacity="0.9"></line>
+            <line x1="178" y1="32" x2="232" y2="46" stroke="#7a8494" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.35"></line>
+            <line x1="248" y1="18" x2="308" y2="32" stroke="#ee2737" stroke-width="2" opacity="1"></line>
+            <line x1="248" y1="46" x2="308" y2="32" stroke="#7a8494" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.25"></line>
+
+            <!-- Origin node -->
+            <circle cx="22" cy="32" r="14" fill="#ee2737" opacity="0.95"></circle>
+            <text x="22" y="36" text-anchor="middle" fill="white" font-size="8" font-weight="700">SRC</text>
+
+            <!-- Mid nodes -->
+            <circle cx="108" cy="14" r="10" fill="#235ba8" opacity="0.85"></circle>
+            <text x="108" y="18" text-anchor="middle" fill="white" font-size="7" font-weight="600">W1</text>
+
+            <circle cx="108" cy="50" r="10" fill="#3a4d60" opacity="0.55"></circle>
+            <text x="108" y="54" text-anchor="middle" fill="#cfd6e0" font-size="7" font-weight="600">W2</text>
+
+            <circle cx="170" cy="32" r="10" fill="#235ba8" opacity="0.9"></circle>
+            <text x="170" y="36" text-anchor="middle" fill="white" font-size="7" font-weight="600">EX</text>
+
+            <circle cx="248" cy="18" r="10" fill="#ee2737" opacity="0.9"></circle>
+            <text x="248" y="22" text-anchor="middle" fill="white" font-size="7" font-weight="600">TX</text>
+
+            <circle cx="248" cy="46" r="10" fill="#2a3540" opacity="0.45"></circle>
+            <text x="248" y="50" text-anchor="middle" fill="#7a8494" font-size="7" font-weight="600">TX</text>
+
+            <!-- Target node with pulse ring -->
+            <circle cx="324" cy="32" r="18" fill="none" stroke="#ee2737" stroke-width="1.5" opacity="0.25" class="pulse-node"></circle>
+            <circle cx="324" cy="32" r="13" fill="#ee2737" opacity="0.95"></circle>
+            <text x="324" y="36" text-anchor="middle" fill="white" font-size="7" font-weight="700">DEST</text>
+          </svg>
+        </div>
+
+        <div class="dash-probability">
+          <div class="prob-number">87%</div>
+          <div class="prob-stack">
+            <div class="prob-label">
+              <strong>Recovery Probability</strong>
+              Blockchain trace active
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-divider"></div>
+
+        <div class="dash-meta-row">
+          <div class="dash-meta-item">
+            <div class="dash-meta-label">Funds at Risk</div>
+            <div class="dash-meta-value">$248,500</div>
+          </div>
+          <div class="dash-meta-item">
+            <div class="dash-meta-label">Nodes Traced</div>
+            <div class="dash-meta-value red">5 / 7</div>
+          </div>
+          <div class="dash-meta-item">
+            <div class="dash-meta-label">Jurisdiction</div>
+            <div class="dash-meta-value">UAE / SG</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 2 — CATEGORIES
+  ══════════════════════════════════════ -->
+  <section class="section-2">
+    <div class="section-label">Coverage Areas</div>
+    <h2 class="section-heading">Eligible Recovery Categories</h2>
+
+    <div class="cat-cards">
+      <div class="cat-card">
+        <span class="cat-num">01</span>
+        <div class="cat-title">Crypto Wealth Recovery</div>
+        <div class="cat-desc">Blockchain forensics to trace stolen, rug-pulled, or laundered cryptocurrency across wallets and chains.</div>
+      </div>
+
+      <div class="cat-card">
+        <span class="cat-num">02</span>
+        <div class="cat-title">Forex &amp; Investment Fraud</div>
+        <div class="cat-desc">Recovery from fraudulent brokers, unlicensed platforms, and orchestrated Ponzi investment schemes.</div>
+      </div>
+
+      <div class="cat-card">
+        <span class="cat-num">03</span>
+        <div class="cat-title">Romance &amp; Social Engineering</div>
+        <div class="cat-desc">Pig butchering, impersonation, and emotional manipulation scams targeting wire transfers and gift cards.</div>
+      </div>
+
+      <div class="cat-card">
+        <span class="cat-num">04</span>
+        <div class="cat-title">Phishing &amp; Bank Hacks</div>
+        <div class="cat-desc">Unauthorized account access, credential theft, and direct bank transfer fraud via spoofed portals.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SECTION 3 — PROCESS
+  ══════════════════════════════════════ -->
+  <section class="section-3">
+    <div class="section-label">Our Process</div>
+    <h2 class="section-heading">How You Get Your Money Back</h2>
+
+    <div class="steps-container">
+      <div class="steps-line"></div>
+
+      <div class="step">
+        <div class="step-circle">1</div>
+        <div class="step-content">
+          <div class="step-title">Confidential Case Intake</div>
+          <div class="step-desc">Submit your report securely. A senior investigator contacts you within 4 hours to assess case viability.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-circle">2</div>
+        <div class="step-content">
+          <div class="step-title">Forensic Fund Trace</div>
+          <div class="step-desc">Our blockchain analysts and financial investigators map the movement of your funds across institutions and wallets.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-circle">3</div>
+        <div class="step-content">
+          <div class="step-title">Legal Freeze Request</div>
+          <div class="step-desc">We file emergency freeze orders with partner banks, exchanges, and regulatory bodies in relevant jurisdictions.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-circle">4</div>
+        <div class="step-content">
+          <div class="step-title">Evidence Compilation</div>
+          <div class="step-desc">A full legal dossier is assembled — transaction logs, IP trails, entity structures — for litigation or settlement.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-circle">5</div>
+        <div class="step-content">
+          <div class="step-title">Asset Liquidation &amp; Return</div>
+          <div class="step-desc">Recovered funds are liquidated, cleared through AML compliance, and returned to your verified account.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-circle">6</div>
+        <div class="step-content">
+          <div class="step-title">Post-Recovery Protection</div>
+          <div class="step-desc">We deploy identity shields and fraud monitoring to protect your assets and prevent repeat targeting.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SECTION 4 — NO WIN NO FEE
+  ══════════════════════════════════════ -->
+  <section class="section-4">
+    <div class="section-4-inner">
+      <div class="section-label">Our Commitment</div>
+      <h2 class="nwnf-headline">No Win.<br>No Fee.</h2>
+      <div class="nwnf-underline"></div>
+      <p class="nwnf-body">You pay nothing upfront. Our team is only compensated when funds are successfully recovered on your behalf. Zero financial risk — we carry the cost of investigation, legal action, and jurisdictional filings until recovery is confirmed.</p>
+    </div>
+
+    <!-- Image Placeholder 2 — Legal Counsel -->
+    <div class="section-4-imgwrap">
+      <img src="https://storage.googleapis.com/forge-sites/fa351abfc16ab8a98f4f6f453bbcc967e6549e076eeb672bf34893a52bd54336.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&amp;X-Goog-Credential=164061697651-compute%40developer.gserviceaccount.com%2F20260609%2Fauto%2Fstorage%2Fgoog4_request&amp;X-Goog-Date=20260609T090416Z&amp;X-Goog-Expires=86400&amp;X-Goog-SignedHeaders=host&amp;response-access-control-allow-origin=https%3A%2F%2Fforge.moonchild.ai&amp;X-Goog-Signature=24a75e0bf86553a34df7db6d65e9d71752d768d28c3433eae2c5168f7910294f9c8a95e3edd4e5197f6a83c93ef828c705b5efd73b863e65fb3a9238bedb8d79f8d52eaf7d31d172d13a3823e710778dc14f1772c1f6156e978fc7acc58c9046c43bc516b5fa08ea74acdfd225b7948e855f01145c094762a6d364d890cc792971f968481ee9c281e26920bbb46e1ccc4161101e0f717ea98f3b85f9509baa34630dc1c172729b249b0bceb362f1bcfdca669a2d7e705e8226a449b9f43dff7624cbb82dfe1fffd6138f922a4b5d401e5f9959876548e22bf09d7de8d61a4697e28217d5f6170ad7c03c2030f150637c348002958bde229785e5dd1c65cbec7c" alt="Legal counsel preparation showing two lawyers in a modern, dark-toned boardroom reviewing financial fraud documents and evidence files on a polished table with city skyline in background" width="430" height="165" style="width:100%; height:165px; object-fit:cover; display:block;">
+      <div class="img-placeholder-overlay"></div>
+      <div class="img-placeholder-grid"></div>
+      <div class="img-placeholder-caption">
+        <div class="img-caption-bar"></div>
+        <div>
+          <div class="img-caption-text">Legal Counsel Preparation</div>
+          <div class="img-caption-sub">International Litigation Division</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nwnf-red-block">
+      <p class="nwnf-quote">"Nexus recovered $340,000 from a Dubai-based crypto fraud ring within 11 weeks. I had given up hope entirely."</p>
+      <p class="nwnf-quote-attr">— Verified client, Sydney AU · Case #NX-1887</p>
+      <button class="btn-white-outline">Start Your Free Case Review →</button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SECTION 5 — URGENCY
+  ══════════════════════════════════════ -->
+  <section class="section-5-top">
+    <h2 class="urgency-heading">Time is Critical.</h2>
+    <div class="urgency-red-line"></div>
+    <p class="urgency-body">The first 72 hours after a financial crime are decisive. Every hour of delay allows funds to be moved further into obfuscation networks, offshore structures, and anonymous wallets. The window to freeze and recover closes fast.</p>
+    <button class="btn-red-full">Report Now — It's Free &amp; Confidential</button>
+  </section>
+
+  <section class="section-5-bottom">
+    <div class="stat-block">
+      <div class="stat-number" data-target="$1.2B+">0</div>
+      <div class="stat-label">Total Illicit Funds Traced</div>
+    </div>
+
+    <div class="stat-divider"></div>
+
+    <div class="stat-block">
+      <div class="investigators-row">
+        <div class="inv-icons">
+          <div class="inv-dot">JK</div>
+          <div class="inv-dot">RM</div>
+          <div class="inv-dot">AS</div>
+          <div class="inv-dot more">+</div>
+        </div>
+        <div class="inv-text">
+          <strong>200+ Active</strong>
+          Investigators Worldwide
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-divider"></div>
+
+    <div class="stat-block">
+      <div class="stat-number" data-target="91%">0</div>
+      <div class="stat-label">Recovery Success Rate on Viable Cases</div>
+    </div>
+  </section>
+
+  <script>
+    // Animate progress bar on load
+    window.addEventListener('load', () => {
+      const fill = document.getElementById('progressFill');
+      if (fill) {
+        fill.style.width = '0%';
+        setTimeout(() => { fill.style.width = '73%'; }, 500);
+      }
+    });
+
+    // Scroll-triggered fade-in for steps
+    const steps = document.querySelectorAll('.step');
+    const stepObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateX(0)';
+        }
+      });
+    }, { threshold: 0.15 });
+
+    steps.forEach((step, i) => {
+      step.style.opacity = '0';
+      step.style.transform = 'translateX(-18px)';
+      step.style.transition = `opacity 0.5s ease ${i * 0.09}s, transform 0.5s ease ${i * 0.09}s`;
+      stepObserver.observe(step);
+    });
+
+    // Cat cards entrance animation
+    const catCards = document.querySelectorAll('.cat-card');
+    const catObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.12 });
+
+    catCards.forEach((card, i) => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(22px)';
+      card.style.transition = `opacity 0.5s ease ${i * 0.1}s, transform 0.5s ease ${i * 0.1}s`;
+      catObserver.observe(card);
+    });
+
+    // Stat number counter animation
+    function animateCounter(el, rawTarget) {
+      const duration = 1800;
+      let prefix = '';
+      let suffix = '';
+      let numStr = rawTarget;
+
+      if (rawTarget.startsWith('$')) { prefix = '$'; numStr = rawTarget.slice(1); }
+      if (numStr.endsWith('%')) { suffix = '%'; numStr = numStr.slice(0, -1); }
+      if (numStr.endsWith('B+')) { suffix = 'B+'; numStr = numStr.slice(0, -2); }
+
+      const target = parseFloat(numStr);
+      const isDecimal = numStr.includes('.');
+      const start = performance.now();
+
+      function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const value = eased * target;
+        el.textContent = prefix + (isDecimal ? value.toFixed(1) : Math.floor(value)) + suffix;
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
+
+    const statObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const raw = el.dataset.target;
+          animateCounter(el, raw);
+          statObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.stat-number[data-target]').forEach(el => {
+      el.textContent = '0';
+      statObserver.observe(el);
+    });
+  </script>
+
+
+</body></html>

@@ -16,7 +16,11 @@ const PrivacyPage = () => {
               transition={{ duration: 0.8 }}
               className="text-center"
             >
-              <h1 className="text-5xl lg:text-6xl font-bold mb-6">
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <span className="w-7 h-0.5 bg-primary-400" />
+                <span className="text-primary-400 text-xs font-bold tracking-[0.22em] uppercase">Legal</span>
+              </div>
+              <h1 className="text-5xl lg:text-6xl font-bold mb-6 font-playfair">
                 Privacy Policy
               </h1>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -131,10 +135,10 @@ const PrivacyPage = () => {
                   acceptance of the updated policy.
                 </p>
 
-                <div className="mt-12 p-6 bg-[#fde8ea] rounded-lg border border-red-200">
-                  <p className="text-[#d11f2d]">
+                <div className="mt-12 p-6 bg-primary-50 border border-primary-200">
+                  <p className="text-primary-600">
                     <strong>Contact Us:</strong> For questions about this privacy policy or to exercise your rights,
-                    please contact us through the <Link href="/contact" className="text-[#ee2737] underline">contact page</Link>.
+                    please contact us through the <Link href="/contact" className="text-primary-500 underline">contact page</Link>.
                   </p>
                 </div>
               </div>

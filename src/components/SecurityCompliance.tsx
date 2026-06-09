@@ -1,52 +1,35 @@
-import { Shield, Lock, CheckCircle } from 'lucide-react';
-
 export default function SecurityCompliance() {
-    return (
-        <section className="py-16 bg-white border-y border-gray-100">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+  const badges = [
+    { title: 'APRA Regulated', desc: 'Authorised Deposit-taking Institution' },
+    { title: 'AES-256 Encryption', desc: 'Bank-grade data security' },
+    { title: 'PCI-DSS Compliant', desc: 'Payment industry standards' },
+  ];
 
-                    <div className="md:w-1/3 text-center md:text-left">
-                        <h2 className="text-2xl font-bold text-navy-900 mb-4">Security & Compliance</h2>
-                        <p className="text-gray-600">
-                            Operating at the highest standards of international banking and legal security to ensure your data and recovered assets are protected.
-                        </p>
-                    </div>
+  return (
+    <section className="py-12 bg-white border-y border-muted-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="text-center md:text-left">
+            <h2 className="text-lg font-bold text-navy-900 mb-1">Security & Compliance</h2>
+            <p className="text-xs text-gray-500">Operating at the highest standards of international banking security.</p>
+          </div>
 
-                    <div className="md:w-2/3 grid grid-cols-1 sm:grid-cols-3 gap-8 w-full">
-                        <div className="flex items-center gap-4 bg-gray-50 p-4 rounded-lg">
-                            <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center flex-shrink-0">
-                                <Shield className="w-6 h-6 text-green-600" />
-                            </div>
-                            <div>
-                                <h4 className="font-bold text-navy-900">GDPR Compliant</h4>
-                                <p className="text-xs text-gray-500">Strict EU data protection</p>
-                            </div>
-                        </div>
-
-                        <div className="flex items-center gap-4 bg-gray-50 p-4 rounded-lg">
-                            <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
-                                <Lock className="w-6 h-6 text-blue-600" />
-                            </div>
-                            <div>
-                                <h4 className="font-bold text-navy-900">AES-256 Crypto</h4>
-                                <p className="text-xs text-gray-500">Bank-grade data transit</p>
-                            </div>
-                        </div>
-
-                        <div className="flex items-center gap-4 bg-gray-50 p-4 rounded-lg">
-                            <div className="w-12 h-12 bg-primary-50 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 border border-primary-200">
-                                <CheckCircle className="w-6 h-6 text-primary-600" />
-                            </div>
-                            <div>
-                                <h4 className="font-bold text-navy-900">Regulated Partners</h4>
-                                <p className="text-xs text-gray-500">Tier-1 financial ties</p>
-                            </div>
-                        </div>
-                    </div>
-
+          <div className="grid grid-cols-3 gap-4 w-full md:w-auto">
+            {badges.map((b) => (
+              <div key={b.title} className="flex items-center gap-3 bg-muted-100 px-4 py-3">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="text-primary-500 flex-shrink-0">
+                  <path d="M9 1L2 4v5c0 4.63 3.04 8.94 7 10 3.96-1.06 7-5.37 7-10V4L9 1z" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                  <path d="M6 9l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <div>
+                  <p className="text-xs font-bold text-navy-900 whitespace-nowrap">{b.title}</p>
+                  <p className="text-[10px] text-gray-400 whitespace-nowrap">{b.desc}</p>
                 </div>
-            </div>
-        </section>
-    );
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
