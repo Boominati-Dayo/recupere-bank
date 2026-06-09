@@ -234,7 +234,7 @@ const Header = () => {
             <>
               <Link
                 href="/login"
-                className="inline-flex items-center justify-center rounded-full font-sans text-[11.5px] font-semibold tracking-[0.10em] uppercase px-[22px] h-[40px] bg-transparent border-[1.5px] border-white/55 text-white/88 hover:bg-white/8 hover:border-white/85 hover:text-white hover:-translate-y-[1px] hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] active:translate-y-0 active:shadow-none transition-all duration-180 no-underline whitespace-nowrap"
+                className="inline-flex items-center justify-center rounded-full font-sans text-[11.5px] font-semibold tracking-[0.10em] uppercase px-[22px] h-[40px] bg-transparent border-[1.5px] border-transparent text-white hover:border-white/70 hover:bg-white/8 hover:text-white hover:-translate-y-[1px] hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] active:translate-y-0 active:shadow-none transition-all duration-180 no-underline whitespace-nowrap"
               >
                 Client Login
               </Link>
@@ -317,7 +317,7 @@ const Header = () => {
                 <>
                   <Link
                     href="/login"
-                    className="inline-flex items-center justify-center rounded-full font-sans text-[11.5px] font-bold tracking-[0.12em] uppercase h-[48px] w-full bg-transparent border-[1.5px] border-white/40 text-white/85 hover:bg-white/7 hover:border-white/75 hover:text-white transition-all duration-180 no-underline"
+                    className="inline-flex items-center justify-center rounded-full font-sans text-[11.5px] font-bold tracking-[0.12em] uppercase h-[48px] w-full bg-transparent border-[1.5px] border-transparent text-white hover:border-white/70 hover:bg-white/7 hover:text-white transition-all duration-180 no-underline"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Client Login

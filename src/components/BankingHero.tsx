@@ -1,7 +1,5 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { Shield, Landmark, ArrowRight, Zap, Globe, Lock, TrendingUp, CheckCircle } from 'lucide-react';
-import HeroBg from '@/assets/images_for_pages/homeHero.png';
 
 const stats = [
   { label: 'Assets Under Management', value: '$2.8B+' },
@@ -18,34 +16,40 @@ const portfolioItems = [
 const BankingHero = () => {
   return (
     <section className="relative min-h-[90vh] flex items-center pt-24 pb-12 overflow-hidden bg-navy-950">
-      <div className="absolute inset-0 z-0 bg-black">
-        <Image
-          src={HeroBg}
-          alt="Nexus Banking Background"
-          fill
-          className="object-cover opacity-35"
-          priority
-        />
+      {/* Animated gradient background */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-navy-950 via-navy-900 to-navy-950" />
+        <div className="absolute top-1/4 -left-32 w-[500px] h-[500px] bg-primary-600/10 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '8s' }} />
+        <div className="absolute bottom-1/4 -right-32 w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '6s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary-500/5 rounded-full blur-[150px] animate-pulse" style={{ animationDuration: '10s' }} />
+
+        {/* Geometric grid */}
         <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
+
+        {/* Diagonal accent lines */}
+        <div className="absolute top-0 right-0 w-[400px] h-[1px] bg-gradient-to-r from-transparent via-primary-500/40 to-transparent rotate-12 translate-y-32" />
+        <div className="absolute bottom-0 left-0 w-[300px] h-[1px] bg-gradient-to-r from-transparent via-blue-500/30 to-transparent -rotate-12 -translate-y-32" />
+
+        {/* Gradient fade */}
         <div className="absolute inset-0 bg-gradient-to-b from-navy-950 via-navy-950/60 to-navy-950" />
       </div>
-
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-600/10 rounded-full blur-[120px] -mr-64 -mt-32 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] -ml-40 -mb-40 pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="lg:w-1/2 text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-primary-400 text-xs font-black uppercase tracking-widest mb-8">
-              <Zap className="w-3.5 h-3.5" />
-              APRA Regulated • Sydney, Australia
-            </div>
 
             <h1 className="text-4xl mobile:text-5xl lg:text-7xl font-['Playfair_Display'] font-black text-white leading-[1.1] tracking-tight mb-8">
-              Secure Your{' '}
-              <span className="text-primary-500 italic">Wealth</span>.<br />
-              Master Your{' '}
-              <span className="underline decoration-primary-500/30 underline-offset-8">Future</span>.
+              Fortify Your{' '}
+              <span className="relative">
+                <span className="text-primary-500 italic">Fortune</span>
+                <span className="absolute -bottom-2 left-0 w-full h-[3px] bg-gradient-to-r from-primary-500 to-transparent rounded-full" />
+              </span>
+              .<br />
+              Forge Your{' '}
+              <span className="relative">
+                <span className="text-white underline decoration-primary-500/40 underline-offset-8">Future</span>
+              </span>
+              .
             </h1>
 
             <p className="text-lg mobile:text-xl text-white/60 font-medium mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed">
@@ -92,7 +96,7 @@ const BankingHero = () => {
             <div className="relative z-10">
               {/* Wealth Dashboard Card */}
               <div className="relative z-20 bg-[#111827] border border-white/10 rounded-3xl p-6 mobile:p-10 shadow-2xl shadow-black/50 overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-1 bg-primary-500/50" />
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-500 via-primary-400 to-primary-600/50" />
 
                 <div className="flex justify-between items-start mb-12">
                   <div>
@@ -113,7 +117,7 @@ const BankingHero = () => {
                       </div>
                       <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
                         <div
-                          className={`h-full ${item.color}`}
+                          className={`h-full ${item.color} transition-all duration-1000`}
                           style={{ width: `${item.pct}%` }}
                         />
                       </div>
@@ -137,8 +141,8 @@ const BankingHero = () => {
             {/* Stats Bar */}
             <div className="mt-8 grid grid-cols-3 gap-4">
               {stats.map((stat, i) => (
-                <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center">
-                  <p className="text-lg font-black text-white">{stat.value}</p>
+                <div key={i} className="group bg-white/5 border border-white/10 rounded-2xl p-4 text-center hover:bg-white/[0.07] hover:border-primary-500/30 transition-all duration-300">
+                  <p className="text-lg font-black text-white group-hover:text-primary-400 transition-colors">{stat.value}</p>
                   <p className="text-[8px] text-gray-500 font-bold uppercase tracking-widest mt-1">{stat.label}</p>
                 </div>
               ))}

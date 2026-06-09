@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Link from 'next/link';
-import ImagePlaceholder from './ImagePlaceholder';
 
 const features = [
   {
@@ -57,7 +56,78 @@ const AssetRecoverySection = () => {
           </div>
         </div>
         <div className="px-8 pb-16 lg:px-16 lg:pb-24">
-          <ImagePlaceholder label="Forensic Analysis Lab" dark={false} aspectRatio="aspect-[16/9]" />
+          <svg viewBox="0 0 400 225" className="w-full h-auto rounded">
+            <rect width="400" height="225" fill="#f3f4f6" />
+            <defs>
+              <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#d1d5db" strokeWidth="0.5" />
+              </pattern>
+            </defs>
+            <rect width="400" height="225" fill="url(#grid)" />
+            <rect x="0" y="0" width="400" height="225" fill="none" stroke="#0d1b2e" strokeWidth="4" />
+            <rect x="10" y="10" width="380" height="205" fill="none" stroke="#0d1b2e" strokeWidth="1" rx="2" />
+            <text x="200" y="28" textAnchor="middle" fontFamily="monospace" fontSize="11" fontWeight="800" fill="#0d1b2e" letterSpacing="4">FORENSIC ANALYSIS</text>
+            <line x1="30" y1="40" x2="370" y2="40" stroke="#ee2737" strokeWidth="2" />
+            <g stroke="#0d1b2e" strokeWidth="1.5" fill="none">
+              <circle cx="100" cy="110" r="32" />
+              <circle cx="100" cy="110" r="18" />
+              <line x1="122" y1="132" x2="145" y2="155" />
+            </g>
+            <circle cx="100" cy="110" r="3" fill="#ee2737" />
+            <line x1="80" y1="90" x2="95" y2="105" stroke="#ee2737" strokeWidth="2" />
+            <g fill="#0d1b2e" opacity="0.4">
+              <rect x="60" y="130" width="8" height="8" rx="1" />
+              <rect x="76" y="138" width="8" height="8" rx="1" />
+              <rect x="92" y="130" width="8" height="8" rx="1" />
+              <rect x="108" y="138" width="8" height="8" rx="1" />
+              <rect x="124" y="130" width="8" height="8" rx="1" />
+            </g>
+            <g fill="#0d1b2e">
+              <circle cx="210" cy="90" r="6" />
+              <circle cx="250" cy="75" r="6" />
+              <circle cx="280" cy="95" r="6" />
+              <circle cx="260" cy="125" r="6" />
+              <circle cx="220" cy="120" r="6" />
+            </g>
+            <g stroke="#0d1b2e" strokeWidth="1" opacity="0.5">
+              <line x1="216" y1="90" x2="244" y2="75" />
+              <line x1="256" y1="75" x2="274" y2="95" />
+              <line x1="274" y1="95" x2="260" y2="119" />
+              <line x1="254" y1="125" x2="226" y2="120" />
+              <line x1="220" y1="120" x2="210" y2="96" />
+              <line x1="244" y1="75" x2="210" y2="90" />
+            </g>
+            <circle cx="210" cy="90" r="2.5" fill="#ee2737" />
+            <circle cx="250" cy="75" r="2.5" fill="#ee2737" />
+            <circle cx="280" cy="95" r="2.5" fill="#ee2737" />
+            <circle cx="260" cy="125" r="2.5" fill="#ee2737" />
+            <circle cx="220" cy="120" r="2.5" fill="#ee2737" />
+            <g stroke="#0d1b2e" strokeWidth="1.5" opacity="0.7">
+              <polyline points="200,160 215,173 230,160 245,173 260,160 275,173 290,160" fill="none" />
+              <circle cx="200" cy="160" r="3" fill="#ee2737" />
+              <circle cx="215" cy="173" r="3" fill="#0d1b2e" />
+              <circle cx="230" cy="160" r="3" fill="#ee2737" />
+              <circle cx="245" cy="173" r="3" fill="#0d1b2e" />
+              <circle cx="260" cy="160" r="3" fill="#ee2737" />
+              <circle cx="275" cy="173" r="3" fill="#0d1b2e" />
+              <circle cx="290" cy="160" r="3" fill="#ee2737" />
+            </g>
+            <path d="M 320 55 L 370 55 L 370 100 L 350 115 L 350 135 L 330 135 L 330 115 L 320 100 Z" fill="none" stroke="#0d1b2e" strokeWidth="1.5" />
+            <line x1="330" y1="70" x2="360" y2="70" stroke="#0d1b2e" strokeWidth="1" />
+            <line x1="330" y1="80" x2="360" y2="80" stroke="#0d1b2e" strokeWidth="1" />
+            <line x1="330" y1="90" x2="360" y2="90" stroke="#0d1b2e" strokeWidth="1" />
+            <line x1="340" y1="110" x2="360" y2="110" stroke="#0d1b2e" strokeWidth="1" />
+            <line x1="340" y1="120" x2="360" y2="120" stroke="#0d1b2e" strokeWidth="1" />
+            <line x1="340" y1="130" x2="352" y2="130" stroke="#0d1b2e" strokeWidth="1" />
+            <rect x="325" y="100" width="6" height="15" fill="#ee2737" opacity="0.6" />
+            <g fill="#0d1b2e" opacity="0.25">
+              <rect x="35" y="168" width="6" height="6" rx="1" />
+              <rect x="48" y="180" width="6" height="6" rx="1" />
+              <rect x="61" y="168" width="6" height="6" rx="1" />
+              <rect x="74" y="180" width="6" height="6" rx="1" />
+              <rect x="87" y="168" width="6" height="6" rx="1" />
+            </g>
+          </svg>
         </div>
       </div>
     </section>

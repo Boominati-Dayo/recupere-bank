@@ -1,7 +1,5 @@
 import Link from 'next/link';
 import { ArrowRight, ShieldAlert } from 'lucide-react';
-import ImagePlaceholder from './ImagePlaceholder';
-
 export default function FinalCTA() {
     return (
         <section className="py-24 bg-navy-900 relative overflow-hidden">
