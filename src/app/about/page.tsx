@@ -7,7 +7,7 @@ import JonathanSterlingImg from '@/assets/images_for_pages/leaders/jonathanSterl
 import ElenaRostovaImg from '@/assets/images_for_pages/leaders/Elena Rostova.png';
 import MarcusChenImg from '@/assets/images_for_pages/leaders/Marcus Chen.jpg';
 import LegalOfficeImg from '@/assets/images_for_pages/legalOffice600-800.png';
-import FinancialGraphImg from '@/assets/images_for_pages/financial_graph_600x800.png';
+
 
 export const metadata: Metadata = {
     title: 'About Us | Nexus Banking',
@@ -49,7 +49,7 @@ export default function AboutPage() {
                 <section className="flex flex-col lg:flex-row min-h-screen">
                     <div className="w-full lg:w-[60%] bg-white px-8 md:px-16 lg:px-20 xl:px-24 py-24 lg:py-0 flex flex-col justify-center">
                         <div className="text-[11px] font-bold tracking-[0.25em] text-primary-500 uppercase mb-7">About Nexus</div>
-                        <h1 className="text-6xl md:text-7xl xl:text-[120px] font-black leading-[0.95] tracking-tight text-black mb-7">
+                        <h1 className="text-6xl md:text-7xl xl:text-[120px] font-['Playfair_Display'] font-black leading-[0.95] tracking-tight text-black mb-7">
                             Our Mission.
                         </h1>
                         <div className="w-30 h-[3px] bg-primary-500 mb-7" />
@@ -101,7 +101,7 @@ export default function AboutPage() {
                     <div className="w-full lg:w-1/2 bg-white px-8 md:px-16 lg:px-20 xl:px-24 py-24 flex flex-col justify-center relative overflow-hidden">
                         <span className="absolute top-10 left-16 text-[200px] font-black text-muted-200 leading-none tracking-tight pointer-events-none select-none">01</span>
                         <div className="relative z-10">
-                            <h2 className="text-4xl md:text-5xl xl:text-6xl font-black tracking-tight text-black mb-4">The Origin</h2>
+                            <h2 className="text-4xl md:text-5xl xl:text-6xl font-['Playfair_Display'] font-black tracking-tight text-black mb-4">The Origin</h2>
                             <p className="text-xl font-bold text-secondary-500 mb-7 tracking-tight">Built by Investigators.</p>
                             <p className="text-[15px] leading-relaxed text-gray-600 max-w-[440px]">
                                 Nexus Banking was founded by a coalition of former prosecutors, forensic accountants, and senior banking compliance officers who recognised a critical gap in financial dispute resolution. Frustrated by siloed systems that allowed bad actors to exploit the seams between law enforcement jurisdiction and international banking protocol, our founders built a firm that operates fluently across both worlds — combining investigative rigour with institutional-grade financial authority to recover assets where others simply cannot reach.
@@ -109,13 +109,8 @@ export default function AboutPage() {
                         </div>
                     </div>
                     <div className="w-full lg:w-1/2 bg-muted-400 flex items-center justify-center px-8 py-16">
-                        <div className="grid grid-cols-2 gap-4 w-full max-w-[520px]">
-                            <div className="relative aspect-[4/3] overflow-hidden bg-navy-800">
-                                <Image src={LegalOfficeImg} alt="Legal office" fill className="object-cover" />
-                            </div>
-                            <div className="relative aspect-[4/3] overflow-hidden bg-navy-800 mt-8">
-                                <Image src={FinancialGraphImg} alt="Financial graphs" fill className="object-cover" />
-                            </div>
+                        <div className="relative w-full max-w-[520px] aspect-[4/3] overflow-hidden bg-navy-800">
+                            <Image src={LegalOfficeImg} alt="Nexus Banking legal office" fill className="object-cover" />
                         </div>
                     </div>
                 </section>
@@ -123,8 +118,24 @@ export default function AboutPage() {
                 {/* ─── SECTION 3: TIMELINE ─── */}
                 <section className="py-24 px-8 md:px-16 lg:px-20 xl:px-24 border-t border-muted-400 bg-white">
                     <div className="max-w-6xl mx-auto">
-                        <div className="text-[11px] font-bold tracking-[0.25em] text-primary-500 uppercase mb-[60px]">Our Journey</div>
-                        <div className="relative flex items-center justify-between">
+                        <div className="text-[11px] font-bold tracking-[0.25em] text-primary-500 uppercase mb-10 md:mb-[60px]">Our Journey</div>
+                        {/* Mobile: vertical list */}
+                        <div className="flex md:hidden flex-col gap-0">
+                            {timelinePhases.map((phase, i) => (
+                                <div key={i} className="flex items-start gap-4 pb-8 relative">
+                                    <div className="flex flex-col items-center">
+                                        <div className="w-[18px] h-[18px] bg-secondary-500 rounded-full border-[3px] border-white shadow-[0_0_0_2px_#235ba8] shrink-0 z-10" />
+                                        {i < timelinePhases.length - 1 && <div className="w-[2px] flex-1 bg-primary-500 mt-1" />}
+                                    </div>
+                                    <div className="pt-0.5">
+                                        <div className="text-[11px] font-bold text-secondary-500 tracking-wide mb-1">{phase.label}</div>
+                                        <div className="text-[13px] font-bold text-black tracking-tight">{phase.title}</div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        {/* Desktop: horizontal */}
+                        <div className="hidden md:flex relative items-center justify-between">
                             <div className="absolute left-0 right-0 top-1/2 h-[2px] bg-primary-500 z-0 -translate-y-1/2" />
                             {timelinePhases.map((phase, i) => (
                                 <div key={i} className="relative z-10 flex flex-col items-center flex-1 transition-all hover:-translate-y-1">
@@ -139,7 +150,7 @@ export default function AboutPage() {
 
                 {/* ─── SECTION 4: CORE VALUES ─── */}
                 <section className="py-24 px-8 md:px-16 lg:px-20 xl:px-24 border-t border-muted-400 bg-white">
-                    <h2 className="text-4xl md:text-5xl xl:text-[56px] font-black tracking-tight text-black mb-[60px]">Our Principles</h2>
+                    <h2 className="text-4xl md:text-5xl xl:text-[56px] font-['Playfair_Display'] font-black tracking-tight text-black mb-[60px]">Our Principles</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
                         {values.map((val, i) => (
                             <div
@@ -158,7 +169,7 @@ export default function AboutPage() {
                 {/* ─── SECTION 5: LEADERSHIP ─── */}
                 <section className="flex flex-col lg:flex-row min-h-[580px] border-t border-muted-400">
                     <div className="w-full lg:w-[40%] bg-secondary-500 px-8 md:px-16 lg:px-[72px] py-24 flex flex-col justify-center">
-                        <h2 className="text-4xl md:text-5xl xl:text-[56px] font-black text-white tracking-tight leading-[1.05] mb-6">Leadership Team</h2>
+                        <h2 className="text-4xl md:text-5xl xl:text-[56px] font-['Playfair_Display'] font-black text-white tracking-tight leading-[1.05] mb-6">Leadership Team</h2>
                         <p className="text-base font-light text-white/75 leading-relaxed mb-7">Professionals from law, finance, and forensic intelligence.</p>
                         <p className="text-sm leading-relaxed text-white/60">
                             Each member of the Nexus Banking leadership team brings decades of frontline experience — drawn from international law enforcement agencies, tier-one investment banks, and forensic consultancies — to bear on the most complex financial recovery mandates in the world.
@@ -185,7 +196,7 @@ export default function AboutPage() {
 
                 {/* ─── SECTION 6: GLOBAL NETWORK ─── */}
                 <section className="py-24 px-8 md:px-16 lg:px-20 xl:px-24 border-t border-muted-400 bg-white">
-                    <h2 className="text-4xl md:text-5xl xl:text-[52px] font-black tracking-tight text-black mb-[60px]">Our International Reach</h2>
+                    <h2 className="text-4xl md:text-5xl xl:text-[52px] font-['Playfair_Display'] font-black tracking-tight text-black mb-[60px]">Our International Reach</h2>
                     <div className="flex flex-col lg:flex-row gap-16 lg:gap-20 items-start">
                         <div className="w-full lg:w-[45%]">
                             <svg viewBox="0 0 800 440" className="w-full h-auto">

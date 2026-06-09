@@ -41,7 +41,7 @@ const BankingHero = () => {
               APRA Regulated • Sydney, Australia
             </div>
 
-            <h1 className="text-4xl mobile:text-5xl lg:text-7xl font-black text-white leading-[1.1] tracking-tight mb-8">
+            <h1 className="text-4xl mobile:text-5xl lg:text-7xl font-['Playfair_Display'] font-black text-white leading-[1.1] tracking-tight mb-8">
               Secure Your{' '}
               <span className="text-primary-500 italic">Wealth</span>.<br />
               Master Your{' '}

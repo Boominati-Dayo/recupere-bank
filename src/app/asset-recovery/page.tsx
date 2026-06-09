@@ -67,7 +67,7 @@ export default function AssetRecoveryPage() {
                             <span className="w-8 h-0.5 bg-primary-500" />
                             <span className="text-[11px] font-bold tracking-[0.18em] text-primary-500 uppercase">Asset Recovery</span>
                         </div>
-                        <h1 className="text-5xl md:text-6xl xl:text-7xl font-black leading-[1.04] tracking-tight text-black mb-7 max-w-[600px]">
+                        <h1 className="text-5xl md:text-6xl xl:text-7xl font-['Playfair_Display'] font-black leading-[1.04] tracking-tight text-black mb-7 max-w-[600px]">
                             We Follow The Money.<br />You Get Your Cashback.
                         </h1>
                         <p className="text-base leading-relaxed text-gray-600 max-w-[480px] mb-11">
@@ -184,7 +184,7 @@ export default function AssetRecoveryPage() {
                         <span className="w-7 h-0.5 bg-primary-500" />
                         <span className="text-sm font-bold tracking-widest text-primary-500 uppercase">Our Expertise</span>
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-8">Eligible Recovery Categories</h2>
+                    <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-black tracking-tight mb-8">Eligible Recovery Categories</h2>
                     <div className="mb-10 max-w-4xl">
                         <div className="relative overflow-hidden flex items-center justify-center aspect-[21/6] bg-navy-800">
                             <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
@@ -213,7 +213,7 @@ export default function AssetRecoveryPage() {
                 {/* ─── SECTION 3: TIMELINE ─── */}
                 <section className="py-24 px-8 md:px-16 lg:px-20 border-t border-muted-400 bg-white">
                     <div className="max-w-6xl mx-auto">
-                        <h2 className="text-4xl md:text-[44px] font-black tracking-tight text-center mb-[72px]">How You Get Your Money Back</h2>
+                        <h2 className="text-4xl md:text-[44px] font-['Playfair_Display'] font-black tracking-tight text-center mb-[72px]">How You Get Your Money Back</h2>
                         <div className="relative flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 lg:gap-0 px-0 lg:px-5">
                             <div className="hidden lg:block absolute top-[22px] left-[60px] right-[60px] h-[3px] bg-primary-500 z-10" />
                             {timelineSteps.map((step, i) => (
@@ -276,7 +276,7 @@ export default function AssetRecoveryPage() {
                             className="object-cover opacity-10 pointer-events-none"
                         />
                         <div className="relative z-10">
-                            <h2 className="text-5xl md:text-6xl xl:text-7xl font-black text-white leading-none tracking-tight">Time is<br />Critical.</h2>
+                            <h2 className="text-5xl md:text-6xl xl:text-7xl font-['Playfair_Display'] font-black text-white leading-none tracking-tight">Time is<br />Critical.</h2>
                             <div className="w-30 h-1 bg-primary-500 my-5" />
                             <p className="text-base leading-relaxed text-white/55 max-w-[420px] mb-10">
                                 Scammers move funds across jurisdictions within 72 hours of a transaction. Once assets are layered through multiple exchanges, recovery becomes exponentially harder. Every minute counts.

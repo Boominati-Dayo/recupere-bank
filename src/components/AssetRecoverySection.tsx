@@ -31,7 +31,7 @@ const AssetRecoverySection = () => {
           <span className="w-6 h-px bg-white/30" />
           <span className="text-[10px] font-semibold tracking-[0.22em] uppercase text-white/30">Unique Proposition</span>
         </div>
-        <h2 className="font-playfair text-4xl lg:text-5xl font-black text-white leading-tight tracking-tighter mb-6">
+        <h2 className="font-['Playfair_Display'] text-4xl lg:text-5xl font-black text-white leading-tight tracking-tighter mb-6">
           Banking Meets<br />Cyber Recovery.
         </h2>
         <p className="text-sm leading-relaxed text-white/55 max-w-md mb-11">

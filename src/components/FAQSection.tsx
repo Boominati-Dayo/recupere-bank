@@ -46,7 +46,7 @@ const FAQSection = () => {
             <span className="w-7 h-0.5 bg-primary-500" />
             <span className="text-primary-500 text-xs font-bold tracking-[0.22em] uppercase">Common Questions</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold text-navy-900 font-playfair">
+          <h2 className="text-3xl md:text-5xl font-['Playfair_Display'] font-bold text-navy-900">
             Frequently Asked Questions
           </h2>
         </div>

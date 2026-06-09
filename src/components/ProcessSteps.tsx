@@ -29,7 +29,7 @@ const ProcessSteps = () => {
             <span className="w-7 h-0.5 bg-primary-500" />
             <span className="text-primary-500 text-xs font-bold tracking-[0.22em] uppercase">How It Works</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold text-navy-900 font-playfair leading-tight">
+          <h2 className="text-3xl md:text-5xl font-['Playfair_Display'] font-bold text-navy-900 leading-tight">
             Open an Account in 5 Minutes
           </h2>
         </div>

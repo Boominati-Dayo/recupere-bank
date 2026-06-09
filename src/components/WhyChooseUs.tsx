@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import ImagePlaceholder from './ImagePlaceholder';
 
 const accounts = [
@@ -37,7 +38,7 @@ export default function WhyChooseUs() {
         <span className="text-[10px] font-semibold tracking-[0.22em] uppercase text-white/50 mb-6">
           Account Portfolio
         </span>
-        <h2 className="font-playfair text-3xl lg:text-4xl font-bold text-white leading-tight tracking-tight mb-3">
+        <h2 className="font-['Playfair_Display'] text-3xl lg:text-4xl font-bold text-white leading-tight tracking-tight mb-3">
           Customised Financial Solutions
         </h2>
         <p className="text-sm font-semibold text-white/70 mb-5">
@@ -56,15 +57,22 @@ export default function WhyChooseUs() {
 
       <div className="w-full lg:w-[65%] bg-white px-8 py-16 lg:px-14 lg:py-20 flex flex-col justify-center">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-          {accounts.map((a) => (
-            <div key={a.name} className="border border-muted-400 overflow-hidden hover:-translate-y-1 hover:shadow-lg transition-all">
+          {accounts.map((a, i) => (
+            <motion.div
+              key={a.name}
+              initial={{ opacity: 0, x: i % 2 === 0 ? -60 : 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.4, delay: i * 0.1, ease: 'easeOut' }}
+              className="border border-muted-400 overflow-hidden hover:-translate-y-1 hover:shadow-lg transition-all"
+            >
                 <ImagePlaceholder label={a.img} aspectRatio="aspect-[3/2]" />
                 <div className="px-5 pt-3 pb-4">
                   <h3 className="text-sm font-bold text-navy-900 tracking-wide mb-2">{a.name}</h3>
                   <p className="text-xs leading-relaxed text-gray-400">{a.desc}</p>
                   <div className={`h-1 mt-4 ${a.bar}`} />
                 </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

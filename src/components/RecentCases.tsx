@@ -40,7 +40,7 @@ export default function RecentCases() {
               <span className="w-7 h-0.5 bg-primary-400" />
               <span className="text-primary-400 text-xs font-bold tracking-[0.22em] uppercase">Proven Results</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold text-white font-playfair mb-4">Recent Success Cases</h2>
+            <h2 className="text-3xl md:text-5xl font-['Playfair_Display'] font-bold text-white mb-4">Recent Success Cases</h2>
             <p className="text-white/60 leading-relaxed">
               Our legal and forensic team routinely handles complex international financial fraud. Here are some of our recently closed cases.
             </p>

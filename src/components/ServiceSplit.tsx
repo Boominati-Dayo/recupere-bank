@@ -9,25 +9,25 @@ const services = [
     num: '01',
     title: 'Digital Private Banking',
     desc: 'Full-spectrum private banking entirely online. Secure, compliant, and built for high-net-worth individuals.',
-    href: '/signup',
+    href: '/banking',
   },
   {
     num: '02',
     title: 'Commercial Property & Investment',
     desc: 'Access institutional-grade property financing and structured investment vehicles for portfolio growth.',
-    href: '/services',
+    href: '/banking',
   },
   {
     num: '03',
     title: 'Nexus Safe Vault',
     desc: 'Encrypted digital vault for sensitive assets, documents, and high-value holdings with multi-layer authentication.',
-    href: '/services',
+    href: '/banking',
   },
   {
     num: '04',
     title: 'Multi-Currency Accounts',
     desc: 'Hold, convert and transact in 40+ currencies with competitive FX rates and real-time global settlements.',
-    href: '/signup',
+    href: '/banking',
   },
   {
     num: '05',
@@ -39,7 +39,7 @@ const services = [
     num: '06',
     title: 'Bank-Grade Cyber Security',
     desc: 'AES-256 encryption, biometric authentication, real-time fraud detection, and 24/7 threat monitoring.',
-    href: '/services',
+    href: '/banking',
   },
 ];
 
@@ -51,9 +51,9 @@ const ServiceSplit = () => {
           <span className="w-7 h-0.5 bg-primary-500" />
           <span className="text-primary-500 text-xs font-bold tracking-[0.22em] uppercase">Our Capabilities</span>
         </div>
-        <h2 className="text-3xl md:text-5xl font-bold text-navy-900 font-playfair mb-8 max-w-2xl leading-tight">
-          Institutional Grade Banking Services
-        </h2>
+          <h2 className="text-3xl md:text-5xl font-['Playfair_Display'] font-bold text-navy-900 mb-8 max-w-2xl leading-tight">
+            Institutional Grade Banking Services
+          </h2>
 
         <div className="mb-12 max-w-4xl">
           <ImagePlaceholder label="Private Banking Suite" aspectRatio="aspect-[21/7]" />

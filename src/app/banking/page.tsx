@@ -39,44 +39,7 @@ export default function BankingServicesPage() {
             <div>
                 {/* ─── SECTION 1: HERO SPLIT ─── */}
                 <section className="flex flex-col lg:flex-row min-h-screen">
-                    <div className="w-full lg:w-1/2 bg-white px-8 md:px-16 lg:px-20 xl:px-24 py-24 lg:py-0 flex flex-col justify-center">
-                        <div className="flex items-center gap-3 mb-7">
-                            <span className="w-8 h-0.5 bg-secondary-500" />
-                            <span className="text-[11px] font-bold tracking-[0.22em] text-secondary-500 uppercase">Private Banking</span>
-                        </div>
-                        <h1 className="text-5xl md:text-6xl xl:text-7xl font-['Playfair_Display'] font-black leading-[1.05] tracking-tight text-black mb-3">
-                            Welcome to<br />Nexus Finance
-                        </h1>
-                        <p className="text-2xl md:text-3xl font-['Playfair_Display'] italic text-black/65 leading-tight mb-7">
-                            A Modern, Digital-Only Private Bank.
-                        </p>
-                        <p className="text-[15px] leading-relaxed text-gray-600 max-w-[480px] mb-11">
-                            Built for sustainable commercial growth, secure wealth management, and recovery of funds lost to financial crime.
-                        </p>
-                        <div className="flex flex-wrap gap-4 mb-[52px]">
-                            <Link
-                                href="/signup"
-                                className="bg-secondary-500 hover:bg-[#1a4a8a] text-white text-[13px] font-semibold tracking-wider uppercase px-9 py-4 border-2 border-secondary-500 transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(35,91,168,0.25)]"
-                            >
-                                Open An Account
-                            </Link>
-                            <Link
-                                href="/contact"
-                                className="bg-transparent text-black text-[13px] font-semibold tracking-wider uppercase px-9 py-4 border-2 border-black transition-all hover:bg-black hover:text-white hover:-translate-y-0.5"
-                            >
-                                Contact Private Advisor
-                            </Link>
-                        </div>
-                        <div className="grid grid-cols-2 border-t border-l border-muted-400 max-w-[460px]">
-                            {['Licensed Financial Services', 'AES-256 Security', 'Multi-Currency Banking', 'Wealth Management Experts'].map((item, i) => (
-                                <div key={i} className="text-[11.5px] font-semibold tracking-wide text-gray-600 uppercase px-[18px] py-3.5 border-r border-b border-muted-400">
-                                    {item}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="w-full lg:w-1/2 bg-secondary-500 flex items-center justify-center relative overflow-hidden px-8 py-16 lg:py-0 min-h-[480px]">
+                    <div className="order-2 lg:order-1 w-full lg:w-1/2 bg-secondary-500 flex items-center justify-center relative overflow-hidden px-8 py-16 lg:py-0 min-h-[480px]">
                         <div className="absolute -top-[120px] -right-[120px] w-[400px] h-[400px] rounded-full bg-white/5 pointer-events-none" />
                         <div className="absolute -bottom-20 -left-20 w-[280px] h-[280px] rounded-full bg-white/5 pointer-events-none" />
 
@@ -130,6 +93,43 @@ export default function BankingServicesPage() {
                                 <div className="text-[9px] font-semibold tracking-widest uppercase text-white/40 mb-1">Weekly Performance</div>
                                 <div className="text-[13px] font-bold text-emerald-400">Portfolio +4.2% This Week</div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div className="order-1 lg:order-2 w-full lg:w-1/2 bg-white px-8 md:px-16 lg:px-20 xl:px-24 py-24 lg:py-0 flex flex-col justify-center">
+                        <div className="flex items-center gap-3 mb-7">
+                            <span className="w-8 h-0.5 bg-secondary-500" />
+                            <span className="text-[11px] font-bold tracking-[0.22em] text-secondary-500 uppercase">Private Banking</span>
+                        </div>
+                        <h1 className="text-5xl md:text-6xl xl:text-7xl font-['Playfair_Display'] font-black leading-[1.05] tracking-tight text-black mb-3">
+                            Welcome to<br />Nexus Finance
+                        </h1>
+                        <p className="text-2xl md:text-3xl font-['Playfair_Display'] italic text-black/65 leading-tight mb-7">
+                            A Modern, Digital-Only Private Bank.
+                        </p>
+                        <p className="text-[15px] leading-relaxed text-gray-600 max-w-[480px] mb-11">
+                            Built for sustainable commercial growth, secure wealth management, and recovery of funds lost to financial crime.
+                        </p>
+                        <div className="flex flex-wrap gap-4 mb-[52px]">
+                            <Link
+                                href="/signup"
+                                className="bg-secondary-500 hover:bg-[#1a4a8a] text-white text-[13px] font-semibold tracking-wider uppercase px-9 py-4 border-2 border-secondary-500 transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(35,91,168,0.25)]"
+                            >
+                                Open An Account
+                            </Link>
+                            <Link
+                                href="/contact"
+                                className="bg-transparent text-black text-[13px] font-semibold tracking-wider uppercase px-9 py-4 border-2 border-black transition-all hover:bg-black hover:text-white hover:-translate-y-0.5"
+                            >
+                                Contact Private Advisor
+                            </Link>
+                        </div>
+                        <div className="grid grid-cols-2 border-t border-l border-muted-400 max-w-[460px]">
+                            {['Licensed Financial Services', 'AES-256 Security', 'Multi-Currency Banking', 'Wealth Management Experts'].map((item, i) => (
+                                <div key={i} className="text-[11.5px] font-semibold tracking-wide text-gray-600 uppercase px-[18px] py-3.5 border-r border-b border-muted-400">
+                                    {item}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </section>

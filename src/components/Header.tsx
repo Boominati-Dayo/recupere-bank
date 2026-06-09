@@ -83,10 +83,15 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
+    if (pathname !== '/') {
+      setIsScrolled(true);
+      return;
+    }
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [pathname]);
 
   const fetchNotifications = useCallback(async () => {
     try {
