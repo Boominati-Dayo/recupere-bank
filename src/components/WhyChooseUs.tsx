@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import ImagePlaceholder from './ImagePlaceholder';
 
 const accounts = [
@@ -32,6 +33,15 @@ const accounts = [
 ];
 
 export default function WhyChooseUs() {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent(prev => (prev + 1) % accounts.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="flex flex-col lg:flex-row min-h-[560px]">
       <div className="w-full lg:w-[35%] bg-secondary-500 px-8 py-16 lg:px-14 lg:py-20 flex flex-col justify-center">
@@ -56,23 +66,38 @@ export default function WhyChooseUs() {
       </div>
 
       <div className="w-full lg:w-[65%] bg-white px-8 py-16 lg:px-14 lg:py-20 flex flex-col justify-center">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-          {accounts.map((a, i) => (
+        {/* Mobile: vertical carousel */}
+        <div className="relative lg:hidden min-h-[420px] flex items-center justify-center">
+          <AnimatePresence mode="wait">
             <motion.div
-              key={a.name}
-              initial={{ opacity: 0, x: i % 2 === 0 ? -60 : 60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.4, delay: i * 0.1, ease: 'easeOut' }}
-              className="border border-muted-400 overflow-hidden hover:-translate-y-1 hover:shadow-lg transition-all"
+              key={current}
+              initial={{ opacity: 0, y: 80 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 80 }}
+              transition={{ duration: 0.35, ease: 'easeOut' }}
+              className="w-full border border-muted-400 overflow-hidden"
             >
-                <ImagePlaceholder label={a.img} aspectRatio="aspect-[3/2]" />
-                <div className="px-5 pt-3 pb-4">
-                  <h3 className="text-sm font-bold text-navy-900 tracking-wide mb-2">{a.name}</h3>
-                  <p className="text-xs leading-relaxed text-gray-400">{a.desc}</p>
-                  <div className={`h-1 mt-4 ${a.bar}`} />
-                </div>
+              <ImagePlaceholder label={accounts[current].img} aspectRatio="aspect-[3/2]" />
+              <div className="px-5 pt-3 pb-4">
+                <h3 className="text-sm font-bold text-navy-900 tracking-wide mb-2">{accounts[current].name}</h3>
+                <p className="text-xs leading-relaxed text-gray-400">{accounts[current].desc}</p>
+                <div className={`h-1 mt-4 ${accounts[current].bar}`} />
+              </div>
             </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Desktop: grid */}
+        <div className="hidden lg:grid grid-cols-4 gap-5">
+          {accounts.map((a) => (
+            <div key={a.name} className="border border-muted-400 overflow-hidden hover:-translate-y-1 hover:shadow-lg transition-all">
+              <ImagePlaceholder label={a.img} aspectRatio="aspect-[3/2]" />
+              <div className="px-5 pt-3 pb-4">
+                <h3 className="text-sm font-bold text-navy-900 tracking-wide mb-2">{a.name}</h3>
+                <p className="text-xs leading-relaxed text-gray-400">{a.desc}</p>
+                <div className={`h-1 mt-4 ${a.bar}`} />
+              </div>
+            </div>
           ))}
         </div>
       </div>
