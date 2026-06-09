@@ -8,25 +8,25 @@ import ImagePlaceholder from './ImagePlaceholder';
 const accounts = [
   {
     name: 'Checking',
-    desc: 'Day-to-day transactional account with zero fees and unlimited transfers.',
+    desc: 'Everyday AUD transaction account with zero fees, PayID support, and unlimited Osko transfers.',
     bar: 'bg-primary-500',
     img: 'Checking Account Dashboard',
   },
   {
     name: 'Savings',
-    desc: 'High-yield interest account with flexible deposit and withdrawal terms.',
+    desc: 'High-yield AUD savings account with competitive interest rates and flexible deposit terms.',
     bar: 'bg-emerald-600',
     img: 'Savings Growth Chart',
   },
   {
     name: 'Fixed Deposit',
-    desc: 'Locked-term deposits offering guaranteed returns at competitive rates.',
+    desc: 'Australian dollar term deposits offering guaranteed returns at competitive rates.',
     bar: 'bg-primary-500',
     img: 'Fixed Deposit Term Sheet',
   },
   {
     name: 'Business',
-    desc: 'Corporate-grade account with multi-user access and integrated treasury tools.',
+    desc: 'Corporate AUD account with multi-user access, ABN verification, and integrated treasury tools.',
     bar: 'bg-navy-900',
     img: 'Business Treasury Console',
   },

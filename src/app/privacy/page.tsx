@@ -57,13 +57,13 @@ const PrivacyPage = () => {
                   <li>Process deposits and withdrawals through our banking network</li>
                   <li>Execute and manage asset recovery operations using professional protocols</li>
                   <li>Communicate with you about your account and recovery status</li>
-                  <li>Provide customer support and respond to financial inquiries</li>
+                  <li>Provide customer support and respond to financial enquiries</li>
                   <li>Comply with international banking and recovery regulations</li>
                 </ul>
 
                 <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">3. How Nexus Operates</h2>
                 <p className="text-gray-700 mb-6">
-                  Nexus operates as a specialized bank and recovery agency. We manage your funds through secure
+                  Nexus operates as a specialised bank and recovery agency. We manage your funds through secure
                   financial pathways and leverage our global infrastructure for asset reclamation.
                   Our expert team handles all technical aspects, financial analysis, and recovery operations.
                   Growth is generated through these optimized banking processes and successful reclamation projects.

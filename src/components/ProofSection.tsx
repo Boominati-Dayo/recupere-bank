@@ -43,7 +43,7 @@ const ProofSection = () => {
                             <span className="text-primary-500">Real Recovery.</span>
                         </h2>
                         <p className="text-gray-400 text-lg max-w-lg">
-                            We have successfully recovered millions for victims of investment fraud, crypto scams, and unauthorized banking transactions.
+                            We have successfully recovered millions for victims of investment fraud, crypto scams, and unauthorised banking transactions.
                         </p>
 
                         <div className="bg-navy-800 rounded-2xl p-8 border border-navy-700 shadow-2xl">
@@ -104,7 +104,7 @@ const ProofSection = () => {
                                 <ShieldCheck className="w-10 h-10 text-primary-500 mx-auto mb-3" />
                                 <p className="text-sm text-gray-300">
                                     <span className="font-bold text-white">Verified Authority</span><br />
-                                    We are authorized to interface directly with banking fraud departments.
+                                    We are authorised to interface directly with banking fraud departments.
                                 </p>
                             </div>
                         </div>

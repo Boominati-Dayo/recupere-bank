@@ -59,7 +59,7 @@ const VirtualCardsSection = () => {
     },
     {
       q: "Is it safe to use online?",
-      a: "Absolutely. Virtual cards offer an extra layer of security for your main account. You can set specific spending limits and easily freeze or cancel the card if you suspect any unauthorized activity."
+      a: "Absolutely. Virtual cards offer an extra layer of security for your main account. You can set specific spending limits and easily freeze or cancel the card if you suspect any unauthorised activity."
     },
     {
       q: "Where is the card accepted?",

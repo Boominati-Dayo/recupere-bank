@@ -41,17 +41,17 @@ const DisclaimerPage = () => {
               <div className="prose prose-lg max-w-none text-gray-700">
                 <h2 className="text-2xl font-bold text-navy-900 mb-6 font-playfair">1. No Legal or Financial Advice</h2>
                 <p className="mb-6">
-                  The information provided by Nexus Banking ("Nexus," "we," "us," or "our") on our website is for general informational purposes only. All information is provided in good faith, however, we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information on the site.
+                  The information provided by Nexus Banking Australia ("Nexus," "we," "us," or "our") on our website is for general informational purposes only. All information is provided in good faith, however, we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information on the site. Nexus is not a licensed Australian legal practice and this website does not constitute legal advice.
                 </p>
 
                 <h2 className="text-2xl font-bold text-navy-900 mb-6 font-playfair">2. Asset Recovery Risks</h2>
                 <p className="mb-6">
-                  Asset recovery is a complex process involving cross-border legal and financial protocols. Success is not guaranteed and depends on various factors, including the nature of the scam, the jurisdiction of the funds, and the cooperation of external financial institutions. Past recovery successes do not guarantee future results.
+                  Asset recovery is a complex process involving cross-border legal and financial protocols. Success is not guaranteed and depends on various factors, including the nature of the scam, the jurisdiction of the funds, and the cooperation of external financial institutions. Past recovery successes do not guarantee future results. All recovery services are subject to applicable Australian laws and regulations administered by ASIC and AUSTRAC.
                 </p>
 
                 <h2 className="text-2xl font-bold text-navy-900 mb-6 font-playfair">3. Limitation of Liability</h2>
                 <p className="mb-6">
-                  Under no circumstance shall we have any liability to you for any loss or damage of any kind incurred as a result of the use of the site or reliance on any information provided on the site. Your use of the site and your reliance on any information on the site is solely at your own risk.
+                  Under no circumstance shall we have any liability to you for any loss or damage of any kind incurred as a result of the use of the site or reliance on any information provided on the site. Your use of the site and your reliance on any information on the site is solely at your own risk. To the extent permitted by Australian Consumer Law, all liability is excluded.
                 </p>
 
                 <h2 className="text-2xl font-bold text-navy-900 mb-6 font-playfair">4. External Links Disclaimer</h2>
@@ -61,7 +61,7 @@ const DisclaimerPage = () => {
 
                 <h2 className="text-2xl font-bold text-navy-900 mb-6 font-playfair">5. Professional Disclaimer</h2>
                 <p className="mb-6">
-                  Nexus operates as a specialized legal and financial entity. While we employ forensic accountants and legal specialists, our services should not be seen as a replacement for independent legal counsel or financial planning. We encourage you to consult with independent professionals before making significant financial decisions.
+                  Nexus operates as a specialised financial services entity under Australian regulatory oversight. While we employ forensic accountants and legal specialists, our services should not be seen as a replacement for independent legal counsel or financial planning. We encourage you to consult with independent professionals before making significant financial decisions.
                 </p>
 
                 <div className="mt-12 p-6 bg-navy-50 rounded-lg border border-primary-200">

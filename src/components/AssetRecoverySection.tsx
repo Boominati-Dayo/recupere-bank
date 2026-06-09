@@ -7,19 +7,19 @@ import ImagePlaceholder from './ImagePlaceholder';
 const features = [
   {
     title: 'Forensic Crypto Tracing',
-    desc: 'Blockchain-level transaction analysis to identify and trace stolen or lost digital assets.',
+    desc: 'Blockchain-level transaction analysis compliant with AUSTRAC guidelines to identify and trace stolen or lost digital assets.',
   },
   {
-    title: 'Offshore Legal Recovery',
-    desc: 'International legal frameworks deployed to recover assets held across jurisdictions.',
+    title: 'ASIC-Regulated Legal Recovery',
+    desc: 'Australian legal frameworks deployed through our ASIC-regulated practice to recover assets held across jurisdictions.',
   },
   {
     title: 'Safe Vault Protection',
-    desc: 'Military-grade encrypted storage for digital assets, credentials, and sensitive documentation.',
+    desc: 'Military-grade encrypted storage for digital assets, credentials, and sensitive documentation — Sydney data centre.',
   },
   {
     title: 'No Upfront Fees',
-    desc: 'Our recovery division operates on a success-based model. You pay only when we deliver results.',
+    desc: 'Our recovery division operates on a success-based model compliant with Australian consumer law. You pay only when we deliver.',
   },
 ];
 

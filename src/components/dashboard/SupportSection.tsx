@@ -161,7 +161,7 @@ const SupportSection = () => {
                   </div>
                   <div>
                     <p className="font-medium text-gray-900 text-sm mobile:text-base">Email Support</p>
-                    <p className="text-xs mobile:text-sm text-gray-600">support@nexusbanking.com</p>
+                    <p className="text-xs mobile:text-sm text-gray-600">support@nexusbanking.com.au</p>
                     <p className="text-[10px] mobile:text-xs text-gray-500">Response within 24 hours</p>
                   </div>
                 </div>
@@ -183,8 +183,8 @@ const SupportSection = () => {
                   </div>
                   <div>
                     <p className="font-medium text-gray-900 text-sm mobile:text-base">Phone Support</p>
-                    <p className="text-xs mobile:text-sm text-gray-600">+381 11 30 20 030</p>
-                    <p className="text-[10px] mobile:text-xs text-gray-500">Mon-Fri 8:00-16:00 CET</p>
+                    <p className="text-xs mobile:text-sm text-gray-600">+61 2 8310 6000</p>
+                    <p className="text-[10px] mobile:text-xs text-gray-500">Mon-Fri 9:00-17:00 AEST</p>
                   </div>
                 </div>
               </div>
@@ -197,9 +197,9 @@ const SupportSection = () => {
                 <div className="flex items-start space-x-2.5 mobile:space-x-3">
                   <MapPin className="w-4 h-4 mobile:w-5 mobile:h-5 text-gray-400 mt-1 shrink-0" />
                   <div>
-                    <p className="font-medium text-gray-900 text-sm mobile:text-base">Nexus JSC Belgrade</p>
-                    <p className="text-xs mobile:text-sm text-gray-600">Bulevar Mihajla Pupina 115Đ</p>
-                    <p className="text-xs mobile:text-sm text-gray-600">Beograd, Serbia</p>
+                    <p className="font-medium text-gray-900 text-sm mobile:text-base">Nexus Banking Australia</p>
+                    <p className="text-xs mobile:text-sm text-gray-600">Sydney, NSW 2000</p>
+                    <p className="text-xs mobile:text-sm text-gray-600">Australia</p>
                   </div>
                 </div>
 
@@ -207,7 +207,7 @@ const SupportSection = () => {
                   <Clock className="w-4 h-4 mobile:w-5 mobile:h-5 text-gray-400 mt-1 shrink-0" />
                   <div>
                     <p className="font-medium text-gray-900 text-sm mobile:text-base">Business Hours</p>
-                    <p className="text-xs mobile:text-sm text-gray-600">Monday - Friday: 08:00 – 16:00h</p>
+                    <p className="text-xs mobile:text-sm text-gray-600">Monday - Friday: 09:00 – 17:00 AEST</p>
                     <p className="text-xs mobile:text-sm text-gray-600">Saturday - Sunday: Closed</p>
                   </div>
                 </div>

@@ -87,7 +87,7 @@ const Footer = () => {
                 </div>
               </Link>
               <p className="text-[13.5px] font-normal leading-[1.78] text-[#cfd6e0]/75 max-w-[295px] mb-7">
-                We are the bridge between financial loss and legal recovery. Nexus combines the power of a specialized law firm with the security of a chartered bank to fight for what belongs to you.
+                We are the bridge between financial loss and legal recovery. Nexus combines the power of a specialised law firm with the security of an APRA-regulated Australian bank to fight for what belongs to you.
               </p>
               <div className="flex gap-[10px]">
                 {[
@@ -209,7 +209,7 @@ const Footer = () => {
             </div>
 
             <p className="text-[12.5px] font-normal leading-[1.75] text-[#cfd6e0] text-center max-w-[340px] mb-7 opacity-82">
-              Nexus Banking provides authorised financial services and legal representation for asset recovery, international wire transfers, and institutional banking solutions worldwide.
+              Nexus Banking (Australia) provides APRA-regulated financial services and ASIC-authorised legal representation for asset recovery, international wire transfers, and institutional banking solutions worldwide.
             </p>
 
             <div className="w-[60px] h-[2px] bg-primary-500 rounded-full mb-11 shadow-[0_0_10px_rgba(238,39,55,0.45)]" />
@@ -310,8 +310,8 @@ const Footer = () => {
 
             <div className="flex flex-col items-center gap-4 w-full">
               <p className="text-[11px] font-normal text-[#cfd6e0]/45 text-center leading-[1.7] tracking-[0.02em]">
-                &copy; {currentYear} Nexus Banking.<br />
-                Authorized Financial Institution & Legal Representative.
+                &copy; {currentYear} Nexus Banking Australia.<br />
+                APRA-Regulated | ASIC-Authorised | AUSTRAC Compliant.
               </p>
               <nav className="flex items-center gap-0 flex-wrap justify-center" aria-label="Legal links">
                 <Link href="/privacy" className="text-[10.5px] font-medium text-[#cfd6e0]/35 no-underline tracking-[0.04em] px-[10px] py-[4px] hover:text-[#cfd6e0]/80 transition-colors duration-200">Privacy Policy</Link>
@@ -328,7 +328,7 @@ const Footer = () => {
 
         <div className="hidden mobile:flex relative z-1 max-w-[1400px] mx-auto px-10 py-5 pb-6 items-center justify-between">
           <p className="text-[12px] font-normal text-[#cfd6e0]/50 tracking-[0.01em]">
-            &copy; {currentYear} Nexus Banking. Authorized Financial Institution & Legal Representative.
+            &copy; {currentYear} Nexus Banking Australia. APRA-Regulated | ASIC-Authorised | AUSTRAC Compliant.
           </p>
           <ul className="flex items-center gap-0 list-none">
             {[

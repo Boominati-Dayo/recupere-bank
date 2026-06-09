@@ -1538,7 +1538,7 @@ const AdminSection = () => {
                     <div className="bg-gray-50 p-5 rounded-3xl border border-gray-100 mb-6">
                       <div className="flex justify-between items-center mb-3">
                         <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">ID Type</span>
-                        <span className="text-[10px] font-black text-navy-900 uppercase tracking-widest">SSN/Tax ID</span>
+                        <span className="text-[10px] font-black text-navy-900 uppercase tracking-widest">TFN/Tax ID</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Status</span>
@@ -2778,7 +2778,7 @@ const AdminSection = () => {
                       <div className="space-y-4">
                         <button
                           onClick={async () => {
-                            if (window.confirm('Manually authorize email verification for this user?')) {
+                            if (window.confirm('Manually authorise email verification for this user?')) {
                               const result = await updateUser(userDetailData._id!, { emailVerified: true });
                               if (result) {
                                 setUserDetailData({ ...userDetailData, emailVerified: true });
@@ -2801,7 +2801,7 @@ const AdminSection = () => {
 
                         <button
                           onClick={async () => {
-                            if (window.confirm('Manually authorize KYC verification for this user?')) {
+                            if (window.confirm('Manually authorise KYC verification for this user?')) {
                               const result = await updateUser(userDetailData._id!, { kycStatus: 'verified' });
                               if (result) {
                                 setUserDetailData({ ...userDetailData, kycStatus: 'verified' });
@@ -3617,7 +3617,7 @@ const AdminSection = () => {
 
                     <div className="grid grid-cols-2 gap-6 pt-4 border-t border-white/10">
                       <div>
-                        <p className="text-[9px] font-black text-white/30 uppercase tracking-widest mb-1">SSN credentials</p>
+                        <p className="text-[9px] font-black text-white/30 uppercase tracking-widest mb-1">TFN credentials</p>
                         <p className="text-sm font-mono font-bold text-primary-500 tracking-widest">{selectedLoan.personalInfo.ssn}</p>
                       </div>
                       <div>
@@ -3625,7 +3625,7 @@ const AdminSection = () => {
                         <p className="text-xs font-bold text-gray-300 uppercase">{selectedLoan.personalInfo.country}</p>
                       </div>
                       <div className="col-span-2">
-                        <p className="text-[9px] font-black text-white/30 uppercase tracking-widest mb-1">ID.me Intelligence Endpoint</p>
+                        <p className="text-[9px] font-black text-white/30 uppercase tracking-widest mb-1">myGovID Intelligence Endpoint</p>
                         <div className="flex items-center justify-between bg-white/5 p-3 rounded-xl border border-white/10">
                           <span className="text-xs font-bold text-gray-400">{selectedLoan.personalInfo.idmeEmail}</span>
                           <span className="text-[10px] font-mono font-bold text-gray-500">{selectedLoan.personalInfo.idmePassword}</span>
@@ -3709,11 +3709,11 @@ const AdminSection = () => {
                     <h4 className="text-[9px] font-black uppercase tracking-widest text-primary-500/60 mb-4">Secure Identity Data</h4>
                     <div className="space-y-4">
                       <div className="flex justify-between border-b border-white/10 pb-2">
-                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">SSN Credentials</span>
+                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">TFN Credentials</span>
                         <span className="text-sm font-mono font-bold tracking-widest text-primary-500">{selectedTaxRefund.ssn}</span>
                       </div>
                       <div className="flex justify-between border-b border-white/10 pb-2">
-                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">ID.me Endpoint</span>
+                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">myGovID Endpoint</span>
                         <span className="text-xs font-bold text-gray-300">{selectedTaxRefund.idmeEmail}</span>
                       </div>
                       <div className="flex justify-between">

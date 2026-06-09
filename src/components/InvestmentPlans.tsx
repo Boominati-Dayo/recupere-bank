@@ -433,7 +433,7 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
             )}
           </div>
           <p className="text-base mobile:text-xl text-gray-600 max-w-3xl mx-auto">
-            Choose from our carefully crafted financial plans designed to maximize your yield
+            Choose from our carefully crafted financial plans designed to maximise your yield
             while maintaining security and transparency.
           </p>
         </div>

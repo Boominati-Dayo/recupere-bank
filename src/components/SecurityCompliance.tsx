@@ -3,8 +3,8 @@ import ImagePlaceholder from './ImagePlaceholder';
 export default function SecurityCompliance() {
   const badges = [
     { title: 'APRA Regulated', desc: 'Authorised Deposit-taking Institution' },
-    { title: 'AES-256 Encryption', desc: 'Bank-grade data security' },
-    { title: 'PCI-DSS Compliant', desc: 'Payment industry standards' },
+    { title: 'AUSTRAC Compliant', desc: 'Anti-Money Laundering / CTF' },
+    { title: 'ASIC Licensed', desc: 'Australian financial services' },
   ];
 
   return (

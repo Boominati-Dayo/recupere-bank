@@ -22,12 +22,12 @@ export default function FinalCTA() {
                 </h2>
 
                 <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
-                    Don't wait. Fraudulent entities move funds quickly across offshore accounts. The sooner our forensic team is involved, the higher your chances of complete recovery.
+                    Don't wait. Scammers move funds through Australian and offshore accounts within hours. The sooner our forensic team is involved, the higher your chances of complete recovery under Australian law.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <Link
-                        href="/asset-recovery"
+                        href="/asset-recovery/report"
                         className="flex items-center gap-2 bg-primary-500 hover:bg-primary-400 text-navy-900 font-bold px-8 py-4 rounded-lg transition-transform hover:-translate-y-1 w-full sm:w-auto justify-center shadow-lg shadow-primary-500/20"
                     >
                         Start Your Claim Now
@@ -35,7 +35,7 @@ export default function FinalCTA() {
                     </Link>
                     <div className="text-sm text-gray-400 mt-4 sm:mt-0 sm:ml-4 text-center sm:text-left">
                         <span className="block text-white font-semibold">Free Evaluation</span>
-                        No upfront legal fees.
+                        No upfront legal fees — ACCC endorsed.
                     </div>
                 </div>
             </div>

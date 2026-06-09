@@ -147,7 +147,7 @@ const SettingsSection = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ee2737] focus:border-transparent"
               >
                 <option value="">Select Country</option>
-                <option value="US">Australia</option>
+                <option value="AU">Australia</option>
                 <option value="CA">Canada</option>
                 <option value="UK">United Kingdom</option>
                 <option value="AU">Australia</option>

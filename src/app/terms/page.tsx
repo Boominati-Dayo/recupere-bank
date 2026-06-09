@@ -41,7 +41,7 @@ const TermsPage = () => {
               <div className="prose prose-lg max-w-none">
                 <h2 className="text-3xl font-bold text-gray-900 mb-6">1. About Nexus</h2>
                 <p className="text-gray-700 mb-6">
-                  Nexus is a specialized financial institution and asset recovery agency that facilitates secure banking
+                  Nexus is a specialised financial institution and asset recovery agency that facilitates secure banking
                   operations and fund reclamation. We manage your financial assets through regulated banking procedures and
                   leverage our global network for efficient asset recovery. Our expert team handles all financial analysis,
                   security monitoring, and reclamation operations. You simply choose a financial plan, deposit your funds,
@@ -70,7 +70,7 @@ const TermsPage = () => {
                 <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">3. How Your Assets Grow</h2>
                 <p className="text-gray-700 mb-6">
                   Nexus manages your funds through high-efficiency banking operations and asset recovery strategies.
-                  We strategically allocate resources to ensure stable growth and maximize the success of reclamation activities.
+                  We strategically allocate resources to ensure stable growth and maximise the success of reclamation activities.
                   Your account balance grows through these secure banking processes and professional recovery operations.
                   We then return your funds with the agreed-upon yield based on the plan you selected. This creates a
                   secure environment where you benefit from our banking expertise and global recovery network without

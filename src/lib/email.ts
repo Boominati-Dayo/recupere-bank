@@ -484,7 +484,7 @@ export const emailTemplates = {
     html: getBaseTemplate(
       'Authorized Intelligence Response',
       `
-      <p>A secure response has been authorized for your inquiry: <strong>${subject}</strong></p>
+      <p>A secure response has been authorised for your enquiry: <strong>${subject}</strong></p>
       <div style="background-color: #f9fafb; padding: 25px; border-radius: 12px; border: 1px solid #e5e7eb; margin: 30px 0;">
         <p style="margin: 0; font-size: 15px; color: #111827; line-height: 1.6;">${reply}</p>
       </div>
@@ -551,7 +551,7 @@ export const emailTemplates = {
     html: getBaseTemplate(
       'Forensic Case Intelligence Update',
       `
-      <p>An authorized update has been posted to your recovery case timeline.</p>
+      <p>An authorised update has been posted to your recovery case timeline.</p>
       <table class="data-table">
         <tr><td>Claim Number:</td><td class="highlight">${claimNumber}</td></tr>
         <tr><td>New Status:</td><td>${status.toUpperCase().replace('_', ' ')}</td></tr>

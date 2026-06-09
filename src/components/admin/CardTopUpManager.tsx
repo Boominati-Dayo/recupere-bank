@@ -90,7 +90,7 @@ const CardTopUpManager = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h2 className="text-xl font-bold text-navy-900 uppercase tracking-tighter">Card Liquidity Queue</h2>
-          <p className="text-sm text-gray-500 font-medium">Verify and authorize manual card top-up requests</p>
+          <p className="text-sm text-gray-500 font-medium">Verify and authorise manual card top-up requests</p>
         </div>
         <button
           onClick={fetchRequests}

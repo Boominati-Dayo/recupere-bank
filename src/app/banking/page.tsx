@@ -20,17 +20,17 @@ const services = [
 ];
 
 const accounts = [
-    { name: 'Checking', desc: 'Day-to-day transactional account with zero fees and unlimited transfers.', bar: 'bg-secondary-500' },
-    { name: 'Savings', desc: 'High-yield interest account with flexible deposit and withdrawal terms.', bar: 'bg-emerald-600' },
-    { name: 'Fixed Deposit', desc: 'Locked-term deposits offering guaranteed returns at competitive rates.', bar: 'bg-primary-500' },
-    { name: 'Business', desc: 'Corporate-grade account with multi-user access and integrated treasury tools.', bar: 'bg-black' },
+    { name: 'Checking', desc: 'Everyday AUD transaction account with zero fees, PayID support, and unlimited Osko transfers.', bar: 'bg-secondary-500' },
+    { name: 'Savings', desc: 'High-yield AUD savings account with competitive interest rates and flexible deposit terms.', bar: 'bg-emerald-600' },
+    { name: 'Fixed Deposit', desc: 'AUD term deposits offering guaranteed returns at competitive rates — FCS protected.', bar: 'bg-primary-500' },
+    { name: 'Business', desc: 'Corporate AUD account with multi-user access, ABN verification, and integrated treasury tools.', bar: 'bg-black' },
 ];
 
 const features = [
-    { title: 'Forensic Crypto Tracing', desc: 'Blockchain-level transaction analysis to identify and trace stolen or lost digital assets.' },
-    { title: 'Offshore Legal Recovery', desc: 'International legal frameworks deployed to recover assets held across jurisdictions.' },
-    { title: 'Safe Vault Protection', desc: 'Military-grade encrypted storage for digital assets, credentials, and sensitive documentation.' },
-    { title: 'No Upfront Fees', desc: 'Our recovery division operates on a success-based model. You pay only when we deliver results.' },
+    { title: 'Forensic Crypto Tracing', desc: 'AUSTRAC-compliant blockchain transaction analysis to identify and trace stolen digital assets.' },
+    { title: 'ASIC-Regulated Legal Recovery', desc: 'Australian legal frameworks deployed through our ASIC-regulated practice to recover assets across jurisdictions.' },
+    { title: 'Safe Vault Protection', desc: 'Military-grade encrypted storage for digital assets, credentials, and sensitive documentation — Sydney data centre.' },
+    { title: 'No Upfront Fees', desc: 'Our recovery division operates on a success-based model compliant with Australian consumer law. You pay only when we deliver.' },
 ];
 
 export default function BankingServicesPage() {
@@ -55,8 +55,8 @@ export default function BankingServicesPage() {
                             <div className="w-[280px] bg-[#0d1117] rounded-[36px] border-2 border-[#2a2a2a] px-[22px] pt-7 pb-7 shadow-[0_40px_80px_rgba(0,0,0,0.5),0_0_0_6px_#1a1d22] relative mx-auto">
                                 <div className="w-20 h-2.5 bg-[#1a1d22] rounded-[10px] mx-auto mb-6" />
                                 <div className="text-[10px] font-medium tracking-widest text-white/45 uppercase mb-1">Total Portfolio Balance</div>
-                                <div className="text-[36px] font-bold text-white tracking-tight mb-1">$2,847,300</div>
-                                <div className="text-[11px] text-white/40 mb-5">+$48,220 this month</div>
+                                <div className="text-[36px] font-bold text-white tracking-tight mb-1">AUD $2,847,300</div>
+                                <div className="text-[11px] text-white/40 mb-5">+AUD $48,220 this month</div>
 
                                 <svg className="w-full h-[60px] mb-[22px]" viewBox="0 0 236 60" fill="none">
                                     <defs>
@@ -72,9 +72,9 @@ export default function BankingServicesPage() {
                                 <div className="h-px bg-white/10 mb-3.5" />
 
                                 {[
-                                    { name: 'Private Savings', type: 'Wealth Account', amount: '$1,240,000', change: '+2.3%' },
-                                    { name: 'Fixed Deposit', type: 'Term Account', amount: '$800,000', change: '+1.8%' },
-                                    { name: 'FX Multi-Currency', type: 'Business Account', amount: '$807,300', change: '+3.7%' },
+                                    { name: 'Private Savings', type: 'Wealth Account', amount: 'AUD $1,240,000', change: '+2.3%' },
+                                    { name: 'Fixed Deposit', type: 'Term Account', amount: 'AUD $800,000', change: '+1.8%' },
+                                    { name: 'FX Multi-Currency', type: 'Business Account', amount: 'AUD $807,300', change: '+3.7%' },
                                 ].map((row, i) => (
                                     <div key={i} className="flex justify-between items-center py-[9px] border-b border-white/5 last:border-none">
                                         <div>
@@ -215,7 +215,7 @@ export default function BankingServicesPage() {
                         <div className="flex flex-col lg:flex-row items-stretch gap-0">
                             {[
                                 { num: '01', title: 'Submit Documents', desc: 'Upload government-issued identification and proof of address securely through our encrypted client portal.' },
-                                { num: '02', title: 'KYC Verification', desc: 'Our compliance team conducts fast, thorough identity verification in line with international AML standards.' },
+                                { num: '02', title: 'KYC Verification', desc: 'AUSTRAC-compliant identity verification conducted by our Australian compliance team in line with local AML/CTF regulations.' },
                                 { num: '03', title: 'Deposit & Grow', desc: 'Fund your account and immediately access the full suite of Nexus banking, investment, and security services.' },
                             ].map((step, i) => (
                                 <React.Fragment key={step.num}>

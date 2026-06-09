@@ -11,7 +11,7 @@ const steps = [
   {
     num: '02',
     title: 'KYC Verification',
-    desc: 'Our compliance team conducts fast, thorough identity verification in line with international AML standards.',
+    desc: 'AUSTRAC-compliant identity verification conducted by our Australian compliance team in line with local AML/CTF regulations.',
   },
   {
     num: '03',

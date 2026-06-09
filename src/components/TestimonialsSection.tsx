@@ -22,26 +22,26 @@ const testimonialData: TestimonialData[] = [
   {
     image: Proof1,
     title: 'Crypto Romance Recovery',
-    tag: 'Case Log #4492 - $85,000 Recovered',
-    description: 'User lost their life savings to a "Liquidity Mining" scam. Nexus traced the funds across three international exchanges, issued a legal freeze, and successfully repatriated $85,400 within 14 days.'
+    tag: 'Case Log #4492 - AUD $85,000 Recovered',
+    description: 'Australian victim lost their life savings to a "Liquidity Mining" scam. Nexus traced the funds across three international exchanges, issued a legal freeze via Australian courts, and successfully repatriated AUD $85,400 within 14 days.'
   },
   {
     image: Proof2,
     title: 'BEC Bank Wire Fraud',
-    tag: 'Case Log #5102 - $120,000 Recovered',
-    description: 'A business owner was targeted by a Business Email Compromise scam. $120,000 was diverted to a rogue offshore account. Our team intervened with the receiving bank, stopping the cash-out and reversing the wire.'
+    tag: 'Case Log #5102 - AUD $120,000 Recovered',
+    description: 'An Australian business owner was targeted by a Business Email Compromise scam. AUD $120,000 was diverted to a rogue offshore account. Our team intervened with the receiving bank under the ePayments Code, stopping the cash-out and reversing the wire.'
   },
   {
     image: Proof3,
     title: 'Phishing Asset Reclamation',
     tag: 'Case Log #3981 - Full Payout Secured',
-    description: 'After a sophisticated phishing attack drained a client\'s safe vault, Nexus\'s forensic accountants provided incontrovertible evidence of illegal access, forcing the custodial platform to honor a full loss reimbursement.'
+    description: 'After a sophisticated phishing attack drained an Australian client\'s safe vault, Nexus\'s forensic accountants provided incontrovertible evidence of illegal access, forcing the custodial platform to honour a full loss reimbursement.'
   },
   {
     image: Proof4,
-    title: 'Unauthorized Leverage Debt',
-    tag: 'Case Log #4220 - $35,000 Debt Expunged',
-    description: 'Identity theft led to $35,000 in fraudulent loan applications. Our legal division successfully expunged the illegitimate debts and fully restored the client\'s credit standing with major financial bureaus.'
+    title: 'Identity Theft Debt Expunged',
+    tag: 'Case Log #4220 - AUD $35,000 Debt Expunged',
+    description: 'Identity theft led to AUD $35,000 in fraudulent loan applications against an Australian consumer. Our legal division successfully expunged the illegitimate debts and fully restored the client\'s credit standing with major Australian financial bureaux.'
   }
 ];
 
@@ -82,7 +82,7 @@ const TestimonialsSection = () => {
               transition={{ duration: 0.4, ease: "easeOut" }}
               className="w-full"
             >
-              <div className="bg-white rounded-[3rem] overflow-hidden shadow-2xl border border-gray-100 flex flex-col md:flex-row min-h-[500px]">
+              <div className="bg-white overflow-hidden shadow-2xl border border-gray-100 flex flex-col md:flex-row min-h-[500px]">
                 {/* Visual Proof Side */}
                 <div className="w-full md:w-3/5 relative min-h-[400px] bg-gray-100 p-6">
                   <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl bg-white border border-gray-200">

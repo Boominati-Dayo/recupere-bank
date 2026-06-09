@@ -14,25 +14,25 @@ const categories = [
     {
         number: '01',
         title: 'Crypto Wealth Recovery',
-        description: 'Tracing lost, stolen, or fraudulently transferred digital assets across Bitcoin, Ethereum, and emerging chain networks using on-chain analytics.',
+        description: 'Tracing lost, stolen, or fraudulently transferred digital assets across Bitcoin, Ethereum, and emerging chain networks — AUSTRAC compliant.',
         redBorder: true,
     },
     {
         number: '02',
         title: 'Forex & Investment Fraud',
-        description: 'Recovering capital lost to unlicensed brokers, clone firms, and false trading platforms operating under fictitious regulatory cover.',
+        description: 'Recovering capital lost to unlicensed brokers, clone firms, and false trading platforms targeting Australian investors via social media.',
         redBorder: false,
     },
     {
         number: '03',
         title: 'Romance & Social Engineering',
-        description: 'Identifying perpetrators and recovering funds extracted through emotionally manipulative schemes, pig-butchering, and trust-based fraud networks.',
+        description: 'Identifying perpetrators and recovering funds extracted through emotionally manipulative schemes, pig-butchering, and trust-based fraud networks targeting Australians.',
         redBorder: false,
     },
     {
         number: '04',
         title: 'Phishing & Bank Hacks',
-        description: 'Rapid response to unauthorised account access, credential compromise, and fraudulent wire transfers through coordinated bank-level intervention.',
+        description: 'Rapid response to unauthorised account access, credential compromise, and fraudulent wire transfers through coordinated bank-level intervention under the ePayments Code.',
         redBorder: true,
     },
 ];
@@ -54,7 +54,7 @@ const blockchainNodes = [
     { label: 'DST', sub: 'Target' },
 ];
 
-const trustItems = ['24/7 Response Network', 'Global Recovery Jurisdictions', 'Certified Forensic Team'];
+const trustItems = ['24/7 Australian Response Network', 'ASIC & AUSTRAC Compliant', 'Certified Forensic Team'];
 
 export default function AssetRecoveryPage() {
     return (
@@ -71,7 +71,7 @@ export default function AssetRecoveryPage() {
                             We Follow The Money.<br />You Get Your Cashback.
                         </h1>
                         <p className="text-base leading-relaxed text-gray-600 max-w-[480px] mb-11">
-                            Cyber fraud leaves a trace. We combine intelligence-grade digital forensics with aggressive litigation to secure swift refunds.
+                             Cyber fraud leaves a trace. We combine intelligence-grade digital forensics with aggressive litigation under Australian law to secure swift refunds.
                         </p>
                         <div className="flex flex-wrap gap-4 mb-12">
                             <Link
@@ -248,7 +248,7 @@ export default function AssetRecoveryPage() {
                             Our engagement model is built entirely around your outcome. Nexus Banking assumes full operational cost — forensic analysis, legal filings, and international coordination — with zero upfront charges to you. We only collect a success-based fee when funds are confirmed recovered and returned to your account.
                         </p>
                         <p className="text-[11px] text-gray-400 leading-relaxed max-w-[460px] italic relative z-20">
-                            *Success fees vary between 15–25% depending on case complexity, jurisdiction, and recovery amount. All fee structures are confirmed in writing prior to engagement commencement. Nexus Banking is not a regulated financial institution.
+                            *Success fees vary between 15–25% depending on case complexity, jurisdiction, and recovery amount. All fee structures are confirmed in writing prior to engagement commencement. Nexus Banking operates under Australian regulatory oversight.
                         </p>
                     </div>
                     <div className="w-full lg:w-[40%] bg-primary-500 flex flex-col justify-center items-start px-8 md:px-16 py-20 relative overflow-hidden">
@@ -279,7 +279,7 @@ export default function AssetRecoveryPage() {
                             <h2 className="text-5xl md:text-6xl xl:text-7xl font-['Playfair_Display'] font-black text-white leading-none tracking-tight">Time is<br />Critical.</h2>
                             <div className="w-30 h-1 bg-primary-500 my-5" />
                             <p className="text-base leading-relaxed text-white/55 max-w-[420px] mb-10">
-                                Scammers move funds across jurisdictions within 72 hours of a transaction. Once assets are layered through multiple exchanges, recovery becomes exponentially harder. Every minute counts.
+                                According to the ACCC Scamwatch, Australians lost over $2.7 billion to scams in 2023. Scammers move funds across jurisdictions within hours. Once assets are layered, recovery becomes exponentially harder. Every minute counts.
                             </p>
                             <Link
                                 href="/asset-recovery/report"

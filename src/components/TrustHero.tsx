@@ -56,7 +56,7 @@ const TrustHero = () => {
                         </h1>
 
                         <p className="text-base mobile:text-xl text-gray-300 max-w-lg leading-relaxed">
-                            Banks often refuse to help. We don't. Nexus combines legal force with banking security to recover your lost funds from scams and unauthorized transactions.
+                            Banks often refuse to help. We don't. Nexus combines legal force with banking security to recover your lost funds from scams and unauthorised transactions.
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-3 mobile:gap-4 pt-4">

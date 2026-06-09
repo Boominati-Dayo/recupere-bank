@@ -116,7 +116,7 @@ const FeaturesSection = () => {
             className="text-base mobile:text-xl text-gray-600 max-w-3xl mx-auto"
           >
             Our comprehensive platform provides all the tools and support you need
-            to make informed investment decisions and maximize your returns.
+            to make informed investment decisions and maximise your returns.
           </motion.p>
         </div>
 

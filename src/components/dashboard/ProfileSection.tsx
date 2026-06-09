@@ -259,7 +259,7 @@ const ProfileSection = () => {
                 <div>
                   <h5 className="text-[11px] font-black text-blue-900 uppercase tracking-widest mb-1">Account Information Integrity</h5>
                   <p className="text-[10px] font-bold text-blue-700/70 leading-relaxed uppercase">
-                    To maintain core ledger security and profile integrity, please contact our authorized support team to update any of the personal metrics shown above.
+                    To maintain core ledger security and profile integrity, please contact our authorised support team to update any of the personal metrics shown above.
                   </p>
                 </div>
               </div>

@@ -438,7 +438,7 @@ const RecoveryCaseManager = () => {
                   <div className="p-6 bg-amber-50 rounded-3xl border border-amber-100 flex items-start gap-4">
                     <AlertCircle className="w-6 h-6 text-amber-500 shrink-0 mt-0.5" />
                     <p className="text-[10px] text-amber-900/70 font-bold leading-relaxed uppercase tracking-widest">
-                      Status transitions are logged and visible to the target user. Ensure forensic accuracy before authorizing protocol phase shifts.
+                      Status transitions are logged and visible to the target user. Ensure forensic accuracy before authorising protocol phase shifts.
                     </p>
                   </div>
                 </form>

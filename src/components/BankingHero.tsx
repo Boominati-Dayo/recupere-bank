@@ -10,9 +10,9 @@ const stats = [
 ];
 
 const portfolioItems = [
-  { label: 'Australian Equities', val: '$840,000.00', pct: 65, color: 'bg-primary-500' },
-  { label: 'Fixed Income', val: '$412,000.00', pct: 28, color: 'bg-blue-500' },
-  { label: 'Property REITS', val: '$230,900.00', pct: 45, color: 'bg-emerald-500' },
+  { label: 'Australian Equities', val: 'AUD $840,000', pct: 65, color: 'bg-primary-500' },
+  { label: 'Fixed Income', val: 'AUD $412,000', pct: 28, color: 'bg-blue-500' },
+  { label: 'Property REITS', val: 'AUD $230,900', pct: 45, color: 'bg-emerald-500' },
 ];
 
 const BankingHero = () => {
@@ -97,7 +97,7 @@ const BankingHero = () => {
                 <div className="flex justify-between items-start mb-12">
                   <div>
                     <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">Total Wealth Overview</p>
-                    <h3 className="text-3xl mobile:text-4xl font-black text-white tracking-tighter">$1,482,900.00</h3>
+                    <h3 className="text-3xl mobile:text-4xl font-black text-white tracking-tighter">AUD $1,482,900</h3>
                   </div>
                   <div className="w-12 h-12 rounded-2xl bg-primary-500/10 flex items-center justify-center text-primary-500">
                     <Zap className="w-6 h-6" />

@@ -333,7 +333,7 @@ const ApplyView = ({
                 className="mt-1 w-5 h-5 rounded-lg border-gray-300 text-primary-500 focus:ring-primary-500 transition-all cursor-pointer"
               />
               <span className="text-sm text-gray-500 leading-relaxed group-hover:text-navy-900 transition-colors">
-                I agree to the terms and conditions. By submitting this application, I confirm that all information provided is accurate and complete. I authorize Providential Trust Finance to verify my information and credit history.
+                I agree to the terms and conditions. By submitting this application, I confirm that all information provided is accurate and complete. I authorise Providential Trust Finance to verify my information and credit history.
               </span>
             </label>
           </div>

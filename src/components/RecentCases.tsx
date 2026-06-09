@@ -5,28 +5,28 @@ import ImagePlaceholder from './ImagePlaceholder';
 
 const cases = [
   {
-    type: 'Forensic Bank Levy',
-    scam: 'Unregulated Forex Broker',
+    type: 'ACCC Referral & Bank Freeze',
+    scam: 'Australian Crypto Investment Scam',
     amount: '$1.2M',
     timeframe: '45 Days',
-    location: 'Cyprus',
-    description: 'Successfully froze and repatriated funds from a fraudulent overseas trading platform masquerading as a licensed broker.',
+    location: 'Sydney, NSW',
+    description: 'Successfully froze and repatriated funds from a fraudulent offshore trading platform targeting Australian investors via social media.',
   },
   {
-    type: 'Blockchain Tracing',
-    scam: 'Crypto Liquidity Pool Scam',
-    amount: '24.5 BTC',
+    type: 'Blockchain Tracing & AFSA Order',
+    scam: 'Pig-Butchering Crypto Scam',
+    amount: '$850,000',
     timeframe: '60 Days',
-    location: 'Dubai',
-    description: 'Collaborated with international authorities to track illicit token movements and force settlement via wallet blacklisting.',
+    location: 'Melbourne, VIC',
+    description: 'Collaborated with AUSTRAC and international authorities to track illicit token movements and force settlement via wallet blacklisting.',
   },
   {
     type: 'Wire Recall & Legal Demand',
     scam: 'Romance Investment Fraud',
     amount: '$450,000',
     timeframe: '30 Days',
-    location: 'Singapore',
-    description: 'Intercepted SWIFT transfers early and issued immediate legal demands to the receiving international banking institution.',
+    location: 'Brisbane, QLD',
+    description: 'Intercepted SWIFT transfers early and issued immediate legal demands via the receiving Australian banking institution under the ePayments Code.',
   },
 ];
 

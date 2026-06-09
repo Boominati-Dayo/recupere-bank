@@ -15,9 +15,9 @@ export const metadata: Metadata = {
 };
 
 const team = [
-    { name: 'Jonathan Sterling', role: 'CEO', bio: 'Former Assistant US Attorney with 20 years prosecuting complex financial crime across federal jurisdictions. Sterling architected Nexus Banking\'s legal strategy framework and drives the firm\'s international expansion mandate.', title: 'Jonathan<br>Sterling' },
-    { name: 'Elena Rostova', role: 'Head of Forensic Accounting', bio: 'Previously a Senior Director at a Big Four forensic practice, Elena has led asset-tracing engagements across 30+ jurisdictions involving cumulative losses exceeding $4 billion.', title: 'Elena<br>Rostova' },
-    { name: 'Marcus Chen', role: 'Chief Legal Officer', bio: 'An expert in cross-border banking litigation and international arbitration, Marcus has represented sovereign wealth funds and high-net-worth individuals before leading financial dispute tribunals.', title: 'Marcus<br>Chen' },
+    { name: 'Jonathan Sterling', role: 'CEO', bio: 'Former federal prosecutor with the Commonwealth Director of Public Prosecutions and 20 years prosecuting complex financial crime. Sterling architected Nexus Banking\'s legal strategy framework and drives the firm\'s international expansion from Sydney.', title: 'Jonathan<br>Sterling' },
+    { name: 'Elena Rostova', role: 'Head of Forensic Accounting', bio: 'Previously a Senior Director at a Big Four forensic practice in Sydney, Elena has led asset-tracing engagements across 30+ jurisdictions involving cumulative losses exceeding AUD $4 billion.', title: 'Elena<br>Rostova' },
+    { name: 'Marcus Chen', role: 'Chief Legal Officer', bio: 'An expert in cross-border banking litigation and international arbitration admitted in Australia, Marcus has represented sovereign wealth funds and high-net-worth individuals before leading financial dispute tribunals.', title: 'Marcus<br>Chen' },
 ];
 
 const values = [
@@ -27,11 +27,11 @@ const values = [
 ];
 
 const timelinePhases = [
-    { label: 'Phase I', title: 'Problem Identified' },
-    { label: 'Phase II', title: 'Legal Expertise Assembled' },
-    { label: 'Phase III', title: 'Banking Infrastructure Built' },
+    { label: 'Phase I', title: 'Australian Fraud Gap Identified' },
+    { label: 'Phase II', title: 'Sydney Legal Team Assembled' },
+    { label: 'Phase III', title: 'APRA Banking Infrastructure Built' },
     { label: 'Phase IV', title: 'Global Network Created' },
-    { label: 'Phase V', title: 'Nexus Launch' },
+    { label: 'Phase V', title: 'Nexus Banking Australia Launch' },
 ];
 
 const networkStats = [
@@ -54,7 +54,7 @@ export default function AboutPage() {
                         </h1>
                         <div className="w-30 h-[3px] bg-primary-500 mb-7" />
                         <p className="text-base leading-relaxed text-gray-500 max-w-[500px] mb-10">
-                            We bridge the gap between complex law enforcement and rigid banking systems to recover what rightfully belongs to you.
+                            We bridge the gap between Australian law enforcement and global banking systems to recover what rightfully belongs to you.
                         </p>
                         <div className="flex flex-wrap gap-4 mb-11">
                             <Link
@@ -104,7 +104,7 @@ export default function AboutPage() {
                             <h2 className="text-4xl md:text-5xl xl:text-6xl font-['Playfair_Display'] font-black tracking-tight text-black mb-4">The Origin</h2>
                             <p className="text-xl font-bold text-secondary-500 mb-7 tracking-tight">Built by Investigators.</p>
                             <p className="text-[15px] leading-relaxed text-gray-600 max-w-[440px]">
-                                Nexus Banking was founded by a coalition of former prosecutors, forensic accountants, and senior banking compliance officers who recognised a critical gap in financial dispute resolution. Frustrated by siloed systems that allowed bad actors to exploit the seams between law enforcement jurisdiction and international banking protocol, our founders built a firm that operates fluently across both worlds — combining investigative rigour with institutional-grade financial authority to recover assets where others simply cannot reach.
+                                Nexus Banking was founded in Sydney by a coalition of former prosecutors, forensic accountants, and senior banking compliance officers who recognised a critical gap in Australian financial dispute resolution. Frustrated by siloed systems that allowed bad actors to exploit the seams between ASIC jurisdiction and international banking protocol, our founders built a firm that operates fluently across both worlds — combining investigative rigour with institutional-grade financial authority to recover assets where others simply cannot reach.
                             </p>
                         </div>
                     </div>
@@ -172,7 +172,7 @@ export default function AboutPage() {
                         <h2 className="text-4xl md:text-5xl xl:text-[56px] font-['Playfair_Display'] font-black text-white tracking-tight leading-[1.05] mb-6">Leadership Team</h2>
                         <p className="text-base font-light text-white/75 leading-relaxed mb-7">Professionals from law, finance, and forensic intelligence.</p>
                         <p className="text-sm leading-relaxed text-white/60">
-                            Each member of the Nexus Banking leadership team brings decades of frontline experience — drawn from international law enforcement agencies, tier-one investment banks, and forensic consultancies — to bear on the most complex financial recovery mandates in the world.
+                            Each member of the Nexus Banking leadership team brings decades of frontline experience — drawn from Australian regulatory agencies, tier-one investment banks, and forensic consultancies — to bear on the most complex financial recovery mandates in the world.
                         </p>
                     </div>
                     <div className="w-full lg:w-[60%] bg-white px-8 md:px-16 lg:px-[72px] py-24 flex items-center">
@@ -237,7 +237,7 @@ export default function AboutPage() {
                                 ))}
                             </div>
                             <p className="text-[15px] leading-relaxed text-gray-600 max-w-[540px]">
-                                The Nexus Banking network spans six continents and more than forty legal jurisdictions, anchored by permanent offices in the world&apos;s five most critical financial centres. Our banking relationships cover every major correspondent banking corridor, and our legal affiliates are qualified practitioners in both common law and civil law systems — enabling seamless, enforceable recovery operations wherever your assets reside.
+                                The Nexus Banking network spans six continents and more than forty legal jurisdictions, anchored by our headquarters in Sydney and permanent offices in the world&apos;s five most critical financial centres. Our banking relationships cover every major correspondent banking corridor, and our legal affiliates are qualified practitioners under Australian law and international legal systems — enabling seamless, enforceable recovery operations wherever your assets reside.
                             </p>
                         </div>
                     </div>

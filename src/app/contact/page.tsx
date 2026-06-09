@@ -37,7 +37,7 @@ export default function ContactPage() {
         showError(data.error);
       }
     } catch (err) {
-      showError('Failed to transmit inquiry. Please check your connection.');
+      showError('Failed to transmit enquiry. Please check your connection.');
     } finally {
       setLoading(false);
     }
@@ -51,7 +51,7 @@ export default function ContactPage() {
         <section className="bg-navy-900 text-white py-24 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-navy-900 to-navy-800" />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-navy-800 mb-8 border border-navy-700">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-navy-800 mb-8 border border-navy-700">
               <Lock className="w-8 h-8 text-primary-500" />
             </div>
           <div className="flex items-center justify-center gap-3 mb-6">
@@ -69,7 +69,7 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
 
             {/* Contact Form */}
-            <div className="bg-white p-10 rounded-xl shadow-lg border border-gray-100 relative">
+            <div className="bg-white p-10 shadow-lg border border-gray-100 relative">
               <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
                 <Lock className="w-24 h-24" />
               </div>
@@ -86,7 +86,7 @@ export default function ContactPage() {
                     onClick={() => setSubmitted(false)}
                     className="text-primary-600 font-bold hover:underline"
                   >
-                    Send another inquiry
+                    Send another enquiry
                   </button>
                 </div>
               ) : (
@@ -97,7 +97,7 @@ export default function ContactPage() {
                       <input 
                         required
                         type="text" 
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors" 
+                        className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors" 
                         placeholder="John Doe" 
                         value={formData.name}
                         onChange={(e) => setFormData({...formData, name: e.target.value})}
@@ -108,7 +108,7 @@ export default function ContactPage() {
                       <input 
                         required
                         type="email" 
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors" 
+                        className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors" 
                         placeholder="secure@example.com" 
                         value={formData.email}
                         onChange={(e) => setFormData({...formData, email: e.target.value})}
@@ -118,8 +118,8 @@ export default function ContactPage() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Scam Type</label>
-                    <select 
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none bg-white font-medium"
+                      <select 
+                      className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none bg-white font-medium"
                       value={formData.scamType}
                       onChange={(e) => setFormData({...formData, scamType: e.target.value})}
                     >
@@ -133,10 +133,10 @@ export default function ContactPage() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Estimated Amount Lost</label>
-                    <input 
+                      <input 
                       type="text" 
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors" 
-                      placeholder="$10,000+" 
+                      className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors" 
+                      placeholder="AUD $10,000+" 
                       value={formData.amount}
                       onChange={(e) => setFormData({...formData, amount: e.target.value})}
                     />
@@ -144,10 +144,10 @@ export default function ContactPage() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Initial Case Details</label>
-                    <textarea 
+                      <textarea 
                       required
                       rows={5} 
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors resize-none" 
+                      className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors resize-none" 
                       placeholder="Provide a brief overview of what happened..."
                       value={formData.message}
                       onChange={(e) => setFormData({...formData, message: e.target.value})}
@@ -157,7 +157,7 @@ export default function ContactPage() {
                   <button 
                     disabled={loading}
                     type="submit" 
-                    className="w-full bg-navy-900 hover:bg-navy-800 text-white font-bold py-4 rounded-lg transition-transform hover:-translate-y-1 flex justify-center items-center gap-2 disabled:opacity-70"
+                    className="w-full bg-navy-900 hover:bg-navy-800 text-white font-bold py-4 transition-transform hover:-translate-y-1 flex justify-center items-center gap-2 disabled:opacity-70"
                   >
                     {loading ? (
                       <div className="w-5 h-5 border-2 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
@@ -175,7 +175,7 @@ export default function ContactPage() {
             <div className="space-y-10">
               {/* Emergency Line */}
               <div className="bg-primary-50 p-8 border border-primary-200 flex items-start gap-6">
-                <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                <div className="w-12 h-12 bg-primary-100 flex items-center justify-center flex-shrink-0 mt-1">
                   <ShieldAlert className="w-6 h-6 text-primary-600" />
                 </div>
                 <div>
@@ -192,7 +192,7 @@ export default function ContactPage() {
               {/* General Contact */}
               <div className="space-y-6 pl-4">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-navy-900/5 rounded-full flex items-center justify-center">
+                  <div className="w-12 h-12 bg-navy-900/5 flex items-center justify-center">
                     <Mail className="w-6 h-6 text-navy-900" />
                   </div>
                   <div>
@@ -202,7 +202,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-navy-900/5 rounded-full flex items-center justify-center">
+                  <div className="w-12 h-12 bg-navy-900/5 flex items-center justify-center">
                     <Phone className="w-6 h-6 text-navy-900" />
                   </div>
                   <div>
@@ -213,7 +213,7 @@ export default function ContactPage() {
               </div>
 
               {/* Locations Removed */}
-              <div className="p-8 bg-navy-900 rounded-xl text-white relative overflow-hidden">
+              <div className="p-8 bg-navy-900 text-white relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-4 opacity-5">
                   <Globe className="w-32 h-32 text-primary-500" />
                 </div>

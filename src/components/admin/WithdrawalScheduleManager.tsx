@@ -271,7 +271,7 @@ const WithdrawalScheduleManager = () => {
                   <div>
                     <h4 className="text-sm font-black uppercase tracking-tight">Technical Advisory</h4>
                     <p className="text-[11px] font-bold text-gray-400 mt-2 leading-relaxed uppercase tracking-wide">
-                      Participants will only be authorized to submit disbursement requests during the specified sequence.
+                      Participants will only be authorised to submit disbursement requests during the specified sequence.
                       Base Reference: <span className="text-primary-600 font-black">{schedule.timezone}</span> temporal zone.
                     </p>
                   </div>

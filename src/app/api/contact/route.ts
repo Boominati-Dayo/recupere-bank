@@ -54,7 +54,7 @@ Sent via Nexus Contact Form.
 
     return NextResponse.json({
       success: true,
-      message: 'Your inquiry has been transmitted securely.'
+      message: 'Your enquiry has been transmitted securely.'
     });
 
   } catch (error) {

@@ -95,7 +95,7 @@ const ReferralLogSection = () => {
           </div>
           <div className="text-center p-4 bg-gray-50 rounded-lg">
             <p className="text-2xl font-bold text-gray-900">
-              {loading ? 'Loading...' : `$${(referralStats?.totalEarnings || 0).toFixed(2)}`}
+              {loading ? 'Loading...' : `A$${(referralStats?.totalEarnings || 0).toFixed(2)}`}
             </p>
             <p className="text-sm text-gray-600">Referral Earnings</p>
           </div>

@@ -291,7 +291,7 @@ const DashboardContent = () => {
         setRecentTransactions(result.data.slice(0, 5));
 
         // Calculate Statistics
-        // Include 'pending' from any specialized collection
+        // Include 'pending' from any specialised collection
         const pending = result.data
           .filter((tx: any) => tx.status === 'pending' || tx.status === 'processing' || tx.status === 'in_review')
           .reduce((sum: number, tx: any) => sum + Math.abs(tx.amount || 0), 0);

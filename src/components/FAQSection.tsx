@@ -10,7 +10,7 @@ const FAQSection = () => {
   const faqs = [
     {
       question: 'Is Nexus a Bank or a Law Firm?',
-      answer: 'We are both. Nexus Banking is a fully chartered financial institution that operates an internal specialized legal department. This unique structure allows us to hold your funds securely (like a bank) while having the legal authority to fight for your assets (like a law firm).',
+      answer: 'We are both. Nexus Banking operates an internal specialist legal department alongside regulated financial services. This unique structure allows us to hold your funds securely while having the legal authority to fight for your assets — all under Australian regulatory oversight.',
     },
     {
       question: 'How does the "No Win, No Fee" recovery service work?',
@@ -18,19 +18,19 @@ const FAQSection = () => {
     },
     {
       question: 'Is my money safe with Nexus Banking?',
-      answer: 'Absolutely. All customer deposits in our banking accounts are APRA regulated up to $250,000. Our banking infrastructure is built on military-grade encryption and 24/7 active fraud monitoring.',
+      answer: 'Absolutely. All client deposits are held with APRA-regulated Australian institutions and protected under the Financial Claims Scheme (FCS) up to AUD $250,000. Our infrastructure uses military-grade encryption with 24/7 fraud monitoring from our Sydney security operations centre.',
     },
     {
       question: 'What types of scams can you recover money from?',
-      answer: 'We specialize in recovering funds from Crypto Investment Scams, Romance Scams, Unauthorized Bank Transfers, Credit Card Fraud, and Merchant Disputes. Our legal team has jurisdiction to subpoena banks and exchanges globally.',
+      answer: 'We specialise in recovering funds from crypto investment scams, romance scams, unauthorised bank transfers, credit card fraud, and merchant disputes. Our legal team works closely with Australian authorities including the ACCC, ASIC, and the Australian Cyber Security Centre to pursue perpetrators.',
     },
     {
       question: 'How long does the recovery process take?',
-      answer: 'Simple disputes (like credit card chargebacks) can be resolved in 7-14 days. Complex crypto fraud cases typically take 30-90 days as they require court orders and international cooperation.',
+      answer: 'Simple disputes (like credit card chargebacks via Australian ePayments Code) can be resolved in 7-14 days. Complex crypto fraud cases typically take 30-90 days as they require court orders and international cooperation across jurisdictions.',
     },
     {
       question: 'Can I open a normal bank account without being a scam victim?',
-      answer: 'Yes! You can open a standard Checking or High-Yield Savings account with us at any time. You get the added benefit of our aggressive fraud protection services for free.',
+      answer: 'Yes. You can open a standard Australian transaction or high-yield savings account at any time. Every account comes with our fraud protection services included at no extra cost — designed to meet Australian banking standards.',
     },
   ];
 
