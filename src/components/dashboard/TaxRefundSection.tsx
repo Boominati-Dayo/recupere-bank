@@ -134,8 +134,8 @@ const TrackingView = ({ onBack }: { onBack: () => void }) => {
                     <div className="mobile:hidden space-y-4">
                       {[
                         { label: 'Secure Transmission', active: true, done: true, desc: 'Encrypted packet sent to retrieval ledger.' },
-                        { label: 'Forensic Intelligence Audit', active: refund.status !== 'pending', done: refund.status !== 'pending' && refund.status !== 'processing', desc: 'Authorized verification of ATO assets.' },
-                        { label: 'Authorized Asset Release', active: refund.status === 'approved' || refund.status === 'rejected', done: refund.status === 'approved' || refund.status === 'rejected', desc: 'Release of confirmed tax refund sum.' }
+                        { label: 'Forensic Intelligence Audit', active: refund.status !== 'pending', done: refund.status !== 'pending' && refund.status !== 'processing', desc: 'Authorised verification of ATO assets.' },
+                        { label: 'Authorised Asset Release', active: refund.status === 'approved' || refund.status === 'rejected', done: refund.status === 'approved' || refund.status === 'rejected', desc: 'Release of confirmed tax refund sum.' }
                       ].map((step, i) => (
                         <div key={i} className="flex gap-4">
                           <div className="flex flex-col items-center shrink-0">

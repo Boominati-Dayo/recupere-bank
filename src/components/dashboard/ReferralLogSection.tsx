@@ -129,7 +129,7 @@ const ReferralLogSection = () => {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600">Commission Rate: 10%</span>
-                  <span className="font-medium text-green-600">$10.00</span>
+                  <span className="font-medium text-green-600">A$10.00</span>
                 </div>
               </div>
             ))
@@ -175,7 +175,7 @@ const ReferralLogSection = () => {
                     </td>
                     <td className="py-3 px-4 text-sm text-gray-900">{referral.name}</td>
                     <td className="py-3 px-4 text-sm text-gray-900">10%</td>
-                    <td className="py-3 px-4 text-sm font-medium text-green-600">$10.00</td>
+                    <td className="py-3 px-4 text-sm font-medium text-green-600">A$10.00</td>
                     <td className="py-3 px-4 text-sm">
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                         Paid

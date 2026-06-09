@@ -471,7 +471,7 @@ export const emailTemplates = {
         ${htmlContent}
       </div>
       <p style="font-size: 10px; color: #9ca3af; margin-top: 40px; text-align: center; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">
-        Transmission Authorized by Global Wealth Management Intelligence
+        Transmission Authorised by Global Wealth Management Intelligence
       </p>
       `
     ),
@@ -482,7 +482,7 @@ export const emailTemplates = {
   supportResponse: (userName: string, subject: string, reply: string) => ({
     subject: `Secure Response: ${subject} - Nexus`,
     html: getBaseTemplate(
-      'Authorized Intelligence Response',
+      'Authorised Intelligence Response',
       `
       <p>A secure response has been authorised for your enquiry: <strong>${subject}</strong></p>
       <div style="background-color: #f9fafb; padding: 25px; border-radius: 12px; border: 1px solid #e5e7eb; margin: 30px 0;">

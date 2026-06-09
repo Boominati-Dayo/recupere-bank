@@ -2330,7 +2330,7 @@ const AdminSection = () => {
                   ) : (
                     <ShieldCheck className="w-4 h-4" />
                   )}
-                  <span>{isProcessingPlan ? 'Processing...' : (editingPlan ? 'Overwrite Parameters' : 'Authorize Deployment')}</span>
+                  <span>{isProcessingPlan ? 'Processing...' : (editingPlan ? 'Overwrite Parameters' : 'Authorise Deployment')}</span>
                 </button>
               </div>
             </div>
@@ -3091,7 +3091,7 @@ const AdminSection = () => {
                               ? (paymentMethods.find(m => m._id === (selectedTransaction as any).paymentMethodId)?.name || 'Protocol gateway')
                               : 'Standard Protocol'}
                           </p>
-                          <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Authorized Financial Endpoint</p>
+                          <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Authorised Financial Endpoint</p>
                         </div>
                       </div>
                     </div>
@@ -3202,7 +3202,7 @@ const AdminSection = () => {
                             className="flex-[2] bg-navy-900 hover:bg-navy-800 text-primary-500 px-8 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all shadow-xl shadow-navy-900/10 flex items-center justify-center gap-3"
                           >
                             <CheckCircle className="w-4 h-4" />
-                            {selectedTransaction.status === 'verifying' ? 'Confirm Payment & Credit' : 'Authorize'}
+                            {selectedTransaction.status === 'verifying' ? 'Confirm Payment & Credit' : 'Authorise'}
                           </button>
                         )}
                         {['pending', 'pending_details', 'verifying'].includes(selectedTransaction.status) && (
@@ -3419,7 +3419,7 @@ const AdminSection = () => {
                       className="flex-[2] bg-navy-900 hover:bg-navy-800 text-primary-500 px-8 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all shadow-xl shadow-navy-900/10 flex items-center justify-center gap-3 active:scale-95"
                     >
                       <CheckCircle className="w-5 h-5" />
-                      Authorize Identity
+                      Authorise Identity
                     </button>
                     <button
                       onClick={() => {
@@ -3538,7 +3538,7 @@ const AdminSection = () => {
                       className="flex-[2] bg-navy-900 hover:bg-navy-800 text-primary-500 px-8 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all shadow-xl shadow-navy-900/10 flex items-center justify-center gap-3 active:scale-95"
                     >
                       <CheckCircle className="w-5 h-5" />
-                      Authorize Issuance
+                      Authorise Issuance
                     </button>
                     <button
                       onClick={() => {
@@ -3662,7 +3662,7 @@ const AdminSection = () => {
                       }}
                       className="flex-1 bg-navy-900 hover:bg-navy-800 text-primary-500 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all shadow-xl"
                     >
-                      Authorize Funds
+                      Authorise Funds
                     </button>
                     <button
                       onClick={() => {
@@ -3747,7 +3747,7 @@ const AdminSection = () => {
                       }}
                       className="bg-navy-900 hover:bg-navy-800 disabled:bg-gray-400 disabled:cursor-not-allowed text-primary-500 py-4 rounded-2xl font-black uppercase tracking-widest text-[9px] transition-all shadow-xl"
                     >
-                      Authorize
+                      Authorise
                     </button>
                     <button
                       onClick={() => {
@@ -3871,7 +3871,7 @@ const AdminSection = () => {
                 <div className="flex items-center justify-between mb-8">
                   <div>
                     <h3 className="text-2xl font-black text-navy-900 uppercase tracking-tighter">Manual Balance Adjust</h3>
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">Authorized Financial Override Profile</p>
+                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">Authorised Financial Override Profile</p>
                   </div>
                   <button
                     onClick={() => setShowBalanceAdjustmentModal(false)}
@@ -3935,7 +3935,7 @@ const AdminSection = () => {
                       ) : (
                         <TrendingUp className="w-4 h-4" />
                       )}
-                      <span>Authorize Adjustment</span>
+                      <span>Authorise Adjustment</span>
                     </button>
                   </div>
                 </div>

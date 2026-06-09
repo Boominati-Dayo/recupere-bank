@@ -725,7 +725,7 @@ const VirtualCardsSection = () => {
                     disabled={isToppingUp || parseFloat(topUpAmount) <= 0 || parseFloat(topUpAmount) > (userProfile?.balances?.main || 0)}
                     className="flex-[2] h-14 bg-navy-900 text-primary-500 rounded-xl font-black uppercase tracking-widest hover:bg-navy-800 transition-all shadow-lg shadow-navy-100 disabled:bg-gray-200 disabled:text-gray-400"
                   >
-                    {isToppingUp ? 'Processing...' : 'Authorize'}
+                    {isToppingUp ? 'Processing...' : 'Authorise'}
                   </button>
                 </div>
               </form>

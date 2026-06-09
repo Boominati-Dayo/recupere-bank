@@ -162,7 +162,7 @@ export default function ContactPage() {
                     {loading ? (
                       <div className="w-5 h-5 border-2 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
                     ) : <Lock className="w-4 h-4 text-primary-500" />}
-                    Submit Secure Inquiry
+                    Submit Secure Enquiry
                   </button>
                   <p className="text-xs text-center text-gray-500 mt-4">
                     By submitting, you agree to our strict privacy policy. Information is legally privileged.

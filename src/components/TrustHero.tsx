@@ -97,7 +97,7 @@ const TrustHero = () => {
 
                             <form onSubmit={handleSubmit} className="space-y-4">
                                 <div>
-                                    <label className="block text-sm font-semibold text-navy-700 mb-1">Was this a Scam or Unauthorized Charge?</label>
+                                    <label className="block text-sm font-semibold text-navy-700 mb-1">Was this a Scam or Unauthorised Charge?</label>
                                     <select 
                                         className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-navy-600 focus:border-transparent outline-none transition-all text-gray-700 font-bold"
                                         value={scamType}

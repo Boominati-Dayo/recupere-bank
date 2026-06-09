@@ -15,9 +15,9 @@ export async function POST(request: Request) {
     // Prepare email to admin
     const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER || 'admin@nexusbanking.com.au';
     
-    const emailSubject = `Web Inquiry: ${scamType} - from ${name}`;
+    const emailSubject = `Web Enquiry: ${scamType} - from ${name}`;
     const emailText = `
-New Secure Inquiry Received
+New Secure Enquiry Received
 
 Name: ${name}
 Email: ${email}
@@ -32,7 +32,7 @@ Sent via Nexus Contact Form.
 
     const emailHtml = `
       <div style="font-family: sans-serif; line-height: 1.6; color: #333;">
-        <h2 style="color: #0b1626; border-bottom: 2px solid #ee2737; padding-bottom: 10px;">New Secure Inquiry</h2>
+        <h2 style="color: #0b1626; border-bottom: 2px solid #ee2737; padding-bottom: 10px;">New Secure Enquiry</h2>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Scam Type:</strong> ${scamType}</p>

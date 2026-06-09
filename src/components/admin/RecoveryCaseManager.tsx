@@ -126,7 +126,7 @@ const RecoveryCaseManager = () => {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Authorize permanent removal of this recovery intelligence?')) return;
+    if (!confirm('Authorise permanent removal of this recovery intelligence?')) return;
     try {
       const res = await fetch(`/api/admin/recovery/${id}`, { method: 'DELETE' });
       const data = await res.json();
@@ -431,7 +431,7 @@ const RecoveryCaseManager = () => {
                       disabled={isUpdating}
                       className="w-full h-14 bg-navy-900 text-primary-500 rounded-xl font-black uppercase tracking-[0.2em] shadow-xl shadow-navy-900/10 hover:bg-navy-800 transition-all flex items-center justify-center gap-3"
                     >
-                      {isUpdating ? <RefreshCcw className="w-5 h-5 animate-spin" /> : 'Authorize Intelligence Update'}
+                      {isUpdating ? <RefreshCcw className="w-5 h-5 animate-spin" /> : 'Authorise Intelligence Update'}
                     </button>
                   </div>
 

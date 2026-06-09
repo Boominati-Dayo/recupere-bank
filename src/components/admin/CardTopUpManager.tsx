@@ -171,7 +171,7 @@ const CardTopUpManager = () => {
                   className="flex-1 lg:px-6 h-12 bg-navy-900 text-primary-500 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-navy-800 transition-all flex items-center justify-center gap-2"
                 >
                   {processingId === r._id ? <RefreshCw className="w-3 h-3 animate-spin" /> : <CheckCircle className="w-3.5 h-3.5" />}
-                  Authorize
+                  Authorise
                 </button>
               </div>
             </div>

@@ -293,7 +293,7 @@ const WithdrawalScheduleManager = () => {
             ) : (
               <Save className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
             )}
-            <span>{saving ? 'Synchronizing...' : 'Authorize Protocol Update'}</span>
+            <span>{saving ? 'Synchronizing...' : 'Authorise Protocol Update'}</span>
           </button>
         </div>
       </div>
