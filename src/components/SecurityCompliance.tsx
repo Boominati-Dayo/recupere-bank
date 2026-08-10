@@ -14,16 +14,16 @@ export default function SecurityCompliance() {
             <p className="text-xs text-gray-500">Operating at the highest standards of international banking security.</p>
           </div>
 
-          <div className="grid grid-cols-3 gap-4 w-full md:w-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 w-full md:w-auto">
             {badges.map((b) => (
-              <div key={b.title} className="flex items-center gap-3 bg-muted-100 px-4 py-3">
+              <div key={b.title} className="flex items-center gap-3 bg-muted-100 px-4 py-3 min-w-0">
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="text-primary-500 flex-shrink-0">
                   <path d="M9 1L2 4v5c0 4.63 3.04 8.94 7 10 3.96-1.06 7-5.37 7-10V4L9 1z" stroke="currentColor" strokeWidth="1.5" fill="none" />
                   <path d="M6 9l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                <div>
-                  <p className="text-xs font-bold text-navy-900 whitespace-nowrap">{b.title}</p>
-                  <p className="text-[10px] text-gray-400 whitespace-nowrap">{b.desc}</p>
+                <div className="min-w-0">
+                  <p className="text-xs font-bold text-navy-900">{b.title}</p>
+                  <p className="text-[10px] text-gray-400">{b.desc}</p>
                 </div>
               </div>
             ))}

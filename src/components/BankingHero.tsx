@@ -1,5 +1,7 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { Shield, Landmark, ArrowRight, Zap, Globe, Lock, TrendingUp, CheckCircle } from 'lucide-react';
+import SydneyHeroImg from '@/assets/images_for_pages/sydney-hero.jpg';
 
 const stats = [
   { label: 'Assets Under Management', value: '$2.8B+' },
@@ -16,6 +18,16 @@ const portfolioItems = [
 const BankingHero = () => {
   return (
     <section className="relative min-h-[90vh] flex items-center pt-24 pb-12 overflow-hidden bg-navy-950">
+      {/* Realistic Sydney skyline background */}
+      <Image
+        src={SydneyHeroImg}
+        alt="Sydney Harbour skyline"
+        fill
+        priority
+        className="object-cover object-center opacity-40"
+        sizes="100vw"
+      />
+
       {/* Animated gradient background */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-navy-950 via-navy-900 to-navy-950" />
