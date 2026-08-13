@@ -364,7 +364,7 @@ const WithdrawSection = () => {
 
           {/* Amount Input */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Withdrawal Amount (AUD)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Withdrawal Amount (USD)</label>
             <input
               type="number"
               value={amount}

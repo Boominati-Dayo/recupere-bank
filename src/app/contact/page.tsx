@@ -136,7 +136,7 @@ export default function ContactPage() {
                       <input 
                       type="text" 
                       className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors" 
-                      placeholder="AUD $10,000+" 
+                      placeholder="USD $10,000+" 
                       value={formData.amount}
                       onChange={(e) => setFormData({...formData, amount: e.target.value})}
                     />
@@ -183,8 +183,8 @@ export default function ContactPage() {
                   <p className="text-primary-600 mb-4 text-sm leading-relaxed font-medium">
                     If you transferred funds within the last 48 hours, immediate action is critical. Call our emergency response team.
                   </p>
-                  <a href="tel:+61 2 8310 6000" className="text-3xl font-black text-primary-500 hover:text-primary-600 transition-colors">
-                    +61 2 8310 6000
+                  <a href="tel:+18005550199" className="text-3xl font-black text-primary-500 hover:text-primary-600 transition-colors">
+                    +1 800 555 0199
                   </a>
                 </div>
               </div>
@@ -197,7 +197,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-500">Email (PGP Available)</p>
-                    <a href="mailto:admin@nexusbanking.com.au" className="text-lg font-bold text-navy-900 hover:text-primary-500 transition-colors lowercase">admin@nexusbanking.com.au</a>
+                    <a href="mailto:admin@nexusbanking.com" className="text-lg font-bold text-navy-900 hover:text-primary-500 transition-colors lowercase">admin@nexusbanking.com</a>
                   </div>
                 </div>
 
@@ -207,7 +207,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-500">Global Switchboard</p>
-                    <a href="tel:+61 2 8310 6000" className="text-lg font-bold text-navy-900 hover:text-primary-500 transition-colors">+61 2 8310 6000</a>
+                    <a href="tel:+18005550199" className="text-lg font-bold text-navy-900 hover:text-primary-500 transition-colors">+1 800 555 0199</a>
                   </div>
                 </div>
               </div>
@@ -222,7 +222,7 @@ export default function ContactPage() {
                   Global Operations
                 </h4>
                 <p className="text-sm text-gray-400 leading-relaxed">
-                  While we maintain digital-first response protocols, our legal network operates across major financial hubs including London, Sydney, Singapore, and Dubai to ensure jurisdictional authority.
+                  While we maintain digital-first response protocols, our legal network operates across major financial hubs including London, New York, Singapore, and Dubai to ensure jurisdictional authority.
                 </p>
               </div>
 

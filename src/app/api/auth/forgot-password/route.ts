@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
 
     // Send password reset email
     try {
-      const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://nexusbanking.com.au'}/reset-password/${resetToken}`;
+      const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://nexusbanking.com'}/reset-password/${resetToken}`;
 
       await sendEmail({
         to: email,

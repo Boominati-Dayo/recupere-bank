@@ -245,7 +245,7 @@ const ApplyView = ({
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-navy-900 uppercase tracking-widest ml-1">Loan Amount (AUD) *</label>
+                <label className="text-[10px] font-black text-navy-900 uppercase tracking-widest ml-1">Loan Amount (USD) *</label>
                 <div className="relative group">
                   <span className="absolute left-5 top-1/2 -translate-y-1/2 font-bold text-gray-400 group-focus-within:text-primary-500">$</span>
                   <input

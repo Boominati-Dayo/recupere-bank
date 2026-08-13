@@ -36,7 +36,7 @@ const RecoverySection = () => {
   const [formData, setFormData] = useState({
     scamType: urlScamType || '',
     amountLost: '',
-    currency: 'AUD',
+          currency: 'USD',
     dateOfIncident: '',
     platformName: '',
     details: urlTid ? `Transaction ID: ${urlTid}\n` : ''
@@ -154,7 +154,7 @@ const RecoverySection = () => {
         setFormData({
           scamType: '',
           amountLost: '',
-          currency: 'AUD',
+    currency: 'USD',
           dateOfIncident: '',
           platformName: '',
           details: ''
@@ -257,7 +257,7 @@ const RecoverySection = () => {
 
                           <div className="grid grid-cols-2 gap-4">
                             <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
-                              <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">Loss Targeted ({recoveryCase.currency || 'AUD'})</p>
+                              <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">Loss Targeted ({recoveryCase.currency || 'USD'})</p>
                               <p className="text-xl font-black text-white">{recoveryCase.currency === 'EUR' ? '€' : recoveryCase.currency === 'GBP' ? '£' : '$'}{recoveryCase.amountLost?.toLocaleString()}</p>
                             </div>
                             <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
@@ -390,11 +390,11 @@ const RecoverySection = () => {
                             value={formData.currency}
                             onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
                           >
-                            <option value="AUD">AUD</option>
+                            <option value="USD">USD</option>
                             <option value="EUR">EUR</option>
                             <option value="GBP">GBP</option>
                             <option value="CAD">CAD</option>
-                            <option value="AUD">AUD</option>
+                            <option value="JPY">JPY</option>
                           </select>
                           <input
                             required

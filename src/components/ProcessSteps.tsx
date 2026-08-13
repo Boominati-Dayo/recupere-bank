@@ -9,7 +9,7 @@ const steps = [
   {
     num: '02',
     title: 'KYC Verification',
-    desc: 'AUSTRAC-compliant identity verification conducted by our Australian compliance team in line with local AML/CTF regulations.',
+    desc: 'Globally compliant identity verification conducted by our compliance team in line with international AML/CTF regulations.',
   },
   {
     num: '03',
@@ -113,7 +113,7 @@ const ProcessSteps = () => {
               <rect y="30" width="340" height="10" fill="#0d1b2e" />
               <text x="170" y="26" fill="#ffffff" fontSize="13" fontFamily="system-ui, sans-serif" fontWeight="700" textAnchor="middle" letterSpacing="2">PROOF OF ADDRESS</text>
               <text x="170" y="78" fill="#0d1b2e" fontSize="14" fontFamily="system-ui, sans-serif" fontWeight="700" textAnchor="middle">123 George Street</text>
-              <text x="170" y="100" fill="#6b7280" fontSize="13" fontFamily="system-ui, sans-serif" textAnchor="middle">Sydney NSW 2000, Australia</text>
+              <text x="170" y="100" fill="#6b7280" fontSize="13" fontFamily="system-ui, sans-serif" textAnchor="middle">Global Headquarters</text>
               <rect x="170" y="120" width="140" height="8" rx="4" fill="#e5e7eb" />
               <rect x="170" y="140" width="100" height="8" rx="4" fill="#e5e7eb" />
               {/* Checkmark overlay */}
@@ -145,7 +145,7 @@ const ProcessSteps = () => {
               <rect width="340" height="200" rx="10" fill="#ffffff" stroke="#e5e7eb" strokeWidth="1" />
               <text x="20" y="28" fill="#0d1b2e" fontSize="14" fontFamily="system-ui, sans-serif" fontWeight="700" letterSpacing="1">SECURITY BADGES</text>
               {[
-                { label: 'AUSTRAC Compliant', icon: '✓' },
+                { label: 'AML/CTF Compliant', icon: '✓' },
                 { label: 'AML/CTF Verified', icon: '✓' },
                 { label: 'Encrypted Channel', icon: '✓' },
                 { label: 'Identity Guaranteed', icon: '✓' },

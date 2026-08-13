@@ -20,7 +20,7 @@ export default function FinalCTA() {
                 </h2>
 
                 <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
-                    Don't wait. Scammers move funds through Australian and offshore accounts within hours. The sooner our forensic team is involved, the higher your chances of complete recovery under Australian law.
+                    Don't wait. Scammers move funds through global and offshore accounts within hours. The sooner our forensic team is involved, the higher your chances of complete recovery under international law.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -33,7 +33,7 @@ export default function FinalCTA() {
                     </Link>
                     <div className="text-sm text-gray-400 mt-4 sm:mt-0 sm:ml-4 text-center sm:text-left">
                         <span className="block text-white font-semibold">Free Evaluation</span>
-                        No upfront legal fees — ACCC endorsed.
+                        No upfront legal fees — internationally endorsed.
                     </div>
                 </div>
             </div>

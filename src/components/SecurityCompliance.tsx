@@ -1,8 +1,8 @@
 export default function SecurityCompliance() {
   const badges = [
-    { title: 'APRA Regulated', desc: 'Authorised Deposit-taking Institution' },
-    { title: 'AUSTRAC Compliant', desc: 'Anti-Money Laundering / CTF' },
-    { title: 'ASIC Licensed', desc: 'Australian financial services' },
+    { title: 'Internationally Regulated', desc: 'Licensed Deposit-taking Institution' },
+    { title: 'AML/CTF Compliant', desc: 'Anti-Money Laundering & Counter-Terrorism Financing' },
+    { title: 'Licensed Financial Services', desc: 'Authorised worldwide banking operations' },
   ];
 
   return (

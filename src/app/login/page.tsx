@@ -376,13 +376,13 @@ const LoginPage = () => {
                   <div className="w-8 h-8 rounded-full bg-navy-50 flex items-center justify-center">
                     <Mail className="h-4 w-4 text-navy-600" />
                   </div>
-                  <span className="text-sm font-medium text-gray-700">support@nexusbanking.com.au</span>
+                  <span className="text-sm font-medium text-gray-700">support@nexusbanking.com</span>
                 </div>
                 <div className="flex items-center space-x-3 mt-3">
                   <div className="w-8 h-8 rounded-full bg-navy-50 flex items-center justify-center">
                     <Phone className="h-4 w-4 text-navy-600" />
                   </div>
-                  <span className="text-sm font-medium text-gray-700">+61 2 8310 6000</span>
+                  <span className="text-sm font-medium text-gray-700">+1 800 555 0199</span>
                 </div>
               </div>
             </motion.div>

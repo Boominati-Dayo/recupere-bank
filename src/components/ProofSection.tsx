@@ -15,9 +15,9 @@ const ProofSection = () => {
     }, []);
 
     const formatCurrency = (amount: number) => {
-        return new Intl.NumberFormat('en-AU', {
+        return new Intl.NumberFormat('en-US', {
             style: 'currency',
-            currency: 'AUD',
+            currency: 'USD',
             maximumFractionDigits: 0,
         }).format(amount);
     };

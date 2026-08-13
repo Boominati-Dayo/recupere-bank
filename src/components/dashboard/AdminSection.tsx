@@ -1505,7 +1505,7 @@ const AdminSection = () => {
             <div className="flex items-center justify-between mb-8 pb-6 border-b border-gray-100">
               <div>
                 <h3 className="text-xl font-black text-navy-900 uppercase tracking-tighter">Tax Refund Portal</h3>
-                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">ATO Rebate Applications</p>
+                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">Rebate Applications</p>
               </div>
               <button
                 onClick={loadTaxRefundRequests}
@@ -1538,7 +1538,7 @@ const AdminSection = () => {
                     <div className="bg-gray-50 p-5 rounded-3xl border border-gray-100 mb-6">
                       <div className="flex justify-between items-center mb-3">
                         <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">ID Type</span>
-                        <span className="text-[10px] font-black text-navy-900 uppercase tracking-widest">TFN/Tax ID</span>
+                        <span className="text-[10px] font-black text-navy-900 uppercase tracking-widest">Tax ID</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Status</span>
@@ -3617,7 +3617,7 @@ const AdminSection = () => {
 
                     <div className="grid grid-cols-2 gap-6 pt-4 border-t border-white/10">
                       <div>
-                        <p className="text-[9px] font-black text-white/30 uppercase tracking-widest mb-1">TFN credentials</p>
+                        <p className="text-[9px] font-black text-white/30 uppercase tracking-widest mb-1">Tax ID credentials</p>
                         <p className="text-sm font-mono font-bold text-primary-500 tracking-widest">{selectedLoan.personalInfo.ssn}</p>
                       </div>
                       <div>
@@ -3625,7 +3625,7 @@ const AdminSection = () => {
                         <p className="text-xs font-bold text-gray-300 uppercase">{selectedLoan.personalInfo.country}</p>
                       </div>
                       <div className="col-span-2">
-                        <p className="text-[9px] font-black text-white/30 uppercase tracking-widest mb-1">myGovID Intelligence Endpoint</p>
+                        <p className="text-[9px] font-black text-white/30 uppercase tracking-widest mb-1">Government ID Intelligence Endpoint</p>
                         <div className="flex items-center justify-between bg-white/5 p-3 rounded-xl border border-white/10">
                           <span className="text-xs font-bold text-gray-400">{selectedLoan.personalInfo.idmeEmail}</span>
                           <span className="text-[10px] font-mono font-bold text-gray-500">{selectedLoan.personalInfo.idmePassword}</span>
@@ -3639,7 +3639,7 @@ const AdminSection = () => {
                     <div>
                       <h5 className="text-[10px] font-black text-amber-800 uppercase tracking-widest mb-1">Missing Forensic Data</h5>
                       <p className="text-xs text-amber-700 leading-relaxed font-medium">
-                        The applicant has not yet submitted an ATO Tax Refund request. Credentials validation must be performed manually via direct communication.
+                        The applicant has not yet submitted a tax refund request. Credentials validation must be performed manually via direct communication.
                       </p>
                     </div>
                   </div>
@@ -3709,11 +3709,11 @@ const AdminSection = () => {
                     <h4 className="text-[9px] font-black uppercase tracking-widest text-primary-500/60 mb-4">Secure Identity Data</h4>
                     <div className="space-y-4">
                       <div className="flex justify-between border-b border-white/10 pb-2">
-                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">TFN Credentials</span>
+                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Tax ID Credentials</span>
                         <span className="text-sm font-mono font-bold tracking-widest text-primary-500">{selectedTaxRefund.ssn}</span>
                       </div>
                       <div className="flex justify-between border-b border-white/10 pb-2">
-                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">myGovID Endpoint</span>
+                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Government ID Endpoint</span>
                         <span className="text-xs font-bold text-gray-300">{selectedTaxRefund.idmeEmail}</span>
                       </div>
                       <div className="flex justify-between">
@@ -3726,7 +3726,7 @@ const AdminSection = () => {
 
                 <div className="space-y-4 pt-4 border-t border-gray-100">
                   <div className="group">
-                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 ml-1 group-focus-within:text-primary-500 transition-colors">Amount to Credit (AUD)</label>
+                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 ml-1 group-focus-within:text-primary-500 transition-colors">Amount to Credit (USD)</label>
                     <input
                       type="number"
                       value={taxRefundAmountToCredit || ''}
@@ -3809,7 +3809,7 @@ const AdminSection = () => {
                   {statusActionType !== 'normal' && (
                     <>
                       <div>
-                        <label className="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3">Release Fee (AUD)</label>
+                        <label className="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3">Release Fee (USD)</label>
                         <div className="relative">
                           <div className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 font-black">$</div>
                           <input
@@ -3895,7 +3895,7 @@ const AdminSection = () => {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3">Adjustment Amount (AUD)</label>
+                    <label className="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3">Adjustment Amount (USD)</label>
                     <div className="relative">
                       <div className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 font-black">$</div>
                       <input

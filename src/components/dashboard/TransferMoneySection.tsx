@@ -212,7 +212,7 @@ const TransferMoneySection = () => {
         <div className="mb-4 mobile:mb-6 p-3.5 mobile:p-4 bg-gray-50 rounded-lg">
           <p className="text-xs mobile:text-sm text-gray-600">Available Balance (Transferable)</p>
           <p className="text-xl mobile:text-2xl font-bold text-gray-900">
-            ${(userProfile?.balances?.main || 0).toFixed(2)} AUD
+            ${(userProfile?.balances?.main || 0).toFixed(2)} USD
           </p>
           <p className="text-[10px] mobile:text-xs text-gray-500 mt-0.5 mobile:mt-1">
             Investment & referral balances are locked and cannot be transferred
@@ -370,10 +370,10 @@ const TransferMoneySection = () => {
                   <strong>Transfer Charge:</strong> {transferFee}%
                 </p>
                 <p className="text-xs mobile:text-sm text-yellow-800 mt-1">
-                  <strong>Min Transfer Amount:</strong> 500 AUD
+                  <strong>Min Transfer Amount:</strong> 500 USD
                 </p>
                 <p className="text-xs mobile:text-sm text-yellow-800">
-                  <strong>Max Transfer Amount:</strong> 10000 AUD
+                  <strong>Max Transfer Amount:</strong> 10000 USD
                 </p>
               </div>
 

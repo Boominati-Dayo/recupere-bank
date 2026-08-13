@@ -10,9 +10,9 @@ const stats = [
 ];
 
 const portfolioItems = [
-  { label: 'Australian Equities', val: 'AUD $840,000', pct: 65, color: 'bg-primary-500' },
-  { label: 'Fixed Income', val: 'AUD $412,000', pct: 28, color: 'bg-blue-500' },
-  { label: 'Property REITS', val: 'AUD $230,900', pct: 45, color: 'bg-emerald-500' },
+  { label: 'Global Equities', val: 'USD $840,000', pct: 65, color: 'bg-primary-500' },
+  { label: 'Fixed Income', val: 'USD $412,000', pct: 28, color: 'bg-blue-500' },
+  { label: 'Property REITS', val: 'USD $230,900', pct: 45, color: 'bg-emerald-500' },
 ];
 
 const BankingHero = () => {
@@ -65,8 +65,8 @@ const BankingHero = () => {
             </h1>
 
             <p className="text-lg mobile:text-xl text-white/60 font-medium mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              Australia&apos;s premier private banking platform. Combine Swiss-level security with
-              forensic asset protection — all from our Sydney headquarters.
+              The world&apos;s premier private banking platform. Combine Swiss-level security with
+              forensic asset protection — serving clients globally.
             </p>
 
             <div className="flex flex-col mobile:flex-row items-center justify-center lg:justify-start gap-5">
@@ -113,7 +113,7 @@ const BankingHero = () => {
                 <div className="flex justify-between items-start mb-12">
                   <div>
                     <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">Total Wealth Overview</p>
-                    <h3 className="text-3xl mobile:text-4xl font-black text-white tracking-tighter">AUD $1,482,900</h3>
+                    <h3 className="text-3xl mobile:text-4xl font-black text-white tracking-tighter">USD $1,482,900</h3>
                   </div>
                   <div className="w-12 h-12 rounded-2xl bg-primary-500/10 flex items-center justify-center text-primary-500">
                     <Zap className="w-6 h-6" />
@@ -142,7 +142,7 @@ const BankingHero = () => {
                     <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
                     <span className="text-[10px] font-black text-white uppercase tracking-widest">Market Status: Bullish</span>
                   </div>
-                  <span className="text-[10px] font-black text-primary-500 uppercase tracking-widest">ASX updated 2m ago</span>
+                  <span className="text-[10px] font-black text-primary-500 uppercase tracking-widest">Markets updated 2m ago</span>
                 </div>
               </div>
 

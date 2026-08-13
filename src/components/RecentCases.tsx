@@ -4,28 +4,28 @@ import Link from 'next/link';
 
 const cases = [
   {
-    type: 'ACCC Referral & Bank Freeze',
-    scam: 'Australian Crypto Investment Scam',
+    type: 'Regulatory Referral & Bank Freeze',
+    scam: 'Crypto Investment Scam',
     amount: '$1.2M',
     timeframe: '45 Days',
-    location: 'Sydney, NSW',
-    description: 'Successfully froze and repatriated funds from a fraudulent offshore trading platform targeting Australian investors via social media.',
+    location: 'New York, USA',
+    description: 'Successfully froze and repatriated funds from a fraudulent offshore trading platform targeting investors via social media.',
   },
   {
-    type: 'Blockchain Tracing & AFSA Order',
+    type: 'Blockchain Tracing & Regulatory Order',
     scam: 'Pig-Butchering Crypto Scam',
     amount: '$850,000',
     timeframe: '60 Days',
-    location: 'Melbourne, VIC',
-    description: 'Collaborated with AUSTRAC and international authorities to track illicit token movements and force settlement via wallet blacklisting.',
+    location: 'London, UK',
+    description: 'Collaborated with international authorities and AML/CTF regulators to track illicit token movements and force settlement via wallet blacklisting.',
   },
   {
     type: 'Wire Recall & Legal Demand',
     scam: 'Romance Investment Fraud',
     amount: '$450,000',
     timeframe: '30 Days',
-    location: 'Brisbane, QLD',
-    description: 'Intercepted SWIFT transfers early and issued immediate legal demands via the receiving Australian banking institution under the ePayments Code.',
+    location: 'Singapore',
+    description: 'Intercepted SWIFT transfers early and issued immediate legal demands via the receiving banking institution under international banking regulations.',
   },
 ];
 

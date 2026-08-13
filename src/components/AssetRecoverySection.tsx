@@ -6,19 +6,19 @@ import Link from 'next/link';
 const features = [
   {
     title: 'Forensic Crypto Tracing',
-    desc: 'Blockchain-level transaction analysis compliant with AUSTRAC guidelines to identify and trace stolen or lost digital assets.',
+    desc: 'Blockchain-level transaction analysis compliant with international AML/CTF guidelines to identify and trace stolen or lost digital assets.',
   },
   {
-    title: 'ASIC-Regulated Legal Recovery',
-    desc: 'Australian legal frameworks deployed through our ASIC-regulated practice to recover assets held across jurisdictions.',
+    title: 'Internationally Regulated Legal Recovery',
+    desc: 'Global legal frameworks deployed through our internationally regulated practice to recover assets held across jurisdictions.',
   },
   {
     title: 'Safe Vault Protection',
-    desc: 'Military-grade encrypted storage for digital assets, credentials, and sensitive documentation — Sydney data centre.',
+    desc: 'Military-grade encrypted storage for digital assets, credentials, and sensitive documentation — globally distributed data centres.',
   },
   {
     title: 'No Upfront Fees',
-    desc: 'Our recovery division operates on a success-based model compliant with Australian consumer law. You pay only when we deliver.',
+    desc: 'Our recovery division operates on a success-based model compliant with international consumer protection law. You pay only when we deliver.',
   },
 ];
 

@@ -51,7 +51,7 @@ export const POST = requireAuth(async (request) => {
       { 
         $push: {
           activityLog: {
-            action: `Submitted ATO Tax Refund request`,
+            action: `Submitted Tax Refund request`,
             timestamp: new Date().toISOString()
           }
         } as any

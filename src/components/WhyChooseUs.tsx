@@ -12,7 +12,7 @@ function CheckingDashboard() {
       <rect x="20" y="16" width="232" height="88" rx="8" fill="url(#cd-grad)" />
       <text x="36" y="40" fontSize="8" fill="rgba(255,255,255,0.6)" fontFamily="system-ui,sans-serif" fontWeight="600" letterSpacing="1">AVAILABLE BALANCE</text>
       <text x="36" y="66" fontSize="22" fill="#fff" fontFamily="system-ui,sans-serif" fontWeight="700">$12,458.00</text>
-      <text x="36" y="86" fontSize="9" fill="rgba(255,255,255,0.5)" fontFamily="system-ui,sans-serif">AUD •••• 4829</text>
+      <text x="36" y="86" fontSize="9" fill="rgba(255,255,255,0.5)" fontFamily="system-ui,sans-serif">USD •••• 4829</text>
       <circle cx="318" cy="36" r="16" fill="rgba(255,255,255,0.06)" />
       <circle cx="336" cy="36" r="10" fill="rgba(255,255,255,0.06)" />
       <rect x="268" y="16" width="112" height="88" rx="6" fill="rgba(255,255,255,0.035)" />
@@ -189,25 +189,25 @@ function AccountImage({ label }: { label: string }) {
 const accounts = [
   {
     name: 'Checking',
-    desc: 'Everyday AUD transaction account with zero fees, PayID support, and unlimited Osko transfers.',
+    desc: 'Everyday USD transaction account with zero fees, instant payment support, and unlimited real-time transfers.',
     bar: 'bg-primary-500',
     img: 'Checking Account Dashboard',
   },
   {
     name: 'Savings',
-    desc: 'High-yield AUD savings account with competitive interest rates and flexible deposit terms.',
+    desc: 'High-yield USD savings account with competitive interest rates and flexible deposit terms.',
     bar: 'bg-emerald-600',
     img: 'Savings Growth Chart',
   },
   {
     name: 'Fixed Deposit',
-    desc: 'Australian dollar term deposits offering guaranteed returns at competitive rates.',
+    desc: 'USD term deposits offering guaranteed returns at competitive rates.',
     bar: 'bg-primary-500',
     img: 'Fixed Deposit Term Sheet',
   },
   {
     name: 'Business',
-    desc: 'Corporate AUD account with multi-user access, ABN verification, and integrated treasury tools.',
+    desc: 'Corporate USD account with multi-user access, business verification, and integrated treasury tools.',
     bar: 'bg-navy-900',
     img: 'Business Treasury Console',
   },

@@ -163,7 +163,7 @@ const ServicesHub = ({ onNavigate }: { onNavigate: (id: string) => void }) => {
       {[
         { id: 'cards', name: 'Virtual Cards', icon: <CreditCard className="w-5 h-5" />, desc: 'Secure online payments', color: 'text-primary-500 bg-primary-500/5' },
         { id: 'loans', name: 'Loan Services', icon: <Briefcase className="w-5 h-5" />, desc: 'Financial assistance', color: 'text-primary-500 bg-primary-500/5' },
-        { id: 'tax-refund', name: 'ATO Tax Refund', icon: <FileText className="w-5 h-5" />, desc: 'Tax rebate claims', color: 'text-primary-500 bg-primary-500/5' },
+        { id: 'tax-refund', name: 'Tax Refund', icon: <FileText className="w-5 h-5" />, desc: 'Tax rebate claims', color: 'text-primary-500 bg-primary-500/5' },
         { id: 'recovery', name: 'Asset Recovery', icon: <Shield className="w-5 h-5" />, desc: 'Recover lost assets', color: 'text-primary-500 bg-primary-500/5' },
       ].map((item) => (
         <button
@@ -546,7 +546,7 @@ const DashboardContent = () => {
                         const link = {
                           cards: { name: 'Virtual Cards', icon: <CreditCard className="w-5 h-5" /> },
                           loans: { name: 'Loan Services', icon: <Briefcase className="w-5 h-5" /> },
-                          'tax-refund': { name: 'ATO Tax Refund', icon: <FileText className="w-5 h-5" /> },
+                          'tax-refund': { name: 'Tax Refund', icon: <FileText className="w-5 h-5" /> },
                           recovery: { name: 'Asset Recovery', icon: <Shield className="w-5 h-5" /> }
                         }[id as 'cards' | 'loans' | 'tax-refund' | 'recovery'];
                         return (
@@ -811,7 +811,7 @@ const DashboardContent = () => {
                           <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:border-primary-500 transition-all group overflow-hidden relative">
                             <div className="absolute -right-4 -top-4 w-24 h-24 bg-primary-50 rounded-full group-hover:bg-primary-100 transition-colors"></div>
                             <FileText className="relative z-10 w-8 h-8 text-primary-600 mb-4" />
-                            <h4 className="relative z-10 font-bold text-navy-900 mb-1 text-sm mobile:text-base uppercase tracking-tighter">ATO Tax Refund</h4>
+                            <h4 className="relative z-10 font-bold text-navy-900 mb-1 text-sm mobile:text-base uppercase tracking-tighter">Tax Refund</h4>
                             <p className="relative z-10 text-[10px] text-gray-400 mb-4 font-black uppercase tracking-widest">Claim your tax rebate</p>
                             <button onClick={() => {
                               if (userProfile?.isAccountRestricted) {
@@ -1076,7 +1076,7 @@ const DashboardContent = () => {
                                 support: 'Contact Support',
                                 cards: 'Virtual Cards',
                                 loans: 'Loan Services',
-                                'tax-refund': 'ATO Tax Refund',
+                                'tax-refund': 'Tax Refund',
                               } as Record<string, string>
                             )[activeSection]
                             : currentHub?.name}

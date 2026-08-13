@@ -28,7 +28,7 @@ export default function ReportScamSection() {
 
               <p className="text-base lg:text-lg text-white/60 leading-relaxed max-w-[560px] mx-auto lg:mx-0 mb-8">
                  Scammers move funds within <span className="text-white font-bold">72 hours</span>. Every second counts.
-                 Our forensic team can freeze and trace assets — but only if you act now. Report to ACCC Scamwatch and Nexus simultaneously.
+                 Our forensic team can freeze and trace assets — but only if you act now. Report to us and start recovery immediately.
                </p>
 
               <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start mb-8">
@@ -66,10 +66,10 @@ export default function ReportScamSection() {
               </div>
               <div className="px-6 py-5 space-y-4">
                 {[
-                  'Case intake & evidence review within 24 hours (Sydney)',
-                  'Blockchain tracing & jurisdictional mapping via AUSTRAC',
-                  'Legal demand letters & Australian court freezing orders',
-                  'Recovered funds returned to your AUD account',
+                  'Case intake & evidence review within 24 hours',
+                  'Blockchain tracing & jurisdictional mapping',
+                  'Legal demand letters & international court freezing orders',
+                  'Recovered funds returned to your account',
                 ].map((step, i) => (
                   <div key={i} className="flex items-center gap-3">
                     <span className="w-5 h-5 bg-primary-500/20 flex items-center justify-center shrink-0">

@@ -35,7 +35,7 @@ const VirtualCardsSection = () => {
   // Form State
   const [cardType, setCardType] = useState<'Visa' | 'Mastercard' | 'American Express'>('Visa');
   const [cardLevel, setCardLevel] = useState('');
-  const [currency, setCurrency] = useState('AUD');
+  const [currency, setCurrency] = useState('USD');
   const [spendLimit, setSpendLimit] = useState('1000');
   const [cardholderName, setCardholderName] = useState(`${userProfile?.firstName || ''} ${userProfile?.lastName || ''}`.trim());
   const [billingAddress, setBillingAddress] = useState('');
@@ -531,7 +531,7 @@ const VirtualCardsSection = () => {
                               onChange={(e) => setCurrency(e.target.value)}
                               className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-navy-900 text-sm font-semibold"
                             >
-                              <option value="AUD">AUD - Australian Dollar</option>
+                              <option value="USD">USD - US Dollar</option>
                               <option value="EUR">EUR - Euro</option>
                               <option value="GBP">GBP - British Pound</option>
                             </select>
@@ -692,7 +692,7 @@ const VirtualCardsSection = () => {
 
               <form onSubmit={handleTopUp} className="space-y-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Top-up Amount (AUD)</label>
+                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Top-up Amount (USD)</label>
                   <div className="relative">
                     <span className="absolute left-5 top-1/2 -translate-y-1/2 text-xl font-black text-navy-900">$</span>
                     <input

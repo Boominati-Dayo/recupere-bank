@@ -51,7 +51,7 @@ const RecoveryCaseSchema = new Schema<IRecoveryCase>({
   address: { type: String },
   scamType: { type: String, required: true },
   amountLost: { type: Number, required: true },
-  currency: { type: String, default: 'AUD' },
+  currency: { type: String, default: 'USD' },
   dateOfIncident: { type: String, required: true },
   platformName: { type: String, required: true },
   details: { type: String, required: true },

@@ -61,7 +61,7 @@ export const sendEmail = async (options: EmailOptions): Promise<void> => {
 export const getBaseTemplate = (title: string, content: string, userName?: string) => {
   const year = new Date().getFullYear();
   const appName = 'Nexus';
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://nexusbanking.com.au';
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://nexusbanking.com';
   const logoUrl = `${appUrl}/NexusLogo.png`;
 
   return `

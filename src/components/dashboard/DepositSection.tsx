@@ -408,7 +408,7 @@ const DepositSection: React.FC<DepositSectionProps> = ({ initialAmount, isFixedA
                   required
                 />
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <span className="text-gray-500 font-bold">AUD</span>
+                  <span className="text-gray-500 font-bold">USD</span>
                 </div>
               </div>
               {isFixedAmount && (

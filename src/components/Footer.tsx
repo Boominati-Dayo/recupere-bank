@@ -87,7 +87,7 @@ const Footer = () => {
                 </div>
               </Link>
               <p className="text-[13.5px] font-normal leading-[1.78] text-[#cfd6e0]/75 max-w-[295px] mb-7">
-                We are the bridge between financial loss and legal recovery. Nexus combines the power of a specialised law firm with the security of an APRA-regulated Australian bank to fight for what belongs to you.
+                We are the bridge between financial loss and legal recovery. Nexus combines the power of a specialised law firm with the security of an internationally regulated bank to fight for what belongs to you.
               </p>
               <div className="flex gap-[10px]">
                 {[
@@ -142,8 +142,8 @@ const Footer = () => {
                 </div>
                 <div className="flex flex-col gap-[3px]">
                   <span className="text-[9px] font-bold tracking-[0.20em] uppercase text-[#cfd6e0]/55 leading-none">Email</span>
-                  <a href="mailto:admin@nexusbanking.com.au" className="text-[13.5px] font-medium text-white no-underline hover:text-primary-500 transition-colors duration-200">
-                    admin@nexusbanking.com.au
+                  <a href="mailto:admin@nexusbanking.com" className="text-[13.5px] font-medium text-white no-underline hover:text-primary-500 transition-colors duration-200">
+                    admin@nexusbanking.com
                   </a>
                 </div>
               </div>
@@ -156,8 +156,8 @@ const Footer = () => {
                 </div>
                 <div className="flex flex-col gap-[3px]">
                   <span className="text-[9px] font-bold tracking-[0.20em] uppercase text-[#cfd6e0]/55 leading-none">Global Switchboard</span>
-                  <a href="tel:+61283106000" className="text-[13.5px] font-medium text-white no-underline hover:text-primary-500 transition-colors duration-200">
-                    +61 2 8310 6000
+                  <a href="tel:+1-800-555-0199" className="text-[13.5px] font-medium text-white no-underline hover:text-primary-500 transition-colors duration-200">
+                    +1 800 555 0199
                   </a>
                 </div>
               </div>
@@ -209,14 +209,14 @@ const Footer = () => {
             </div>
 
             <p className="text-[12.5px] font-normal leading-[1.75] text-[#cfd6e0] text-center max-w-[340px] mb-7 opacity-82">
-              Nexus Banking (Australia) provides APRA-regulated financial services and ASIC-authorised legal representation for asset recovery, international wire transfers, and institutional banking solutions worldwide.
+              Nexus Banking provides internationally regulated financial services and licensed legal representation for asset recovery, international wire transfers, and institutional banking solutions worldwide.
             </p>
 
             <div className="w-[60px] h-[2px] bg-primary-500 rounded-full mb-11 shadow-[0_0_10px_rgba(238,39,55,0.45)]" />
 
             <div className="flex items-center gap-4 mb-9 w-full">
               {[
-                { label: 'AFSL Licensed', path: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' },
+                { label: 'Licensed & Regulated', path: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' },
                 { label: 'Legal Rep.', path: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0 1 12 2.944a11.955 11.955 0 0 1-8.618 3.04A12.02 12.02 0 0 0 3 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z' },
                 { label: '256-bit', path: 'M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z' },
               ].map(badge => (
@@ -255,7 +255,7 @@ const Footer = () => {
                 <div className="flex-1 h-[1px] bg-primary-500/22" />
               </div>
 
-              <a href="mailto:admin@nexusbanking.com.au" className="flex items-center gap-[14px] py-[14px] border-b border-white/6 no-underline">
+              <a href="mailto:admin@nexusbanking.com" className="flex items-center gap-[14px] py-[14px] border-b border-white/6 no-underline">
                 <div className="w-[40px] h-[40px] rounded-full bg-[#235ba8]/18 border border-[#235ba8]/40 flex items-center justify-center shrink-0 hover:bg-[#235ba8]/30 hover:border-[#235ba8]/70 hover:scale-105 transition-all duration-200">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5b9bd5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
@@ -263,11 +263,11 @@ const Footer = () => {
                 </div>
                 <div className="flex flex-col gap-[2px]">
                   <span className="text-[9.5px] font-bold tracking-[0.16em] uppercase text-[#cfd6e0]/55">Email</span>
-                  <span className="text-[14px] font-medium text-[#cfd6e0]">admin@nexusbanking.com.au</span>
+                  <span className="text-[14px] font-medium text-[#cfd6e0]">admin@nexusbanking.com</span>
                 </div>
               </a>
 
-              <a href="tel:+61298765400" className="flex items-center gap-[14px] py-[14px] border-b border-white/6 no-underline">
+              <a href="tel:+18005550199" className="flex items-center gap-[14px] py-[14px] border-b border-white/6 no-underline">
                 <div className="w-[40px] h-[40px] rounded-full bg-[#235ba8]/18 border border-[#235ba8]/40 flex items-center justify-center shrink-0 hover:bg-[#235ba8]/30 hover:border-[#235ba8]/70 hover:scale-105 transition-all duration-200">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5b9bd5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
@@ -275,7 +275,7 @@ const Footer = () => {
                 </div>
                 <div className="flex flex-col gap-[2px]">
                   <span className="text-[9.5px] font-bold tracking-[0.16em] uppercase text-[#cfd6e0]/55">Global Switchboard</span>
-                  <span className="text-[14px] font-medium text-[#cfd6e0]">+61 2 9876 5400</span>
+                  <span className="text-[14px] font-medium text-[#cfd6e0]">+1 800 555 0199</span>
                 </div>
               </a>
 
@@ -310,8 +310,8 @@ const Footer = () => {
 
             <div className="flex flex-col items-center gap-4 w-full">
               <p className="text-[11px] font-normal text-[#cfd6e0]/45 text-center leading-[1.7] tracking-[0.02em]">
-                &copy; {currentYear} Nexus Banking Australia.<br />
-                APRA-Regulated | ASIC-Authorised | AUSTRAC Compliant.
+                &copy; {currentYear} Nexus Banking Worldwide.<br />
+                Internationally Regulated | Licensed Operations | AML/CTF Compliant.
               </p>
               <nav className="flex items-center gap-0 flex-wrap justify-center" aria-label="Legal links">
                 <Link href="/privacy" className="text-[10.5px] font-medium text-[#cfd6e0]/35 no-underline tracking-[0.04em] px-[10px] py-[4px] hover:text-[#cfd6e0]/80 transition-colors duration-200">Privacy Policy</Link>
@@ -328,7 +328,7 @@ const Footer = () => {
 
         <div className="hidden mobile:flex relative z-1 max-w-[1400px] mx-auto px-10 py-5 pb-6 items-center justify-between">
           <p className="text-[12px] font-normal text-[#cfd6e0]/50 tracking-[0.01em]">
-            &copy; {currentYear} Nexus Banking Australia. APRA-Regulated | ASIC-Authorised | AUSTRAC Compliant.
+            &copy; {currentYear} Nexus Banking Worldwide. Internationally Regulated | Licensed Operations | AML/CTF Compliant.
           </p>
           <ul className="flex items-center gap-0 list-none">
             {[

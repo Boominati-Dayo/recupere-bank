@@ -590,7 +590,7 @@ export class UserService {
   }
 
   static generateReferralLink(userCode: string): string {
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://nexusbanking.com.au';
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://nexusbanking.com';
     return `${baseUrl}/signup?ref=${userCode}`;
   }
 

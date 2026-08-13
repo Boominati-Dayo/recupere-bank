@@ -296,7 +296,7 @@ const UpgradePlanSection = ({ onBack, onUpgrade }: UpgradePlanSectionProps) => {
         <div className="mb-6 p-4 bg-gray-50 rounded-lg">
           <p className="text-sm text-gray-600">Available Balance</p>
           <p className="text-2xl font-bold text-gray-900">
-            ${accountBalance.toLocaleString()} AUD
+            ${accountBalance.toLocaleString()} USD
           </p>
         </div>
 
@@ -404,7 +404,7 @@ const UpgradePlanSection = ({ onBack, onUpgrade }: UpgradePlanSectionProps) => {
               {/* Amount Input */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Investment Amount (AUD)
+                  Investment Amount (USD)
                 </label>
                 <input
                   type="number"
