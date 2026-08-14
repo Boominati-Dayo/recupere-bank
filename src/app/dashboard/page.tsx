@@ -1163,8 +1163,8 @@ const DashboardContent = () => {
             )}
 
             {/* Bottom Nav for Mobile - Grouped for all links */}
-            <div className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] w-[94vw] max-w-[440px]">
-              <div className="bg-[#0b1626]/95 backdrop-blur-xl border border-navy-800 rounded-full p-1.5 flex items-center justify-between shadow-2xl">
+            <div className="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-[60] w-[96vw] max-w-[480px]">
+              <div className="bg-[#0b1626]/95 backdrop-blur-xl border border-navy-800 rounded-full p-1 flex items-center justify-between gap-1 shadow-2xl">
                 {dashboardLinks.map((link) => {
                   const isActive = activeSection === link.id || (link.subItems && link.subItems.includes(activeSection));
 
@@ -1178,11 +1178,11 @@ const DashboardContent = () => {
                       key={link.id}
                       onClick={() => handleNavigate(link.id)}
                       className={`relative flex items-center transition-all duration-500 ease-out group ${isActive
-                        ? 'bg-primary-500 text-[#0b1626] rounded-full pr-4 pl-1 pb-1 pt-1'
-                        : 'text-gray-400 p-3 hover:text-white'
+                        ? 'bg-primary-500 text-[#0b1626] rounded-full pr-3 pl-0.5 py-0.5'
+                        : 'text-gray-400 p-2 hover:text-white'
                         }`}
                     >
-                      <div className={`w-9 h-9 flex items-center justify-center rounded-full transition-colors duration-300 ${isActive ? 'bg-[#0b1626] text-primary-500 shadow-sm' : 'bg-transparent'
+                      <div className={`w-9 h-8 flex items-center justify-center rounded-full transition-colors duration-300 ${isActive ? 'bg-[#0b1626] text-primary-500 shadow-sm' : 'bg-transparent'
                         }`}>
                         {link.icon}
                       </div>
@@ -1192,7 +1192,7 @@ const DashboardContent = () => {
                         </span>
                       )}
                       {showMobileDot && !isActive && (
-                        <span className={`absolute top-2 right-2 w-2 h-2 rounded-full ${dotColor} animate-pulse shadow-[0_0_8px_rgba(234,179,8,0.5)]`}></span>
+                        <span className={`absolute top-1.5 right-1.5 w-2 h-2 rounded-full ${dotColor} animate-pulse shadow-[0_0_8px_rgba(234,179,8,0.5)]`}></span>
                       )}
                     </button>
                   );
