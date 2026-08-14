@@ -62,7 +62,7 @@ const BankingHero = () => {
                 className="group relative w-full mobile:w-auto px-10 py-5 bg-primary-500 text-[#0d1b2e] rounded-2xl font-black text-sm uppercase tracking-widest overflow-hidden transition-all hover:shadow-[0_0_30px_rgba(238,39,55,0.4)] active:scale-95"
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
-                  Open Private Account{' '}
+                  Open Account{' '}
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
@@ -71,7 +71,7 @@ const BankingHero = () => {
                 href="/login"
                 className="w-full mobile:w-auto px-10 py-5 bg-white/5 border border-white/10 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-white/10 transition-all text-center"
               >
-                Secure Client Portal
+                Client Portal
               </Link>
             </div>
         </div>
