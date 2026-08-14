@@ -26,6 +26,7 @@ interface TopUpRequest {
     firstName: string;
     lastName: string;
     userCode: string;
+    currency?: string;
   };
   card: {
     lastFour: string;
@@ -141,7 +142,7 @@ const CardTopUpManager = () => {
                 </div>
                 <div className="space-y-1">
                   <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Amount</p>
-                  <p className="text-lg font-black text-navy-900 font-mono">${r.amount.toFixed(2)}</p>
+                  <p className="text-lg font-black text-navy-900 font-mono">{r.user?.currency || 'USD'} {r.amount.toFixed(2)}</p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Status</p>

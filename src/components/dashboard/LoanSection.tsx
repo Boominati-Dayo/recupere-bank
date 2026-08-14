@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { getCurrencySymbol } from '@/lib/currencies';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -199,6 +200,8 @@ interface ApplyViewProps {
   setIncome: (val: string) => void;
   agreeTerms: boolean;
   setAgreeTerms: (val: boolean) => void;
+  currency: string;
+  currencySymbol: string;
 }
 
 const ApplyView = ({
@@ -216,7 +219,9 @@ const ApplyView = ({
   income,
   setIncome,
   agreeTerms,
-  setAgreeTerms
+  setAgreeTerms,
+  currency,
+  currencySymbol
 }: ApplyViewProps) => (
   <div className="max-w-3xl mx-auto">
     <button
@@ -245,9 +250,9 @@ const ApplyView = ({
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-navy-900 uppercase tracking-widest ml-1">Loan Amount (USD) *</label>
+                <label className="text-[10px] font-black text-navy-900 uppercase tracking-widest ml-1">Loan Amount ({currency}) *</label>
                 <div className="relative group">
-                  <span className="absolute left-5 top-1/2 -translate-y-1/2 font-bold text-gray-400 group-focus-within:text-primary-500">$</span>
+                  <span className="absolute left-5 top-1/2 -translate-y-1/2 font-bold text-gray-400 group-focus-within:text-primary-500">{currencySymbol}</span>
                   <input
                     type="number"
                     value={amount}
@@ -314,11 +319,11 @@ const ApplyView = ({
                 className="w-full px-5 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold text-navy-900 appearance-none cursor-pointer"
                 required
               >
-                <option value="$0 - $1,000">$0 - $1,000</option>
-                <option value="$1,000 - $2,000">$1,000 - $2,000</option>
-                <option value="$2,000 - $5,000">$2,000 - $5,000</option>
-                <option value="$5,000 - $10,000">$5,000 - $10,000</option>
-                <option value="$10,000+">$10,000+</option>
+                <option value={`${currencySymbol}0 - ${currencySymbol}1,000`}>{currencySymbol}0 - {currencySymbol}1,000</option>
+                <option value={`${currencySymbol}1,000 - ${currencySymbol}2,000`}>{currencySymbol}1,000 - {currencySymbol}2,000</option>
+                <option value={`${currencySymbol}2,000 - ${currencySymbol}5,000`}>{currencySymbol}2,000 - {currencySymbol}5,000</option>
+                <option value={`${currencySymbol}5,000 - ${currencySymbol}10,000`}>{currencySymbol}5,000 - {currencySymbol}10,000</option>
+                <option value={`${currencySymbol}10,000+`}>{currencySymbol}10,000+</option>
               </select>
             </div>
           </div>
@@ -366,6 +371,7 @@ const ApplyView = ({
 );
 
 const TrackingView = ({ onBack }: { onBack: () => void }) => {
+  const { userProfile } = useAuth();
   const [loans, setLoans] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -445,7 +451,7 @@ const TrackingView = ({ onBack }: { onBack: () => void }) => {
                   <div className="grid grid-cols-2 mobile:grid-cols-3 gap-4 mobile:gap-8 lg:gap-12 pt-4 lg:pt-0 border-t lg:border-t-0 border-gray-200/50 lg:border-none">
                     <div>
                       <p className="text-[8px] mobile:text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1">Principle Sum</p>
-                      <p className="text-base mobile:text-lg font-black text-navy-900 tracking-tight">${loan.amount.toLocaleString()}</p>
+                      <p className="text-base mobile:text-lg font-black text-navy-900 tracking-tight">{getCurrencySymbol(userProfile?.currency || 'USD')}{loan.amount.toLocaleString()}</p>
                     </div>
                     <div>
                       <p className="text-[8px] mobile:text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1">Duration</p>
@@ -542,6 +548,13 @@ const LoanSection = () => {
   const [income, setIncome] = useState('$2,000 - $5,000');
   const [agreeTerms, setAgreeTerms] = useState(false);
 
+  const loanCurrency = userProfile?.currency || 'USD';
+  const loanCurrencySymbol = getCurrencySymbol(loanCurrency);
+
+  useEffect(() => {
+    setIncome((prev) => prev.includes('$') ? prev.replace(/\$/g, loanCurrencySymbol) : prev);
+  }, [loanCurrencySymbol]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!amount || !facility || !purpose || !agreeTerms) {
@@ -560,6 +573,7 @@ const LoanSection = () => {
           facility,
           purpose,
           income,
+          currency: loanCurrency,
         })
       });
 
@@ -626,6 +640,8 @@ const LoanSection = () => {
               setIncome={setIncome}
               agreeTerms={agreeTerms}
               setAgreeTerms={setAgreeTerms}
+              currency={loanCurrency}
+              currencySymbol={loanCurrencySymbol}
             />
           ) : (
             <TrackingView onBack={() => setView('info')} />

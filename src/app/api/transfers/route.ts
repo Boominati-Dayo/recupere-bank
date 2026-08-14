@@ -22,7 +22,7 @@ export const POST = requireAuth(async (request: AuthenticatedRequest) => {
     // Validate amount
     if (amount < 500 || amount > 10000) {
       return NextResponse.json(
-        { success: false, error: 'Transfer amount must be between $500 and $10,000' },
+        { success: false, error: 'Transfer amount must be between 500 and 10,000' },
         { status: 400 }
       );
     }
@@ -76,7 +76,7 @@ export const POST = requireAuth(async (request: AuthenticatedRequest) => {
     const senderMainBalance = sender.balances?.main || 0;
     if (senderMainBalance < totalDeduction) {
       return NextResponse.json(
-        { success: false, error: `Insufficient main balance. You have $${senderMainBalance.toFixed(2)} available. Investment balances cannot be transferred.` },
+        { success: false, error: `Insufficient main balance. You have ${sender.currency || 'USD'} ${senderMainBalance.toFixed(2)} available. Investment balances cannot be transferred.` },
         { status: 400 }
       );
     }
@@ -167,7 +167,7 @@ export const POST = requireAuth(async (request: AuthenticatedRequest) => {
         // Notify sender
         NotificationService.createNotification({
           title: 'Transfer Completed',
-          message: `You have successfully transferred $${amount.toFixed(2)} to ${receiverEmail}. Transfer fee: $${transferFee.toFixed(2)}`,
+          message: `You have successfully transferred ${sender.currency || 'USD'} ${amount.toFixed(2)} to ${receiverEmail}. Transfer fee: ${sender.currency || 'USD'} ${transferFee.toFixed(2)}`,
           type: 'transfer_sent',
           recipients: [senderId],
           sentBy: 'system',
@@ -181,7 +181,7 @@ export const POST = requireAuth(async (request: AuthenticatedRequest) => {
         // Notify receiver
         NotificationService.createNotification({
           title: 'Transfer Received',
-          message: `You have received $${amount.toFixed(2)} from ${senderEmail}`,
+          message: `You have received ${receiver.currency || 'USD'} ${amount.toFixed(2)} from ${senderEmail}`,
           type: 'transfer_received',
           recipients: [receiver.userCode || receiver._id?.toString() || ''],
           sentBy: 'system',

@@ -36,6 +36,7 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
 
   // Get actual account balance from user profile
   const accountBalance = userProfile?.balances?.main || 0;
+  const displayCurrency = userProfile?.currency || 'USD';
 
   // Recalculate when plan changes
   const handlePlanChange = (plan: InvestmentPlan | null) => {
@@ -308,7 +309,7 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
     if (investmentAmount > accountBalance) {
       setMessage({
         type: 'error',
-        text: `Insufficient balance. You need $${investmentAmount.toLocaleString()} but only have $${accountBalance.toLocaleString()} in your account. Please deposit funds first.`
+        text: `Insufficient balance. You need ${userProfile?.currency || 'USD'} ${investmentAmount.toLocaleString()} but only have ${userProfile?.currency || 'USD'} ${accountBalance.toLocaleString()} in your account. Please deposit funds first.`
       });
       setIsProcessing(false);
       return;
@@ -337,7 +338,7 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
 
       setMessage({
         type: 'success',
-        text: `Secure deposit of $${investmentAmount.toLocaleString()} in ${selectedPlan.name} plan confirmed! Your financial plan is now active.`
+        text: `Secure deposit of ${userProfile?.currency || 'USD'} ${investmentAmount.toLocaleString()} in ${selectedPlan.name} plan confirmed! Your financial plan is now active.`
       });
 
       // Reset form
@@ -362,10 +363,10 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
 
   const validateAmount = (amount: number, plan: InvestmentPlan) => {
     if (amount < plan.minAmount) {
-      return `Minimum investment amount is $${plan.minAmount.toLocaleString()}`;
+      return `Minimum investment amount is ${userProfile?.currency || 'USD'} ${plan.minAmount.toLocaleString()}`;
     }
     if (plan.maxAmount !== Infinity && amount > plan.maxAmount) {
-      return `Maximum investment amount is $${plan.maxAmount.toLocaleString()}`;
+      return `Maximum investment amount is ${userProfile?.currency || 'USD'} ${plan.maxAmount.toLocaleString()}`;
     }
     return '';
   };
@@ -486,12 +487,12 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Min Amount:</span>
-                        <span className="font-semibold">${plan.minAmount.toLocaleString()}</span>
+                        <span className="font-semibold">{displayCurrency} {plan.minAmount.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Max Amount:</span>
                         <span className="font-semibold">
-                          {plan.maxAmount === Infinity ? 'Unlimited' : `$${plan.maxAmount.toLocaleString()}`}
+                          {plan.maxAmount === Infinity ? 'Unlimited' : `${displayCurrency} ${plan.maxAmount.toLocaleString()}`}
                         </span>
                       </div>
                       <div className="flex justify-between text-sm mobile:text-base">
@@ -610,8 +611,8 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
                     <p className="text-sm text-[#ee2737] mt-1">{amountError}</p>
                   ) : (
                     <p className="text-sm text-gray-500 mt-1">
-                      Min: ${selectedPlan.minAmount.toLocaleString()} |
-                      Max: {selectedPlan.maxAmount === Infinity ? 'Unlimited' : `$${selectedPlan.maxAmount.toLocaleString()}`}
+                      Min: {displayCurrency} {selectedPlan.minAmount.toLocaleString()} |
+                      Max: {selectedPlan.maxAmount === Infinity ? 'Unlimited' : `${displayCurrency} ${selectedPlan.maxAmount.toLocaleString()}`}
                     </p>
                   )}
                 </div>
@@ -638,7 +639,7 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
                   <div className="space-y-3">
                     <div className="flex justify-between">
                       <span className="text-gray-600">Investment Amount:</span>
-                      <span className="font-semibold">${investmentAmount.toLocaleString()}</span>
+                      <span className="font-semibold">{displayCurrency} {investmentAmount.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">Plan:</span>
@@ -689,7 +690,7 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
                   <div className="space-y-4">
                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
                       <span className="text-gray-700">Initial Investment:</span>
-                      <span className="font-semibold text-gray-900">${investmentAmount.toLocaleString()}</span>
+                      <span className="font-semibold text-gray-900">{displayCurrency} {investmentAmount.toLocaleString()}</span>
                     </div>
 
                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
@@ -714,13 +715,13 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
                         <div className="flex justify-between items-center py-2 border-b border-gray-200">
                           <span className="text-gray-700">Daily Earnings:</span>
                           <span className="font-semibold text-green-600">
-                            ${(investmentAmount * selectedPlan.roi / 100).toFixed(2)}
+                            {displayCurrency} {(investmentAmount * selectedPlan.roi / 100).toFixed(2)}
                           </span>
                         </div>
                         <div className="flex justify-between items-center py-2 border-b border-gray-200">
                           <span className="text-gray-700">Total Earnings (30 days):</span>
                           <span className="font-semibold text-green-600">
-                            ${(investmentAmount * selectedPlan.roi / 100 * 30).toFixed(2)}
+                            {displayCurrency} {(investmentAmount * selectedPlan.roi / 100 * 30).toFixed(2)}
                           </span>
                         </div>
                       </>
@@ -728,7 +729,7 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
                       <div className="flex justify-between items-center py-2 border-b border-gray-200">
                         <span className="text-gray-700">Total Earnings:</span>
                         <span className="font-semibold text-green-600">
-                          ${(investmentAmount * selectedPlan.roi / 100).toFixed(2)}
+                          {displayCurrency} {(investmentAmount * selectedPlan.roi / 100).toFixed(2)}
                         </span>
                       </div>
                     )}
@@ -744,7 +745,7 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
                       <div className="flex justify-between items-center">
                         <span className="text-lg font-semibold text-gray-900">Total Return:</span>
                         <span className="text-xl font-bold text-green-600">
-                          ${selectedPlan.capitalBack
+                          {displayCurrency} {selectedPlan.capitalBack
                             ? (parseFloat(calculateEarnings(investmentAmount, selectedPlan.roi, selectedPlan.duration)) + investmentAmount).toFixed(2)
                             : calculateEarnings(investmentAmount, selectedPlan.roi, selectedPlan.duration)
                           }
@@ -841,8 +842,8 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
                   )}
                   {selectedPlan && !amountError && (
                     <p className="text-sm text-gray-500 mt-1">
-                      Min: ${selectedPlan.minAmount.toLocaleString()} |
-                      Max: {selectedPlan.maxAmount === Infinity ? 'Unlimited' : `$${selectedPlan.maxAmount.toLocaleString()}`}
+                      Min: {displayCurrency} {selectedPlan.minAmount.toLocaleString()} |
+                      Max: {selectedPlan.maxAmount === Infinity ? 'Unlimited' : `${displayCurrency} ${selectedPlan.maxAmount.toLocaleString()}`}
                     </p>
                   )}
                 </div>
@@ -900,7 +901,7 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
                   <div className="space-y-3">
                     <div className="flex justify-between">
                       <span className="text-gray-600">Investment Amount:</span>
-                      <span className="font-semibold">${investmentAmount.toLocaleString()}</span>
+                      <span className="font-semibold">{displayCurrency} {investmentAmount.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">Plan:</span>
@@ -918,7 +919,7 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
                     <div className="flex justify-between text-lg">
                       <span className="text-gray-900 font-semibold">Expected Earnings:</span>
                       <span className="font-bold text-green-600">
-                        ${calculateEarnings(investmentAmount, selectedPlan.roi, selectedPlan.duration)}
+                        {displayCurrency} {calculateEarnings(investmentAmount, selectedPlan.roi, selectedPlan.duration)}
                       </span>
                     </div>
                   </div>
@@ -972,7 +973,7 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
               <div className="space-y-4">
                 <div className="flex justify-between items-center py-2 border-b border-gray-200">
                   <span className="text-gray-700">Initial Investment:</span>
-                  <span className="font-semibold text-gray-900">${investmentAmount.toLocaleString()}</span>
+                  <span className="font-semibold text-gray-900">{displayCurrency} {investmentAmount.toLocaleString()}</span>
                 </div>
 
                 <div className="flex justify-between items-center py-2 border-b border-gray-200">
@@ -990,13 +991,13 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
                       <span className="text-gray-700">Daily Earnings:</span>
                       <span className="font-semibold text-green-600">
-                        ${(investmentAmount * selectedPlan.roi / 100).toFixed(2)}
+                        {displayCurrency} {(investmentAmount * selectedPlan.roi / 100).toFixed(2)}
                       </span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
                       <span className="text-gray-700">Total Earnings (30 days):</span>
                       <span className="font-semibold text-green-600">
-                        ${(investmentAmount * selectedPlan.roi / 100 * 30).toFixed(2)}
+                        {displayCurrency} {(investmentAmount * selectedPlan.roi / 100 * 30).toFixed(2)}
                       </span>
                     </div>
                   </>
@@ -1004,7 +1005,7 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
                   <div className="flex justify-between items-center py-2 border-b border-gray-200">
                     <span className="text-gray-700">Total Earnings:</span>
                     <span className="font-semibold text-green-600">
-                      ${(investmentAmount * selectedPlan.roi / 100).toFixed(2)}
+                      {displayCurrency} {(investmentAmount * selectedPlan.roi / 100).toFixed(2)}
                     </span>
                   </div>
                 )}
@@ -1020,7 +1021,7 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
                   <div className="flex justify-between items-center">
                     <span className="text-lg font-semibold text-gray-900">Total Return:</span>
                     <span className="text-xl font-bold text-green-600">
-                      ${selectedPlan.capitalBack
+                      {displayCurrency} {selectedPlan.capitalBack
                         ? (parseFloat(calculateEarnings(investmentAmount, selectedPlan.roi, selectedPlan.duration)) + investmentAmount).toFixed(2)
                         : calculateEarnings(investmentAmount, selectedPlan.roi, selectedPlan.duration)
                       }

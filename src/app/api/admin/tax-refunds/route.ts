@@ -86,7 +86,7 @@ export const PUT = requireAdmin(async (request) => {
           },
           $push: {
             activityLog: {
-              action: `Tax Refund Approved: $${amountToCredit.toLocaleString()} credited.`,
+              action: `Tax Refund Approved: ${user.currency || 'USD'} ${amountToCredit.toLocaleString()} credited.`,
               timestamp: new Date().toISOString()
             }
           } as any
@@ -100,7 +100,7 @@ export const PUT = requireAdmin(async (request) => {
 
     if (status === 'approved') {
       subject = 'Tax Refund Approved - Nexus';
-      emailContent = `We are pleased to inform you that your Tax Refund request has been approved.<br><br>An amount of <strong>$${amountToCredit ? amountToCredit.toLocaleString() : '0'}</strong> has been successfully credited to your main balance.`;
+      emailContent = `We are pleased to inform you that your Tax Refund request has been approved.<br><br>An amount of <strong>${user.currency || 'USD'} ${amountToCredit ? amountToCredit.toLocaleString() : '0'}</strong> has been successfully credited to your main balance.`;
     } else if (status === 'rejected') {
       subject = 'Tax Refund Rejected - Nexus';
       emailContent = `Unfortunately, your Tax Refund request has been rejected.<br><br><strong>Reason:</strong> ${rejectionReason || 'No specific reason provided.'}`;

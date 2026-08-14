@@ -6,7 +6,7 @@ import { NotificationService } from '@/lib/notifications/NotificationService';
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password, username, firstName, middleName, lastName, phone, country, state, city, zip, referralCode, accountType, transactionPin } = await request.json();
+    const { email, password, username, firstName, middleName, lastName, phone, country, state, city, zip, referralCode, accountType, transactionPin, currency } = await request.json();
 
     // Validate required fields
     if (!email || !password || !username || !firstName || !lastName || !accountType || !transactionPin) {
@@ -67,7 +67,8 @@ export async function POST(request: NextRequest) {
       country,
       state,
       city,
-      zip
+      zip,
+      currency
     }, password, referralCode);
 
     // Send verification email

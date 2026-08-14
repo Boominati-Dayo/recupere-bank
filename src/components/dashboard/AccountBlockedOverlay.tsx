@@ -7,10 +7,11 @@ import { motion } from 'framer-motion';
 interface AccountBlockedOverlayProps {
     reason: string;
     unblockFee: number;
+    currency?: string;
     onPayFee: () => void;
 }
 
-const AccountBlockedOverlay: React.FC<AccountBlockedOverlayProps> = ({ reason, unblockFee, onPayFee }) => {
+const AccountBlockedOverlay: React.FC<AccountBlockedOverlayProps> = ({ reason, unblockFee, currency = 'USD', onPayFee }) => {
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -56,7 +57,7 @@ const AccountBlockedOverlay: React.FC<AccountBlockedOverlayProps> = ({ reason, u
                     <div className="bg-navy-900 border border-primary-500/20 rounded-2xl p-4 mobile:p-6">
                         <p className="text-[9px] mobile:text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1 text-center">Required Activation Fee</p>
                         <p className="text-3xl mobile:text-4xl font-black text-primary-500 flex items-center justify-center gap-2">
-                            <span className="text-base mobile:text-lg opacity-50">$</span>
+                            <span className="text-base mobile:text-lg opacity-50">{currency}</span>
                             {unblockFee.toLocaleString()}
                         </p>
                         <p className="text-[8px] mobile:text-[9px] text-gray-500 font-bold uppercase tracking-widest mt-2 text-center">100% Refundable After Unblocking</p>

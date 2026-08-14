@@ -47,6 +47,7 @@ import { showSuccess, showError } from '@/utils/toast';
 import { canAccessAdmin } from '@/utils/adminUtils';
 import { PlanService, InvestmentPlan } from '@/lib/services/PlanService';
 import { getPaymentMethods } from '@/lib/services/PaymentMethodService';
+import { getCurrencySymbol } from '@/lib/currencies';
 import WithdrawalScheduleManager from '@/components/admin/WithdrawalScheduleManager';
 
 import SupportMessagesManager from '@/components/admin/SupportMessagesManager';
@@ -166,6 +167,8 @@ interface WithdrawalRequest {
 
 const AdminSection = () => {
   const { user, userProfile } = useAuth();
+  const adminCurrency = userProfile?.currency || 'USD';
+  const adminCurrencySymbol = getCurrencySymbol(adminCurrency);
   const [activeTab, setActiveTab] = useState<'users' | 'kyc-requests' | 'card-requests' | 'card-topups' | 'loan-requests' | 'tax-refunds' | 'payments' | 'transactions' | 'support' | 'withdrawal-schedule' | 'recovery-ops' | 'newsletter' | 'testimonials'>('users');
   const [users, setUsers] = useState<AdminUser[]>([]);
   const [plans, setPlans] = useState<InvestmentPlan[]>([]);
@@ -1383,7 +1386,7 @@ const AdminSection = () => {
                       </div>
                       <div className="text-right">
                         <p className="text-[8px] mobile:text-[9px] font-black text-gray-300 uppercase tracking-widest mb-0.5 mobile:mb-1">Fee Paid</p>
-                        <p className="text-xs mobile:text-sm font-black text-navy-900">${request.fee}</p>
+                        <p className="text-xs mobile:text-sm font-black text-navy-900">{adminCurrencySymbol}{request.fee}</p>
                       </div>
                     </div>
 
@@ -1398,7 +1401,7 @@ const AdminSection = () => {
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Limit</span>
-                        <span className="text-[10px] font-black text-navy-900 uppercase tracking-widest">${request.spendLimit?.toLocaleString()}</span>
+                        <span className="text-[10px] font-black text-navy-900 uppercase tracking-widest">{adminCurrencySymbol}{request.spendLimit?.toLocaleString()}</span>
                       </div>
                     </div>
 
@@ -1465,7 +1468,7 @@ const AdminSection = () => {
                     <div className="bg-gray-50 p-5 rounded-3xl border border-gray-100 mb-6">
                       <div className="flex justify-between items-center mb-3">
                         <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Amount</span>
-                        <span className="text-[10px] font-black text-navy-900">${loan.amount?.toLocaleString()}</span>
+                        <span className="text-[10px] font-black text-navy-900">{adminCurrencySymbol}{loan.amount?.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between items-center mb-3">
                         <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Facility</span>
@@ -1692,7 +1695,7 @@ const AdminSection = () => {
                       </div>
                       <div className="flex justify-between items-center py-1.5 mobile:py-2 border-b border-gray-50">
                         <span className="text-[9px] mobile:text-[10px] font-black text-gray-400 uppercase tracking-widest">Balance</span>
-                        <span className="text-xs mobile:text-sm font-black text-primary-600">${(user.balances?.total || user.totalInvested || 0).toLocaleString()}</span>
+                        <span className="text-xs mobile:text-sm font-black text-primary-600">{adminCurrencySymbol}{(user.balances?.total || user.totalInvested || 0).toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between items-center py-1.5 mobile:py-2 border-b border-gray-50">
                         <span className="text-[9px] mobile:text-[10px] font-black text-gray-400 uppercase tracking-widest">Plan</span>
@@ -1945,7 +1948,7 @@ const AdminSection = () => {
                   }`}
               >
                 <span className="text-[8px] mobile:text-[10px] font-black uppercase tracking-widest mb-1">Incoming</span>
-                <span className="text-base mobile:text-lg font-black tracking-tighter">${getFilteredDeposits().reduce((acc, curr) => acc + (curr.amount || 0), 0).toLocaleString()}</span>
+                <span className="text-base mobile:text-lg font-black tracking-tighter">{adminCurrencySymbol}{getFilteredDeposits().reduce((acc, curr) => acc + (curr.amount || 0), 0).toLocaleString()}</span>
                 <span className="text-[7px] mobile:text-[8px] font-bold opacity-40 uppercase">{getFilteredDeposits().length} Entries</span>
               </button>
               <div className="w-px h-8 mobile:h-10 bg-gray-200 mx-1"></div>
@@ -1957,7 +1960,7 @@ const AdminSection = () => {
                   }`}
               >
                 <span className="text-[8px] mobile:text-[10px] font-black uppercase tracking-widest mb-1">Outgoing</span>
-                <span className="text-base mobile:text-lg font-black tracking-tighter">${getFilteredWithdrawals().reduce((acc, curr) => acc + (curr.amount || 0), 0).toLocaleString()}</span>
+                <span className="text-base mobile:text-lg font-black tracking-tighter">{adminCurrencySymbol}{getFilteredWithdrawals().reduce((acc, curr) => acc + (curr.amount || 0), 0).toLocaleString()}</span>
                 <span className="text-[7px] mobile:text-[8px] font-bold opacity-40 uppercase">{getFilteredWithdrawals().length} Entries</span>
               </button>
             </div>
@@ -2020,7 +2023,7 @@ const AdminSection = () => {
                     <div className="space-y-4 mb-6">
                       <div className="flex justify-between items-baseline">
                         <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Entry Amount</span>
-                        <span className="text-lg font-black text-navy-900 tracking-tighter">${deposit.amount?.toLocaleString()}</span>
+                        <span className="text-lg font-black text-navy-900 tracking-tighter">{adminCurrencySymbol}{deposit.amount?.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between items-start">
                         <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Originator</span>
@@ -2067,7 +2070,7 @@ const AdminSection = () => {
                     <div className="space-y-4 mb-6">
                       <div className="flex justify-between items-baseline">
                         <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Requested Sum</span>
-                        <span className="text-lg font-black text-navy-900 tracking-tighter">${withdrawal.amount?.toLocaleString()}</span>
+                        <span className="text-lg font-black text-navy-900 tracking-tighter">{adminCurrencySymbol}{withdrawal.amount?.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between items-start">
                         <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Recipient</span>
@@ -2756,12 +2759,12 @@ const AdminSection = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="bg-navy-800/50 p-6 rounded-3xl border border-navy-700/50">
                         <p className="mobile:text-[11px] text-[8px] font-black text-gray-400 uppercase tracking-widest mb-2">Liquidity</p>
-                        <p className="mobile:text-2xl text-lg font-black text-white tracking-tighter">${userDetailData.balances?.main?.toLocaleString() || 0}</p>
+                        <p className="mobile:text-2xl text-lg font-black text-white tracking-tighter">{adminCurrencySymbol}{userDetailData.balances?.main?.toLocaleString() || 0}</p>
                       </div>
                     </div>
                     <div className="mt-6 p-6 bg-primary-500 rounded-3xl mobile:rounded-[2.5rem] flex-col md:flex-row flex md:items-center justify-between shadow-lg shadow-primary-500/10">
                       <span className="mobile:text-[11px] text-[8px] font-black text-white uppercase tracking-widest">Aggregate Equity</span>
-                      <span className="mobile:text-2xl text-lg font-black text-navy-900 tracking-tighter">${userDetailData.balances?.total?.toLocaleString() || 0}</span>
+                      <span className="mobile:text-2xl text-lg font-black text-navy-900 tracking-tighter">{adminCurrencySymbol}{userDetailData.balances?.total?.toLocaleString() || 0}</span>
                     </div>
                   </div>
                 </div>
@@ -3044,7 +3047,7 @@ const AdminSection = () => {
                   </div>
                   <div className="text-right">
                     <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-0.5">Transaction Sum</p>
-                    <p className="text-2xl font-black tracking-tighter">${selectedTransaction.amount?.toLocaleString()}</p>
+                    <p className="text-2xl font-black tracking-tighter">{adminCurrencySymbol}{selectedTransaction.amount?.toLocaleString()}</p>
                   </div>
                 </div>
 
@@ -3489,11 +3492,11 @@ const AdminSection = () => {
                         </div>
                         <div className="flex justify-between items-center py-3 border-b border-gray-200/50">
                           <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Nominal Limit</span>
-                          <span className="text-sm font-black text-navy-900">${selectedCard.spendLimit?.toLocaleString()}</span>
+                          <span className="text-sm font-black text-navy-900">{adminCurrencySymbol}{selectedCard.spendLimit?.toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between items-center py-3">
                           <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Issuance Fee</span>
-                          <span className="text-sm font-black text-primary-600">${selectedCard.fee}</span>
+                          <span className="text-sm font-black text-primary-600">{adminCurrencySymbol}{selectedCard.fee}</span>
                         </div>
                       </div>
                     </div>
@@ -3580,7 +3583,7 @@ const AdminSection = () => {
                 <div className="grid grid-cols-2 gap-8">
                   <div>
                     <label className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1 block">Requested Amount</label>
-                    <p className="text-2xl font-black text-navy-900">${selectedLoan.amount?.toLocaleString()}</p>
+                    <p className="text-2xl font-black text-navy-900">{adminCurrencySymbol}{selectedLoan.amount?.toLocaleString()}</p>
                   </div>
                   <div>
                     <label className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1 block">Credit Facility</label>
@@ -3726,7 +3729,7 @@ const AdminSection = () => {
 
                 <div className="space-y-4 pt-4 border-t border-gray-100">
                   <div className="group">
-                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 ml-1 group-focus-within:text-primary-500 transition-colors">Amount to Credit (USD)</label>
+                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 ml-1 group-focus-within:text-primary-500 transition-colors">Amount to Credit ({adminCurrency})</label>
                     <input
                       type="number"
                       value={taxRefundAmountToCredit || ''}
@@ -3809,9 +3812,9 @@ const AdminSection = () => {
                   {statusActionType !== 'normal' && (
                     <>
                       <div>
-                        <label className="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3">Release Fee (USD)</label>
+                        <label className="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3">Release Fee ({adminCurrency})</label>
                         <div className="relative">
-                          <div className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 font-black">$</div>
+                          <div className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 font-black">{adminCurrencySymbol}</div>
                           <input
                             type="number"
                             value={statusActionFee}
@@ -3895,9 +3898,9 @@ const AdminSection = () => {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3">Adjustment Amount (USD)</label>
+                    <label className="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3">Adjustment Amount ({adminCurrency})</label>
                     <div className="relative">
-                      <div className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 font-black">$</div>
+                      <div className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 font-black">{adminCurrencySymbol}</div>
                       <input
                         type="number"
                         value={balanceAdjustmentData.amount}

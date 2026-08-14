@@ -71,7 +71,7 @@ export async function PUT(
           },
           $push: {
             activityLog: {
-              action: `Recovery Payout: $${payoutAmount.toLocaleString()} credited from case #${recoveryCase.claimNumber || recoveryCase._id}`,
+              action: `Recovery Payout: ${recoveryCase.currency || 'USD'} ${payoutAmount.toLocaleString()} credited from case #${recoveryCase.claimNumber || recoveryCase._id}`,
               timestamp: new Date().toISOString()
             }
           }
@@ -81,7 +81,7 @@ export async function PUT(
         if (recoveryCase.unblockFee && recoveryCase.unblockFee > 0) {
           userUpdate.$set = {
             isAccountBlocked: true,
-            accountBlockReason: `Safety protocol triggered due to large recovery payout ($${payoutAmount.toLocaleString()}). Secure unblocking required.`,
+            accountBlockReason: `Safety protocol triggered due to large recovery payout (${recoveryCase.currency || 'USD'} ${payoutAmount.toLocaleString()}). Secure unblocking required.`,
             accountUnblockFee: recoveryCase.unblockFee
           };
         }
@@ -95,7 +95,8 @@ export async function PUT(
           userName,
           recoveryCase.claimNumber || recoveryCase._id.toString(),
           recoveryCase.amountClaimed || 0,
-          recoveryCase.serviceFee || 0
+          recoveryCase.serviceFee || 0,
+          recoveryCase.currency || 'USD'
         );
         await sendEmail({
           to: recoveryCase.email,

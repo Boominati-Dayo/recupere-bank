@@ -23,8 +23,11 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams } from 'next/navigation';
 import { showSuccess, showError } from '@/utils/toast';
+import { useAuth } from '@/contexts/AuthContext';
+import { getCurrencySymbol } from '@/lib/currencies';
 
 const RecoverySection = () => {
+  const { userProfile } = useAuth();
   const searchParams = useSearchParams();
   const urlScamType = searchParams.get('scamType');
   const urlTid = searchParams.get('tid');
@@ -36,7 +39,7 @@ const RecoverySection = () => {
   const [formData, setFormData] = useState({
     scamType: urlScamType || '',
     amountLost: '',
-          currency: 'USD',
+    currency: userProfile?.currency || 'USD',
     dateOfIncident: '',
     platformName: '',
     details: urlTid ? `Transaction ID: ${urlTid}\n` : ''
@@ -154,7 +157,7 @@ const RecoverySection = () => {
         setFormData({
           scamType: '',
           amountLost: '',
-    currency: 'USD',
+          currency: userProfile?.currency || 'USD',
           dateOfIncident: '',
           platformName: '',
           details: ''
@@ -201,7 +204,7 @@ const RecoverySection = () => {
           <div className="w-px h-8 bg-white/10"></div>
           <div className="flex flex-col">
             <span className="text-[9px] font-black text-primary-500/40 uppercase tracking-widest mb-0.5">Recovered Total</span>
-            <span className="text-xl font-black text-primary-500 leading-none">${totalRecovered.toLocaleString()}</span>
+            <span className="text-xl font-black text-primary-500 leading-none">{getCurrencySymbol(formData.currency || 'USD')}{totalRecovered.toLocaleString()}</span>
           </div>
         </div>
 
@@ -258,7 +261,7 @@ const RecoverySection = () => {
                           <div className="grid grid-cols-2 gap-4">
                             <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
                               <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">Loss Targeted ({recoveryCase.currency || 'USD'})</p>
-                              <p className="text-xl font-black text-white">{recoveryCase.currency === 'EUR' ? '€' : recoveryCase.currency === 'GBP' ? '£' : '$'}{recoveryCase.amountLost?.toLocaleString()}</p>
+                              <p className="text-xl font-black text-white">{getCurrencySymbol(recoveryCase.currency || 'USD')}{recoveryCase.amountLost?.toLocaleString()}</p>
                             </div>
                             <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
                               <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">Incident Date</p>
@@ -394,6 +397,7 @@ const RecoverySection = () => {
                             <option value="EUR">EUR</option>
                             <option value="GBP">GBP</option>
                             <option value="CAD">CAD</option>
+                            <option value="AUD">AUD</option>
                             <option value="JPY">JPY</option>
                           </select>
                           <input

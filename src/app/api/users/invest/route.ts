@@ -122,7 +122,7 @@ export const POST = requireAuth(async (request) => {
             planName: planName,
             date: now,
             status: 'completed',
-            description: `Invested $${amount} in ${planName} plan`
+            description: `Invested ${user.currency || 'USD'} ${amount} in ${planName} plan`
           }
         }
       } as Record<string, unknown>
@@ -134,7 +134,7 @@ export const POST = requireAuth(async (request) => {
       {
         $push: {
           activityLog: {
-            action: `Invested $${amount} in ${planName} plan`,
+            action: `Invested ${user.currency || 'USD'} ${amount} in ${planName} plan`,
             timestamp: now.toISOString()
           }
         }
@@ -144,7 +144,7 @@ export const POST = requireAuth(async (request) => {
     // Create notification for user
     await db.collection('notifications').insertOne({
       title: 'Investment Started',
-      message: `You've successfully invested $${amount} in ${planName} plan. Your investment will earn ${roi}% over ${durationDays} days.`,
+      message: `You've successfully invested ${user.currency || 'USD'} ${amount} in ${planName} plan. Your investment will earn ${roi}% over ${durationDays} days.`,
       type: 'success',
       recipients: [userId],
       sentBy: 'system',
@@ -160,7 +160,7 @@ export const POST = requireAuth(async (request) => {
     if (adminIds.length > 0) {
       await db.collection('notifications').insertOne({
         title: 'New Investment',
-        message: `${user.firstName} ${user.lastName} (${user.email}) invested $${amount} in ${planName} plan`,
+        message: `${user.firstName} ${user.lastName} (${user.email}) invested ${user.currency || 'USD'} ${amount} in ${planName} plan`,
         type: 'admin-only',
         recipients: adminIds,
         sentBy: 'system',

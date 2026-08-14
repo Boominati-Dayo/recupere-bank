@@ -69,7 +69,7 @@ export const POST = requireAuth(async (request) => {
             topUpId: topUpResult.insertedId
           },
           activityLog: {
-            action: `Requested $${amount} card top-up`,
+            action: `Requested ${user.currency || 'USD'} ${amount} card top-up`,
             timestamp: new Date().toISOString()
           }
         } as any
@@ -79,7 +79,7 @@ export const POST = requireAuth(async (request) => {
     // Notify user
     await NotificationService.createNotification({
       title: 'Top-up Request Received',
-      message: `Your request to top up $${amount} to your virtual card has been received and is pending admin approval.`,
+      message: `Your request to top up ${user.currency || 'USD'} ${amount} to your virtual card has been received and is pending admin approval.`,
       type: 'individual',
       recipients: [userId],
       sentBy: 'system'

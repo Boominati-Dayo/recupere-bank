@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Star, Zap, Crown, Gem, AlertCircle, Diamond, Rocket, Shield, Gift, Target, Trophy, Flame, RefreshCw, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { PlanService, InvestmentPlan } from '@/lib/services/PlanService';
+import { getCurrencySymbol } from '@/lib/currencies';
 
 interface UpgradePlanSectionProps {
   onBack: () => void;
@@ -13,6 +14,8 @@ interface UpgradePlanSectionProps {
 
 const UpgradePlanSection = ({ onBack, onUpgrade }: UpgradePlanSectionProps) => {
   const { userProfile } = useAuth();
+  const currencyCode = userProfile?.currency || 'USD';
+  const currencySymbol = getCurrencySymbol(currencyCode);
   const [selectedPlan, setSelectedPlan] = useState<InvestmentPlan | null>(null);
   const [investmentAmount, setInvestmentAmount] = useState<number>(0);
   const [showCalculation, setShowCalculation] = useState<boolean>(false);
@@ -56,13 +59,13 @@ const UpgradePlanSection = ({ onBack, onUpgrade }: UpgradePlanSectionProps) => {
   // Validate investment amount
   const validateAmount = (amount: number, plan: InvestmentPlan): string => {
     if (amount < plan.minAmount) {
-      return `Minimum investment is $${plan.minAmount.toLocaleString()}`;
+      return `Minimum investment is ${currencySymbol}${plan.minAmount.toLocaleString()}`;
     }
     if (amount > plan.maxAmount && plan.maxAmount !== Infinity) {
-      return `Maximum investment is $${plan.maxAmount.toLocaleString()}`;
+      return `Maximum investment is ${currencySymbol}${plan.maxAmount.toLocaleString()}`;
     }
     if (amount > accountBalance) {
-      return `Insufficient balance. Available: $${accountBalance.toLocaleString()}`;
+      return `Insufficient balance. Available: ${currencySymbol}${accountBalance.toLocaleString()}`;
     }
     return '';
   };
@@ -296,7 +299,7 @@ const UpgradePlanSection = ({ onBack, onUpgrade }: UpgradePlanSectionProps) => {
         <div className="mb-6 p-4 bg-gray-50 rounded-lg">
           <p className="text-sm text-gray-600">Available Balance</p>
           <p className="text-2xl font-bold text-gray-900">
-            ${accountBalance.toLocaleString()} USD
+            {currencySymbol}{accountBalance.toLocaleString()} {currencyCode}
           </p>
         </div>
 
@@ -341,12 +344,12 @@ const UpgradePlanSection = ({ onBack, onUpgrade }: UpgradePlanSectionProps) => {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Min Amount:</span>
-                        <span className="font-semibold">${plan.minAmount.toLocaleString()}</span>
+                        <span className="font-semibold">{currencySymbol}{plan.minAmount.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Max Amount:</span>
                         <span className="font-semibold">
-                          {plan.maxAmount === Infinity ? 'Unlimited' : `$${plan.maxAmount.toLocaleString()}`}
+                          {plan.maxAmount === Infinity ? 'Unlimited' : `${currencySymbol}${plan.maxAmount.toLocaleString()}`}
                         </span>
                       </div>
                       <div className="flex justify-between">
@@ -404,13 +407,13 @@ const UpgradePlanSection = ({ onBack, onUpgrade }: UpgradePlanSectionProps) => {
               {/* Amount Input */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Investment Amount (USD)
+                  Investment Amount ({currencyCode})
                 </label>
                 <input
                   type="number"
                   value={investmentAmount || ''}
                   onChange={(e) => handleAmountChange(parseFloat(e.target.value) || 0)}
-                  placeholder={`Min: $${selectedPlan.minAmount.toLocaleString()}`}
+                  placeholder={`Min: ${currencySymbol}${selectedPlan.minAmount.toLocaleString()}`}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ee2737] focus:border-transparent"
                 />
                 {amountError && (
@@ -426,19 +429,19 @@ const UpgradePlanSection = ({ onBack, onUpgrade }: UpgradePlanSectionProps) => {
                     <div>
                       <p className="text-sm text-gray-600">Daily Return</p>
                       <p className="text-lg font-semibold text-green-600">
-                        ${calculateReturns(investmentAmount, selectedPlan).dailyReturn.toFixed(2)}
+                        {currencySymbol}{calculateReturns(investmentAmount, selectedPlan).dailyReturn.toFixed(2)}
                       </p>
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">Total Return</p>
                       <p className="text-lg font-semibold text-blue-600">
-                        ${calculateReturns(investmentAmount, selectedPlan).totalReturn.toFixed(2)}
+                        {currencySymbol}{calculateReturns(investmentAmount, selectedPlan).totalReturn.toFixed(2)}
                       </p>
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">Net Profit</p>
                       <p className="text-lg font-semibold text-purple-600">
-                        ${calculateReturns(investmentAmount, selectedPlan).netProfit.toFixed(2)}
+                        {currencySymbol}{calculateReturns(investmentAmount, selectedPlan).netProfit.toFixed(2)}
                       </p>
                     </div>
                   </div>

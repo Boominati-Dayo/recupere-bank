@@ -29,11 +29,14 @@ export const POST = requireAuth(async (request) => {
     const userId = request.user!.id;
     const data = await request.json();
 
-    const { amount, duration, facility, purpose, income } = data;
+    const { amount, duration, facility, purpose, income, currency } = data;
+
+    const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
 
     const newLoan = {
       userId,
       amount,
+      currency: currency || user?.currency || 'USD',
       duration,
       facility,
       purpose,
@@ -51,7 +54,7 @@ export const POST = requireAuth(async (request) => {
       { 
         $push: {
           activityLog: {
-            action: `Applied for a $${amount} ${facility} loan`,
+            action: `Applied for a ${user?.currency || 'USD'} ${amount} ${facility} loan`,
             timestamp: new Date().toISOString()
           }
         } as any

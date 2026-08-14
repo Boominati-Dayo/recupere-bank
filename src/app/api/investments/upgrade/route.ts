@@ -27,6 +27,7 @@ interface UserBalances {
 interface UserDoc {
   _id: ObjectId;
   email: string;
+  currency?: string;
   balances?: UserBalances;
   investments?: InvestmentSnapshot[];
   currentInvestment?: number;
@@ -189,7 +190,7 @@ export const POST = requireAuth(async (request: AuthenticatedRequest) => {
                 planName,
                 date: now,
                 status: 'completed',
-                description: `Upgraded investment by $${Number(amount)} to ${planName}`
+                description: `Upgraded investment by ${user?.currency || 'USD'} ${Number(amount)} to ${planName}`
               }
             ]
           }
@@ -205,7 +206,7 @@ export const POST = requireAuth(async (request: AuthenticatedRequest) => {
           activityLog: {
             $each: [
               {
-                action: `Upgraded plan to ${planName} with $${Number(amount)}`,
+                action: `Upgraded plan to ${planName} with ${user?.currency || 'USD'} ${Number(amount)}`,
                 timestamp: now.toISOString()
               }
             ]

@@ -220,7 +220,7 @@ const TrackClaimPage = () => {
 
                                     <div className="text-left md:text-right">
                                         <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Impact Evaluation</p>
-                                        <p className="text-3xl font-black text-white">$ {caseData.amountLost.toLocaleString()}</p>
+                                        <p className="text-3xl font-black text-white">{caseData.currency || 'USD'} {caseData.amountLost.toLocaleString()}</p>
                                         <p className="text-[10px] text-primary-500 font-bold uppercase tracking-widest mt-1">Authorized for Repatriation</p>
                                     </div>
                                 </div>

@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
             address,
             scamType,
             amountLost,
+            currency,
             dateOfIncident,
             platformName,
             details,
@@ -46,6 +47,7 @@ export async function POST(request: NextRequest) {
             address,
             scamType,
             amountLost: parseFloat(amountLost),
+            currency: currency || 'USD',
             dateOfIncident,
             platformName,
             details,
@@ -71,7 +73,7 @@ export async function POST(request: NextRequest) {
         // Send alert email to admin
         const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER;
         if (adminEmail) {
-            const adminOptions = emailTemplates.recoveryClaimAdminAlert(email, claimNumber, scamType, parseFloat(amountLost));
+            const adminOptions = emailTemplates.recoveryClaimAdminAlert(email, claimNumber, scamType, parseFloat(amountLost), currency || 'USD');
             await sendEmail({
                 to: adminEmail,
                 ...adminOptions

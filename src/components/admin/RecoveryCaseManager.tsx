@@ -42,6 +42,7 @@ interface RecoveryCase {
   unblockFee?: number;
   scamType: string;
   amountLost: number;
+  currency?: string;
   dateOfIncident: string;
   platformName: string;
   details: string;
@@ -180,7 +181,7 @@ const RecoveryCaseManager = () => {
             <div className="w-[1px] h-6 bg-gray-200"></div>
             <div className="flex flex-col">
               <span className="text-[8px] font-black text-gray-400 uppercase">Recovered Total</span>
-              <span className="text-sm font-black text-primary-600">${cases.filter(c => c.status === 'completed').reduce((sum, c) => sum + c.amountLost, 0).toLocaleString()}</span>
+              <span className="text-sm font-black text-primary-600">USD {cases.filter(c => c.status === 'completed').reduce((sum, c) => sum + c.amountLost, 0).toLocaleString()}</span>
             </div>
           </div>
         </div>
@@ -230,7 +231,7 @@ const RecoveryCaseManager = () => {
                     </div>
                     <div className="flex flex-wrap gap-2">
                       <span className="bg-gray-100 px-2 py-0.5 rounded text-[9px] font-black text-gray-500 uppercase tracking-widest">{c.scamType}</span>
-                      <span className="bg-navy-900 text-primary-500 px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest">${c.amountLost.toLocaleString()}</span>
+                      <span className="bg-navy-900 text-primary-500 px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest">{c.currency || 'USD'} {c.amountLost.toLocaleString()}</span>
                       <span className="bg-gray-100 px-2 py-0.5 rounded text-[9px] font-black text-gray-500 uppercase tracking-widest">{c.platformName}</span>
                     </div>
                   </div>
@@ -293,7 +294,7 @@ const RecoveryCaseManager = () => {
                   </div>
                   <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">
                     {selectedCase.isPublic ? `Public Submission: ${selectedCase.email}` : `Registered Target: ${selectedCase.userId?.firstName} ${selectedCase.userId?.lastName}`}
-                    • Exposure: ${selectedCase.amountLost.toLocaleString()}
+                    • Exposure: {selectedCase.currency || 'USD'} {selectedCase.amountLost.toLocaleString()}
                   </p>
                 </div>
               </div>

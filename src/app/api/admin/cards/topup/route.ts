@@ -29,7 +29,7 @@ export const GET = requireAdmin(async (request) => {
     const cardIds = requests.map(r => new ObjectId(r.cardId));
 
     const [users, cards] = await Promise.all([
-      db.collection('users').find({ _id: { $in: userIds } }).project({ email: 1, firstName: 1, lastName: 1, userCode: 1 }).toArray(),
+      db.collection('users').find({ _id: { $in: userIds } }).project({ email: 1, firstName: 1, lastName: 1, userCode: 1, currency: 1 }).toArray(),
       db.collection('virtualCards').find({ _id: { $in: cardIds } }).toArray()
     ]);
 
@@ -63,6 +63,9 @@ export const PUT = requireAdmin(async (request) => {
       return NextResponse.json({ success: false, error: 'Request not found or already processed' }, { status: 404 });
     }
 
+    const user = await db.collection('users').findOne({ _id: new ObjectId(topUp.userId) });
+    const userCurrency = user?.currency || 'USD';
+
     if (action === 'approve') {
       // 1. Update card balance
       await db.collection('virtualCards').updateOne(
@@ -79,14 +82,13 @@ export const PUT = requireAdmin(async (request) => {
       // 3. Notify user
       await NotificationService.createNotification({
         title: 'Card Top-up Successful',
-        message: `Your card top-up of $${topUp.amount} has been approved and added to your card balance.`,
+        message: `Your card top-up of ${userCurrency} ${topUp.amount} has been approved and added to your card balance.`,
         type: 'individual',
         recipients: [topUp.userId],
         sentBy: 'system'
       });
     } else {
       // 1. Refund user main balance
-      const user = await db.collection('users').findOne({ _id: new ObjectId(topUp.userId) });
       if (user) {
         const newMain = (user.balances?.main || 0) + topUp.amount;
         await db.collection('users').updateOne(
@@ -119,7 +121,7 @@ export const PUT = requireAdmin(async (request) => {
       // 3. Notify user
       await NotificationService.createNotification({
         title: 'Card Top-up Declined',
-        message: `Your card top-up request of $${topUp.amount} was declined. The funds have been returned to your main balance.`,
+        message: `Your card top-up request of ${userCurrency} ${topUp.amount} was declined. The funds have been returned to your main balance.`,
         type: 'individual',
         recipients: [topUp.userId],
         sentBy: 'system'

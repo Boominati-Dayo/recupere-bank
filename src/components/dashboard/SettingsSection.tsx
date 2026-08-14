@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { showSuccess, showError } from '@/utils/toast';
+import { getCurrencyForCountry } from '@/lib/currencies';
 
 const SettingsSection = () => {
   const { user, userProfile, updateProfile } = useAuth();
@@ -35,7 +36,8 @@ const SettingsSection = () => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: value,
+      ...(name === 'country' ? { currency: getCurrencyForCountry(value) } : {})
     }));
   };
 
@@ -54,7 +56,8 @@ const SettingsSection = () => {
         country: formData.country,
         state: formData.state,
         city: formData.city,
-        zip: formData.zipCode
+        zip: formData.zipCode,
+        currency: getCurrencyForCountry(formData.country)
       });
 
       if (success) {
@@ -149,8 +152,8 @@ const SettingsSection = () => {
                 <option value="">Select Country</option>
                 <option value="AU">Australia</option>
                 <option value="CA">Canada</option>
-                <option value="UK">United Kingdom</option>
-                <option value="AU">Australia</option>
+                <option value="GB">United Kingdom</option>
+                <option value="US">United States</option>
                 <option value="DE">Germany</option>
                 <option value="FR">France</option>
                 <option value="JP">Japan</option>

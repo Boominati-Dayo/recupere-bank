@@ -40,8 +40,8 @@ export const POST = requireAdmin(async (request) => {
             updateData.accountUnblockFee = parseFloat(fee) || 0;
 
             notificationTitle = 'ACCOUNT TEMPORARILY BLOCKED';
-            notificationMessage = `Your account has been temporarily blocked for security reasons: ${updateData.accountBlockReason}. A safety release fee of $${updateData.accountUnblockFee} is required.`;
-            activityAction = `Account blocked by admin. Reason: ${updateData.accountBlockReason}. Fee: $${updateData.accountUnblockFee}`;
+            notificationMessage = `Your account has been temporarily blocked for security reasons: ${updateData.accountBlockReason}. A safety release fee of ${user.currency || 'USD'} ${updateData.accountUnblockFee} is required.`;
+            activityAction = `Account blocked by admin. Reason: ${updateData.accountBlockReason}. Fee: ${user.currency || 'USD'} ${updateData.accountUnblockFee}`;
         } else if (action === 'restrict') {
             updateData.isAccountRestricted = true;
             updateData.isAccountBlocked = false;
@@ -49,8 +49,8 @@ export const POST = requireAdmin(async (request) => {
             updateData.accountUnblockFee = parseFloat(fee) || 0;
 
             notificationTitle = 'ACCOUNT ACTIVITY RESTRICTED';
-            notificationMessage = `Your account functionality has been restricted: ${updateData.accountBlockReason}. You can still view your dashboard, but financial actions are disabled until a release fee of $${updateData.accountUnblockFee} is processed.`;
-            activityAction = `Account restricted by admin. Reason: ${updateData.accountBlockReason}. Fee: $${updateData.accountUnblockFee}`;
+            notificationMessage = `Your account functionality has been restricted: ${updateData.accountBlockReason}. You can still view your dashboard, but financial actions are disabled until a release fee of ${user.currency || 'USD'} ${updateData.accountUnblockFee} is processed.`;
+            activityAction = `Account restricted by admin. Reason: ${updateData.accountBlockReason}. Fee: ${user.currency || 'USD'} ${updateData.accountUnblockFee}`;
         } else {
             // normal (this is essentially unblock but without the refund logic of the other API)
             // usually unblock should be used for the refund, but this is a manual reset
@@ -96,7 +96,8 @@ export const POST = requireAdmin(async (request) => {
                 user.firstName || user.displayName || 'User',
                 action,
                 reason || (action === 'normal' ? 'Account verification complete' : 'Security audit required'),
-                action !== 'normal' ? (parseFloat(fee) || 0) : 0
+                action !== 'normal' ? (parseFloat(fee) || 0) : 0,
+                user.currency || 'USD'
             );
 
             await sendEmail({

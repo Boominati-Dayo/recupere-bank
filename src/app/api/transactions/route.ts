@@ -2,12 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { NotificationService } from '@/lib/notifications/NotificationService';
+import { getCurrencySymbol } from '@/lib/currencies';
 
 interface DepositRequest {
   _id?: ObjectId;
   userId: string;
   paymentMethodId: string;
   amount: number;
+  currency?: string;
   screenshot?: string;
   paymentDetailsString?: string;
   status: 'pending_details' | 'awaiting_payment' | 'verifying' | 'completed' | 'pending' | 'approved' | 'rejected';
@@ -23,6 +25,7 @@ interface WithdrawalRequest {
   userId: string;
   paymentMethodId: string;
   amount: number;
+  currency?: string;
   accountDetails: {
     accountName: string;
     accountNumber: string;
@@ -96,7 +99,8 @@ export async function POST(request: NextRequest) {
         userEmail,
         transactionData.amount,
         result.insertedId.toString(),
-        paymentMethodName
+        paymentMethodName,
+        transactionData.currency
       );
 
       return NextResponse.json({ success: true, data: result.insertedId });
@@ -155,7 +159,8 @@ export async function POST(request: NextRequest) {
         userEmail,
         transactionData.amount,
         result.insertedId.toString(),
-        paymentMethodName
+        paymentMethodName,
+        transactionData.currency
       );
 
       return NextResponse.json({ success: true, data: result.insertedId });
@@ -199,9 +204,10 @@ export async function PUT(request: NextRequest) {
           const user = await db.collection('users').findOne({ _id: new ObjectId(depositRequest.userId) });
           if (user?.email) {
             const { sendEmail, getBaseTemplate } = await import('@/lib/email');
+            const sym = getCurrencySymbol(depositRequest.currency || user.currency || 'USD');
             const subject = 'Deposit Instructions Ready - Nexus';
             const html = getBaseTemplate(subject, `
-              <p>Your deposit request of <strong>$${depositRequest.amount.toLocaleString()}</strong> has been reviewed.</p>
+              <p>Your deposit request of <strong>${sym}${depositRequest.amount.toLocaleString()}</strong> has been reviewed.</p>
               <div style="background-color: #f9fafb; padding: 25px; border-radius: 12px; border: 1px solid #e5e7eb; margin: 30px 0;">
                 <p style="margin: 0; font-size: 15px; color: #111827; line-height: 1.6;"><strong>Payment Instructions:</strong><br/>${paymentDetailsString}</p>
               </div>
@@ -219,9 +225,10 @@ export async function PUT(request: NextRequest) {
           const user = await db.collection('users').findOne({ _id: new ObjectId(depositRequest.userId) });
           if (user?.email) {
             const { sendEmail, getBaseTemplate } = await import('@/lib/email');
+            const sym = getCurrencySymbol(depositRequest.currency || user.currency || 'USD');
             const subject = 'Payment Proof Verifying - Nexus';
             const html = getBaseTemplate(subject, `
-              <p>We received your payment proof for the deposit of <strong>$${depositRequest.amount.toLocaleString()}</strong>.</p>
+              <p>We received your payment proof for the deposit of <strong>${sym}${depositRequest.amount.toLocaleString()}</strong>.</p>
               <p>Our financial team is currently verifying the transaction. Your balance will be credited shortly upon successful confirmation.</p>
             `, user.firstName);
             await sendEmail({ to: user.email, subject, text: 'Payment proof received, verifying.', html });
@@ -279,6 +286,7 @@ export async function PUT(request: NextRequest) {
             // Get referrer details
             const referrer = await db.collection('users').findOne({ _id: new ObjectId(referrerId) });
             if (referrer) {
+              const refSym = getCurrencySymbol(referrer.currency || 'USD');
               // Add commission to referrer's main balance
               const newMainBalance = (referrer.balances?.main || 0) + commissionAmount;
               const newTotalBalance = (referrer.balances?.total || 0) + commissionAmount;
@@ -305,7 +313,7 @@ export async function PUT(request: NextRequest) {
                       amount: commissionAmount,
                       date: new Date(),
                       status: 'completed',
-                      description: `Commission: 5% of ${user.firstName} ${user.lastName}'s first deposit ($${depositRequest.amount})`
+                      description: `Commission: 5% of ${user.firstName} ${user.lastName}'s first deposit (${refSym}${depositRequest.amount})`
                     }
                   }
                 } as Record<string, unknown>
@@ -317,7 +325,7 @@ export async function PUT(request: NextRequest) {
                 {
                   $push: {
                     activityLog: {
-                      action: `Referral commission earned: $${commissionAmount.toFixed(2)} (5% of ${user.firstName}'s first deposit)`,
+                      action: `Referral commission earned: ${refSym}${commissionAmount.toFixed(2)} (5% of ${user.firstName}'s first deposit)`,
                       timestamp: new Date().toISOString()
                     }
                   }
@@ -327,7 +335,7 @@ export async function PUT(request: NextRequest) {
               // Send notification to referrer
               await NotificationService.createNotification({
                 title: 'Referral Commission Earned!',
-                message: `Congratulations! You earned $${commissionAmount.toFixed(2)} (5%) commission from ${user.firstName} ${user.lastName}'s first deposit of $${depositRequest.amount}.`,
+                message: `Congratulations! You earned ${refSym}${commissionAmount.toFixed(2)} (5%) commission from ${user.firstName} ${user.lastName}'s first deposit of ${refSym}${depositRequest.amount}.`,
                 type: 'referral_gain',
                 recipients: [referrerId],
                 sentBy: 'system',
@@ -337,7 +345,7 @@ export async function PUT(request: NextRequest) {
                 }
               });
 
-              console.log(`Referral commission of $${commissionAmount} added to referrer ${referrer.email}`);
+              console.log(`Referral commission of ${refSym}${commissionAmount} added to referrer ${referrer.email}`);
             }
           }
 
@@ -491,7 +499,7 @@ async function updateUserBalance(userId: string, amount: number, operation: 'add
           description: description || (transactionType === 'deposit' ? 'Deposit Approved' : 'Withdrawal Approved')
         },
         activityLog: {
-          action: description || `${transactionType.charAt(0).toUpperCase() + transactionType.slice(1)} ${operation === 'add' ? 'Added' : 'Subtracted'}: $${amount.toFixed(2)}`,
+          action: description || `${transactionType.charAt(0).toUpperCase() + transactionType.slice(1)} ${operation === 'add' ? 'Added' : 'Subtracted'}: ${user.currency || 'USD'} ${amount.toFixed(2)}`,
           timestamp: new Date().toISOString()
         }
       };

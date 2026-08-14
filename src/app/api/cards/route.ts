@@ -102,7 +102,7 @@ export const POST = requireAuth(async (request) => {
     // Notify user
     await NotificationService.createNotification({
       title: 'Card Application Submitted',
-      message: `Your application for a ${cardLevel} virtual card has been submitted. An issuance fee of $${fee} has been deducted from your balance.`,
+      message: `Your application for a ${cardLevel} virtual card has been submitted. An issuance fee of ${user.currency || 'USD'} ${fee} has been deducted from your balance.`,
       type: 'individual',
       recipients: [userId],
       sentBy: 'system'

@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
             adjustedBy: adminId || 'admin'
           },
           activityLog: {
-            action: `Manual balance adjustment: ${action} $${Math.abs(adjustedAmount)}. Reason: ${reason}`,
+            action: `Manual balance adjustment: ${action} ${user.currency || 'USD'} ${Math.abs(adjustedAmount)}. Reason: ${reason}`,
             timestamp: new Date().toISOString()
           }
         } as any
@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
     // Send Notification
     await NotificationService.createNotification({
       title: 'Account Balance Adjusted',
-      message: `Your ${balanceType} balance has been ${action === 'add' ? 'credited' : 'debited'} with $${Math.abs(adjustedAmount).toLocaleString()}. Reason: ${reason}`,
+      message: `Your ${balanceType} balance has been ${action === 'add' ? 'credited' : 'debited'} with ${user.currency || 'USD'} ${Math.abs(adjustedAmount).toLocaleString()}. Reason: ${reason}`,
       type: action === 'add' ? 'deposit_approval' : 'withdrawal_decline',
       recipients: [userId],
       sentBy: 'system',

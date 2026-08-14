@@ -7,10 +7,11 @@ import { ShieldAlert, ArrowRight, Info } from 'lucide-react';
 interface AccountRestrictedBannerProps {
     reason: string;
     fee: number;
+    currency?: string;
     onPayFee: () => void;
 }
 
-const AccountRestrictedBanner: React.FC<AccountRestrictedBannerProps> = ({ reason, fee, onPayFee }) => {
+const AccountRestrictedBanner: React.FC<AccountRestrictedBannerProps> = ({ reason, fee, currency, onPayFee }) => {
     return (
         <motion.div
             initial={{ height: 0, opacity: 0 }}
@@ -25,7 +26,7 @@ const AccountRestrictedBanner: React.FC<AccountRestrictedBannerProps> = ({ reaso
                     <div>
                         <p className="text-xs mobile:text-sm font-black uppercase tracking-widest leading-none">Account Activity Restricted</p>
                         <p className="text-[10px] mobile:text-[11px] font-bold opacity-90 mt-1 uppercase tracking-wider">
-                            Reason: {reason || 'Security Verification Required'} • Release Fee: ${fee.toLocaleString()}
+                            Reason: {reason || 'Security Verification Required'} • Release Fee: {currency || 'USD'} {fee.toLocaleString()}
                         </p>
                     </div>
                 </div>

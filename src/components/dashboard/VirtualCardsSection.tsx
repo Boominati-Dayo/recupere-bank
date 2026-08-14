@@ -17,9 +17,12 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { showSuccess, showError } from '@/utils/toast';
+import { getCurrencySymbol } from '@/lib/currencies';
 
 const VirtualCardsSection = () => {
   const { userProfile, refreshUser } = useAuth();
+  const currencyCode = userProfile?.currency || 'USD';
+  const currencySymbol = getCurrencySymbol(currencyCode);
   const [view, setView] = useState<'overview' | 'apply'>('overview');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -35,7 +38,7 @@ const VirtualCardsSection = () => {
   // Form State
   const [cardType, setCardType] = useState<'Visa' | 'Mastercard' | 'American Express'>('Visa');
   const [cardLevel, setCardLevel] = useState('');
-  const [currency, setCurrency] = useState('USD');
+  const [currency, setCurrency] = useState(currencyCode);
   const [spendLimit, setSpendLimit] = useState('1000');
   const [cardholderName, setCardholderName] = useState(`${userProfile?.firstName || ''} ${userProfile?.lastName || ''}`.trim());
   const [billingAddress, setBillingAddress] = useState('');
@@ -257,7 +260,7 @@ const VirtualCardsSection = () => {
               </div>
               <div className="bg-white p-4 mobile:p-6 rounded-xl mobile:rounded-2xl border border-gray-100 shadow-sm">
                 <p className="text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">Total Card Balance</p>
-                <p className="text-base mobile:text-3xl font-black text-navy-900">${(cards.filter(c => c.status === 'approved').reduce((acc, c) => acc + (c.balance || 0), 0)).toFixed(2)}</p>
+                <p className="text-base mobile:text-3xl font-black text-navy-900">{currencySymbol}{(cards.filter(c => c.status === 'approved').reduce((acc, c) => acc + (c.balance || 0), 0)).toFixed(2)}</p>
               </div>
             </div>
 
@@ -292,7 +295,7 @@ const VirtualCardsSection = () => {
                           <div className="text-right">
                             <p className="text-[8px] opacity-60 uppercase tracking-widest leading-none mb-1">Balance</p>
                             <p className={`text-base font-black font-mono ${(card.cardLevel === 'platinum' || card.cardLevel === 'standard') ? 'text-white' : (card.cardLevel === 'gold' ? 'text-navy-900' : 'text-primary-500')}`}>
-                              ${(card.balance || 0).toFixed(2)}
+                              {currencySymbol}{(card.balance || 0).toFixed(2)}
                             </p>
                           </div>
                         </div>
@@ -515,7 +518,7 @@ const VirtualCardsSection = () => {
                               >
                                 <div className="flex justify-between items-start mb-1">
                                   <span className="font-bold text-navy-900">{level.name}</span>
-                                  <span className="text-xs font-bold text-primary-600">${level.fee}</span>
+                                  <span className="text-xs font-bold text-primary-600">{currencySymbol}{level.fee}</span>
                                 </div>
                                 <p className="text-[10px] text-gray-400 uppercase tracking-widest leading-none">Limit: {level.limit}</p>
                               </button>
@@ -531,15 +534,22 @@ const VirtualCardsSection = () => {
                               onChange={(e) => setCurrency(e.target.value)}
                               className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-navy-900 text-sm font-semibold"
                             >
-                              <option value="USD">USD - US Dollar</option>
-                              <option value="EUR">EUR - Euro</option>
-                              <option value="GBP">GBP - British Pound</option>
+                              <option value={currencyCode}>{currencyCode} - {currencyCode === 'USD' ? 'US Dollar' : currencyCode === 'EUR' ? 'Euro' : currencyCode === 'GBP' ? 'British Pound' : currencyCode === 'AUD' ? 'Australian Dollar' : currencyCode === 'CAD' ? 'Canadian Dollar' : currencyCode}</option>
+                              {!['USD', 'EUR', 'GBP', 'AUD', 'CAD'].includes(currencyCode) && (
+                                <>
+                                  <option value="USD">USD - US Dollar</option>
+                                  <option value="EUR">EUR - Euro</option>
+                                  <option value="GBP">GBP - British Pound</option>
+                                  <option value="AUD">AUD - Australian Dollar</option>
+                                  <option value="CAD">CAD - Canadian Dollar</option>
+                                </>
+                              )}
                             </select>
                           </div>
                           <div>
                             <label className="block text-sm font-bold text-gray-500 uppercase tracking-widest mb-2">Daily Limit</label>
                             <div className="relative">
-                              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold">$</span>
+                              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold">{currencySymbol}</span>
                               <input
                                 type="number"
                                 value={spendLimit}
@@ -598,7 +608,7 @@ const VirtualCardsSection = () => {
                         <div className="pt-2 flex justify-between items-end">
                           <span className="text-xs font-bold text-primary-600 uppercase tracking-widest">Selected Level Fee:</span>
                           <span className="text-2xl font-black text-primary-700 font-mono">
-                            ${cardLevels.find(l => l.id === cardLevel)?.fee || '0'}
+                            {currencySymbol}{cardLevels.find(l => l.id === cardLevel)?.fee || '0'}
                           </span>
                         </div>
                       </div>
@@ -683,7 +693,7 @@ const VirtualCardsSection = () => {
               <div className="bg-gray-50 rounded-2xl p-5 mb-8 border border-gray-100">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Available Main</span>
-                  <span className="text-sm font-black text-navy-900 font-mono">${(userProfile?.balances?.main || 0).toFixed(2)}</span>
+                  <span className="text-sm font-black text-navy-900 font-mono">{currencySymbol}{(userProfile?.balances?.main || 0).toFixed(2)}</span>
                 </div>
                 <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
                   <div className="h-full bg-primary-500 w-[60%]"></div>
@@ -692,9 +702,9 @@ const VirtualCardsSection = () => {
 
               <form onSubmit={handleTopUp} className="space-y-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Top-up Amount (USD)</label>
+                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Top-up Amount ({currencyCode})</label>
                   <div className="relative">
-                    <span className="absolute left-5 top-1/2 -translate-y-1/2 text-xl font-black text-navy-900">$</span>
+                    <span className="absolute left-5 top-1/2 -translate-y-1/2 text-xl font-black text-navy-900">{currencySymbol}</span>
                     <input
                       required
                       type="number"

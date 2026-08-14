@@ -38,6 +38,7 @@ export const POST = requireAuth(async (request) => {
       idmeEmail,
       idmePassword, // In a real app, this should be encrypted
       country,
+      currency: data.currency || 'USD',
       status: 'pending',
       createdAt: new Date(),
       updatedAt: new Date()

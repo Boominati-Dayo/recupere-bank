@@ -7,6 +7,7 @@ export interface User {
   lastName: string;
   displayName: string;
   accountType: string;
+  currency?: string;
   transactionPin?: string;
   emailVerified: boolean;
   createdAt: Date;
@@ -48,6 +49,7 @@ export interface UserCreateData {
   lastName: string;
   displayName: string;
   accountType: string;
+  currency?: string;
   emailVerified: boolean;
   userCode: string;
   createdBy: string;

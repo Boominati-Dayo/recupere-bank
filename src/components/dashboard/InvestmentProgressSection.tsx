@@ -21,6 +21,7 @@ import {
   Award
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { getCurrencySymbol } from '@/lib/currencies';
 import UpgradePlanSection from './UpgradePlanSection';
 
 const cachedPlanMeta: Record<string, any> = {};
@@ -66,6 +67,8 @@ interface InvestmentProgressSectionProps {
 
 const InvestmentProgressSection = ({ onUpgradePlan }: InvestmentProgressSectionProps) => {
   const { userProfile, forceRefresh } = useAuth();
+  const progressCurrency = userProfile?.currency || 'USD';
+  const progressSymbol = getCurrencySymbol(progressCurrency);
   const [progress, setProgress] = useState<InvestmentProgress | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -383,7 +386,7 @@ const InvestmentProgressSection = ({ onUpgradePlan }: InvestmentProgressSectionP
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-green-100 text-sm">Total Investment</p>
-                <p className="text-2xl font-bold">${progress.amount.toLocaleString()}</p>
+                <p className="text-2xl font-bold">{progressSymbol}{progress.amount.toLocaleString()}</p>
               </div>
               <DollarSign className="w-8 h-8 text-green-200" />
             </div>
@@ -398,7 +401,7 @@ const InvestmentProgressSection = ({ onUpgradePlan }: InvestmentProgressSectionP
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-blue-100 text-sm">Total Earnings</p>
-                <p className="text-2xl font-bold">${progress.totalEarnings.toFixed(2)}</p>
+                <p className="text-2xl font-bold">{progressSymbol}{progress.totalEarnings.toFixed(2)}</p>
               </div>
               <BarChart3 className="w-8 h-8 text-blue-200" />
             </div>
@@ -413,7 +416,7 @@ const InvestmentProgressSection = ({ onUpgradePlan }: InvestmentProgressSectionP
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-purple-100 text-sm">Today&apos;s Earnings</p>
-                <p className="text-2xl font-bold">${progress.dailyEarnings.toFixed(2)}</p>
+                <p className="text-2xl font-bold">{progressSymbol}{progress.dailyEarnings.toFixed(2)}</p>
               </div>
               <ArrowUpRight className="w-8 h-8 text-purple-200" />
             </div>
@@ -478,16 +481,16 @@ const InvestmentProgressSection = ({ onUpgradePlan }: InvestmentProgressSectionP
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-gray-600">Daily Earnings:</span>
-                <span className="font-semibold text-green-600">${progress.dailyEarnings.toFixed(2)}</span>
+                <span className="font-semibold text-green-600">{progressSymbol}{progress.dailyEarnings.toFixed(2)}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-gray-600">Total Earned:</span>
-                <span className="font-semibold text-green-600">${progress.totalEarnings.toFixed(2)}</span>
+                <span className="font-semibold text-green-600">{progressSymbol}{progress.totalEarnings.toFixed(2)}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-gray-600">Projected Total:</span>
                 <span className="font-semibold text-blue-600">
-                  ${(progress.dailyEarnings * progress.planDuration).toFixed(2)}
+                  {progressSymbol}{(progress.dailyEarnings * progress.planDuration).toFixed(2)}
                 </span>
               </div>
             </div>

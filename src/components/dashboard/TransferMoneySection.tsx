@@ -3,10 +3,13 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { showSuccess, showError } from '@/utils/toast';
+import { getCurrencySymbol } from '@/lib/currencies';
 import { ShieldCheck, AlertCircle, Clock } from 'lucide-react';
 
 const TransferMoneySection = () => {
   const { userProfile, refreshUser } = useAuth();
+  const currencyCode = userProfile?.currency || 'USD';
+  const currencySymbol = getCurrencySymbol(currencyCode);
   const [currentStep, setCurrentStep] = useState(1);
   const [receiverEmail, setReceiverEmail] = useState('');
   const [receiverUserCode, setReceiverUserCode] = useState('');
@@ -88,7 +91,7 @@ const TransferMoneySection = () => {
     }
 
     if (!transferAmount || parseFloat(transferAmount) < 500 || parseFloat(transferAmount) > 10000) {
-      setError('Please enter a valid transfer amount between $500 and $10,000');
+      setError(`Please enter a valid transfer amount between ${currencySymbol}500 and ${currencySymbol}10,000`);
       return;
     }
 
@@ -212,7 +215,7 @@ const TransferMoneySection = () => {
         <div className="mb-4 mobile:mb-6 p-3.5 mobile:p-4 bg-gray-50 rounded-lg">
           <p className="text-xs mobile:text-sm text-gray-600">Available Balance (Transferable)</p>
           <p className="text-xl mobile:text-2xl font-bold text-gray-900">
-            ${(userProfile?.balances?.main || 0).toFixed(2)} USD
+            {currencySymbol}{(userProfile?.balances?.main || 0).toFixed(2)} {currencyCode}
           </p>
           <p className="text-[10px] mobile:text-xs text-gray-500 mt-0.5 mobile:mt-1">
             Investment & referral balances are locked and cannot be transferred
@@ -350,16 +353,16 @@ const TransferMoneySection = () => {
                   <div className="space-y-1 text-xs mobile:text-sm text-blue-800">
                     <div className="flex justify-between">
                       <span>Transfer Amount:</span>
-                      <span className="font-semibold">${parseFloat(transferAmount).toLocaleString()}</span>
+                      <span className="font-semibold">{currencySymbol}{parseFloat(transferAmount).toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Transfer Fee ({transferFee}%):</span>
-                      <span className="font-semibold">${feeAmount.toFixed(2)}</span>
+                      <span className="font-semibold">{currencySymbol}{feeAmount.toFixed(2)}</span>
                     </div>
                     <hr className="my-2" />
                     <div className="flex justify-between font-semibold">
                       <span>Total Deducted:</span>
-                      <span>${totalAmount.toFixed(2)}</span>
+                      <span>{currencySymbol}{totalAmount.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
@@ -370,10 +373,10 @@ const TransferMoneySection = () => {
                   <strong>Transfer Charge:</strong> {transferFee}%
                 </p>
                 <p className="text-xs mobile:text-sm text-yellow-800 mt-1">
-                  <strong>Min Transfer Amount:</strong> 500 USD
+                  <strong>Min Transfer Amount:</strong> 500 {currencyCode}
                 </p>
                 <p className="text-xs mobile:text-sm text-yellow-800">
-                  <strong>Max Transfer Amount:</strong> 10000 USD
+                  <strong>Max Transfer Amount:</strong> 10000 {currencyCode}
                 </p>
               </div>
 

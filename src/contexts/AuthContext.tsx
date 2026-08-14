@@ -19,6 +19,7 @@ interface User {
   state?: string;
   city?: string;
   zip?: string;
+  currency?: string;
   totalInvested: number;
   currentInvestment: number;
   investmentPlan?: string;

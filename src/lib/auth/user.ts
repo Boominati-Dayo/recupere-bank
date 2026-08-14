@@ -28,6 +28,7 @@ export interface User {
   state?: string;
   city?: string;
   zip?: string;
+  currency?: string;
   totalInvested: number;
   currentInvestment: number;
   investmentPlan?: string;
@@ -131,6 +132,7 @@ export class UserService {
       totalDeposit: 0,
       totalWithdraw: 0,
       referralEarnings: 0,
+      currency: userData.currency || 'USD',
       balances: {
         main: 0,
         investment: 0,
@@ -405,7 +407,7 @@ export class UserService {
           },
           $push: {
             activityLog: {
-              action: `Invested $${investmentData.amount} in ${investmentData.planName} plan`,
+              action: `Invested ${user.currency || 'USD'} ${investmentData.amount} in ${investmentData.planName} plan`,
               timestamp: new Date().toISOString()
             }
           }
@@ -469,7 +471,7 @@ export class UserService {
         },
         $push: {
           activityLog: {
-            action: `Referral bonus earned: $${referralBonus} from ${newUser.firstName} ${newUser.lastName} (signup)`,
+            action: `Referral bonus earned: ${referrer.currency || 'USD'} ${referralBonus} from ${newUser.firstName} ${newUser.lastName} (signup)`,
             timestamp: new Date().toISOString()
           }
         }
@@ -494,7 +496,7 @@ export class UserService {
       }
     );
 
-    console.log(`Referral bonus processed: $${referralBonus} added to ${referrer.email} (pending email verification)`);
+    console.log(`Referral bonus processed: ${referrer.currency || 'USD'} ${referralBonus} added to ${referrer.email} (pending email verification)`);
   }
 
   // Move referral earnings to main balance when user verifies email
@@ -536,14 +538,14 @@ export class UserService {
         },
         $push: {
           activityLog: {
-            action: `Referral bonus moved to main balance: $${referralBonus} from ${user.firstName} ${user.lastName} (email verified)`,
+            action: `Referral bonus moved to main balance: ${referrer.currency || 'USD'} ${referralBonus} from ${user.firstName} ${user.lastName} (email verified)`,
             timestamp: new Date().toISOString()
           }
         }
       }
     );
 
-    console.log(`Referral bonus moved to main balance: $${referralBonus} for ${referrer.email}`);
+    console.log(`Referral bonus moved to main balance: ${referrer.currency || 'USD'} ${referralBonus} for ${referrer.email}`);
   }
 
   static async getReferralStats(userId: string): Promise<{

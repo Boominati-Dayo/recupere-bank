@@ -7,10 +7,12 @@ import { ArrowUpDown, CheckCircle, AlertCircle, CreditCard, DollarSign, Clock, C
 import { useAuth } from '@/contexts/AuthContext';
 import { showSuccess, showError } from '@/utils/toast';
 import { getPaymentMethods, PaymentMethod } from '@/lib/services/PaymentMethodService';
+import { getCurrencySymbol } from '@/lib/currencies';
 interface WithdrawalRequest {
   userId: string;
   paymentMethodId: string;
   amount: number;
+  currency?: string;
   accountDetails: {
     accountName: string;
     accountNumber: string;
@@ -33,6 +35,8 @@ interface WithdrawalSchedule {
 
 const WithdrawSection = () => {
   const { user, userProfile, forceRefresh } = useAuth();
+  const currencyCode = userProfile?.currency || 'USD';
+  const currencySymbol = getCurrencySymbol(currencyCode);
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null);
   const [amount, setAmount] = useState('');
@@ -169,7 +173,7 @@ const WithdrawSection = () => {
     const availableBalance = userProfile?.balances?.main || 0;
 
     if (withdrawalAmount > availableBalance) {
-      showError('Insufficient balance. Available balance: $' + availableBalance);
+      showError(`Insufficient balance. Available balance: ${currencyCode} ${availableBalance}`);
       return;
     }
 
@@ -180,6 +184,7 @@ const WithdrawSection = () => {
         userId: user?._id || '',
         paymentMethodId: selectedMethod._id,
         amount: withdrawalAmount,
+        currency: currencyCode,
         accountDetails: {
           accountName,
           accountNumber,
@@ -325,7 +330,7 @@ const WithdrawSection = () => {
           <div className="bg-gray-50 rounded-lg p-4 mb-6">
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium text-gray-700">Available Balance:</span>
-              <span className="text-lg font-bold text-gray-900">${(availableBalance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+              <span className="text-lg font-bold text-gray-900">{currencySymbol}{(availableBalance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             </div>
           </div>
         </div>
@@ -364,7 +369,7 @@ const WithdrawSection = () => {
 
           {/* Amount Input */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Withdrawal Amount (USD)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Withdrawal Amount ({currencyCode})</label>
             <input
               type="number"
               value={amount}
@@ -381,17 +386,17 @@ const WithdrawSection = () => {
             />
             {amount && !isAmountValid && (
               <p className="mt-1 text-sm text-[#ee2737]">
-                Amount exceeds available balance (${(availableBalance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })})
+                Amount exceeds available balance ({currencySymbol}{(availableBalance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })})
               </p>
             )}
             {amount && isAmountValid && (
               <p className="mt-1 text-sm text-green-600">
-                Available balance: ${(availableBalance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                Available balance: {currencySymbol}{(availableBalance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </p>
             )}
             {!amount && (
               <p className="text-sm text-gray-500 mt-1">
-                Available balance: ${(availableBalance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                Available balance: {currencySymbol}{(availableBalance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </p>
             )}
           </div>

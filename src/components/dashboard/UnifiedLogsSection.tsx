@@ -17,6 +17,7 @@ import {
   Clock
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { getCurrencySymbol } from '@/lib/currencies';
 
 interface LogEntry {
   id: string;
@@ -37,7 +38,8 @@ interface LogEntry {
 }
 
 const UnifiedLogsSection = () => {
-  const { user } = useAuth();
+  const { userProfile } = useAuth();
+  const logsSymbol = getCurrencySymbol(userProfile?.currency || 'USD');
   const [activeTab, setActiveTab] = useState<string>('all');
   const [selectedLog, setSelectedLog] = useState<LogEntry | null>(null);
   const [transactions, setTransactions] = useState<LogEntry[]>([]);
@@ -115,13 +117,13 @@ const UnifiedLogsSection = () => {
     // For transfers, use isSent to determine prefix
     if (type === 'transfer') {
       const prefix = isSent ? '-' : '+';
-      return `${prefix}$${Math.abs(amount).toLocaleString()}`;
+      return `${prefix}${logsSymbol}${Math.abs(amount).toLocaleString()}`;
     }
     // For other types, use type to determine prefix
     // Positive types: deposit, earning, tax_refund, loan (payouts), recovery (if positive)
     const positiveTypes = ['deposit', 'earning', 'tax_refund', 'loan'];
     const prefix = (positiveTypes.includes(type) || (type === 'recovery' && amount > 0)) ? '+' : '-';
-    return `${prefix}$${Math.abs(amount).toLocaleString()}`;
+    return `${prefix}${logsSymbol}${Math.abs(amount).toLocaleString()}`;
   };
 
   return (
@@ -384,7 +386,7 @@ const UnifiedLogsSection = () => {
                     <div>
                       <label className="block text-sm font-medium text-gray-700">Transaction Fee</label>
                       <div className="space-y-1">
-                        <p className="text-sm text-gray-900">${selectedLog.fee.toFixed(2)}</p>
+                        <p className="text-sm text-gray-900">{logsSymbol}{selectedLog.fee.toFixed(2)}</p>
                         <p className="text-xs text-gray-500">
                           {((selectedLog.fee / selectedLog.amount) * 100).toFixed(2)}% fee
                         </p>
@@ -419,7 +421,7 @@ const UnifiedLogsSection = () => {
                 {selectedLog.fee && (
                   <div>
                     <label className="block text-sm font-medium text-gray-700">Transaction Fee</label>
-                    <p className="text-sm text-gray-900">${selectedLog.fee}</p>
+                    <p className="text-sm text-gray-900">{logsSymbol}{selectedLog.fee}</p>
                   </div>
                 )}
 

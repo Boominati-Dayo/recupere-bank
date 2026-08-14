@@ -5,6 +5,7 @@ import { Mail, Lock, User, Eye, EyeOff, ArrowRight, ArrowLeft, Shield, Zap, Chec
 import { useState, useEffect, useRef, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { getCurrencyForCountry, getCurrencySymbol } from '@/lib/currencies';
 
 const ACCOUNT_TYPES = [
   { id: 'checking', name: 'Checking Account', desc: 'Perfect for daily transactions and bill payments' },
@@ -52,6 +53,7 @@ const SignupForm = () => {
     confirmPassword: '',
     agreeToTerms: false,
     otherCountry: '',
+    currency: 'USD',
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -142,7 +144,7 @@ const SignupForm = () => {
       
       // Combine otherCountry if 'Other' is selected
       const finalCountry = formData.country === 'Other' ? formData.otherCountry : formData.country;
-      const signupData = { ...formData, country: finalCountry, transactionPin: pin };
+      const signupData = { ...formData, country: finalCountry, transactionPin: pin, currency: formData.currency || 'USD' };
 
       const success = await register(signupData);
       if (success) {
@@ -305,7 +307,11 @@ const SignupForm = () => {
                     <select
                       required
                       value={formData.country}
-                      onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+                      onChange={(e) => setFormData({
+                        ...formData,
+                        country: e.target.value,
+                        currency: e.target.value === 'Other' ? 'USD' : getCurrencyForCountry(e.target.value),
+                      })}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     >
                       <option value="">Select your country</option>
@@ -321,6 +327,12 @@ const SignupForm = () => {
                       <option value="Other">Other</option>
                     </select>
                   </div>
+                  {formData.country && (
+                    <div className="flex items-center justify-between bg-primary-50 border border-primary-100 rounded-lg px-4 py-3">
+                      <span className="text-sm font-medium text-primary-700">Account Currency</span>
+                      <span className="text-sm font-bold text-navy-900">{formData.currency} ({getCurrencySymbol(formData.currency)})</span>
+                    </div>
+                  )}
                   {formData.country === 'Other' && (
                     <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="space-y-2">
                       <label className="block text-sm font-medium text-gray-700 mb-2">Please specify your country *</label>

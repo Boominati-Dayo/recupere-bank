@@ -45,6 +45,7 @@ import {
 import VerificationBanner from '@/components/dashboard/VerificationBanner';
 import { useAuth } from '@/contexts/AuthContext';
 import { canAccessAdmin } from '@/utils/adminUtils';
+import { getCurrencySymbol } from '@/lib/currencies';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState, Suspense, useMemo } from 'react';
 import ProtectedRoute from '@/components/ProtectedRoute';
@@ -218,6 +219,7 @@ const DashboardContent = () => {
   const { user, userProfile, logout, loading, refreshUser } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const currencySymbol = getCurrencySymbol(userProfile?.currency);
   const [activeSection, setActiveSection] = useState('dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -597,6 +599,7 @@ const DashboardContent = () => {
               <AccountRestrictedBanner
                 reason={userProfile.accountBlockReason || ''}
                 fee={userProfile.accountUnblockFee || 0}
+                currency={userProfile.currency || 'USD'}
                 onPayFee={() => {
                   setPendingDepositAmount(userProfile.accountUnblockFee || 0);
                   setActiveSection('deposit');
@@ -623,7 +626,7 @@ const DashboardContent = () => {
 
               <div className="flex items-center space-x-4">
                 <div className="text-right mr-4 hidden sm:block">
-                  <p className="text-lg mobile:text-xl font-bold text-navy-900">${(userProfile?.balances?.total || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                  <p className="text-lg mobile:text-xl font-bold text-navy-900">{currencySymbol}{(userProfile?.balances?.total || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                 </div>
                 <div className="flex items-center space-x-3 p-1 pl-3 bg-gray-50 rounded-full border border-gray-100">
                   <span className="inline font-semibold text-navy-900">{userProfile?.firstName || 'User'}</span>
@@ -674,7 +677,7 @@ const DashboardContent = () => {
                                     className="absolute inset-0 flex flex-col justify-center md:items-start items-center"
                                   >
                                     <p className="text-4xl mobile:text-5xl lg:text-6xl font-black text-white tracking-tighter whitespace-nowrap">
-                                      ${(userProfile?.balances?.main || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                      {currencySymbol}{(userProfile?.balances?.main || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                     </p>
                                     <p className="text-primary-500 font-bold uppercase tracking-widest text-[10px] mobile:text-xs mt-2 opacity-80">Available Liquid Assets</p>
                                   </motion.div>
@@ -689,7 +692,7 @@ const DashboardContent = () => {
                                     className="absolute inset-0 flex flex-col justify-center md:items-start items-center"
                                   >
                                     <p className="text-4xl mobile:text-5xl lg:text-6xl font-black text-white tracking-tighter whitespace-nowrap">
-                                      ${stats.volumeTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                      {currencySymbol}{stats.volumeTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                     </p>
                                     <p className="text-primary-500 font-bold uppercase tracking-widest text-[10px] mobile:text-xs mt-2 opacity-80">Total Account Volume</p>
                                   </motion.div>
@@ -704,7 +707,7 @@ const DashboardContent = () => {
                                     className="absolute inset-0 flex flex-col justify-center md:items-start items-center"
                                   >
                                     <p className="text-4xl mobile:text-5xl lg:text-6xl font-black text-white tracking-tighter whitespace-nowrap">
-                                      ${stats.pendingTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                      {currencySymbol}{stats.pendingTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                     </p>
                                     <p className="text-primary-500 font-bold uppercase tracking-widest text-[10px] mobile:text-xs mt-2 opacity-80">Pending Asset Transfers</p>
                                   </motion.div>
@@ -719,7 +722,7 @@ const DashboardContent = () => {
                                     className="absolute inset-0 flex flex-col justify-center md:items-start items-center"
                                   >
                                     <p className="text-4xl mobile:text-5xl lg:text-6xl font-black text-white tracking-tighter whitespace-nowrap">
-                                      ${totalCardBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                      {currencySymbol}{totalCardBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                     </p>
                                     <p className="text-primary-500 font-bold uppercase tracking-widest text-[10px] mobile:text-xs mt-2 opacity-80">Virtual Card Liquidity</p>
                                   </motion.div>
@@ -877,7 +880,7 @@ const DashboardContent = () => {
                                       'text-red-500'
                                     }`}>
                                     {tx.type === 'deposit' || (tx.type === 'transfer' && !tx.isSent) ? '+' :
-                                      (tx.type === 'tax_refund' || tx.type === 'recovery') ? '' : '-'}$
+                                      (tx.type === 'tax_refund' || tx.type === 'recovery') ? '' : '-'}{currencySymbol}
                                     {Math.abs(tx.amount || 0).toLocaleString(undefined, { minimumFractionDigits: tx.amount > 0 ? 2 : 0 })}
                                   </p>
                                   <p className={`text-[8px] mobile:text-[9px] font-black uppercase tracking-widest ${tx.status === 'completed' || tx.status === 'processed' ? 'text-green-500' :
@@ -970,14 +973,14 @@ const DashboardContent = () => {
                                       <div className="w-3 h-3 bg-[#0b1626] rounded-sm"></div>
                                       <span className="text-gray-500 uppercase">Settled Funds</span>
                                     </div>
-                                    <span className="text-navy-900">${settles.toLocaleString()}</span>
+                                    <span className="text-navy-900">{currencySymbol}{settles.toLocaleString()}</span>
                                   </div>
                                   <div className="flex items-center justify-between text-[11px] font-bold">
                                     <div className="flex items-center space-x-2">
                                       <div className="w-3 h-3 bg-primary-500 rounded-sm"></div>
                                       <span className="text-gray-500 uppercase">Card Liquidity</span>
                                     </div>
-                                    <span className="text-navy-900">${cardLiquidity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                                    <span className="text-navy-900">{currencySymbol}{cardLiquidity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                                   </div>
                                 </div>
                               </div>
@@ -991,9 +994,9 @@ const DashboardContent = () => {
                         <h3 className="font-bold text-navy-900 mb-4 mobile:mb-6 text-sm mobile:text-base">Account Statistics</h3>
                         <div className="space-y-3 mobile:space-y-4">
                           {[
-                            { label: 'Transaction Limit', value: '$500,000.00' },
-                            { label: 'Pending Transactions', value: `$${stats.pendingTotal.toLocaleString()}` },
-                            { label: 'Transaction Volume', value: `$${stats.volumeTotal.toLocaleString()}` },
+                            { label: 'Transaction Limit', value: `${currencySymbol}500,000.00` },
+                            { label: 'Pending Transactions', value: `${currencySymbol}${stats.pendingTotal.toLocaleString()}` },
+                            { label: 'Transaction Volume', value: `${currencySymbol}${stats.volumeTotal.toLocaleString()}` },
                             { label: 'Account Age', value: stats.accountAge },
                           ].map((stat, i) => (
                             <div key={i} className="flex justify-between items-center py-2.5 mobile:py-3 border-b border-gray-50 last:border-0">
@@ -1132,6 +1135,7 @@ const DashboardContent = () => {
               <AccountBlockedOverlay
                 reason={userProfile.accountBlockReason || ''}
                 unblockFee={userProfile.accountUnblockFee || 0}
+                currency={userProfile.currency || 'USD'}
                 onPayFee={() => {
                   setPendingDepositAmount(userProfile.accountUnblockFee || 0);
                   setActiveSection('deposit');

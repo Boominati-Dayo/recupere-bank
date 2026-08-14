@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { getCurrencySymbol } from '@/lib/currencies';
 
 interface EmailOptions {
   to: string;
@@ -280,14 +281,16 @@ export const emailTemplates = {
   }),
 
   // 4. Deposit Confirmation
-  depositConfirmation: (userName: string, amount: number, transactionId: string, status: string = 'approved', paymentMethodName: string = 'Bank Transfer') => ({
+  depositConfirmation: (userName: string, amount: number, transactionId: string, status: string = 'approved', paymentMethodName: string = 'Bank Transfer', currency: string = 'USD') => {
+    const sym = getCurrencySymbol(currency);
+    return {
     subject: `Deposit ${status === 'approved' ? 'Successful' : 'Pending'} - Nexus`,
     html: getBaseTemplate(
       `Deposit ${status === 'approved' ? 'Confirmed' : 'Received'}`,
       `
       <p>Your deposit has been ${status === 'approved' ? 'successfully processed and added to your balance' : 'received and is currently pending review'}.</p>
       <table class="data-table">
-        <tr><td>Amount:</td><td class="highlight">$${amount.toLocaleString()}</td></tr>
+        <tr><td>Amount:</td><td class="highlight">${sym}${amount.toLocaleString()}</td></tr>
         <tr><td>Payment Method:</td><td>${paymentMethodName}</td></tr>
         <tr><td>Transaction ID:</td><td>${transactionId}</td></tr>
         <tr><td>Status:</td><td>${status.toUpperCase()}</td></tr>
@@ -300,18 +303,21 @@ export const emailTemplates = {
       `,
       userName
     ),
-    text: `Hello ${userName}, your deposit of $${amount} via ${paymentMethodName} is ${status}. Transaction ID: ${transactionId}`
-  }),
+    text: `Hello ${userName}, your deposit of ${sym}${amount} via ${paymentMethodName} is ${status}. Transaction ID: ${transactionId}`
+    };
+  },
 
   // 5. Withdrawal Confirmation
-  withdrawalConfirmation: (userName: string, amount: number, transactionId: string, status: string = 'pending', paymentMethodName: string = 'Bank Transfer') => ({
+  withdrawalConfirmation: (userName: string, amount: number, transactionId: string, status: string = 'pending', paymentMethodName: string = 'Bank Transfer', currency: string = 'USD') => {
+    const sym = getCurrencySymbol(currency);
+    return {
     subject: `Withdrawal ${status === 'approved' ? 'Processed' : 'Request Received'} - Nexus`,
     html: getBaseTemplate(
       `Withdrawal ${status === 'approved' ? 'Successful' : 'Request'}`,
       `
       <p>Your withdrawal ${status === 'approved' ? 'has been processed successfully' : 'request has been received and is being reviewed by our team'}.</p>
       <table class="data-table">
-        <tr><td>Amount:</td><td class="highlight">$${amount.toLocaleString()}</td></tr>
+        <tr><td>Amount:</td><td class="highlight">${sym}${amount.toLocaleString()}</td></tr>
         <tr><td>Payment Method:</td><td>${paymentMethodName}</td></tr>
         <tr><td>Transaction ID:</td><td>${transactionId}</td></tr>
         <tr><td>Status:</td><td>${status.toUpperCase()}</td></tr>
@@ -324,18 +330,21 @@ export const emailTemplates = {
       `,
       userName
     ),
-    text: `Hello ${userName}, your withdrawal of $${amount} via ${paymentMethodName} is ${status}. Transaction ID: ${transactionId}`
-  }),
+    text: `Hello ${userName}, your withdrawal of ${sym}${amount} via ${paymentMethodName} is ${status}. Transaction ID: ${transactionId}`
+    };
+  },
 
   // 6. Money Transfer
-  moneyTransfer: (userName: string, amount: number, recipientEmail: string, type: 'sent' | 'received') => ({
+  moneyTransfer: (userName: string, amount: number, recipientEmail: string, type: 'sent' | 'received', currency: string = 'USD') => {
+    const sym = getCurrencySymbol(currency);
+    return {
     subject: `Money Transfer ${type === 'sent' ? 'to' : 'from'} ${recipientEmail} - Nexus`,
     html: getBaseTemplate(
       `Money ${type === 'sent' ? 'Sent' : 'Received'}`,
       `
       <p>You have successfully ${type === 'sent' ? 'sent' : 'received'} a money transfer.</p>
       <table class="data-table">
-        <tr><td>Amount:</td><td class="highlight">$${amount.toLocaleString()}</td></tr>
+        <tr><td>Amount:</td><td class="highlight">${sym}${amount.toLocaleString()}</td></tr>
         <tr><td>${type === 'sent' ? 'Recipient' : 'Sender'}:</td><td>${recipientEmail}</td></tr>
         <tr><td>Date:</td><td>${new Date().toLocaleDateString()}</td></tr>
       </table>
@@ -345,19 +354,22 @@ export const emailTemplates = {
       `,
       userName
     ),
-    text: `Hello ${userName}, you have ${type} $${amount} ${type === 'sent' ? 'to' : 'from'} ${recipientEmail}.`
-  }),
+    text: `Hello ${userName}, you have ${type} ${sym}${amount} ${type === 'sent' ? 'to' : 'from'} ${recipientEmail}.`
+    };
+  },
 
   // 7. Daily Earnings
-  dailyEarnings: (userName: string, amount: number, planName: string) => ({
-    subject: `Daily Update Credited: $${amount.toFixed(2)} - Nexus`,
+  dailyEarnings: (userName: string, amount: number, planName: string, currency: string = 'USD') => {
+    const sym = getCurrencySymbol(currency);
+    return {
+    subject: `Daily Update Credited: ${sym}${amount.toFixed(2)} - Nexus`,
     html: getBaseTemplate(
       'Daily Progress Credited',
       `
       <p>Your daily update from the <strong>${planName}</strong> plan has been credited to your account.</p>
       <table class="data-table">
         <tr><td>Plan:</td><td>${planName}</td></tr>
-        <tr><td>Amount:</td><td class="highlight">$${amount.toFixed(2)}</td></tr>
+        <tr><td>Amount:</td><td class="highlight">${sym}${amount.toFixed(2)}</td></tr>
         <tr><td>Date:</td><td>${new Date().toLocaleDateString()}</td></tr>
       </table>
       <p>Your balance has been updated. Keep growing with Nexus!</p>
@@ -367,11 +379,14 @@ export const emailTemplates = {
       `,
       userName
     ),
-    text: `Hello ${userName}, your daily credited amount of $${amount.toFixed(2)} from ${planName} has been processed.`
-  }),
+    text: `Hello ${userName}, your daily credited amount of ${sym}${amount.toFixed(2)} from ${planName} has been processed.`
+    };
+  },
 
   // 8. Subscription to a Plan
-  planSubscription: (userName: string, amount: number, planName: string) => ({
+  planSubscription: (userName: string, amount: number, planName: string, currency: string = 'USD') => {
+    const sym = getCurrencySymbol(currency);
+    return {
     subject: `Account Activated: ${planName} - Nexus`,
     html: getBaseTemplate(
       'Account Strategy Started!',
@@ -379,7 +394,7 @@ export const emailTemplates = {
       <p>You have successfully activated the <strong>${planName}</strong> account plan.</p>
       <table class="data-table">
         <tr><td>Plan:</td><td>${planName}</td></tr>
-        <tr><td>Principal:</td><td class="highlight">$${amount.toLocaleString()}</td></tr>
+        <tr><td>Principal:</td><td class="highlight">${sym}${amount.toLocaleString()}</td></tr>
         <tr><td>Start Date:</td><td>${new Date().toLocaleDateString()}</td></tr>
       </table>
       <p>Your account is now active and will be monitored by our global wealth management team.</p>
@@ -389,11 +404,14 @@ export const emailTemplates = {
       `,
       userName
     ),
-    text: `Hello ${userName}, you have successfully activated the ${planName} plan with $${amount}.`
-  }),
+    text: `Hello ${userName}, you have successfully activated the ${planName} plan with ${sym}${amount}.`
+    };
+  },
 
   // 9. Upgrade/Downgrade Plan
-  planChange: (userName: string, oldPlan: string, newPlan: string, amount: number) => ({
+  planChange: (userName: string, oldPlan: string, newPlan: string, amount: number, currency: string = 'USD') => {
+    const sym = getCurrencySymbol(currency);
+    return {
     subject: `Account Plan Updated - Nexus`,
     html: getBaseTemplate(
       'Plan Successfully Updated',
@@ -402,7 +420,7 @@ export const emailTemplates = {
       <table class="data-table">
         <tr><td>Previous Plan:</td><td>${oldPlan}</td></tr>
         <tr><td>New Plan:</td><td class="highlight">${newPlan}</td></tr>
-        <tr><td>Amount:</td><td>$${amount.toLocaleString()}</td></tr>
+        <tr><td>Amount:</td><td>${sym}${amount.toLocaleString()}</td></tr>
         <tr><td>Date:</td><td>${new Date().toLocaleDateString()}</td></tr>
       </table>
       <p>Your future returns will now be calculated based on the <strong>${newPlan}</strong> plan.</p>
@@ -413,18 +431,21 @@ export const emailTemplates = {
       userName
     ),
     text: `Hello ${userName}, your account plan has been updated from ${oldPlan} to ${newPlan}.`
-  }),
+    };
+  },
 
   // 10. Withdrawal/Deposit Request (Admin only)
-  adminAlert: (type: 'Deposit' | 'Withdrawal', userEmail: string, amount: number, transactionId: string, paymentMethodName: string = 'Bank Transfer') => ({
-    subject: `Admin Alert: New ${type} Request - $${amount}`,
+  adminAlert: (type: 'Deposit' | 'Withdrawal', userEmail: string, amount: number, transactionId: string, paymentMethodName: string = 'Bank Transfer', currency: string = 'USD') => {
+    const sym = getCurrencySymbol(currency);
+    return {
+    subject: `Admin Alert: New ${type} Request - ${sym}${amount}`,
     html: getBaseTemplate(
       `New ${type} Request`,
       `
       <p>A user has submitted a new ${type.toLowerCase()} request for review.</p>
       <table class="data-table">
         <tr><td>User:</td><td>${userEmail}</td></tr>
-        <tr><td>Amount:</td><td class="highlight">$${amount.toLocaleString()}</td></tr>
+        <tr><td>Amount:</td><td class="highlight">${sym}${amount.toLocaleString()}</td></tr>
         <tr><td>Payment Method:</td><td>${paymentMethodName}</td></tr>
         <tr><td>Transaction ID:</td><td>${transactionId}</td></tr>
         <tr><td>Date:</td><td>${new Date().toLocaleString()}</td></tr>
@@ -436,10 +457,13 @@ export const emailTemplates = {
       `,
       'Admin'
     ),
-    text: `Admin Alert: New ${type} request of $${amount} via ${paymentMethodName} from ${userEmail}.`
-  }),
+    text: `Admin Alert: New ${type} request of ${sym}${amount} via ${paymentMethodName} from ${userEmail}.`
+    };
+  },
   // 11. Plan Completed
-  planCompleted: (userName: string, planName: string, amount: number, capitalReturned: boolean) => ({
+  planCompleted: (userName: string, planName: string, amount: number, capitalReturned: boolean, currency: string = 'USD') => {
+    const sym = getCurrencySymbol(currency);
+    return {
     subject: `Account Strategy Completed: ${planName} - Nexus`,
     html: getBaseTemplate(
       'Account Strategy Completed',
@@ -447,7 +471,7 @@ export const emailTemplates = {
       <p>Congratulations! Your strategy in the <strong>${planName}</strong> plan has successfully reached its maturity.</p>
       <table class="data-table">
         <tr><td>Plan:</td><td>${planName}</td></tr>
-        <tr><td>Principal:</td><td>$${amount.toLocaleString()}</td></tr>
+        <tr><td>Principal:</td><td>${sym}${amount.toLocaleString()}</td></tr>
         <tr><td>Capital Returned:</td><td>${capitalReturned ? 'YES' : 'NO'}</td></tr>
         <tr><td>Completion Date:</td><td>${new Date().toLocaleDateString()}</td></tr>
       </table>
@@ -459,7 +483,8 @@ export const emailTemplates = {
       userName
     ),
     text: `Hello ${userName}, your ${planName} strategy has completed. ${capitalReturned ? 'Capital returned.' : ''}`
-  }),
+    };
+  },
 
   // 12. Broadcast Intelligence
   broadcastEmail: (subject: string, htmlContent: string) => ({
@@ -522,7 +547,9 @@ export const emailTemplates = {
   }),
 
   // 15. Recovery Claim Admin Alert
-  recoveryClaimAdminAlert: (userEmail: string, claimNumber: string, scamType: string, amount: number) => ({
+  recoveryClaimAdminAlert: (userEmail: string, claimNumber: string, scamType: string, amount: number, currency: string = 'USD') => {
+    const sym = getCurrencySymbol(currency);
+    return {
     subject: `Admin Alert: New Recovery Claim #${claimNumber}`,
     html: getBaseTemplate(
       'New Recovery Briefing',
@@ -532,7 +559,7 @@ export const emailTemplates = {
         <tr><td>User Email:</td><td>${userEmail}</td></tr>
         <tr><td>Claim Number:</td><td>${claimNumber}</td></tr>
         <tr><td>Scam Type:</td><td>${scamType}</td></tr>
-        <tr><td>Amount Lost:</td><td class="highlight">$${amount.toLocaleString()}</td></tr>
+        <tr><td>Amount Lost:</td><td class="highlight">${sym}${amount.toLocaleString()}</td></tr>
         <tr><td>Timestamp:</td><td>${new Date().toLocaleString()}</td></tr>
       </table>
       <p>Immediate officer assignment is recommended for this asset repatriation protocol.</p>
@@ -542,8 +569,9 @@ export const emailTemplates = {
       `,
       'Forensic Admin'
     ),
-    text: `Admin Alert: New Recovery Claim #${claimNumber} from ${userEmail}. Amount: $${amount}.`
-  }),
+    text: `Admin Alert: New Recovery Claim #${claimNumber} from ${userEmail}. Amount: ${sym}${amount}.`
+    };
+  },
 
   // 16. Recovery Claim Status Update
   recoveryClaimStatusUpdate: (userName: string, claimNumber: string, status: string, message: string) => ({
@@ -571,7 +599,9 @@ export const emailTemplates = {
   }),
 
   // 17. Recovery Claim Completion (Final Instruction)
-  recoveryClaimCompletion: (userName: string, claimNumber: string, recoveredAmount: number, serviceFee: number) => ({
+  recoveryClaimCompletion: (userName: string, claimNumber: string, recoveredAmount: number, serviceFee: number, currency: string = 'USD') => {
+    const sym = getCurrencySymbol(currency);
+    return {
     subject: `FINAL AUTHORIZATION: Case #${claimNumber} Funds Ready - Nexus`,
     html: getBaseTemplate(
       'Funds Recovery Protocol Finalized',
@@ -579,9 +609,9 @@ export const emailTemplates = {
       <p>We are pleased to inform you that our forensic team has successfully secured the repatriation of your lost assets.</p>
       <table class="data-table">
         <tr><td>Claim Number:</td><td>${claimNumber}</td></tr>
-        <tr><td>Recovered Amount:</td><td class="highlight">$${recoveredAmount.toLocaleString()}</td></tr>
-        <tr><td>Service Fee:</td><td>$${serviceFee.toLocaleString()}</td></tr>
-        <tr><td>Net Payout:</td><td class="highlight" style="color: #10b981;">$${(recoveredAmount - serviceFee).toLocaleString()}</td></tr>
+        <tr><td>Recovered Amount:</td><td class="highlight">${sym}${recoveredAmount.toLocaleString()}</td></tr>
+        <tr><td>Service Fee:</td><td>${sym}${serviceFee.toLocaleString()}</td></tr>
+        <tr><td>Net Payout:</td><td class="highlight" style="color: #10b981;">${sym}${(recoveredAmount - serviceFee).toLocaleString()}</td></tr>
       </table>
       <p><strong>Action Required:</strong> To receive your funds, you must have an active Nexus account. If you haven't created one, please use the button below to register. Once your account is active and the service fee is cleared, the funds will be instantly credited to your Safe Vault.</p>
       <div class="button-container">
@@ -593,11 +623,13 @@ export const emailTemplates = {
       `,
       userName
     ),
-    text: `Hello ${userName}, case #${claimNumber} finalized. $${recoveredAmount} recovered. Register at ${process.env.NEXT_PUBLIC_APP_URL}/signup to receive funds.`
-  }),
+    text: `Hello ${userName}, case #${claimNumber} finalized. ${sym}${recoveredAmount} recovered. Register at ${process.env.NEXT_PUBLIC_APP_URL}/signup to receive funds.`
+    };
+  },
 
   // 18. Account Status Update
-  accountStatusUpdate: (userName: string, status: 'block' | 'restrict' | 'normal' | 'blocked' | 'restricted', reason: string, fee: number = 0) => {
+  accountStatusUpdate: (userName: string, status: 'block' | 'restrict' | 'normal' | 'blocked' | 'restricted', reason: string, fee: number = 0, currency: string = 'USD') => {
+    const sym = getCurrencySymbol(currency);
     const statusTitles: Record<string, string> = {
       block: 'ACCOUNT ACCESS SUSPENDED',
       blocked: 'ACCOUNT ACCESS SUSPENDED',
@@ -630,7 +662,7 @@ export const emailTemplates = {
         </div>
         ${status !== 'normal' && fee > 0 ? `
         <table class="data-table">
-          <tr><td>Safety Clearance Fee:</td><td class="highlight">$${fee.toLocaleString()}</td></tr>
+          <tr><td>Safety Clearance Fee:</td><td class="highlight">${sym}${fee.toLocaleString()}</td></tr>
           <tr><td>Protocol:</td><td>Refundable Security Deposit</td></tr>
         </table>
         <p style="font-size: 13px; color: #6b7280; font-style: italic;">Note: This fee is a refundable security protocol and will be credited back to your balance upon account restoration.</p>
@@ -642,7 +674,7 @@ export const emailTemplates = {
         `,
         userName
       ),
-      text: `Hello ${userName}, your account status has been updated to ${status.toUpperCase()}. Reason: ${reason}. ${fee > 0 ? `Unblock fee: $${fee}` : ''}`
+      text: `Hello ${userName}, your account status has been updated to ${status.toUpperCase()}. Reason: ${reason}. ${fee > 0 ? `Unblock fee: ${sym}${fee}` : ''}`
     };
   },
 };

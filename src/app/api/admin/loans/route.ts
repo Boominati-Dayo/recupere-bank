@@ -94,6 +94,7 @@ export const PUT = requireAdmin(async (request) => {
 
     // If approved, send email and update balance
     if (status === 'approved' && loan.status !== 'approved') {
+      const loanCurrency = loan.currency || user.currency || 'USD';
       const subject = 'Your Loan Application has been Approved';
       const text = `Hello ${user.firstName}, your application for a ${loan.facility} has been approved. Your balance has been credited.`;
 
@@ -101,7 +102,7 @@ export const PUT = requireAdmin(async (request) => {
         <div style="font-family: Arial, sans-serif; color: #333;">
           <h2 style="color: #ee2737;">Congratulations!</h2>
           <p>Hello <strong>${user.firstName}</strong>,</p>
-          <p>We are pleased to inform you that your loan application for <strong>$${loan.amount.toLocaleString()}</strong> (${loan.facility}) has been <strong>APPROVED</strong>.</p>
+          <p>We are pleased to inform you that your loan application for <strong>${loanCurrency} ${loan.amount.toLocaleString()}</strong> (${loan.facility}) has been <strong>APPROVED</strong>.</p>
           <p>The funds have been credited to your main balance.</p>
           <div style="background: #fdf6ec; border: 1px solid #faecc5; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <p style="margin: 0; font-weight: bold; color: #8a6d3b;">Next Steps:</p>
@@ -133,7 +134,7 @@ export const PUT = requireAdmin(async (request) => {
           },
           $push: {
             activityLog: {
-              action: `Loan Approved: $${loan.amount.toLocaleString()} credited.`,
+              action: `Loan Approved: ${loan.currency || user.currency || 'USD'} ${loan.amount.toLocaleString()} credited.`,
               timestamp: new Date().toISOString()
             }
           } as any
@@ -147,7 +148,7 @@ export const PUT = requireAdmin(async (request) => {
         <div style="font-family: Arial, sans-serif; color: #333;">
           <h2 style="color: #d9534f;">Loan Application Update</h2>
           <p>Hello <strong>${user.firstName}</strong>,</p>
-          <p>We regret to inform you that your recent loan application for <strong>$${loan.amount.toLocaleString()}</strong> (${loan.facility}) has been <strong>REJECTED</strong>.</p>
+          <p>We regret to inform you that your recent loan application for <strong>${loan.currency || user.currency || 'USD'} ${loan.amount.toLocaleString()}</strong> (${loan.facility}) has been <strong>REJECTED</strong>.</p>
           ${rejectionReason ? `<p><strong>Reason provided:</strong> ${rejectionReason}</p>` : ''}
           <p>If you have any questions or wish to appeal this decision, please contact our support team.</p>
           <p>Best regards,<br/>The Nexus Team</p>

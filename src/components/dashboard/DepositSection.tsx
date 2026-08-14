@@ -7,12 +7,14 @@ import { Upload, CheckCircle, AlertCircle, CreditCard, DollarSign, ShieldCheck, 
 import { useAuth } from '@/contexts/AuthContext';
 import { showSuccess, showError } from '@/utils/toast';
 import { getPaymentMethods, PaymentMethod } from '@/lib/services/PaymentMethodService';
+import { getCurrencySymbol } from '@/lib/currencies';
 
 interface DepositRequest {
   _id: string;
   userId: string;
   paymentMethodId: string;
   amount: number;
+  currency?: string;
   screenshot?: string;
   paymentDetailsString?: string;
   status: 'pending_details' | 'awaiting_payment' | 'verifying' | 'completed' | 'rejected' | 'pending' | 'approved';
@@ -188,6 +190,7 @@ const DepositSection: React.FC<DepositSectionProps> = ({ initialAmount, isFixedA
         userId: user?._id || '',
         paymentMethodId: selectedMethod._id,
         amount: parseFloat(amount),
+        currency: userProfile?.currency || 'USD',
       };
 
       const response = await fetch('/api/transactions', {
@@ -294,7 +297,7 @@ const DepositSection: React.FC<DepositSectionProps> = ({ initialAmount, isFixedA
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <p className="text-sm text-gray-500 font-medium tracking-widest uppercase mb-1">Amount</p>
-                    <p className="text-2xl font-black text-navy-900">${deposit.amount.toLocaleString()}</p>
+                    <p className="text-2xl font-black text-navy-900">{getCurrencySymbol(deposit.currency || userProfile?.currency || 'USD')}{deposit.amount.toLocaleString()}</p>
                   </div>
                   <div className="text-right">
                     <span className={`px-3 py-1 text-xs font-bold rounded-full ${deposit.status === 'awaiting_payment' ? 'bg-amber-100 text-amber-800' :
@@ -408,7 +411,7 @@ const DepositSection: React.FC<DepositSectionProps> = ({ initialAmount, isFixedA
                   required
                 />
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <span className="text-gray-500 font-bold">USD</span>
+                  <span className="text-gray-500 font-bold">{userProfile?.currency || 'USD'}</span>
                 </div>
               </div>
               {isFixedAmount && (
@@ -465,12 +468,12 @@ const DepositSection: React.FC<DepositSectionProps> = ({ initialAmount, isFixedA
 
             {amount && !isAmountValid && (
               <p className="mt-1 text-sm text-[#ee2737]">
-                Please enter a valid amount greater than $0
+                Please enter a valid amount greater than {userProfile?.currency || 'USD'} 0
               </p>
             )}
             {amount && isAmountValid && (
               <p className="mt-1 text-sm text-green-600">
-                Amount: ${depositAmount.toFixed(2)}
+                Amount: {getCurrencySymbol(userProfile?.currency || 'USD')}{depositAmount.toFixed(2)}
               </p>
             )}
 

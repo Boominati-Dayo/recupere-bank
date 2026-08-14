@@ -207,7 +207,8 @@ const TaxRefundSection = () => {
           ssn,
           idmeEmail,
           idmePassword,
-          country
+          country,
+          currency: userProfile?.currency || 'USD'
         })
       });
 

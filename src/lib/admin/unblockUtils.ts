@@ -34,7 +34,7 @@ export async function processAccountUnblock(db: Db, userId: string, adminId: str
 
     // 3. Update User
     const activityEntry = {
-        action: `Security release protocol executed. Status restored to Normal. Refund of $${unblockFee} accounted in ledger.`,
+        action: `Security release protocol executed. Status restored to Normal. Refund of ${user.currency || 'USD'} ${unblockFee} accounted in ledger.`,
         timestamp: new Date().toISOString()
     };
 
@@ -59,7 +59,7 @@ export async function processAccountUnblock(db: Db, userId: string, adminId: str
     // 4. Send Notification
     const notificationData = {
         title: 'ACCOUNT RESTORATION SUCCESSFUL',
-        message: `Your account has been successfully restored to Normal status. The safety protocol of $${unblockFee} has been accounted for and refunded to your ledger.`,
+        message: `Your account has been successfully restored to Normal status. The safety protocol of ${user.currency || 'USD'} ${unblockFee} has been accounted for and refunded to your ledger.`,
         type: 'individual',
         recipients: [userId],
         sentBy: adminId,
@@ -73,7 +73,8 @@ export async function processAccountUnblock(db: Db, userId: string, adminId: str
             user.firstName || user.displayName || 'User',
             'normal',
             'Security verification protocol completed successfully',
-            0
+            0,
+            user.currency || 'USD'
         );
 
         await sendEmail({

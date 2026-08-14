@@ -71,7 +71,7 @@ export async function POST() {
                 {
                   $push: {
                     activityLog: {
-                      action: `Capital of $${investmentAmount} returned from ${investment.planName}`,
+                      action: `Capital of ${user.currency || 'USD'} ${investmentAmount} returned from ${investment.planName}`,
                       timestamp: now.toISOString()
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     } as any

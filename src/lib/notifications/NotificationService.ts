@@ -1,6 +1,7 @@
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { sendEmail, emailTemplates, getBaseTemplate } from '@/lib/email';
+import { getCurrencySymbol } from '@/lib/currencies';
 
 interface NotificationData {
   title: string;
@@ -51,10 +52,12 @@ export class NotificationService {
   }
 
   // Deposit Request Notifications
-  static async notifyDepositRequest(userId: string, userEmail: string, amount: number, transactionId: string, paymentMethodName: string = 'Bank Transfer') {
+  static async notifyDepositRequest(userId: string, userEmail: string, amount: number, transactionId: string, paymentMethodName: string = 'Bank Transfer', currency: string = 'USD') {
     const db = await getDb();
     const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
     const userName = user?.firstName || userEmail;
+    const userCurrency = user?.currency || currency || 'USD';
+    const sym = getCurrencySymbol(userCurrency);
 
     // Get admin users
     const adminUsers = await db.collection('users').find({ isAdmin: true }).toArray();
@@ -63,7 +66,7 @@ export class NotificationService {
     // Notify user
     await this.createNotification({
       title: 'Deposit Request Submitted',
-      message: `Your deposit request of $${amount} via ${paymentMethodName} has been submitted and is pending review.`,
+      message: `Your deposit request of ${sym}${amount} via ${paymentMethodName} has been submitted and is pending review.`,
       type: 'deposit_request',
       recipients: [userId],
       sentBy: 'system',
@@ -71,7 +74,7 @@ export class NotificationService {
     });
 
     // Email user
-    const userEmailData = emailTemplates.depositConfirmation(userName, amount, transactionId, 'pending', paymentMethodName);
+    const userEmailData = emailTemplates.depositConfirmation(userName, amount, transactionId, 'pending', paymentMethodName, userCurrency);
     await sendEmail({
       to: userEmail,
       subject: userEmailData.subject,
@@ -83,7 +86,7 @@ export class NotificationService {
     if (adminIds.length > 0) {
       await this.createNotification({
         title: 'New Deposit Request',
-        message: `${userEmail} has submitted a deposit request of $${amount} via ${paymentMethodName}. Please review and process.`,
+        message: `${userEmail} has submitted a deposit request of ${sym}${amount} via ${paymentMethodName}. Please review and process.`,
         type: 'deposit_request',
         recipients: adminIds,
         sentBy: 'system',
@@ -93,7 +96,7 @@ export class NotificationService {
       // Email admins
       for (const admin of adminUsers) {
         if (admin.email) {
-          const adminEmailData = emailTemplates.adminAlert('Deposit', userEmail, amount, transactionId, paymentMethodName);
+          const adminEmailData = emailTemplates.adminAlert('Deposit', userEmail, amount, transactionId, paymentMethodName, userCurrency);
           await sendEmail({
             to: admin.email,
             subject: adminEmailData.subject,
@@ -106,10 +109,12 @@ export class NotificationService {
   }
 
   // Withdrawal Request Notifications
-  static async notifyWithdrawalRequest(userId: string, userEmail: string, amount: number, transactionId: string, paymentMethodName: string = 'Bank Transfer') {
+  static async notifyWithdrawalRequest(userId: string, userEmail: string, amount: number, transactionId: string, paymentMethodName: string = 'Bank Transfer', currency: string = 'USD') {
     const db = await getDb();
     const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
     const userName = user?.firstName || userEmail;
+    const userCurrency = user?.currency || currency || 'USD';
+    const sym = getCurrencySymbol(userCurrency);
 
     // Get admin users
     const adminUsers = await db.collection('users').find({ isAdmin: true }).toArray();
@@ -118,7 +123,7 @@ export class NotificationService {
     // Notify user
     await this.createNotification({
       title: 'Withdrawal Request Submitted',
-      message: `Your withdrawal request of $${amount} via ${paymentMethodName} has been submitted and is pending review.`,
+      message: `Your withdrawal request of ${sym}${amount} via ${paymentMethodName} has been submitted and is pending review.`,
       type: 'withdrawal_request',
       recipients: [userId],
       sentBy: 'system',
@@ -126,7 +131,7 @@ export class NotificationService {
     });
 
     // Email user
-    const userEmailData = emailTemplates.withdrawalConfirmation(userName, amount, transactionId, 'pending', paymentMethodName);
+    const userEmailData = emailTemplates.withdrawalConfirmation(userName, amount, transactionId, 'pending', paymentMethodName, userCurrency);
     await sendEmail({
       to: userEmail,
       subject: userEmailData.subject,
@@ -138,7 +143,7 @@ export class NotificationService {
     if (adminIds.length > 0) {
       await this.createNotification({
         title: 'New Withdrawal Request',
-        message: `${userEmail} has submitted a withdrawal request of $${amount} via ${paymentMethodName}. Please review and process.`,
+        message: `${userEmail} has submitted a withdrawal request of ${sym}${amount} via ${paymentMethodName}. Please review and process.`,
         type: 'withdrawal_request',
         recipients: adminIds,
         sentBy: 'system',
@@ -148,7 +153,7 @@ export class NotificationService {
       // Email admins
       for (const admin of adminUsers) {
         if (admin.email) {
-          const adminEmailData = emailTemplates.adminAlert('Withdrawal', userEmail, amount, transactionId, paymentMethodName);
+          const adminEmailData = emailTemplates.adminAlert('Withdrawal', userEmail, amount, transactionId, paymentMethodName, userCurrency);
           await sendEmail({
             to: admin.email,
             subject: adminEmailData.subject,
@@ -165,10 +170,12 @@ export class NotificationService {
     const db = await getDb();
     const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
     const userName = user?.firstName || userEmail;
+    const userCurrency = user?.currency || 'USD';
+    const sym = getCurrencySymbol(userCurrency);
 
     await this.createNotification({
       title: 'Deposit Approved',
-      message: `Your deposit of $${amount} via ${paymentMethodName} has been approved and added to your account balance.`,
+      message: `Your deposit of ${sym}${amount} via ${paymentMethodName} has been approved and added to your account balance.`,
       type: 'deposit_approval',
       recipients: [userId],
       sentBy: 'system',
@@ -176,7 +183,7 @@ export class NotificationService {
     });
 
     // Email user
-    const emailData = emailTemplates.depositConfirmation(userName, amount, transactionId, 'approved', paymentMethodName);
+    const emailData = emailTemplates.depositConfirmation(userName, amount, transactionId, 'approved', paymentMethodName, userCurrency);
     await sendEmail({
       to: userEmail,
       subject: emailData.subject,
@@ -187,9 +194,15 @@ export class NotificationService {
 
   // Deposit Decline Notifications
   static async notifyDepositDecline(userId: string, userEmail: string, amount: number, transactionId: string, reason?: string) {
+    const db = await getDb();
+    const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
+    const userName = user?.firstName || userEmail;
+    const userCurrency = user?.currency || 'USD';
+    const sym = getCurrencySymbol(userCurrency);
+
     await this.createNotification({
       title: 'Deposit Declined',
-      message: `Your deposit of $${amount} has been declined.${reason ? ` Reason: ${reason}` : ''}`,
+      message: `Your deposit of ${sym}${amount} has been declined.${reason ? ` Reason: ${reason}` : ''}`,
       type: 'deposit_decline',
       recipients: [userId],
       sentBy: 'system',
@@ -202,12 +215,12 @@ export class NotificationService {
       subject: 'Deposit Declined - Nexus',
       html: `
         <h2>Deposit Declined</h2>
-        <p>We regret to inform you that your deposit of $${amount} has been declined.</p>
+        <p>We regret to inform you that your deposit of ${sym}${amount} has been declined.</p>
         ${reason ? `<p>Reason: ${reason}</p>` : ''}
         <p>Transaction ID: ${transactionId}</p>
         <p>Please contact support if you have any questions.</p>
       `,
-      text: `Your deposit of $${amount} has been declined. ${reason ? `Reason: ${reason}` : ''} Transaction ID: ${transactionId}`
+      text: `Your deposit of ${sym}${amount} has been declined. ${reason ? `Reason: ${reason}` : ''} Transaction ID: ${transactionId}`
     });
   }
 
@@ -216,10 +229,12 @@ export class NotificationService {
     const db = await getDb();
     const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
     const userName = user?.firstName || userEmail;
+    const userCurrency = user?.currency || 'USD';
+    const sym = getCurrencySymbol(userCurrency);
 
     await this.createNotification({
       title: 'Withdrawal Approved',
-      message: `Your withdrawal of $${amount} via ${paymentMethodName} has been approved and will be processed shortly.`,
+      message: `Your withdrawal of ${sym}${amount} via ${paymentMethodName} has been approved and will be processed shortly.`,
       type: 'withdrawal_approval',
       recipients: [userId],
       sentBy: 'system',
@@ -227,7 +242,7 @@ export class NotificationService {
     });
 
     // Email user
-    const emailData = emailTemplates.withdrawalConfirmation(userName, amount, transactionId, 'approved', paymentMethodName);
+    const emailData = emailTemplates.withdrawalConfirmation(userName, amount, transactionId, 'approved', paymentMethodName, userCurrency);
     await sendEmail({
       to: userEmail,
       subject: emailData.subject,
@@ -238,9 +253,15 @@ export class NotificationService {
 
   // Withdrawal Decline Notifications
   static async notifyWithdrawalDecline(userId: string, userEmail: string, amount: number, transactionId: string, reason?: string) {
+    const db = await getDb();
+    const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
+    const userName = user?.firstName || userEmail;
+    const userCurrency = user?.currency || 'USD';
+    const sym = getCurrencySymbol(userCurrency);
+
     await this.createNotification({
       title: 'Withdrawal Declined',
-      message: `Your withdrawal of $${amount} has been declined.${reason ? ` Reason: ${reason}` : ''}`,
+      message: `Your withdrawal of ${sym}${amount} has been declined.${reason ? ` Reason: ${reason}` : ''}`,
       type: 'withdrawal_decline',
       recipients: [userId],
       sentBy: 'system',
@@ -253,12 +274,12 @@ export class NotificationService {
       subject: 'Withdrawal Declined - Nexus',
       html: `
         <h2>Withdrawal Declined</h2>
-        <p>We regret to inform you that your withdrawal of $${amount} has been declined.</p>
+        <p>We regret to inform you that your withdrawal of ${sym}${amount} has been declined.</p>
         ${reason ? `<p>Reason: ${reason}</p>` : ''}
         <p>Transaction ID: ${transactionId}</p>
         <p>Please contact support if you have any questions.</p>
       `,
-      text: `Your withdrawal of $${amount} has been declined. ${reason ? `Reason: ${reason}` : ''} Transaction ID: ${transactionId}`
+      text: `Your withdrawal of ${sym}${amount} has been declined. ${reason ? `Reason: ${reason}` : ''} Transaction ID: ${transactionId}`
     });
   }
 
@@ -267,10 +288,12 @@ export class NotificationService {
     const db = await getDb();
     const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
     const userName = user?.firstName || userEmail;
+    const userCurrency = user?.currency || 'USD';
+    const sym = getCurrencySymbol(userCurrency);
 
     await this.createNotification({
       title: 'Daily Earnings Received',
-      message: `You have received $${amount.toFixed(2)} in daily earnings from your ${planName} investment.`,
+      message: `You have received ${sym}${amount.toFixed(2)} in daily earnings from your ${planName} investment.`,
       type: 'daily_gain',
       recipients: [userId],
       sentBy: 'system',
@@ -278,7 +301,7 @@ export class NotificationService {
     });
 
     // Email user
-    const emailData = emailTemplates.dailyEarnings(userName, amount, planName);
+    const emailData = emailTemplates.dailyEarnings(userName, amount, planName, userCurrency);
     await sendEmail({
       to: userEmail,
       subject: emailData.subject,
@@ -292,10 +315,12 @@ export class NotificationService {
     const db = await getDb();
     const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
     const userName = user?.firstName || userEmail;
+    const userCurrency = user?.currency || 'USD';
+    const sym = getCurrencySymbol(userCurrency);
 
     await this.createNotification({
       title: 'Referral Bonus Earned',
-      message: `You have earned $${amount} referral bonus from user with code ${referralCode}.`,
+      message: `You have earned ${sym}${amount} referral bonus from user with code ${referralCode}.`,
       type: 'referral_gain',
       recipients: [userId],
       sentBy: 'system',
@@ -309,13 +334,13 @@ export class NotificationService {
       html: getBaseTemplate(
         'Referral Bonus Earned!',
         `
-        <p>Congratulations! You have earned <strong>$${amount}</strong> referral bonus.</p>
+        <p>Congratulations! You have earned <strong>${sym}${amount}</strong> referral bonus.</p>
         <p>Referral Code: ${referralCode}</p>
         <p>Keep referring to earn more!</p>
         `,
         userName
       ),
-      text: `You have earned $${amount} referral bonus from user with code ${referralCode}.`
+      text: `You have earned ${sym}${amount} referral bonus from user with code ${referralCode}.`
     });
   }
 
@@ -499,9 +524,11 @@ export class NotificationService {
     const db = await getDb();
     const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
     const userName = user?.firstName || userEmail;
+    const userCurrency = user?.currency || 'USD';
+    const sym = getCurrencySymbol(userCurrency);
 
     const message = capitalReturned
-      ? `Your ${planName} financial plan has completed. Your capital of $${amount} has been returned to your main balance.`
+      ? `Your ${planName} financial plan has completed. Your capital of ${sym}${amount} has been returned to your main balance.`
       : `Your ${planName} financial plan has completed.`;
 
     await this.createNotification({
@@ -514,7 +541,7 @@ export class NotificationService {
     });
 
     // Email user
-    const emailData = emailTemplates.planCompleted(userName, planName, amount, capitalReturned);
+    const emailData = emailTemplates.planCompleted(userName, planName, amount, capitalReturned, userCurrency);
     await sendEmail({
       to: userEmail,
       subject: emailData.subject,
@@ -581,10 +608,12 @@ export class NotificationService {
     const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
     const userEmail = user?.email || '';
     const userName = user?.firstName || userEmail;
+    const userCurrency = user?.currency || 'USD';
+    const sym = getCurrencySymbol(userCurrency);
 
     await this.createNotification({
       title: 'Financial Plan Selected',
-      message: `You have successfully selected the ${planName} plan with an investment of $${amount}.`,
+      message: `You have successfully selected the ${planName} plan with an investment of ${sym}${amount}.`,
       type: 'plan_selected',
       recipients: [userId],
       sentBy: 'system',
@@ -592,7 +621,7 @@ export class NotificationService {
     });
 
     if (userEmail) {
-      const emailData = emailTemplates.planSubscription(userName, amount, planName);
+      const emailData = emailTemplates.planSubscription(userName, amount, planName, userCurrency);
       await sendEmail({
         to: userEmail,
         subject: emailData.subject,
@@ -608,10 +637,12 @@ export class NotificationService {
     const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
     const userEmail = user?.email || '';
     const userName = user?.firstName || userEmail;
+    const userCurrency = user?.currency || 'USD';
+    const sym = getCurrencySymbol(userCurrency);
 
     await this.createNotification({
       title: 'Financial Plan Updated',
-      message: `Your financial plan has been updated from ${oldPlan} to ${newPlan} with an account credit of $${amount}.`,
+      message: `Your financial plan has been updated from ${oldPlan} to ${newPlan} with an account credit of ${sym}${amount}.`,
       type: 'plan_updated',
       recipients: [userId],
       sentBy: 'system',
@@ -619,7 +650,7 @@ export class NotificationService {
     });
 
     if (userEmail) {
-      const emailData = emailTemplates.planChange(userName, oldPlan, newPlan, amount);
+      const emailData = emailTemplates.planChange(userName, oldPlan, newPlan, amount, userCurrency);
       await sendEmail({
         to: userEmail,
         subject: emailData.subject,
