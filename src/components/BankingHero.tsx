@@ -1,36 +1,25 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Shield, Landmark, ArrowRight, Zap, Globe, Lock, TrendingUp, CheckCircle } from 'lucide-react';
-import SydneyHeroImg from '@/assets/images_for_pages/sydney-hero.jpg';
-
-const stats = [
-  { label: 'Assets Under Management', value: '$2.8B+' },
-  { label: 'Active Accounts', value: '14,200+' },
-  { label: 'Recovery Rate', value: '94%' },
-];
-
-const portfolioItems = [
-  { label: 'Global Equities', val: 'USD $840,000', pct: 65, color: 'bg-primary-500' },
-  { label: 'Fixed Income', val: 'USD $412,000', pct: 28, color: 'bg-blue-500' },
-  { label: 'Property REITS', val: 'USD $230,900', pct: 45, color: 'bg-emerald-500' },
-];
+import { Shield, ArrowRight, Globe, Lock } from 'lucide-react';
+import FinanceHeroImg from '@/assets/images_for_pages/finance-hero.jpg';
 
 const BankingHero = () => {
   return (
     <section className="relative min-h-[90vh] flex items-center pt-24 pb-12 overflow-hidden bg-navy-950">
-      {/* Realistic Sydney skyline background */}
+      {/* Finance background image */}
       <Image
-        src={SydneyHeroImg}
-        alt="Sydney Harbour skyline"
+        src={FinanceHeroImg}
+        alt="Global finance and wealth"
         fill
         priority
-        className="object-cover object-center opacity-40"
+        className="object-cover object-center opacity-30"
         sizes="100vw"
       />
 
       {/* Animated gradient background */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-navy-950 via-navy-900 to-navy-950" />
+        <div className="absolute inset-0 bg-gradient-to-br from-navy-950 via-navy-950 to-navy-950" />
+        <div className="absolute inset-0 bg-navy-950/70" />
         <div className="absolute top-1/4 -left-32 w-[500px] h-[500px] bg-primary-600/10 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '8s' }} />
         <div className="absolute bottom-1/4 -right-32 w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '6s' }} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary-500/5 rounded-full blur-[150px] animate-pulse" style={{ animationDuration: '10s' }} />
@@ -43,12 +32,11 @@ const BankingHero = () => {
         <div className="absolute bottom-0 left-0 w-[300px] h-[1px] bg-gradient-to-r from-transparent via-blue-500/30 to-transparent -rotate-12 -translate-y-32" />
 
         {/* Gradient fade */}
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-950 via-navy-950/60 to-navy-950" />
+        <div className="absolute inset-0 bg-gradient-to-b from-navy-950 via-navy-950/80 to-navy-950" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-16">
-          <div className="lg:w-1/2 text-center lg:text-left">
+        <div className="max-w-3xl mx-auto text-center">
 
             <h1 className="text-4xl mobile:text-5xl lg:text-7xl font-['Playfair_Display'] font-black text-white leading-[1.1] tracking-tight mb-8">
               Fortify Your{' '}
@@ -64,12 +52,12 @@ const BankingHero = () => {
               .
             </h1>
 
-            <p className="text-lg mobile:text-xl text-white/60 font-medium mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            <p className="text-lg mobile:text-xl text-white/60 font-medium mb-10 max-w-2xl mx-auto leading-relaxed">
               The world&apos;s premier private banking platform. Combine Swiss-level security with
               forensic asset protection — serving clients globally.
             </p>
 
-            <div className="flex flex-col mobile:flex-row items-center justify-center lg:justify-start gap-5">
+            <div className="flex flex-col mobile:flex-row items-center justify-center gap-5">
               <Link
                 href="/signup"
                 className="group relative w-full mobile:w-auto px-10 py-5 bg-primary-500 text-navy-950 rounded-2xl font-black text-sm uppercase tracking-widest overflow-hidden transition-all hover:shadow-[0_0_30px_rgba(238,39,55,0.4)] active:scale-95"
@@ -88,7 +76,7 @@ const BankingHero = () => {
               </Link>
             </div>
 
-            <div className="mt-16 pt-10 border-t border-white/5 flex flex-wrap justify-center lg:justify-start gap-8 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
+            <div className="mt-16 pt-10 border-t border-white/5 flex flex-wrap justify-center gap-8 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
               <div className="flex items-center gap-2">
                 <Shield className="w-5 h-5 text-primary-500" />
                 <span className="text-sm font-black text-white uppercase tracking-tighter">PCI-DSS Compliant</span>
@@ -102,64 +90,6 @@ const BankingHero = () => {
                 <span className="text-sm font-black text-white uppercase tracking-tighter">Global Liquidity</span>
               </div>
             </div>
-          </div>
-
-          <div className="lg:w-1/2 w-full">
-            <div className="relative z-10">
-              {/* Wealth Dashboard Card */}
-              <div className="relative z-20 bg-[#111827] border border-white/10 rounded-3xl p-6 mobile:p-10 shadow-2xl shadow-black/50 overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-500 via-primary-400 to-primary-600/50" />
-
-                <div className="flex justify-between items-start mb-12">
-                  <div>
-                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">Total Wealth Overview</p>
-                    <h3 className="text-3xl mobile:text-4xl font-black text-white tracking-tighter">USD $1,482,900</h3>
-                  </div>
-                  <div className="w-12 h-12 rounded-2xl bg-primary-500/10 flex items-center justify-center text-primary-500">
-                    <Zap className="w-6 h-6" />
-                  </div>
-                </div>
-
-                <div className="space-y-6">
-                  {portfolioItems.map((item, i) => (
-                    <div key={i} className="space-y-2">
-                      <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
-                        <span className="text-gray-400">{item.label}</span>
-                        <span className="text-white">{item.val}</span>
-                      </div>
-                      <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                        <div
-                          className={`h-full ${item.color} transition-all duration-1000`}
-                          style={{ width: `${item.pct}%` }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-12 flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5">
-                  <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="text-[10px] font-black text-white uppercase tracking-widest">Market Status: Bullish</span>
-                  </div>
-                  <span className="text-[10px] font-black text-primary-500 uppercase tracking-widest">Markets updated 2m ago</span>
-                </div>
-              </div>
-
-              <div className="absolute -top-10 -left-10 w-32 h-32 bg-primary-500/20 rounded-full blur-3xl pointer-events-none" />
-              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
-            </div>
-
-            {/* Stats Bar */}
-            <div className="mt-8 grid grid-cols-3 gap-4">
-              {stats.map((stat, i) => (
-                <div key={i} className="group bg-white/5 border border-white/10 rounded-2xl p-4 text-center hover:bg-white/[0.07] hover:border-primary-500/30 transition-all duration-300">
-                  <p className="text-lg font-black text-white group-hover:text-primary-400 transition-colors">{stat.value}</p>
-                  <p className="text-[8px] text-gray-500 font-bold uppercase tracking-widest mt-1">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     </section>
