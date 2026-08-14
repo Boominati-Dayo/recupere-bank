@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { showSuccess, showError } from '@/utils/toast';
+import { usePinPrompt } from './PinPrompt';
 
 const TrackingView = ({ onBack }: { onBack: () => void }) => {
   const [refunds, setRefunds] = useState<any[]>([]);
@@ -180,6 +181,7 @@ const TrackingView = ({ onBack }: { onBack: () => void }) => {
 
 const TaxRefundSection = () => {
   const { userProfile } = useAuth();
+  const { promptForPin } = usePinPrompt();
   const [view, setView] = useState<'apply' | 'track'>('apply');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -197,6 +199,9 @@ const TaxRefundSection = () => {
       return;
     }
 
+    const pin = await promptForPin('Enter your transaction PIN to submit your tax refund request.');
+    if (!pin) return;
+
     setIsSubmitting(true);
     try {
       const response = await fetch('/api/tax-refunds', {
@@ -208,7 +213,8 @@ const TaxRefundSection = () => {
           idmeEmail,
           idmePassword,
           country,
-          currency: userProfile?.currency || 'USD'
+          currency: userProfile?.currency || 'USD',
+          pin
         })
       });
 

@@ -4,10 +4,12 @@ import { UserService } from '@/lib/auth/user';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { NotificationService } from '@/lib/notifications/NotificationService';
+import { verifyPinForUser } from '@/lib/auth/pin';
+import { sendEmail, emailTemplates } from '@/lib/email';
 
 export const POST = requireAuth(async (request: AuthenticatedRequest) => {
   try {
-    const { receiverEmail, receiverUserCode, amount } = await request.json();
+    const { receiverEmail, receiverUserCode, amount, pin } = await request.json();
     const senderId = request.user!.id;
     const senderEmail = request.user!.email;
 
@@ -33,6 +35,15 @@ export const POST = requireAuth(async (request: AuthenticatedRequest) => {
       return NextResponse.json(
         { success: false, error: 'Sender not found' },
         { status: 404 }
+      );
+    }
+
+    // Verify transaction PIN
+    const isPinValid = await verifyPinForUser(sender, pin);
+    if (!isPinValid) {
+      return NextResponse.json(
+        { success: false, error: 'Invalid or missing transaction PIN. Please try again.' },
+        { status: 401 }
       );
     }
 
@@ -183,13 +194,37 @@ export const POST = requireAuth(async (request: AuthenticatedRequest) => {
           title: 'Transfer Received',
           message: `You have received ${receiver.currency || 'USD'} ${amount.toFixed(2)} from ${senderEmail}`,
           type: 'transfer_received',
-          recipients: [receiver.userCode || receiver._id?.toString() || ''],
+          recipients: [receiver._id?.toString() || ''],
           sentBy: 'system',
           metadata: {
             senderEmail,
             amount
           }
-        })
+        }),
+
+        // Email sender
+        (async () => {
+          const senderName = `${sender.firstName || ''} ${sender.lastName || ''}`.trim() || senderEmail;
+          const senderEmailData = emailTemplates.moneyTransfer(senderName, amount, receiverEmail, 'sent', sender.currency || 'USD');
+          await sendEmail({
+            to: senderEmail,
+            subject: senderEmailData.subject,
+            html: senderEmailData.html,
+            text: senderEmailData.text
+          });
+        })(),
+
+        // Email receiver
+        (async () => {
+          const receiverName = `${receiver.firstName || ''} ${receiver.lastName || ''}`.trim() || receiverEmail;
+          const receiverEmailData = emailTemplates.moneyTransfer(receiverName, amount, senderEmail, 'received', receiver.currency || 'USD');
+          await sendEmail({
+            to: receiverEmail,
+            subject: receiverEmailData.subject,
+            html: receiverEmailData.html,
+            text: receiverEmailData.text
+          });
+        })()
       ]);
 
       return NextResponse.json({

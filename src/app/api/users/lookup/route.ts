@@ -48,7 +48,7 @@ export const POST = requireAuth(async (request: AuthenticatedRequest) => {
     }
 
     // Return user info (without sensitive data)
-    const { password: _, emailVerificationToken: __, passwordResetToken: ___, ...userInfo } = user;
+    const { password: _, emailVerificationToken: __, passwordResetToken: ___, transactionPin: ____, ...userInfo } = user;
 
     return NextResponse.json({
       success: true,

@@ -31,7 +31,7 @@ export const GET = requireAdmin(async (request) => {
     const userIds = [...new Set(cards.map(c => new ObjectId(c.userId)))];
     const users = await db.collection('users')
       .find({ _id: { $in: userIds } })
-      .project({ firstName: 1, lastName: 1, email: 1, userCode: 1 })
+      .project({ firstName: 1, lastName: 1, email: 1, userCode: 1, currency: 1 })
       .toArray();
 
     const userMap = users.reduce((acc, u) => ({

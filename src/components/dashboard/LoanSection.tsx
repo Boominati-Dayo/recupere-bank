@@ -23,6 +23,7 @@ import {
   Activity
 } from 'lucide-react';
 import { showSuccess, showError } from '@/utils/toast';
+import { usePinPrompt } from './PinPrompt';
 
 interface LoanType {
   id: string;
@@ -536,6 +537,7 @@ const TrackingView = ({ onBack }: { onBack: () => void }) => {
 
 const LoanSection = () => {
   const { userProfile } = useAuth();
+  const { promptForPin } = usePinPrompt();
   const [view, setView] = useState<'info' | 'apply' | 'track'>('info');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -562,6 +564,9 @@ const LoanSection = () => {
       return;
     }
 
+    const pin = await promptForPin(`Enter your transaction PIN to submit your ${facility} loan application of ${loanCurrencySymbol}${parseFloat(amount).toLocaleString()}.`);
+    if (!pin) return;
+
     setIsSubmitting(true);
     try {
       const response = await fetch('/api/loans', {
@@ -574,6 +579,7 @@ const LoanSection = () => {
           purpose,
           income,
           currency: loanCurrency,
+          pin
         })
       });
 

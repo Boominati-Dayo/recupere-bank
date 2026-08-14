@@ -82,6 +82,7 @@ interface AdminUser {
   displayName: string;
   emailVerified: boolean;
   userCode: string;
+  currency?: string;
   isAdmin: boolean;
   isActive: boolean;
   profilePicture?: string;
@@ -135,6 +136,7 @@ interface DepositRequest {
   userId: string;
   paymentMethodId: string;
   amount: number;
+  currency?: string;
   screenshot?: string;
   paymentDetailsString?: string;
   status: 'pending_details' | 'awaiting_payment' | 'verifying' | 'completed' | 'rejected' | 'pending' | 'approved';
@@ -150,6 +152,7 @@ interface WithdrawalRequest {
   userId: string;
   paymentMethodId: string;
   amount: number;
+  currency?: string;
   accountDetails: {
     accountName: string;
     accountNumber: string;
@@ -452,12 +455,16 @@ const AdminSection = () => {
       name: `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'Unknown User',
       userCode: user.userCode || 'N/A',
       userId: user._id || 'N/A',
-      email: user.email || 'N/A'
+      email: user.email || 'N/A',
+      currency: user.currency || adminCurrency,
+      currencySymbol: getCurrencySymbol(user.currency || adminCurrency)
     } : {
       name: 'Unknown User',
       userCode: 'N/A',
       userId: userId,
-      email: 'N/A'
+      email: 'N/A',
+      currency: adminCurrency,
+      currencySymbol: adminCurrencySymbol
     };
   };
 
@@ -1386,7 +1393,7 @@ const AdminSection = () => {
                       </div>
                       <div className="text-right">
                         <p className="text-[8px] mobile:text-[9px] font-black text-gray-300 uppercase tracking-widest mb-0.5 mobile:mb-1">Fee Paid</p>
-                        <p className="text-xs mobile:text-sm font-black text-navy-900">{adminCurrencySymbol}{request.fee}</p>
+                        <p className="text-xs mobile:text-sm font-black text-navy-900">{getCurrencySymbol(request.currency || request.user?.currency || adminCurrency)}{request.fee}</p>
                       </div>
                     </div>
 
@@ -1401,7 +1408,7 @@ const AdminSection = () => {
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Limit</span>
-                        <span className="text-[10px] font-black text-navy-900 uppercase tracking-widest">{adminCurrencySymbol}{request.spendLimit?.toLocaleString()}</span>
+                        <span className="text-[10px] font-black text-navy-900 uppercase tracking-widest">{getCurrencySymbol(request.currency || request.user?.currency || adminCurrency)}{request.spendLimit?.toLocaleString()}</span>
                       </div>
                     </div>
 
@@ -1468,7 +1475,7 @@ const AdminSection = () => {
                     <div className="bg-gray-50 p-5 rounded-3xl border border-gray-100 mb-6">
                       <div className="flex justify-between items-center mb-3">
                         <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Amount</span>
-                        <span className="text-[10px] font-black text-navy-900">{adminCurrencySymbol}{loan.amount?.toLocaleString()}</span>
+                        <span className="text-[10px] font-black text-navy-900">{getCurrencySymbol(loan.currency || loan.userDetails?.currency || adminCurrency)}{loan.amount?.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between items-center mb-3">
                         <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Facility</span>
@@ -1695,7 +1702,7 @@ const AdminSection = () => {
                       </div>
                       <div className="flex justify-between items-center py-1.5 mobile:py-2 border-b border-gray-50">
                         <span className="text-[9px] mobile:text-[10px] font-black text-gray-400 uppercase tracking-widest">Balance</span>
-                        <span className="text-xs mobile:text-sm font-black text-primary-600">{adminCurrencySymbol}{(user.balances?.total || user.totalInvested || 0).toLocaleString()}</span>
+                        <span className="text-xs mobile:text-sm font-black text-primary-600">{getCurrencySymbol(user.currency || adminCurrency)}{(user.balances?.total || user.totalInvested || 0).toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between items-center py-1.5 mobile:py-2 border-b border-gray-50">
                         <span className="text-[9px] mobile:text-[10px] font-black text-gray-400 uppercase tracking-widest">Plan</span>
@@ -2023,7 +2030,7 @@ const AdminSection = () => {
                     <div className="space-y-4 mb-6">
                       <div className="flex justify-between items-baseline">
                         <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Entry Amount</span>
-                        <span className="text-lg font-black text-navy-900 tracking-tighter">{adminCurrencySymbol}{deposit.amount?.toLocaleString()}</span>
+                        <span className="text-lg font-black text-navy-900 tracking-tighter">{getCurrencySymbol(deposit.currency || getUserInfo(deposit.userId).currency || adminCurrency)}{deposit.amount?.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between items-start">
                         <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Originator</span>
@@ -2070,7 +2077,7 @@ const AdminSection = () => {
                     <div className="space-y-4 mb-6">
                       <div className="flex justify-between items-baseline">
                         <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Requested Sum</span>
-                        <span className="text-lg font-black text-navy-900 tracking-tighter">{adminCurrencySymbol}{withdrawal.amount?.toLocaleString()}</span>
+                        <span className="text-lg font-black text-navy-900 tracking-tighter">{getCurrencySymbol(withdrawal.currency || getUserInfo(withdrawal.userId).currency || adminCurrency)}{withdrawal.amount?.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between items-start">
                         <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Recipient</span>
@@ -2759,12 +2766,12 @@ const AdminSection = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="bg-navy-800/50 p-6 rounded-3xl border border-navy-700/50">
                         <p className="mobile:text-[11px] text-[8px] font-black text-gray-400 uppercase tracking-widest mb-2">Liquidity</p>
-                        <p className="mobile:text-2xl text-lg font-black text-white tracking-tighter">{adminCurrencySymbol}{userDetailData.balances?.main?.toLocaleString() || 0}</p>
+                        <p className="mobile:text-2xl text-lg font-black text-white tracking-tighter">{getCurrencySymbol(userDetailData.currency || adminCurrency)}{userDetailData.balances?.main?.toLocaleString() || 0}</p>
                       </div>
                     </div>
                     <div className="mt-6 p-6 bg-primary-500 rounded-3xl mobile:rounded-[2.5rem] flex-col md:flex-row flex md:items-center justify-between shadow-lg shadow-primary-500/10">
                       <span className="mobile:text-[11px] text-[8px] font-black text-white uppercase tracking-widest">Aggregate Equity</span>
-                      <span className="mobile:text-2xl text-lg font-black text-navy-900 tracking-tighter">{adminCurrencySymbol}{userDetailData.balances?.total?.toLocaleString() || 0}</span>
+                      <span className="mobile:text-2xl text-lg font-black text-navy-900 tracking-tighter">{getCurrencySymbol(userDetailData.currency || adminCurrency)}{userDetailData.balances?.total?.toLocaleString() || 0}</span>
                     </div>
                   </div>
                 </div>
@@ -3047,7 +3054,7 @@ const AdminSection = () => {
                   </div>
                   <div className="text-right">
                     <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-0.5">Transaction Sum</p>
-                    <p className="text-2xl font-black tracking-tighter">{adminCurrencySymbol}{selectedTransaction.amount?.toLocaleString()}</p>
+                    <p className="text-2xl font-black tracking-tighter">{getCurrencySymbol(selectedTransaction.currency || getUserInfo(selectedTransaction.userId).currency || adminCurrency)}{selectedTransaction.amount?.toLocaleString()}</p>
                   </div>
                 </div>
 
@@ -3111,6 +3118,7 @@ const AdminSection = () => {
                         alt="Payment Screenshot"
                         width={800}
                         height={600}
+                        unoptimized
                         className="w-full h-auto object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-navy-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
@@ -3119,6 +3127,7 @@ const AdminSection = () => {
                     </div>
                   </div>
                 ) : selectedTransactionType === 'withdrawals' && selectedTransaction && 'accountDetails' in selectedTransaction && selectedTransaction.accountDetails && (
+                  <>
                   <div className="group">
                     <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 ml-1">Destinaton Intelligence (Account Details)</label>
                     <div className="bg-gray-50 p-8 rounded-[2rem] border border-gray-100 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -3144,6 +3153,25 @@ const AdminSection = () => {
                       )}
                     </div>
                   </div>
+                  {('screenshot' in selectedTransaction && selectedTransaction.screenshot) && (
+                    <div className="group">
+                      <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 ml-1">Withdrawal Proof Screenshot</label>
+                      <div className="relative rounded-[2rem] overflow-hidden border border-gray-100 shadow-lg group-hover:shadow-2xl transition-all duration-500">
+                        <Image
+                          src={(selectedTransaction as any).screenshot}
+                          alt="Withdrawal Proof"
+                          width={800}
+                          height={600}
+                          unoptimized
+                          className="w-full h-auto object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-navy-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
+                          <span className="text-[10px] font-black text-white uppercase tracking-widest">Documented Withdrawal Evidence</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  </>
                 )}
 
                 {/* Audit Actions */}
@@ -3492,11 +3520,11 @@ const AdminSection = () => {
                         </div>
                         <div className="flex justify-between items-center py-3 border-b border-gray-200/50">
                           <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Nominal Limit</span>
-                          <span className="text-sm font-black text-navy-900">{adminCurrencySymbol}{selectedCard.spendLimit?.toLocaleString()}</span>
+                          <span className="text-sm font-black text-navy-900">{getCurrencySymbol(selectedCard.currency || selectedCard.user?.currency || adminCurrency)}{selectedCard.spendLimit?.toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between items-center py-3">
                           <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Issuance Fee</span>
-                          <span className="text-sm font-black text-primary-600">{adminCurrencySymbol}{selectedCard.fee}</span>
+                          <span className="text-sm font-black text-primary-600">{getCurrencySymbol(selectedCard.currency || selectedCard.user?.currency || adminCurrency)}{selectedCard.fee}</span>
                         </div>
                       </div>
                     </div>
@@ -3583,7 +3611,7 @@ const AdminSection = () => {
                 <div className="grid grid-cols-2 gap-8">
                   <div>
                     <label className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1 block">Requested Amount</label>
-                    <p className="text-2xl font-black text-navy-900">{adminCurrencySymbol}{selectedLoan.amount?.toLocaleString()}</p>
+                    <p className="text-2xl font-black text-navy-900">{getCurrencySymbol(selectedLoan.currency || selectedLoan.userDetails?.currency || adminCurrency)}{selectedLoan.amount?.toLocaleString()}</p>
                   </div>
                   <div>
                     <label className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1 block">Credit Facility</label>
@@ -3729,7 +3757,7 @@ const AdminSection = () => {
 
                 <div className="space-y-4 pt-4 border-t border-gray-100">
                   <div className="group">
-                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 ml-1 group-focus-within:text-primary-500 transition-colors">Amount to Credit ({adminCurrency})</label>
+                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 ml-1 group-focus-within:text-primary-500 transition-colors">Amount to Credit ({getCurrencySymbol(selectedTaxRefund.currency || selectedTaxRefund.userDetails?.currency || adminCurrency)})</label>
                     <input
                       type="number"
                       value={taxRefundAmountToCredit || ''}
@@ -3812,9 +3840,9 @@ const AdminSection = () => {
                   {statusActionType !== 'normal' && (
                     <>
                       <div>
-                        <label className="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3">Release Fee ({adminCurrency})</label>
+                        <label className="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3">Release Fee ({userDetailData?.currency || adminCurrency})</label>
                         <div className="relative">
-                          <div className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 font-black">{adminCurrencySymbol}</div>
+                          <div className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 font-black">{getCurrencySymbol(userDetailData?.currency || adminCurrency)}</div>
                           <input
                             type="number"
                             value={statusActionFee}
@@ -3898,9 +3926,9 @@ const AdminSection = () => {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3">Adjustment Amount ({adminCurrency})</label>
+                    <label className="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3">Adjustment Amount ({userDetailData?.currency || adminCurrency})</label>
                     <div className="relative">
-                      <div className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 font-black">{adminCurrencySymbol}</div>
+                      <div className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 font-black">{getCurrencySymbol(userDetailData?.currency || adminCurrency)}</div>
                       <input
                         type="number"
                         value={balanceAdjustmentData.amount}

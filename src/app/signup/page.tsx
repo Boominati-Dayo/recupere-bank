@@ -51,6 +51,8 @@ const SignupForm = () => {
     accountType: '',
     password: '',
     confirmPassword: '',
+    transactionPin: '',
+    confirmPin: '',
     agreeToTerms: false,
     otherCountry: '',
     currency: 'USD',
@@ -112,6 +114,16 @@ const SignupForm = () => {
       } else if (formData.password !== formData.confirmPassword) {
         stepErrors.push('Passwords do not match');
       }
+      if (!formData.transactionPin) {
+        stepErrors.push('Transaction PIN is required');
+      } else if (!/^\d{4}$/.test(formData.transactionPin)) {
+        stepErrors.push('Transaction PIN must be exactly 4 digits');
+      }
+      if (!formData.confirmPin) {
+        stepErrors.push('Please confirm your transaction PIN');
+      } else if (formData.transactionPin !== formData.confirmPin) {
+        stepErrors.push('Transaction PINs do not match');
+      }
       if (!formData.agreeToTerms) {
         stepErrors.push('You must agree to the Terms of Service and Privacy Policy');
       }
@@ -140,8 +152,8 @@ const SignupForm = () => {
         return;
       }
 
-      const pin = Math.floor(1000 + Math.random() * 9000).toString();
-      
+      const pin = formData.transactionPin;
+
       // Combine otherCountry if 'Other' is selected
       const finalCountry = formData.country === 'Other' ? formData.otherCountry : formData.country;
       const signupData = { ...formData, country: finalCountry, transactionPin: pin, currency: formData.currency || 'USD' };
@@ -425,6 +437,59 @@ const SignupForm = () => {
                   </div>
 
 
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Transaction PIN *</label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                      <input
+                        type={showPin ? 'text' : 'password'}
+                        required
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        maxLength={4}
+                        value={formData.transactionPin}
+                        onChange={(e) => setFormData({ ...formData, transactionPin: e.target.value.replace(/\D/g, '') })}
+                        className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent tracking-[0.5em] text-center"
+                        placeholder="••••"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPin(!showPin)}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                      >
+                        {showPin ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                      </button>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">
+                      You will use this PIN to confirm transfers, withdrawals, investments, and other money-motion actions.
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Transaction PIN *</label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                      <input
+                        type={showPin ? 'text' : 'password'}
+                        required
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        maxLength={4}
+                        value={formData.confirmPin}
+                        onChange={(e) => setFormData({ ...formData, confirmPin: e.target.value.replace(/\D/g, '') })}
+                        className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent tracking-[0.5em] text-center"
+                        placeholder="••••"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPin(!showPin)}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                      >
+                        {showPin ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                      </button>
+                    </div>
+                  </div>
+
                   <div className="flex items-start mt-4">
                     <input
                       type="checkbox"
@@ -526,17 +591,6 @@ const SignupForm = () => {
                     <p className="text-gray-600">Private wealth managers are assigned to assist with large transfers.</p>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
-              className="mt-auto"
-            >
-              <div className="w-full h-48 bg-navy-900 flex items-center justify-center rounded-xl border border-navy-800">
-                <span className="text-primary-500/30 text-xs font-bold uppercase tracking-widest">RecupereBank Secure Infrastructure</span>
               </div>
             </motion.div>
           </div>

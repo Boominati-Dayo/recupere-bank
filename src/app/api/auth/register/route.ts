@@ -108,7 +108,7 @@ export async function POST(request: NextRequest) {
 
     // Remove sensitive data from response
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password: _password, emailVerificationToken: _emailToken, ...userWithoutSensitiveData } = result.user;
+    const { password: _password, emailVerificationToken: _emailToken, transactionPin: _pin, ...userWithoutSensitiveData } = result.user;
 
     return NextResponse.json({
       success: true,

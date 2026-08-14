@@ -75,21 +75,6 @@ const BankingHero = () => {
                 Secure Client Portal
               </Link>
             </div>
-
-            <div className="mt-16 pt-10 border-t border-white/5 flex flex-wrap justify-center gap-8 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
-              <div className="flex items-center gap-2">
-                <Shield className="w-5 h-5 text-primary-500" />
-                <span className="text-sm font-black text-white uppercase tracking-tighter">PCI-DSS Compliant</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Lock className="w-5 h-5 text-primary-500" />
-                <span className="text-sm font-black text-white uppercase tracking-tighter">256-bit AES Encryption</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Globe className="w-5 h-5 text-primary-500" />
-                <span className="text-sm font-black text-white uppercase tracking-tighter">Global Liquidity</span>
-              </div>
-            </div>
         </div>
       </div>
     </section>

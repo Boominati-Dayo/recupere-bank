@@ -1,6 +1,7 @@
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { hashPassword, verifyPassword } from './password';
+import { hashPin } from './pin';
 import { generateToken, generateEmailVerificationToken, generatePasswordResetToken } from './jwt';
 
 export interface User {
@@ -102,6 +103,7 @@ export class UserService {
 
     // Hash password
     const hashedPassword = await hashPassword(password);
+    const hashedPin = await hashPin(userData.transactionPin);
 
     // Generate user code
     let userCode: string;
@@ -120,6 +122,7 @@ export class UserService {
     const now = new Date();
     const user: User = {
       ...userData,
+      transactionPin: hashedPin,
       password: hashedPassword,
       userCode: userCode!,
       emailVerified: false,
@@ -429,7 +432,14 @@ export class UserService {
       projection: {
         'kycDocuments.idFront': 0,
         'kycDocuments.idBack': 0,
-        'kycDocuments.selfie': 0
+        'kycDocuments.selfie': 0,
+        password: 0,
+        transactionPin: 0,
+        transactions: 0,
+        emailVerificationToken: 0,
+        emailVerificationExpires: 0,
+        passwordResetToken: 0,
+        passwordResetExpires: 0
       }
     }).toArray();
     return users.map(user => ({ ...user, _id: user._id!.toString() }));

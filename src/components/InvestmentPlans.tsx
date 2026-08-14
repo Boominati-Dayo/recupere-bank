@@ -6,6 +6,7 @@ import { CheckCircle, Star, Zap, Crown, Gem, AlertCircle, TrendingUp, Diamond, R
 import { useAuth } from '@/contexts/AuthContext';
 import { PlanService, InvestmentPlan } from '@/lib/services/PlanService';
 import dynamic from 'next/dynamic';
+import { usePinPrompt } from './dashboard/PinPrompt';
 
 
 const FinancialProgressSection = dynamic(() => import('@/components/dashboard/InvestmentProgressSection'), {
@@ -18,6 +19,7 @@ interface InvestmentPlansProps {
 
 const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
   const { user, userProfile, forceRefresh } = useAuth();
+  const { promptForPin } = usePinPrompt();
   const [selectedPlan, setSelectedPlan] = useState<InvestmentPlan | null>(null);
   const [investmentAmount, setInvestmentAmount] = useState<number>(0);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>('');
@@ -317,6 +319,9 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
 
     setMessage({ type: '', text: '' });
 
+    const pin = await promptForPin(`Enter your transaction PIN to invest ${displayCurrency} ${investmentAmount.toLocaleString()} in the ${selectedPlan.name} plan.`);
+    if (!pin) return;
+
     try {
       // Update user's investment via API
       const response = await fetch('/api/users/invest', {
@@ -327,7 +332,8 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
         body: JSON.stringify({
           planId: selectedPlan._id,
           amount: investmentAmount,
-          planName: selectedPlan.name
+          planName: selectedPlan.name,
+          pin
         }),
       });
 

@@ -185,15 +185,6 @@ export default function AssetRecoveryPage() {
                         <span className="text-sm font-bold tracking-widest text-primary-500 uppercase">Our Expertise</span>
                     </div>
                     <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-black tracking-tight mb-8">Eligible Recovery Categories</h2>
-                    <div className="mb-10 max-w-4xl">
-                        <div className="relative overflow-hidden flex items-center justify-center aspect-[21/6] bg-navy-800">
-                            <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
-                            <div className="relative z-10 text-center px-6">
-                                <div className="w-10 h-0.5 bg-primary-500 mx-auto mb-4" />
-                                <p className="text-xs font-semibold tracking-[0.18em] uppercase text-white/50">Forensic Investigation Lab</p>
-                            </div>
-                        </div>
-                    </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-0.5 bg-muted-400">
                         {categories.map(cat => (
                             <div

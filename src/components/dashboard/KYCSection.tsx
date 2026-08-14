@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Upload, CheckCircle, AlertCircle, Camera, ShieldCheck, X } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { showSuccess, showError } from '@/utils/toast';
+import { compressImage } from '@/lib/imageCompressor';
 import Image from 'next/image';
 
 const KYCSection = () => {
@@ -16,46 +17,6 @@ const KYCSection = () => {
     const [selfie, setSelfie] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const compressImage = (file: File): Promise<string> => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = (event) => {
-                const img = new window.Image();
-                img.src = event.target?.result as string;
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 1200;
-                    const MAX_HEIGHT = 1200;
-                    let width = img.width;
-                    let height = img.height;
-
-                    if (width > height) {
-                        if (width > MAX_WIDTH) {
-                            height *= MAX_WIDTH / width;
-                            width = MAX_WIDTH;
-                        }
-                    } else {
-                        if (height > MAX_HEIGHT) {
-                            width *= MAX_HEIGHT / height;
-                            height = MAX_HEIGHT;
-                        }
-                    }
-
-                    canvas.width = width;
-                    canvas.height = height;
-                    const ctx = canvas.getContext('2d');
-                    ctx?.drawImage(img, 0, 0, width, height);
-                    
-                    const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
-                    resolve(dataUrl);
-                };
-                img.onerror = (error) => reject(error);
-            };
-            reader.onerror = (error) => reject(error);
-        });
-    };
-
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, type: 'front' | 'back' | 'selfie') => {
         const file = e.target.files?.[0];
         if (file) {
@@ -64,7 +25,7 @@ const KYCSection = () => {
                 return;
             }
             try {
-                const compressedBase64 = await compressImage(file);
+                const compressedBase64 = await compressImage(file, { maxWidth: 1400, maxHeight: 1400, quality: 0.75 });
                 if (type === 'front') setIdFront(compressedBase64);
                 if (type === 'back') setIdBack(compressedBase64);
                 if (type === 'selfie') setSelfie(compressedBase64);
@@ -187,7 +148,7 @@ const KYCSection = () => {
                         <div className="border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center bg-white">
                             {idFront ? (
                                 <div className="relative inline-block">
-                                    <Image src={idFront} alt="ID Front" width={400} height={250} className="rounded-xl shadow-lg h-auto w-full max-w-md mx-auto" />
+                                    <Image src={idFront} alt="ID Front" width={400} height={250} unoptimized className="rounded-xl shadow-lg h-auto w-full max-w-md mx-auto" />
                                     <button onClick={() => setIdFront(null)} className="absolute -top-3 -right-3 p-1 bg-red-500 text-white rounded-full"><X className="w-5 h-5" /></button>
                                 </div>
                             ) : (
@@ -211,7 +172,7 @@ const KYCSection = () => {
                         <div className="border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center bg-white">
                             {idBack ? (
                                 <div className="relative inline-block">
-                                    <Image src={idBack} alt="ID Back" width={400} height={250} className="rounded-xl shadow-lg h-auto w-full max-w-md mx-auto" />
+                                    <Image src={idBack} alt="ID Back" width={400} height={250} unoptimized className="rounded-xl shadow-lg h-auto w-full max-w-md mx-auto" />
                                     <button onClick={() => setIdBack(null)} className="absolute -top-3 -right-3 p-1 bg-red-500 text-white rounded-full"><X className="w-5 h-5" /></button>
                                 </div>
                             ) : (
@@ -236,7 +197,7 @@ const KYCSection = () => {
                         <div className="border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center bg-white">
                             {selfie ? (
                                 <div className="relative inline-block">
-                                    <Image src={selfie} alt="Selfie" width={300} height={300} className="rounded-xl shadow-lg h-auto w-full max-w-[250px] mx-auto" />
+                                    <Image src={selfie} alt="Selfie" width={300} height={300} unoptimized className="rounded-xl shadow-lg h-auto w-full max-w-[250px] mx-auto" />
                                     <button onClick={() => setSelfie(null)} className="absolute -top-3 -right-3 p-1 bg-red-500 text-white rounded-full"><X className="w-5 h-5" /></button>
                                 </div>
                             ) : (

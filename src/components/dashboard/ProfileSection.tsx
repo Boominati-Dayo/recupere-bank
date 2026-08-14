@@ -15,18 +15,64 @@ import {
   Copy,
   Info,
   Zap,
-  LogOut
+  LogOut,
+  Lock,
+  Eye,
+  EyeOff
 } from 'lucide-react';
-import { showSuccess } from '@/utils/toast';
+import { showSuccess, showError } from '@/utils/toast';
 
 const ProfileSection = () => {
   const { userProfile, logout } = useAuth();
   const [activeTab, setActiveTab] = useState('profile');
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [currentPin, setCurrentPin] = useState('');
+  const [newPin, setNewPin] = useState('');
+  const [confirmPin, setConfirmPin] = useState('');
+  const [showPinInputs, setShowPinInputs] = useState(false);
+  const [isChangingPin, setIsChangingPin] = useState(false);
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     showSuccess('Copied to clipboard');
+  };
+
+  const handleChangePin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!/^\d{4}$/.test(newPin)) {
+      showError('New PIN must be exactly 4 digits');
+      return;
+    }
+    if (newPin !== confirmPin) {
+      showError('New PINs do not match');
+      return;
+    }
+
+    setIsChangingPin(true);
+    try {
+      const response = await fetch('/api/auth/change-pin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ currentPin, newPin }),
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        showSuccess('Transaction PIN updated successfully');
+        setCurrentPin('');
+        setNewPin('');
+        setConfirmPin('');
+        setShowPinInputs(false);
+      } else {
+        showError(result.error || 'Failed to change PIN');
+      }
+    } catch (error) {
+      console.error('Change PIN error:', error);
+      showError('Failed to change PIN. Please try again.');
+    } finally {
+      setIsChangingPin(false);
+    }
   };
 
   const initials = `${userProfile?.firstName?.[0] || ''}${userProfile?.lastName?.[0] || ''}`.toUpperCase() || 'MB';
@@ -251,6 +297,96 @@ const ProfileSection = () => {
                     />
                   </div>
                 </div>
+              </div>
+
+              {/* Transaction PIN */}
+              <div className="bg-gradient-to-br from-navy-900 to-navy-800 rounded-3xl p-6 mobile:p-8">
+                <div className="flex items-center justify-between gap-4 mb-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 mobile:w-12 mobile:h-12 bg-primary-500/15 text-primary-500 rounded-2xl flex items-center justify-center">
+                      <Lock className="w-5 h-5 mobile:w-6 mobile:h-6" />
+                    </div>
+                    <div>
+                      <h5 className="text-sm mobile:text-base font-black text-white uppercase tracking-tight">Transaction PIN</h5>
+                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">
+                        Used to confirm transfers, withdrawals, and investments
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setShowPinInputs(!showPinInputs)}
+                    className="px-4 py-2.5 bg-primary-500 text-navy-900 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-primary-400 transition-colors"
+                  >
+                    {showPinInputs ? 'Cancel' : 'Change PIN'}
+                  </button>
+                </div>
+
+                {showPinInputs && (
+                  <form onSubmit={handleChangePin} className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Current PIN</label>
+                      <div className="relative">
+                        <Lock className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
+                        <input
+                          type="password"
+                          inputMode="numeric"
+                          maxLength={4}
+                          required
+                          value={currentPin}
+                          onChange={(e) => setCurrentPin(e.target.value.replace(/\D/g, ''))}
+                          className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/10 rounded-xl text-sm font-bold text-white tracking-[0.4em] placeholder:text-gray-500 focus:border-primary-500/50 focus:ring-2 focus:ring-primary-500/20 outline-none"
+                          placeholder="••••"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">New PIN</label>
+                      <div className="relative">
+                        <Lock className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
+                        <input
+                          type="password"
+                          inputMode="numeric"
+                          maxLength={4}
+                          required
+                          value={newPin}
+                          onChange={(e) => setNewPin(e.target.value.replace(/\D/g, ''))}
+                          className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/10 rounded-xl text-sm font-bold text-white tracking-[0.4em] placeholder:text-gray-500 focus:border-primary-500/50 focus:ring-2 focus:ring-primary-500/20 outline-none"
+                          placeholder="••••"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Confirm New PIN</label>
+                      <div className="flex gap-2">
+                        <div className="relative flex-1">
+                          <Lock className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
+                          <input
+                            type="password"
+                            inputMode="numeric"
+                            maxLength={4}
+                            required
+                            value={confirmPin}
+                            onChange={(e) => setConfirmPin(e.target.value.replace(/\D/g, ''))}
+                            className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/10 rounded-xl text-sm font-bold text-white tracking-[0.4em] placeholder:text-gray-500 focus:border-primary-500/50 focus:ring-2 focus:ring-primary-500/20 outline-none"
+                            placeholder="••••"
+                          />
+                        </div>
+                        <button
+                          type="submit"
+                          disabled={isChangingPin}
+                          className="px-5 py-3 bg-primary-500 text-navy-900 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-primary-400 transition-colors disabled:opacity-50 flex items-center justify-center"
+                        >
+                          {isChangingPin ? (
+                            <div className="animate-spin rounded-full h-4 w-4 border-2 border-navy-900/30 border-t-navy-900"></div>
+                          ) : (
+                            'Save'
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                )}
               </div>
 
               {/* Status Banner */}

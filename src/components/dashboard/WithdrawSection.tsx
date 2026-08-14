@@ -8,6 +8,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { showSuccess, showError } from '@/utils/toast';
 import { getPaymentMethods, PaymentMethod } from '@/lib/services/PaymentMethodService';
 import { getCurrencySymbol } from '@/lib/currencies';
+import { usePinPrompt } from './PinPrompt';
 interface WithdrawalRequest {
   userId: string;
   paymentMethodId: string;
@@ -37,6 +38,7 @@ const WithdrawSection = () => {
   const { user, userProfile, forceRefresh } = useAuth();
   const currencyCode = userProfile?.currency || 'USD';
   const currencySymbol = getCurrencySymbol(currencyCode);
+  const { promptForPin } = usePinPrompt();
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null);
   const [amount, setAmount] = useState('');
@@ -177,6 +179,9 @@ const WithdrawSection = () => {
       return;
     }
 
+    const pin = await promptForPin('Enter your transaction PIN to confirm this withdrawal request.');
+    if (!pin) return;
+
     setIsSubmitting(true);
 
     try {
@@ -202,6 +207,7 @@ const WithdrawSection = () => {
         },
         body: JSON.stringify({
           type: 'withdrawal',
+          pin,
           ...withdrawalRequest
         })
       });

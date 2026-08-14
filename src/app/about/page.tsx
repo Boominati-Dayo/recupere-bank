@@ -6,7 +6,6 @@ import Link from 'next/link';
 import JonathanSterlingImg from '@/assets/images_for_pages/leaders/jonathanSterling.jpg';
 import ElenaRostovaImg from '@/assets/images_for_pages/leaders/Elena Rostova.png';
 import MarcusChenImg from '@/assets/images_for_pages/leaders/Marcus Chen.jpg';
-import LegalOfficeImg from '@/assets/images_for_pages/legalOffice600-800.png';
 
 
 export const metadata: Metadata = {
@@ -98,7 +97,7 @@ export default function AboutPage() {
 
                 {/* ─── SECTION 2: ORIGIN STORY ─── */}
                 <section className="flex flex-col lg:flex-row min-h-[600px]">
-                    <div className="w-full lg:w-1/2 bg-white px-8 md:px-16 lg:px-20 xl:px-24 py-24 flex flex-col justify-center relative overflow-hidden">
+                    <div className="w-full bg-white px-8 md:px-16 lg:px-20 xl:px-24 py-24 flex flex-col justify-center relative overflow-hidden">
                         <span className="absolute top-10 left-16 text-[200px] font-black text-muted-200 leading-none tracking-tight pointer-events-none select-none">01</span>
                         <div className="relative z-10">
                             <h2 className="text-4xl md:text-5xl xl:text-6xl font-['Playfair_Display'] font-black tracking-tight text-black mb-4">The Origin</h2>
@@ -106,11 +105,6 @@ export default function AboutPage() {
                             <p className="text-[15px] leading-relaxed text-gray-600 max-w-[440px]">
                                 RecupereBank was founded by a coalition of former prosecutors, forensic accountants, and senior banking compliance officers who recognised a critical gap in global financial dispute resolution. Frustrated by siloed systems that allowed bad actors to exploit the seams between local jurisdictions and international banking protocol, our founders built a firm that operates fluently across both worlds — combining investigative rigour with institutional-grade financial authority to recover assets where others simply cannot reach.
                             </p>
-                        </div>
-                    </div>
-                    <div className="w-full lg:w-1/2 bg-muted-400 flex items-center justify-center px-8 py-16">
-                        <div className="relative w-full max-w-[520px] aspect-[4/3] overflow-hidden bg-navy-800">
-                            <Image src={LegalOfficeImg} alt="RecupereBank legal office" fill className="object-cover" />
                         </div>
                     </div>
                 </section>
@@ -198,48 +192,19 @@ export default function AboutPage() {
                 <section className="py-24 px-8 md:px-16 lg:px-20 xl:px-24 border-t border-muted-400 bg-white">
                     <h2 className="text-4xl md:text-5xl xl:text-[52px] font-['Playfair_Display'] font-black tracking-tight text-black mb-[60px]">Our International Reach</h2>
                     <div className="flex flex-col lg:flex-row gap-16 lg:gap-20 items-start">
-                        <div className="w-full lg:w-[45%]">
-                            <svg viewBox="0 0 800 440" className="w-full h-auto">
-                                <path d="M 60 80 L 100 70 L 130 72 L 160 68 L 180 75 L 195 90 L 200 110 L 195 130 L 185 145 L 190 165 L 180 180 L 170 195 L 155 200 L 140 210 L 125 215 L 110 205 L 95 195 L 80 185 L 65 175 L 55 160 L 50 140 L 45 120 L 48 100 Z" fill="none" stroke="#cfd6e0" strokeWidth="1.5" />
-                                <path d="M 140 215 L 145 230 L 135 240 L 125 238 L 120 228 L 128 218 Z" fill="none" stroke="#cfd6e0" strokeWidth="1.5" />
-                                <path d="M 140 245 L 165 238 L 185 240 L 200 255 L 210 275 L 215 300 L 210 330 L 200 355 L 185 375 L 168 385 L 150 382 L 135 370 L 120 350 L 112 325 L 110 295 L 115 270 L 125 255 Z" fill="none" stroke="#cfd6e0" strokeWidth="1.5" />
-                                <path d="M 355 50 L 375 45 L 390 50 L 405 48 L 415 55 L 420 68 L 415 80 L 405 88 L 395 92 L 380 95 L 368 88 L 358 78 L 352 65 Z" fill="none" stroke="#cfd6e0" strokeWidth="1.5" />
-                                <path d="M 340 55 L 348 52 L 352 60 L 348 68 L 340 66 Z" fill="none" stroke="#cfd6e0" strokeWidth="1.5" />
-                                <path d="M 375 28 L 390 22 L 400 30 L 395 45 L 383 42 L 375 35 Z" fill="none" stroke="#cfd6e0" strokeWidth="1.5" />
-                                <path d="M 355 110 L 375 105 L 395 108 L 410 118 L 415 135 L 418 155 L 415 180 L 408 205 L 395 230 L 380 250 L 365 258 L 350 252 L 336 238 L 325 215 L 318 190 L 316 165 L 318 140 L 325 120 L 338 112 Z" fill="none" stroke="#cfd6e0" strokeWidth="1.5" />
-                                <path d="M 420 90 L 445 88 L 460 95 L 462 110 L 450 118 L 435 115 L 422 108 Z" fill="none" stroke="#cfd6e0" strokeWidth="1.5" />
-                                <path d="M 420 30 L 480 20 L 560 22 L 610 28 L 625 40 L 620 55 L 590 62 L 540 60 L 490 58 L 455 60 L 435 68 L 422 62 L 418 48 Z" fill="none" stroke="#cfd6e0" strokeWidth="1.5" />
-                                <path d="M 490 95 L 510 90 L 525 98 L 528 115 L 520 135 L 508 148 L 498 145 L 488 130 L 485 112 Z" fill="none" stroke="#cfd6e0" strokeWidth="1.5" />
-                                <path d="M 555 45 L 600 40 L 635 45 L 650 58 L 655 75 L 645 90 L 625 98 L 600 100 L 575 95 L 555 80 L 548 62 Z" fill="none" stroke="#cfd6e0" strokeWidth="1.5" />
-                                <path d="M 600 108 L 625 105 L 640 115 L 635 130 L 618 135 L 600 125 Z" fill="none" stroke="#cfd6e0" strokeWidth="1.5" />
-                                <path d="M 658 60 L 668 56 L 672 65 L 666 74 L 658 70 Z" fill="none" stroke="#cfd6e0" strokeWidth="1.5" />
-                                <path d="M 600 245 L 640 235 L 680 240 L 710 255 L 720 275 L 715 298 L 700 315 L 678 322 L 655 318 L 632 308 L 615 290 L 605 270 Z" fill="none" stroke="#cfd6e0" strokeWidth="1.5" />
-                                <path d="M 732 300 L 740 295 L 744 308 L 738 318 L 730 312 Z" fill="none" stroke="#cfd6e0" strokeWidth="1.5" />
-                                <circle cx="345" cy="64" r="7" fill="#235ba8" />
-                                <text x="345" y="52" textAnchor="middle" fontSize="11" fill="#235ba8" fontFamily="Inter, sans-serif" fontWeight="700" letterSpacing="0.05em">London</text>
-                                <circle cx="378" cy="74" r="7" fill="#235ba8" />
-                                <text x="393" y="68" textAnchor="start" fontSize="11" fill="#235ba8" fontFamily="Inter, sans-serif" fontWeight="700" letterSpacing="0.05em">Zurich</text>
-                                <circle cx="163" cy="108" r="7" fill="#235ba8" />
-                                <text x="163" y="96" textAnchor="middle" fontSize="11" fill="#235ba8" fontFamily="Inter, sans-serif" fontWeight="700" letterSpacing="0.05em">New York</text>
-                                <circle cx="617" cy="132" r="7" fill="#235ba8" />
-                                <text x="617" y="120" textAnchor="middle" fontSize="11" fill="#235ba8" fontFamily="Inter, sans-serif" fontWeight="700" letterSpacing="0.05em">Singapore</text>
-                                <circle cx="672" cy="285" r="7" fill="#235ba8" />
-                                <text x="672" y="273" textAnchor="middle" fontSize="11" fill="#235ba8" fontFamily="Inter, sans-serif" fontWeight="700" letterSpacing="0.05em">Dubai</text>
-                            </svg>
+                        <div className="w-full flex flex-col gap-12">
+                        <div className="grid grid-cols-2 md:grid-cols-4 border-t border-b border-muted-400">
+                            {networkStats.map(stat => (
+                                <div key={stat.label} className="py-8 px-7 border-r border-muted-400 last:border-r-0 transition-all hover:bg-[#f8f9fb]">
+                                    <div className="text-2xl md:text-3xl xl:text-[38px] font-black text-black tracking-tight mb-2">{stat.num}</div>
+                                    <div className="text-[11px] font-semibold tracking-widest text-gray-500 uppercase">{stat.label}</div>
+                                </div>
+                            ))}
                         </div>
-                        <div className="w-full lg:flex-1 flex flex-col gap-12">
-                            <div className="grid grid-cols-2 md:grid-cols-4 border-t border-b border-muted-400">
-                                {networkStats.map(stat => (
-                                    <div key={stat.label} className="py-8 px-7 border-r border-muted-400 last:border-r-0 transition-all hover:bg-[#f8f9fb]">
-                                        <div className="text-2xl md:text-3xl xl:text-[38px] font-black text-black tracking-tight mb-2">{stat.num}</div>
-                                        <div className="text-[11px] font-semibold tracking-widest text-gray-500 uppercase">{stat.label}</div>
-                                    </div>
-                                ))}
-                            </div>
-                            <p className="text-[15px] leading-relaxed text-gray-600 max-w-[540px]">
-                                The RecupereBank network spans six continents and more than forty legal jurisdictions, anchored by our global headquarters and permanent offices in the world&apos;s most critical financial centres. Our banking relationships cover every major correspondent banking corridor, and our legal affiliates are qualified practitioners under international law — enabling seamless, enforceable recovery operations wherever your assets reside.
-                            </p>
-                        </div>
+                        <p className="text-[15px] leading-relaxed text-gray-600 max-w-[540px]">
+                            The RecupereBank network spans six continents and more than forty legal jurisdictions, anchored by our global headquarters and permanent offices in the world's most critical financial centres. Our banking relationships cover every major correspondent banking corridor, and our legal affiliates are qualified practitioners under international law — enabling seamless, enforceable recovery operations wherever your assets reside.
+                        </p>
+                    </div>
                     </div>
                 </section>
 

@@ -3,10 +3,11 @@ import { requireAuth } from '@/middleware/auth';
 // import { UserService } from '@/lib/auth/user';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { verifyPinForUser } from '@/lib/auth/pin';
 
 export const POST = requireAuth(async (request) => {
   try {
-    const { planId, amount, planName } = await request.json();
+    const { planId, amount, planName, pin } = await request.json();
     const userId = request.user!.id;
 
     if (!planId || !amount || !planName) {
@@ -33,6 +34,15 @@ export const POST = requireAuth(async (request) => {
       return NextResponse.json(
         { success: false, error: 'User not found' },
         { status: 404 }
+      );
+    }
+
+    // Verify transaction PIN
+    const isPinValid = await verifyPinForUser(user, pin);
+    if (!isPinValid) {
+      return NextResponse.json(
+        { success: false, error: 'Invalid or missing transaction PIN. Please try again.' },
+        { status: 401 }
       );
     }
 

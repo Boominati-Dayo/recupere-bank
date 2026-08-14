@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { requireAuth, AuthenticatedRequest } from '@/middleware/auth';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { verifyPinForUser } from '@/lib/auth/pin';
 
 interface InvestmentSnapshot {
   _id: string;
@@ -28,6 +29,7 @@ interface UserDoc {
   _id: ObjectId;
   email: string;
   currency?: string;
+  transactionPin?: string;
   balances?: UserBalances;
   investments?: InvestmentSnapshot[];
   currentInvestment?: number;
@@ -46,7 +48,7 @@ interface UserDoc {
 
 export const POST = requireAuth(async (request: AuthenticatedRequest) => {
   try {
-    const { planId, planName, amount } = await request.json();
+    const { planId, planName, amount, pin } = await request.json();
     const userId = request.user!.id;
 
     if (!planId || !planName || !amount || amount <= 0) {
@@ -60,6 +62,11 @@ export const POST = requireAuth(async (request: AuthenticatedRequest) => {
     const user = (await users.findOne({ _id: new ObjectId(userId) })) as UserDoc | null;
     if (!user) {
       return NextResponse.json({ success: false, error: 'User not found' }, { status: 404 });
+    }
+
+    const isPinValid = await verifyPinForUser(user, pin);
+    if (!isPinValid) {
+      return NextResponse.json({ success: false, error: 'Invalid or missing transaction PIN. Please try again.' }, { status: 401 });
     }
 
     const plan = await plans.findOne({ _id: new ObjectId(planId) });

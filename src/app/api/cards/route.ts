@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { requireAuth } from '@/middleware/auth';
 import { NotificationService } from '@/lib/notifications/NotificationService';
+import { verifyPinForUser } from '@/lib/auth/pin';
 
 export const GET = requireAuth(async (request) => {
   try {
@@ -30,7 +31,7 @@ export const POST = requireAuth(async (request) => {
     const userId = request.user!.id;
     const data = await request.json();
 
-    const { cardType, cardLevel, currency, spendLimit, cardholderName, billingAddress } = data;
+    const { cardType, cardLevel, currency, spendLimit, cardholderName, billingAddress, pin } = data;
 
     // Fees map
     const cardLevels = {
@@ -46,6 +47,12 @@ export const POST = requireAuth(async (request) => {
     const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
     if (!user) {
       return NextResponse.json({ success: false, error: 'User not found' }, { status: 404 });
+    }
+
+    // Verify transaction PIN
+    const isPinValid = await verifyPinForUser(user, pin);
+    if (!isPinValid) {
+      return NextResponse.json({ success: false, error: 'Invalid or missing transaction PIN. Please try again.' }, { status: 401 });
     }
 
     const currentBalance = user.balances?.main || 0;

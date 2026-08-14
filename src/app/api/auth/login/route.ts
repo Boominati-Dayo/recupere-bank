@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
 
     // Remove sensitive data from response
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password: _password, emailVerificationToken: _emailToken, passwordResetToken: _resetToken, ...userWithoutSensitiveData } = result.user;
+    const { password: _password, emailVerificationToken: _emailToken, passwordResetToken: _resetToken, transactionPin: _pin, kycDocuments: _kycDocs, activityLog: _activityLog, ...userWithoutSensitiveData } = result.user;
 
     // Set httpOnly cookie
     const response = NextResponse.json({

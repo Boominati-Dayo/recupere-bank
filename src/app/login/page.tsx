@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Mail, Lock, Eye, EyeOff, ArrowRight, Shield, Zap, CheckCircle, Phone } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, ArrowRight, Shield, Zap, CheckCircle } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
@@ -317,74 +317,6 @@ const LoginPage = () => {
               <p className="text-gray-600 mb-4">
                 Sign in to manage your case files, track legal performance, and access exclusive updates.
               </p>
-
-              <div className="space-y-3">
-                <div className="flex items-start space-x-3">
-                  <Shield className="h-6 w-6 text-primary-500 mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Bank-Level Security</h4>
-                    <p className="text-sm text-gray-600">Bank-level security for your account</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3">
-                  <Zap className="h-6 w-6 text-primary-500 mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Rapid Action</h4>
-                    <p className="text-sm text-gray-600">Access your portfolio instantly</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-navy-900 rounded-lg p-6 text-white relative overflow-hidden"
-            >
-              <div className="absolute inset-0 opacity-20">
-                <img src="https://placehold.co/800x400/0b1626/c9933a?text=Private+Banking+Network" alt="Private Banking Pattern" className="w-full h-full object-cover" />
-              </div>
-              <div className="relative z-10">
-                <h3 className="text-xl font-bold mb-3 text-primary-500">New to RecupereBank?</h3>
-                <p className="text-gray-300 mb-6 leading-relaxed">
-                  Join thousands of clients who trust RecupereBank for their financial and legal security. Experience private banking designed for asset protection.
-                </p>
-                <button
-                  onClick={() => router.push('/signup')}
-                  className="w-full bg-primary-500 text-navy-900 py-3 px-4 rounded-lg font-bold hover:bg-primary-400 transition-colors shadow-lg"
-                >
-                  Create Account
-                </button>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="bg-white rounded-lg shadow-md p-4 border border-gray-200"
-            >
-              <h3 className="text-lg font-bold text-gray-900 mb-3">Need Help?</h3>
-              <p className="text-gray-600 mb-4">
-                Our support team is available 24/7 to assist you.
-              </p>
-
-              <div className="space-y-2 mt-4">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 rounded-full bg-navy-50 flex items-center justify-center">
-                    <Mail className="h-4 w-4 text-navy-600" />
-                  </div>
-                  <span className="text-sm font-medium text-gray-700">support@recuperebank.com</span>
-                </div>
-                <div className="flex items-center space-x-3 mt-3">
-                  <div className="w-8 h-8 rounded-full bg-navy-50 flex items-center justify-center">
-                    <Phone className="h-4 w-4 text-navy-600" />
-                  </div>
-                  <span className="text-sm font-medium text-gray-700">+1 800 555 0199</span>
-                </div>
-              </div>
             </motion.div>
           </div>
         </div>

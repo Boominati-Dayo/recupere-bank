@@ -3,12 +3,13 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { requireAuth } from '@/middleware/auth';
 import { NotificationService } from '@/lib/notifications/NotificationService';
+import { verifyPinForUser } from '@/lib/auth/pin';
 
 export const POST = requireAuth(async (request) => {
   try {
     const db = await getDb();
     const userId = request.user!.id;
-    const { cardId, amount } = await request.json();
+    const { cardId, amount, pin } = await request.json();
 
     if (!cardId || !amount || amount <= 0) {
       return NextResponse.json({ success: false, error: 'Invalid card or amount' }, { status: 400 });
@@ -31,6 +32,12 @@ export const POST = requireAuth(async (request) => {
     // Check user balance
     const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
     if (!user) return NextResponse.json({ success: false, error: 'User not found' }, { status: 404 });
+
+    // Verify transaction PIN
+    const isPinValid = await verifyPinForUser(user, pin);
+    if (!isPinValid) {
+      return NextResponse.json({ success: false, error: 'Invalid or missing transaction PIN. Please try again.' }, { status: 401 });
+    }
 
     const currentBalance = user.balances?.main || 0;
     if (currentBalance < amount) {

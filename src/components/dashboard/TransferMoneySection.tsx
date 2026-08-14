@@ -5,9 +5,11 @@ import { useAuth } from '@/contexts/AuthContext';
 import { showSuccess, showError } from '@/utils/toast';
 import { getCurrencySymbol } from '@/lib/currencies';
 import { ShieldCheck, AlertCircle, Clock } from 'lucide-react';
+import { usePinPrompt } from './PinPrompt';
 
 const TransferMoneySection = () => {
   const { userProfile, refreshUser } = useAuth();
+  const { promptForPin } = usePinPrompt();
   const currencyCode = userProfile?.currency || 'USD';
   const currencySymbol = getCurrencySymbol(currencyCode);
   const [currentStep, setCurrentStep] = useState(1);
@@ -95,6 +97,9 @@ const TransferMoneySection = () => {
       return;
     }
 
+    const pin = await promptForPin(`Enter your transaction PIN to confirm the transfer of ${currencySymbol}${parseFloat(transferAmount).toLocaleString()} to ${receiverEmail}.`);
+    if (!pin) return;
+
     setIsTransferring(true);
     setError('');
 
@@ -108,7 +113,8 @@ const TransferMoneySection = () => {
         body: JSON.stringify({
           receiverEmail,
           receiverUserCode,
-          amount: parseFloat(transferAmount)
+          amount: parseFloat(transferAmount),
+          pin
         })
       });
 

@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
         // Fetch users with pending KYC status
         const pendingKycUsers = await usersCollection.find(
             { kycStatus: 'pending' },
-            { projection: { password: 0 } } // Exclude password security
+            { projection: { password: 0, transactionPin: 0 } } // Exclude password and PIN security
         ).toArray();
 
         return NextResponse.json({ success: true, data: pendingKycUsers });

@@ -213,13 +213,19 @@ export class NotificationService {
     await sendEmail({
       to: userEmail,
       subject: 'Deposit Declined - RecupereBank',
-      html: `
-        <h2>Deposit Declined</h2>
-        <p>We regret to inform you that your deposit of ${sym}${amount} has been declined.</p>
-        ${reason ? `<p>Reason: ${reason}</p>` : ''}
-        <p>Transaction ID: ${transactionId}</p>
-        <p>Please contact support if you have any questions.</p>
-      `,
+      html: getBaseTemplate(
+        'Deposit Declined',
+        `
+        <p>We regret to inform you that your deposit of <strong>${sym}${amount}</strong> has been declined.</p>
+        ${reason ? `<p><strong>Reason:</strong> ${reason}</p>` : ''}
+        <p>Transaction ID: <span style="font-family: monospace;">${transactionId}</span></p>
+        <p>If you believe this is an error, please contact our support team.</p>
+        <div class="button-container">
+          <a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard?section=deposit" class="button">Contact Support</a>
+        </div>
+        `,
+        userName
+      ),
       text: `Your deposit of ${sym}${amount} has been declined. ${reason ? `Reason: ${reason}` : ''} Transaction ID: ${transactionId}`
     });
   }
@@ -272,13 +278,19 @@ export class NotificationService {
     await sendEmail({
       to: userEmail,
       subject: 'Withdrawal Declined - RecupereBank',
-      html: `
-        <h2>Withdrawal Declined</h2>
-        <p>We regret to inform you that your withdrawal of ${sym}${amount} has been declined.</p>
-        ${reason ? `<p>Reason: ${reason}</p>` : ''}
-        <p>Transaction ID: ${transactionId}</p>
-        <p>Please contact support if you have any questions.</p>
-      `,
+      html: getBaseTemplate(
+        'Withdrawal Declined',
+        `
+        <p>We regret to inform you that your withdrawal of <strong>${sym}${amount}</strong> has been declined.</p>
+        ${reason ? `<p><strong>Reason:</strong> ${reason}</p>` : ''}
+        <p>Transaction ID: <span style="font-family: monospace;">${transactionId}</span></p>
+        <p>If you believe this is an error, please contact our support team.</p>
+        <div class="button-container">
+          <a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard?section=withdraw" class="button">Contact Support</a>
+        </div>
+        `,
+        userName
+      ),
       text: `Your withdrawal of ${sym}${amount} has been declined. ${reason ? `Reason: ${reason}` : ''} Transaction ID: ${transactionId}`
     });
   }

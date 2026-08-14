@@ -8,8 +8,9 @@ export const GET = requireAuth(async (request) => {
         const db = await getDb();
 
         const deposits = await db.collection('depositRequests')
-            .find({ userId })
+            .find({ userId }, { projection: { screenshot: 0 } })
             .sort({ createdAt: -1 })
+            .limit(100)
             .toArray();
 
         // Fetch payment methods to resolve details if needed

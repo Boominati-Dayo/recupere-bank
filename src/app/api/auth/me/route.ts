@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
 
     // Remove sensitive data from response
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password: _password, emailVerificationToken: _emailToken, passwordResetToken: _resetToken, ...userWithoutSensitiveData } = user;
+    const { password: _password, emailVerificationToken: _emailToken, passwordResetToken: _resetToken, transactionPin: _pin, kycDocuments: _kycDocs, activityLog: _activityLog, ...userWithoutSensitiveData } = user;
 
     return NextResponse.json({
       success: true,

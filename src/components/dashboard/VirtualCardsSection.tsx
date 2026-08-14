@@ -18,9 +18,11 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { showSuccess, showError } from '@/utils/toast';
 import { getCurrencySymbol } from '@/lib/currencies';
+import { usePinPrompt } from './PinPrompt';
 
 const VirtualCardsSection = () => {
   const { userProfile, refreshUser } = useAuth();
+  const { promptForPin } = usePinPrompt();
   const currencyCode = userProfile?.currency || 'USD';
   const currencySymbol = getCurrencySymbol(currencyCode);
   const [view, setView] = useState<'overview' | 'apply'>('overview');
@@ -113,6 +115,9 @@ const VirtualCardsSection = () => {
       return;
     }
 
+    const pin = await promptForPin(`Enter your transaction PIN to apply for the ${selectedLevel?.name || ''} card. A ${currencySymbol}${selectedLevel?.fee || 0} issuance fee will be deducted.`);
+    if (!pin) return;
+
     setIsSubmitting(true);
     try {
       const response = await fetch('/api/cards', {
@@ -124,7 +129,8 @@ const VirtualCardsSection = () => {
           currency,
           spendLimit: parseFloat(spendLimit),
           cardholderName,
-          billingAddress
+          billingAddress,
+          pin
         })
       });
 
@@ -153,6 +159,9 @@ const VirtualCardsSection = () => {
       return;
     }
 
+    const pin = await promptForPin(`Enter your transaction PIN to top up ${topUpModalCard.cardholderName || 'your card'} with ${currencySymbol}${parseFloat(topUpAmount).toLocaleString()}.`);
+    if (!pin) return;
+
     setIsToppingUp(true);
     try {
       const response = await fetch('/api/cards/topup', {
@@ -160,7 +169,8 @@ const VirtualCardsSection = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           cardId: topUpModalCard._id,
-          amount: parseFloat(topUpAmount)
+          amount: parseFloat(topUpAmount),
+          pin
         })
       });
 

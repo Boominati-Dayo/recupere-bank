@@ -23,6 +23,7 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { getCurrencySymbol } from '@/lib/currencies';
 import UpgradePlanSection from './UpgradePlanSection';
+import { usePinPrompt } from './PinPrompt';
 
 const cachedPlanMeta: Record<string, any> = {};
 import { InvestmentPlan } from '@/lib/services/PlanService';
@@ -67,6 +68,7 @@ interface InvestmentProgressSectionProps {
 
 const InvestmentProgressSection = ({ onUpgradePlan }: InvestmentProgressSectionProps) => {
   const { userProfile, forceRefresh } = useAuth();
+  const { promptForPin } = usePinPrompt();
   const progressCurrency = userProfile?.currency || 'USD';
   const progressSymbol = getCurrencySymbol(progressCurrency);
   const [progress, setProgress] = useState<InvestmentProgress | null>(null);
@@ -280,11 +282,14 @@ const InvestmentProgressSection = ({ onUpgradePlan }: InvestmentProgressSectionP
   };
 
   const handleUpgrade = async (plan: InvestmentPlan, amount: number) => {
+    const pin = await promptForPin(`Enter your transaction PIN to upgrade to the ${plan.name} plan with ${progressSymbol}${amount.toLocaleString()}.`);
+    if (!pin) return;
+
     try {
       const response = await fetch('/api/investments/upgrade', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ planId: plan._id, planName: plan.name, amount })
+        body: JSON.stringify({ planId: plan._id, planName: plan.name, amount, pin })
       });
 
       if (!response.ok) {

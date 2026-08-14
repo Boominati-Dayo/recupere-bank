@@ -11,10 +11,10 @@ export const GET = requireAuth(async (request) => {
     // Fetch all transaction types for the user
     const [deposits, withdrawals, transfers, investments, cards, loans, taxRefunds, recoveryCases] = await Promise.all([
       // Deposit requests
-      db.collection('depositRequests').find({ userId }).sort({ createdAt: -1 }).toArray(),
+      db.collection('depositRequests').find({ userId }, { projection: { screenshot: 0 } }).sort({ createdAt: -1 }).limit(100).toArray(),
       
       // Withdrawal requests  
-      db.collection('withdrawalRequests').find({ userId }).sort({ createdAt: -1 }).toArray(),
+      db.collection('withdrawalRequests').find({ userId }, { projection: { screenshot: 0 } }).sort({ createdAt: -1 }).limit(100).toArray(),
       
       // Money transfers
       db.collection('transfers').find({ 
@@ -22,22 +22,22 @@ export const GET = requireAuth(async (request) => {
           { senderId: userId },
           { receiverId: userId }
         ]
-      }).sort({ createdAt: -1 }).toArray(),
+      }).sort({ createdAt: -1 }).limit(100).toArray(),
       
       // Investment transactions
-      db.collection('investments').find({ userId }).sort({ createdAt: -1 }).toArray(),
+      db.collection('investments').find({ userId }).sort({ createdAt: -1 }).limit(100).toArray(),
 
       // Virtual Cards
-      db.collection('virtualCards').find({ userId }).sort({ createdAt: -1 }).toArray(),
+      db.collection('virtualCards').find({ userId }).sort({ createdAt: -1 }).limit(100).toArray(),
 
       // Loans
-      db.collection('loans').find({ userId }).sort({ createdAt: -1 }).toArray(),
+      db.collection('loans').find({ userId }).sort({ createdAt: -1 }).limit(100).toArray(),
 
       // Tax Refunds
-      db.collection('taxRefunds').find({ userId }).sort({ createdAt: -1 }).toArray(),
+      db.collection('taxRefunds').find({ userId }).sort({ createdAt: -1 }).limit(100).toArray(),
 
       // Recovery Cases (using raw db for consistency)
-      db.collection('recoverycases').find({ userId: new ObjectId(userId) }).sort({ createdAt: -1 }).toArray()
+      db.collection('recoverycases').find({ userId: new ObjectId(userId) }).sort({ createdAt: -1 }).limit(100).toArray()
     ]);
 
     // Fetch payment methods to resolve IDs to names
@@ -159,7 +159,10 @@ export const GET = requireAuth(async (request) => {
     }));
 
     // Get user's transaction history from user document
-    const userDoc = await db.collection('users').findOne({ _id: new ObjectId(userId) });
+    const userDoc = await db.collection('users').findOne(
+      { _id: new ObjectId(userId) },
+      { projection: { transactions: 1 } }
+    );
     const userTransactions = userDoc?.transactions || [];
 
     // Transform user transactions (daily gains, referral bonuses, transfers, etc.)

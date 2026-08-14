@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { NotificationService } from '@/lib/notifications/NotificationService';
 import { getCurrencySymbol } from '@/lib/currencies';
+import { verifyTransactionPin } from '@/lib/auth/pin';
 
 interface DepositRequest {
   _id?: ObjectId;
@@ -26,6 +27,7 @@ interface WithdrawalRequest {
   paymentMethodId: string;
   amount: number;
   currency?: string;
+  screenshot?: string;
   accountDetails: {
     accountName: string;
     accountNumber: string;
@@ -53,7 +55,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ success: true, data: deposits });
     } else if (type === 'withdrawals') {
       const collection = db.collection<WithdrawalRequest>('withdrawalRequests');
-      const withdrawals = await collection.find({}).sort({ createdAt: -1 }).toArray();
+      const withdrawals = await collection.find({}, { projection: { screenshot: 0 } }).sort({ createdAt: -1 }).toArray();
       return NextResponse.json({ success: true, data: withdrawals });
     } else {
       return NextResponse.json({ success: false, error: 'Invalid transaction type' }, { status: 400 });
@@ -68,7 +70,7 @@ export async function POST(request: NextRequest) {
   try {
     const db = await getDb();
     const data = await request.json();
-    const { type, ...transactionData } = data;
+    const { type, pin, ...transactionData } = data;
 
     if (type === 'deposit') {
       const collection = db.collection<DepositRequest>('depositRequests');
@@ -129,6 +131,16 @@ export async function POST(request: NextRequest) {
             error: `Withdrawals are not allowed at this time. Allowed window: ${withdrawalSchedule.allowedDays.join(', ')} from ${startTime} to ${endTime} (${withdrawalSchedule.timezone})`
           }, { status: 403 });
         }
+      }
+
+      // Verify transaction PIN before processing the withdrawal
+      if (!transactionData.userId) {
+        return NextResponse.json({ success: false, error: 'User ID is required' }, { status: 400 });
+      }
+      const pinUser = await db.collection('users').findOne({ _id: new ObjectId(transactionData.userId) });
+      const isPinValid = await verifyTransactionPin(pin || '', pinUser?.transactionPin);
+      if (!isPinValid) {
+        return NextResponse.json({ success: false, error: 'Invalid or missing transaction PIN. Please try again.' }, { status: 401 });
       }
 
       const collection = db.collection<WithdrawalRequest>('withdrawalRequests');

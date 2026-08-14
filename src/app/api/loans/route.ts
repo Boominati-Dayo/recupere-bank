@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { requireAuth } from '@/middleware/auth';
+import { verifyPinForUser } from '@/lib/auth/pin';
 
 export const GET = requireAuth(async (request) => {
   try {
@@ -29,9 +30,18 @@ export const POST = requireAuth(async (request) => {
     const userId = request.user!.id;
     const data = await request.json();
 
-    const { amount, duration, facility, purpose, income, currency } = data;
+    const { amount, duration, facility, purpose, income, currency, pin } = data;
 
     const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
+    if (!user) {
+      return NextResponse.json({ success: false, error: 'User not found' }, { status: 404 });
+    }
+
+    // Verify transaction PIN
+    const isPinValid = await verifyPinForUser(user, pin);
+    if (!isPinValid) {
+      return NextResponse.json({ success: false, error: 'Invalid or missing transaction PIN. Please try again.' }, { status: 401 });
+    }
 
     const newLoan = {
       userId,

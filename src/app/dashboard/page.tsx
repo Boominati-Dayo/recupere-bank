@@ -215,6 +215,98 @@ const DashboardClock = () => {
   return { formattedDate, formattedTime };
 };
 
+const BalanceSlideshow = ({ mainBalance, stats, totalCardBalance, currencySymbol }: {
+  mainBalance: number;
+  stats: { volumeTotal: number; pendingTotal: number };
+  totalCardBalance: number;
+  currencySymbol: string;
+}) => {
+  const [statIndex, setStatIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setStatIndex((prev) => (prev + 1) % 4);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="relative h-32 w-full">
+      <AnimatePresence mode="wait">
+        {statIndex === 0 && (
+          <motion.div
+            key="main-balance"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="absolute inset-0 flex flex-col justify-center md:items-start items-center"
+          >
+            <p className="text-4xl mobile:text-5xl lg:text-6xl font-black text-white tracking-tighter whitespace-nowrap">
+              {currencySymbol}{mainBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </p>
+            <p className="text-primary-500 font-bold uppercase tracking-widest text-[10px] mobile:text-xs mt-2 opacity-80">Available Liquid Assets</p>
+          </motion.div>
+        )}
+
+        {statIndex === 1 && (
+          <motion.div
+            key="integrity-level"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="absolute inset-0 flex flex-col justify-center md:items-start items-center"
+          >
+            <p className="text-4xl mobile:text-5xl lg:text-6xl font-black text-white tracking-tighter whitespace-nowrap">
+              {currencySymbol}{stats.volumeTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </p>
+            <p className="text-primary-500 font-bold uppercase tracking-widest text-[10px] mobile:text-xs mt-2 opacity-80">Total Account Volume</p>
+          </motion.div>
+        )}
+
+        {statIndex === 2 && (
+          <motion.div
+            key="active-cases"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="absolute inset-0 flex flex-col justify-center md:items-start items-center"
+          >
+            <p className="text-4xl mobile:text-5xl lg:text-6xl font-black text-white tracking-tighter whitespace-nowrap">
+              {currencySymbol}{stats.pendingTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </p>
+            <p className="text-primary-500 font-bold uppercase tracking-widest text-[10px] mobile:text-xs mt-2 opacity-80">Pending Asset Transfers</p>
+          </motion.div>
+        )}
+
+        {statIndex === 3 && (
+          <motion.div
+            key="security-score"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="absolute inset-0 flex flex-col justify-center md:items-start items-center"
+          >
+            <p className="text-4xl mobile:text-5xl lg:text-6xl font-black text-white tracking-tighter whitespace-nowrap">
+              {currencySymbol}{totalCardBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </p>
+            <p className="text-primary-500 font-bold uppercase tracking-widest text-[10px] mobile:text-xs mt-2 opacity-80">Virtual Card Liquidity</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      {/* Slide Indicators */}
+      <div className="absolute bottom-[-20px] left-0 md:left-0 right-0 flex justify-center md:justify-start gap-1.5">
+        {[0, 1, 2, 3].map((i) => (
+          <div
+            key={i}
+            className={`h-1 rounded-full transition-all duration-300 ${statIndex === i ? 'w-4 bg-primary-400' : 'w-1 bg-white/20'
+              }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const DashboardContent = () => {
   const { user, userProfile, logout, loading, refreshUser } = useAuth();
   const router = useRouter();
@@ -223,20 +315,12 @@ const DashboardContent = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-  const [statIndex, setStatIndex] = useState(0);
   const [pendingDepositAmount, setPendingDepositAmount] = useState<number | undefined>(undefined);
 
   const { formattedDate, formattedTime } = DashboardClock();
 
   // Mock unreadCount if not provided by auth (to fix lint)
   const unreadCount = 0;
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setStatIndex((prev) => (prev + 1) % 4);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
 
   const [recentTransactions, setRecentTransactions] = useState<any[]>([]);
   const [loadingRecent, setLoadingRecent] = useState(false);
@@ -667,77 +751,12 @@ const DashboardContent = () => {
                             </h2>
 
                             <div className="relative h-32 w-full">
-                              <AnimatePresence mode="wait">
-                                {statIndex === 0 && (
-                                  <motion.div
-                                    key="main-balance"
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.95 }}
-                                    className="absolute inset-0 flex flex-col justify-center md:items-start items-center"
-                                  >
-                                    <p className="text-4xl mobile:text-5xl lg:text-6xl font-black text-white tracking-tighter whitespace-nowrap">
-                                      {currencySymbol}{(userProfile?.balances?.main || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                                    </p>
-                                    <p className="text-primary-500 font-bold uppercase tracking-widest text-[10px] mobile:text-xs mt-2 opacity-80">Available Liquid Assets</p>
-                                  </motion.div>
-                                )}
-
-                                {statIndex === 1 && (
-                                  <motion.div
-                                    key="integrity-level"
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.95 }}
-                                    className="absolute inset-0 flex flex-col justify-center md:items-start items-center"
-                                  >
-                                    <p className="text-4xl mobile:text-5xl lg:text-6xl font-black text-white tracking-tighter whitespace-nowrap">
-                                      {currencySymbol}{stats.volumeTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                                    </p>
-                                    <p className="text-primary-500 font-bold uppercase tracking-widest text-[10px] mobile:text-xs mt-2 opacity-80">Total Account Volume</p>
-                                  </motion.div>
-                                )}
-
-                                {statIndex === 2 && (
-                                  <motion.div
-                                    key="active-cases"
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.95 }}
-                                    className="absolute inset-0 flex flex-col justify-center md:items-start items-center"
-                                  >
-                                    <p className="text-4xl mobile:text-5xl lg:text-6xl font-black text-white tracking-tighter whitespace-nowrap">
-                                      {currencySymbol}{stats.pendingTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                                    </p>
-                                    <p className="text-primary-500 font-bold uppercase tracking-widest text-[10px] mobile:text-xs mt-2 opacity-80">Pending Asset Transfers</p>
-                                  </motion.div>
-                                )}
-
-                                {statIndex === 3 && (
-                                  <motion.div
-                                    key="security-score"
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.95 }}
-                                    className="absolute inset-0 flex flex-col justify-center md:items-start items-center"
-                                  >
-                                    <p className="text-4xl mobile:text-5xl lg:text-6xl font-black text-white tracking-tighter whitespace-nowrap">
-                                      {currencySymbol}{totalCardBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                                    </p>
-                                    <p className="text-primary-500 font-bold uppercase tracking-widest text-[10px] mobile:text-xs mt-2 opacity-80">Virtual Card Liquidity</p>
-                                  </motion.div>
-                                )}
-                              </AnimatePresence>
-                              {/* Slide Indicators */}
-                              <div className="absolute bottom-[-20px] left-0 md:left-0 right-0 flex justify-center md:justify-start gap-1.5">
-                                {[0, 1, 2, 3].map((i) => (
-                                  <div
-                                    key={i}
-                                    className={`h-1 rounded-full transition-all duration-300 ${statIndex === i ? 'w-4 bg-primary-400' : 'w-1 bg-white/20'
-                                      }`}
-                                  />
-                                ))}
-                              </div>
+                              <BalanceSlideshow
+                                mainBalance={userProfile?.balances?.main || 0}
+                                stats={stats}
+                                totalCardBalance={totalCardBalance}
+                                currencySymbol={currencySymbol}
+                              />
                             </div>
                           </div>
 
@@ -837,7 +856,7 @@ const DashboardContent = () => {
                       {/* Recent Transactions */}
                       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden animate-in fade-in duration-700">
                         <div className="p-4 mobile:p-6 border-b border-gray-50 flex justify-between items-center bg-gray-50/50">
-                          <h3 className="font-black text-navy-900 text-sm mobile:text-base uppercase tracking-tighter">Recent Intelligence</h3>
+                          <h3 className="font-black text-navy-900 text-sm mobile:text-base uppercase tracking-tighter">Recent Activity</h3>
                           <button onClick={() => setActiveSection('logs')} className="text-primary-600 font-black text-[10px] mobile:text-xs uppercase tracking-widest hover:underline">View Ledger</button>
                         </div>
                         <div className="divide-y divide-gray-50">
