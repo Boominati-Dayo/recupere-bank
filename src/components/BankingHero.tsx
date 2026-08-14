@@ -39,22 +39,21 @@ const BankingHero = () => {
         <div className="max-w-3xl mx-auto text-center">
 
             <h1 className="text-4xl mobile:text-5xl lg:text-7xl font-['Playfair_Display'] font-black text-white leading-[1.1] tracking-tight mb-8">
-              Fortify Your{' '}
+              Protect Your{' '}
               <span className="relative">
-                <span className="text-primary-500 italic">Fortune</span>
+                <span className="text-primary-500 italic">Money</span>
                 <span className="absolute -bottom-2 left-0 w-full h-[3px] bg-gradient-to-r from-primary-500 to-transparent rounded-full" />
               </span>
               .<br />
-              Forge Your{' '}
+              Recover What Was{' '}
               <span className="relative">
-                <span className="text-white underline decoration-primary-500/40 underline-offset-8">Future</span>
+                <span className="text-white underline decoration-primary-500/40 underline-offset-8">Lost</span>
               </span>
               .
             </h1>
 
             <p className="text-lg mobile:text-xl text-white/60 font-medium mb-10 max-w-2xl mx-auto leading-relaxed">
-              The world&apos;s premier private banking platform. Combine Swiss-level security with
-              forensic asset protection — serving clients globally.
+              Secure banking and trusted asset recovery built to protect your wealth at every stage. From managing your everyday finances and investments to helping recover assets lost to fraud, RecupereBank provides secure financial solutions and dedicated support for clients around the world.
             </p>
 
             <div className="flex flex-col mobile:flex-row items-center justify-center gap-5">
