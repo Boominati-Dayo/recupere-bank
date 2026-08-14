@@ -50,24 +50,6 @@ const Footer = () => {
               <p className="text-[13.5px] font-normal leading-[1.78] text-[#cfd6e0]/75 max-w-[295px] mb-7">
                 We are the bridge between financial loss and legal recovery. RecupereBank combines the power of a specialised law firm with the security of an internationally regulated bank to fight for what belongs to you.
               </p>
-              <div className="flex gap-[10px]">
-                {[
-                  { label: 'LinkedIn', href: '#', path: 'M19 3a2 2 0 0 0-2 2v12.5a2 2 0 0 0 2 2h12.5a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H19zm1.5 4h2.5v2.5a3.5 3.5 0 0 1 7 0V7h2.5v3.5a6 6 0 0 1-6 6h-1a6 6 0 0 1-6-6V7zm1 1.5V10a4.5 4.5 0 0 0 4.5 4.5h1A4.5 4.5 0 0 0 31.5 10V8.5h-1V10a3.5 3.5 0 0 1-7 0V8.5h-1zm0-3h8v1.5h-8V5.5z' },
-                  { label: 'X/Twitter', href: '#', path: 'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H21.17l-5.214-6.817L11.99 21.75H8.682l7.73-8.835L8.254 2.25h5.286l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z' },
-                  { label: 'Facebook', href: '#', path: 'M24 2.5A21.5 21.5 0 0 0 2.5 24c0 11.92 9.62 21.58 21.5 21.5A21.5 21.5 0 0 0 45.5 24C45.5 12.08 35.88 2.42 24 2.5zm3.5 11.5h-2.5a3 3 0 0 0-3 3v2.5h5.5l-1 5.5H22V40h-6V25h-4v-5.5h4V16a8.5 8.5 0 0 1 8.5-8.5h3.5v6.5z' },
-                ].map(social => (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    className="w-[34px] h-[34px] rounded-full bg-white/6 border border-white/12 flex items-center justify-center text-[#cfd6e0]/70 hover:bg-primary-500/12 hover:border-primary-500/50 hover:text-primary-500 hover:-translate-y-[2px] transition-all duration-200"
-                    aria-label={social.label}
-                  >
-                    <svg viewBox="0 0 48 48" className="w-[14px] h-[14px]" fill="currentColor">
-                      <path d={social.path} />
-                    </svg>
-                  </a>
-                ))}
-              </div>
             </div>
 
             <div>

@@ -177,15 +177,6 @@ const CaseReportPage = () => {
             <div className="container mx-auto px-4">
                 <div className="max-w-4xl mx-auto">
                     {/* Header */}
-                    <div className="text-center mb-16 space-y-4">
-                        <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-navy-900/5 text-navy-900 text-[10px] font-black uppercase tracking-widest"
-                        >
-                            <ShieldAlert className="w-4 h-4 text-primary-600" />
-                            Forensic Intake Division
-                        </motion.div>
                         <motion.h1
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -509,7 +500,6 @@ const CaseReportPage = () => {
                     </div>
                 </div>
             </div>
-        </div>
     );
 };
 
