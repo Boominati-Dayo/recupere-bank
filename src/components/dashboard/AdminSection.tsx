@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import {
@@ -45,7 +45,6 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { showSuccess, showError } from '@/utils/toast';
 import { canAccessAdmin } from '@/utils/adminUtils';
-import { PlanService, InvestmentPlan } from '@/lib/services/PlanService';
 import { getPaymentMethods } from '@/lib/services/PaymentMethodService';
 import { getCurrencySymbol } from '@/lib/currencies';
 import WithdrawalScheduleManager from '@/components/admin/WithdrawalScheduleManager';
@@ -174,12 +173,10 @@ const AdminSection = () => {
   const adminCurrencySymbol = getCurrencySymbol(adminCurrency);
   const [activeTab, setActiveTab] = useState<'users' | 'kyc-requests' | 'card-requests' | 'card-topups' | 'loan-requests' | 'tax-refunds' | 'payments' | 'transactions' | 'support' | 'withdrawal-schedule' | 'recovery-ops' | 'newsletter' | 'testimonials'>('users');
   const [users, setUsers] = useState<AdminUser[]>([]);
-  const [plans, setPlans] = useState<InvestmentPlan[]>([]);
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
   const [depositRequests, setDepositRequests] = useState<DepositRequest[]>([]);
   const [withdrawalRequests, setWithdrawalRequests] = useState<WithdrawalRequest[]>([]);
   const [loadingUsers, setLoadingUsers] = useState(false);
-  const [loadingPlans, setLoadingPlans] = useState(false);
   const [loadingPayments, setLoadingPayments] = useState(false);
   const [kycRequests, setKycRequests] = useState<AdminUser[]>([]);
   const [loadingKyc, setLoadingKyc] = useState(false);
@@ -211,17 +208,13 @@ const AdminSection = () => {
   const [showUserDetailModal, setShowUserDetailModal] = useState(false);
   const [userDetailData, setUserDetailData] = useState<AdminUser | null>(null);
   const [userIndividualMessage, setUserIndividualMessage] = useState('');
-  const [showPlanModal, setShowPlanModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [editingPlan, setEditingPlan] = useState<InvestmentPlan | null>(null);
   const [editingPayment, setEditingPayment] = useState<PaymentMethod | null>(null);
-  const [newPlan, setNewPlan] = useState<Partial<InvestmentPlan>>({});
   const [newPayment, setNewPayment] = useState<Partial<PaymentMethod>>({});
   const [paymentLogoFile, setPaymentLogoFile] = useState<File | null>(null);
   const [paymentLogoPreview, setPaymentLogoPreview] = useState<string>('');
   const [isUploadingLogo, setIsUploadingLogo] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
-  const [isProcessingPlan, setIsProcessingPlan] = useState(false);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -240,7 +233,7 @@ const AdminSection = () => {
   const [kycRejectionReason, setKycRejectionReason] = useState('');
   const [isSendingMessage, setIsSendingMessage] = useState(false);
   const [confirmAction, setConfirmAction] = useState<{
-    type: 'deletePlan' | 'deleteUser' | 'deletePayment';
+    type: 'deleteUser' | 'deletePayment';
     id: string;
     name: string;
   } | null>(null);
@@ -274,9 +267,6 @@ const AdminSection = () => {
     reason: ''
   });
   const [isProcessingBalanceAdjustment, setIsProcessingBalanceAdjustment] = useState(false);
-
-  // MongoDB services
-  const planService = useMemo(() => new PlanService(), []);
 
   // Check if user is admin
   const isAdmin = canAccessAdmin(userProfile);
@@ -334,43 +324,13 @@ const AdminSection = () => {
     }
   }, []);
 
-  const loadPlans = useCallback(async () => {
-    setLoadingPlans(true);
-    try {
-      const mongoPlans = await planService.getAllPlans();
-      // Convert MongoDB plans to component format
-      const formattedPlans = mongoPlans.map(plan => ({
-        _id: plan._id || '',
-        id: plan._id || '',
-        name: plan.name,
-        minAmount: plan.minAmount,
-        maxAmount: plan.maxAmount,
-        duration: plan.duration,
-        roi: plan.roi,
-        capitalBack: plan.capitalBack,
-        color: plan.color,
-        gradient: plan.gradient,
-        icon: plan.icon,
-        isActive: plan.isActive
-      }));
-      setPlans(formattedPlans);
-    } catch (error) {
-      console.error('Error loading plans:', error);
-      // Set empty array if both MongoDB and fallback fail
-      setPlans([]);
-    } finally {
-      setLoadingPlans(false);
-    }
-  }, [planService]);
-
   useEffect(() => {
     if (isAdmin) {
       loadUsers();
-      loadPlans();
       loadPaymentMethods();
       loadTransactions();
     }
-  }, [isAdmin, loadUsers, loadPlans]);
+  }, [isAdmin, loadUsers]);
 
 
 
@@ -783,12 +743,6 @@ const AdminSection = () => {
     await updateUser(userId, { isAdmin });
   };
 
-  const handleDeletePlan = (planId: string, planName: string) => {
-    setConfirmAction({ type: 'deletePlan', id: planId, name: planName });
-    setShowConfirmModal(true);
-  };
-
-
   const handleDeletePayment = (paymentId: string, paymentName: string) => {
     setConfirmAction({ type: 'deletePayment', id: paymentId, name: paymentName });
     setShowConfirmModal(true);
@@ -800,16 +754,6 @@ const AdminSection = () => {
     setIsDeleting(true);
     try {
       switch (confirmAction.type) {
-        case 'deletePlan':
-          const success = await planService.deletePlan(confirmAction.id);
-          if (success) {
-            setMessage({ type: 'success', text: 'Plan deleted successfully' });
-            loadPlans();
-          } else {
-            setMessage({ type: 'error', text: 'Failed to delete plan' });
-          }
-          break;
-
         case 'deleteUser':
           try {
             const response = await fetch(`/api/users/${confirmAction.id}`, {
@@ -856,72 +800,6 @@ const AdminSection = () => {
       setConfirmAction(null);
     }
   };
-
-  const savePlan = async () => {
-    setIsProcessingPlan(true);
-    try {
-      // Validate required fields
-      if (!newPlan.name || !newPlan.minAmount || !newPlan.maxAmount || !newPlan.roi || !newPlan.duration || !newPlan.icon) {
-        setMessage({ type: 'error', text: 'Please fill in all required fields including icon' });
-        setIsProcessingPlan(false);
-        return;
-      }
-
-      if (editingPlan && editingPlan._id) {
-        console.log('Updating plan with ID:', editingPlan._id);
-        // Update existing plan in MongoDB
-        const success = await planService.updatePlan(editingPlan._id, {
-          name: newPlan.name!,
-          minAmount: newPlan.minAmount!,
-          maxAmount: newPlan.maxAmount!,
-          duration: newPlan.duration!,
-          roi: newPlan.roi!,
-          capitalBack: newPlan.capitalBack || false,
-          color: newPlan.color || 'blue',
-          icon: newPlan.icon!,
-          isActive: newPlan.isActive !== false,
-          updatedBy: userProfile?.email || 'admin'
-        });
-
-        if (success) {
-          setMessage({ type: 'success', text: 'Plan updated successfully' });
-        } else {
-          setMessage({ type: 'error', text: 'Failed to update plan' });
-        }
-      } else {
-        console.log('Creating new plan - editingPlan:', editingPlan);
-        // Create new plan in MongoDB
-        const newMongoPlan = await planService.createPlan({
-          name: newPlan.name!,
-          minAmount: newPlan.minAmount!,
-          maxAmount: newPlan.maxAmount!,
-          duration: newPlan.duration!,
-          roi: newPlan.roi!,
-          capitalBack: newPlan.capitalBack || false,
-          color: newPlan.color || 'blue',
-          icon: newPlan.icon!,
-          isActive: newPlan.isActive !== false,
-          createdBy: userProfile?.email || 'admin'
-        });
-
-        if (newMongoPlan) {
-          setMessage({ type: 'success', text: 'Plan created successfully' });
-        } else {
-          setMessage({ type: 'error', text: 'Failed to create plan' });
-        }
-      }
-      setShowPlanModal(false);
-      setEditingPlan(null);
-      setNewPlan({});
-      loadPlans();
-    } catch (error) {
-      console.error('Error saving plan:', error);
-      setMessage({ type: 'error', text: 'Failed to save plan' });
-    } finally {
-      setIsProcessingPlan(false);
-    }
-  };
-
 
   const savePaymentMethod = async () => {
     setIsProcessingPayment(true);
@@ -2130,223 +2008,6 @@ const AdminSection = () => {
           </div>
         )}
       </div>
-
-      {/* Plan Modal */}
-      {showPlanModal && (
-        <div className="fixed inset-0 bg-navy-900/40 backdrop-blur-md flex items-center justify-center z-50 p-6 animate-in fade-in duration-300">
-          <div className="bg-white rounded-[2.5rem] shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-white/20">
-            <div className="p-10">
-              <div className="flex items-center justify-between mb-10">
-                <div>
-                  <h3 className="text-2xl font-black text-navy-900 uppercase tracking-tighter">
-                    {editingPlan ? 'Optimize Asset' : 'Deploy Asset'}
-                  </h3>
-                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">Configure strategic investment parameters</p>
-                </div>
-                <button
-                  onClick={() => {
-                    setShowPlanModal(false);
-                    setEditingPlan(null);
-                    setNewPlan({});
-                  }}
-                  className="w-12 h-12 bg-gray-50 text-gray-400 hover:bg-red-50 hover:text-red-500 rounded-2xl flex items-center justify-center transition-all"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              <div className="space-y-8">
-                <div className="group">
-                  <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 ml-1 group-focus-within:text-primary-500 transition-colors">Strategic Designation</label>
-                  <input
-                    type="text"
-                    value={newPlan.name || ''}
-                    onChange={(e) => setNewPlan({ ...newPlan, name: e.target.value })}
-                    className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold text-navy-900"
-                    placeholder="e.g., ADVANCED SCOUT"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="group">
-                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 ml-1 group-focus-within:text-primary-500 transition-colors">Minimum Stake ($)</label>
-                    <input
-                      type="number"
-                      value={newPlan.minAmount || ''}
-                      onChange={(e) => setNewPlan({ ...newPlan, minAmount: Number(e.target.value) })}
-                      className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold text-navy-900"
-                      placeholder="1000"
-                    />
-                  </div>
-                  <div className="group">
-                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 ml-1 group-focus-within:text-primary-500 transition-colors">Ceiling Limit ($)</label>
-                    <input
-                      type="number"
-                      value={newPlan.maxAmount || ''}
-                      onChange={(e) => setNewPlan({ ...newPlan, maxAmount: Number(e.target.value) })}
-                      className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold text-navy-900"
-                      placeholder="9999"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="group">
-                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 ml-1 group-focus-within:text-primary-500 transition-colors">Yield ROI (%)</label>
-                    <input
-                      type="number"
-                      step="0.1"
-                      value={newPlan.roi || ''}
-                      onChange={(e) => setNewPlan({ ...newPlan, roi: Number(e.target.value) })}
-                      className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold text-navy-900"
-                      placeholder="1.5"
-                    />
-                  </div>
-                  <div className="group">
-                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 ml-1 group-focus-within:text-primary-500 transition-colors">Asset Duration</label>
-                    <input
-                      type="text"
-                      value={newPlan.duration || ''}
-                      onChange={(e) => setNewPlan({ ...newPlan, duration: e.target.value })}
-                      className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold text-navy-900"
-                      placeholder="30 days"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="group">
-                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 ml-1 group-focus-within:text-primary-500 transition-colors">Theme Color</label>
-                    <select
-                      value={newPlan.color || ''}
-                      onChange={(e) => setNewPlan({ ...newPlan, color: e.target.value })}
-                      className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold text-navy-900 cursor-pointer appearance-none"
-                    >
-                      <option value="">Select Palette</option>
-                      <option value="blue">Blue</option>
-                      <option value="green">Green</option>
-                      <option value="purple">Purple</option>
-                      <option value="gold">Gold</option>
-                      <option value="red">red</option>
-                      <option value="cyan">Cyan</option>
-                      <option value="orange">Orange</option>
-                      <option value="pink">Pink</option>
-                      <option value="indigo">Indigo</option>
-                      <option value="teal">Teal</option>
-                      <option value="lime">Lime</option>
-                      <option value="amber">Amber</option>
-                      <option value="emerald">Emerald</option>
-                      <option value="rose">Rose</option>
-                      <option value="violet">Violet</option>
-                    </select>
-                  </div>
-
-                  <div className="group">
-                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 ml-1 group-focus-within:text-primary-500 transition-colors">Asset Identifier</label>
-                    <select
-                      value={newPlan.icon || ''}
-                      onChange={(e) => setNewPlan({ ...newPlan, icon: e.target.value })}
-                      className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold text-navy-900 cursor-pointer appearance-none"
-                    >
-                      <option value="">Select Icon</option>
-                      <option value="star">Star</option>
-                      <option value="diamond">Diamond</option>
-                      <option value="crown">Crown</option>
-                      <option value="rocket">Rocket</option>
-                      <option value="trending-up">Trending Up</option>
-                      <option value="zap">Lightning</option>
-                      <option value="shield">Shield</option>
-                      <option value="gem">Gem</option>
-                      <option value="trophy">Trophy</option>
-                      <option value="medal">Medal</option>
-                      <option value="target">Target</option>
-                      <option value="flame">Flame</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="group">
-                  <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 ml-1 group-focus-within:text-primary-500 transition-colors">Visual Gradient (Advanced)</label>
-                  <select
-                    value={newPlan.gradient || ''}
-                    onChange={(e) => setNewPlan({ ...newPlan, gradient: e.target.value })}
-                    className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold text-navy-900 cursor-pointer appearance-none"
-                  >
-                    <option value="">Default Gradient</option>
-                    <option value="blue-to-purple">Blue to Purple</option>
-                    <option value="green-to-blue">Green to Blue</option>
-                    <option value="purple-to-pink">Purple to Pink</option>
-                    <option value="red-to-orange">Red to Orange</option>
-                    <option value="primary-to-amber">Gold to Amber</option>
-                    <option value="cyan-to-blue">Cyan to Blue</option>
-                    <option value="pink-to-rose">Pink to Rose</option>
-                    <option value="indigo-to-purple">Indigo to Purple</option>
-                    <option value="emerald-to-teal">Emerald to Teal</option>
-                    <option value="orange-to-red">Orange to Red</option>
-                    <option value="rose-to-pink">Rose to Pink</option>
-                    <option value="violet-to-purple">Violet to Purple</option>
-                  </select>
-                </div>
-
-                <div className="flex flex-wrap gap-8 items-center bg-gray-50 p-6 rounded-3xl border border-gray-100">
-                  <label className="flex items-center gap-3 cursor-pointer group">
-                    <div className="relative">
-                      <input
-                        type="checkbox"
-                        checked={newPlan.capitalBack || false}
-                        onChange={(e) => setNewPlan({ ...newPlan, capitalBack: e.target.checked })}
-                        className="sr-only"
-                      />
-                      <div className={`w-12 h-6 rounded-full transition-colors duration-300 ${newPlan.capitalBack ? 'bg-primary-500' : 'bg-gray-200'}`}></div>
-                      <div className={`absolute left-1 top-1 w-4 h-4 rounded-full bg-white transition-transform duration-300 ${newPlan.capitalBack ? 'translate-x-6' : ''}`}></div>
-                    </div>
-                    <span className="text-[10px] font-black text-navy-900 uppercase tracking-widest">Guaranteed Capital</span>
-                  </label>
-
-                  <label className="flex items-center gap-3 cursor-pointer group">
-                    <div className="relative">
-                      <input
-                        type="checkbox"
-                        checked={newPlan.isActive !== false}
-                        onChange={(e) => setNewPlan({ ...newPlan, isActive: e.target.checked })}
-                        className="sr-only"
-                      />
-                      <div className={`w-12 h-6 rounded-full transition-colors duration-300 ${newPlan.isActive !== false ? 'bg-green-500' : 'bg-gray-200'}`}></div>
-                      <div className={`absolute left-1 top-1 w-4 h-4 rounded-full bg-white transition-transform duration-300 ${newPlan.isActive !== false ? 'translate-x-6' : ''}`}></div>
-                    </div>
-                    <span className="text-[10px] font-black text-navy-900 uppercase tracking-widest">Live Status</span>
-                  </label>
-                </div>
-              </div>
-
-              <div className="mt-12 flex gap-4">
-                <button
-                  onClick={() => {
-                    setShowPlanModal(false);
-                    setEditingPlan(null);
-                    setNewPlan({});
-                  }}
-                  className="flex-1 px-8 py-4 bg-gray-50 hover:bg-gray-100 text-gray-400 font-black uppercase tracking-widest text-[11px] rounded-2xl transition-all"
-                >
-                  Discard
-                </button>
-                <button
-                  onClick={savePlan}
-                  disabled={isProcessingPlan}
-                  className="flex-[2] px-8 py-4 bg-navy-900 hover:bg-navy-800 text-primary-500 font-black uppercase tracking-widest text-[11px] rounded-2xl shadow-xl shadow-navy-900/20 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
-                >
-                  {isProcessingPlan ? (
-                    <div className="w-4 h-4 border-2 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
-                  ) : (
-                    <ShieldCheck className="w-4 h-4" />
-                  )}
-                  <span>{isProcessingPlan ? 'Processing...' : (editingPlan ? 'Overwrite Parameters' : 'Authorise Deployment')}</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Payment Method Modal */}
       {showPaymentModal && (

@@ -93,20 +93,10 @@ const HeroSection = () => {
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
               </Link>
               <Link
-                href="#investment-plans"
+                href="/banking"
                 className="border-2 border-white hover:bg-white hover:text-gray-900 text-white px-6 py-3 mobile:px-8 mobile:py-4 rounded-lg text-base mobile:text-lg font-semibold transition-all duration-300 text-center"
-                onClick={(e) => {
-                  e.preventDefault();
-                  const element = document.getElementById('investment-plans');
-                  if (element) {
-                    element.scrollIntoView({
-                      behavior: 'smooth',
-                      block: 'start'
-                    });
-                  }
-                }}
               >
-                View Plans
+                Learn More
               </Link>
             </div>
 
