@@ -6,17 +6,17 @@ import Image from 'next/image';
 import FraudInvestigationImg from '@/assets/images_for_pages/financialfraudinvestigation.png';
 
 export const metadata: Metadata = {
-    title: 'Private Digital Banking | RecupereBank',
-    description: 'A modern, digital-only bank designed to support sustainable growth, commercial property investment, and secure asset recovery.',
+    title: 'Digital Banking | RecupereBank',
+    description: 'A modern online bank for everyday banking, property investment, and recovering money lost to scams.',
 };
 
 const services = [
-    { number: '01', title: 'Digital Private Banking', description: 'Full-spectrum private banking entirely online. Secure, compliant, and built for high-net-worth individuals.' },
-    { number: '02', title: 'Commercial Property & Investment', description: 'Access institutional-grade property financing and structured investment vehicles for portfolio growth.' },
-    { number: '03', title: 'RecupereBank Safe Vault', description: 'Encrypted digital vault for sensitive assets, documents, and high-value holdings with multi-layer authentication.' },
-    { number: '04', title: 'Multi-Currency Accounts', description: 'Hold, convert and transact in 40+ currencies with competitive FX rates and real-time global settlements.' },
-    { number: '05', title: 'Wealth Management', description: 'Dedicated advisors delivering bespoke investment strategies, estate planning, and long-term capital preservation.' },
-    { number: '06', title: 'Bank-Grade Cyber Security', description: 'AES-256 encryption, biometric authentication, real-time fraud detection, and 24/7 threat monitoring.' },
+    { number: '01', title: 'Digital Banking', description: 'A secure online bank account you can open from anywhere. Hold funds, send money, and manage your finances in one place.' },
+    { number: '02', title: 'Property & Investment Accounts', description: 'Property financing and structured investment accounts to help your money grow over time.' },
+    { number: '03', title: 'Safe Vault', description: 'An encrypted vault for sensitive documents and assets, protected by multiple layers of authentication.' },
+    { number: '04', title: 'Multi-Currency Accounts', description: 'Hold, convert and transact in 40+ currencies with competitive exchange rates and real-time global settlements.' },
+    { number: '05', title: 'Wealth Management', description: 'Our advisors help you plan investments, manage risk, and protect what you have built.' },
+    { number: '06', title: 'Secure by Design', description: 'Bank-grade encryption, biometric login, real-time fraud detection, and 24/7 monitoring of every account.' },
 ];
 
 const accounts = [
@@ -255,7 +255,7 @@ export default function BankingServicesPage() {
                                 Banking Meets<br />Cyber Recovery.
                             </h2>
                             <p className="text-[15px] leading-relaxed text-white/55 max-w-[500px] mb-11">
-                                RecupereBank uniquely combines private banking infrastructure with a forensic recovery division — protecting your wealth and restoring it if compromised. No other institution offers this convergence of financial security and digital forensics.
+                                RecupereBank combines a secure bank account with an in-house legal team that recovers money lost to scams. Most banks can only protect your funds. We can also help you get them back when something goes wrong.
                             </p>
                             <Link
                                 href="/asset-recovery"

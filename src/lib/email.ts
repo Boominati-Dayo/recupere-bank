@@ -13,7 +13,7 @@ const createTransporter = () => {
   const host = process.env.SMTP_HOST || 'smtp.gmail.com';
   const port = parseInt(process.env.SMTP_PORT || '465');
   const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASSWORD;
+  const pass = process.env.SMTP_PASS || process.env.SMTP_PASSWORD;
 
   if (!user || !pass) {
     console.warn('SMTP credentials not found. Emails will not be sent.');

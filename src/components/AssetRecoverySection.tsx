@@ -34,7 +34,7 @@ const AssetRecoverySection = () => {
           Banking Meets<br />Cyber Recovery.
         </h2>
         <p className="text-sm leading-relaxed text-white/55 max-w-md mb-11">
-          RecupereBank uniquely combines private banking infrastructure with a forensic recovery division — protecting your wealth and restoring it if compromised. No other institution offers this convergence of financial security and digital forensics.
+          RecupereBank combines a secure bank account with an in-house legal team that recovers money lost to scams. Most banks can only protect your funds. We can also help you get them back when something goes wrong.
         </p>
         <Link
           href="/asset-recovery/report"

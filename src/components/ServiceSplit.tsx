@@ -6,38 +6,38 @@ import Link from 'next/link';
 const services = [
   {
     num: '01',
-    title: 'Digital Private Banking',
-    desc: 'Internationally regulated private banking entirely online. Secure, compliant, and built for high-net-worth individuals worldwide.',
+    title: 'Digital Banking',
+    desc: 'A secure online bank account you can open from anywhere. Hold funds, send money, and manage your finances in one place.',
     href: '/banking',
   },
   {
     num: '02',
-    title: 'Commercial Property & Investment',
-    desc: 'Access institutional-grade global property financing and structured investment vehicles for portfolio growth.',
+    title: 'Property & Investment Accounts',
+    desc: 'Property financing and structured investment accounts to help your money grow over time.',
     href: '/banking',
   },
   {
     num: '03',
-    title: 'RecupereBank Safe Vault',
-    desc: 'Encrypted digital vault for sensitive assets, documents, and high-value holdings with multi-layer authentication — globally distributed security operations.',
+    title: 'Safe Vault',
+    desc: 'An encrypted vault for sensitive documents and assets, protected by multiple layers of authentication.',
     href: '/banking',
   },
   {
     num: '04',
     title: 'USD & Multi-Currency Accounts',
-    desc: 'Hold USD and transact in 40+ currencies with competitive FX rates and real-time settlements via international clearing systems.',
+    desc: 'Hold USD and transact in 40+ currencies with competitive exchange rates and real-time settlements.',
     href: '/banking',
   },
   {
     num: '05',
     title: 'Wealth Management',
-    desc: 'Global advisory team delivering bespoke investment strategies, estate planning, and long-term capital preservation.',
+    desc: 'Our advisors help you plan investments, manage risk, and protect what you have built.',
     href: '/contact',
   },
   {
     num: '06',
-    title: 'Bank-Grade Cyber Security',
-    desc: 'AES-256 encryption, biometric authentication, real-time fraud detection, and 24/7 threat monitoring from our global SOC.',
+    title: 'Secure by Design',
+    desc: 'Bank-grade encryption, biometric login, real-time fraud detection, and 24/7 monitoring of every account.',
     href: '/banking',
   },
 ];

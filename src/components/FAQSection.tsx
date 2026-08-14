@@ -99,7 +99,7 @@ const FAQSection = () => {
         </div>
 
         <div className="mt-12 text-center">
-          <div className="bg-secondary-500 px-8 py-8 text-white relative overflow-hidden">
+          <div className="bg-secondary-500 px-8 py-10 text-white relative overflow-hidden">
             <h3 className="text-xl font-bold mb-3 relative z-10">Still have questions?</h3>
             <p className="text-sm text-white/70 mb-5 relative z-10">Our legal team is ready to review your case for free.</p>
             <a
@@ -109,121 +109,6 @@ const FAQSection = () => {
               Contact Legal Support
             </a>
           </div>
-        </div>
-        <div className="mt-12">
-          <svg
-            viewBox="0 0 2100 420"
-            className="w-full h-auto rounded-lg"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect width="2100" height="420" fill="#0d1b2e" />
-
-            {/* Grid pattern */}
-            <defs>
-              <pattern id="legalGrid" width="60" height="60" patternUnits="userSpaceOnUse">
-                <line x1="60" y1="0" x2="60" y2="60" stroke="#1b2d4a" strokeWidth="1" />
-                <line x1="0" y1="60" x2="60" y2="60" stroke="#1b2d4a" strokeWidth="1" />
-              </pattern>
-              <pattern id="legalGridSmall" width="20" height="20" patternUnits="userSpaceOnUse">
-                <line x1="20" y1="0" x2="20" y2="20" stroke="#1b2d4a" strokeWidth="0.5" opacity="0.4" />
-                <line x1="0" y1="20" x2="20" y2="20" stroke="#1b2d4a" strokeWidth="0.5" opacity="0.4" />
-              </pattern>
-            </defs>
-            <rect width="2100" height="420" fill="url(#legalGridSmall)" />
-            <rect width="2100" height="420" fill="url(#legalGrid)" />
-
-            {/* Abstract gavel - left */}
-            <g transform="translate(300, 160)" opacity="0.3">
-              <rect x="0" y="0" width="8" height="100" rx="2" fill="#ee2737" />
-              <rect x="-40" y="100" width="88" height="12" rx="3" fill="#ee2737" />
-              <rect x="-30" y="80" width="68" height="24" rx="4" fill="#ee2737" opacity="0.6" />
-            </g>
-
-            {/* Scale of justice - left center */}
-            <g transform="translate(700, 110)">
-              <line x1="0" y1="0" x2="160" y2="0" stroke="#ee2737" strokeWidth="3" opacity="0.5" />
-              <line x1="80" y1="0" x2="80" y2="80" stroke="#ee2737" strokeWidth="3" opacity="0.5" />
-              <path d="M-10,0 Q-5,-40 15,-45" stroke="#ee2737" strokeWidth="2" fill="none" opacity="0.4" />
-              <path d="M170,0 Q165,-40 145,-45" stroke="#ee2737" strokeWidth="2" fill="none" opacity="0.4" />
-              <circle cx="80" cy="80" r="6" fill="#ee2737" opacity="0.3" />
-            </g>
-
-            {/* Connected team nodes */}
-            <g opacity="0.35">
-              <circle cx="1050" cy="80" r="12" fill="none" stroke="#ee2737" strokeWidth="2" />
-              <circle cx="1050" cy="80" r="4" fill="#ee2737" />
-              <line x1="1050" y1="92" x2="1050" y2="140" stroke="#ee2737" strokeWidth="1.5" />
-              <circle cx="1050" cy="150" r="8" fill="none" stroke="#ee2737" strokeWidth="1.5" />
-              <line x1="1050" y1="158" x2="1050" y2="200" stroke="#ee2737" strokeWidth="1.5" />
-              <circle cx="1050" cy="210" r="8" fill="none" stroke="#ee2737" strokeWidth="1.5" />
-
-              <circle cx="1130" cy="120" r="8" fill="none" stroke="#ee2737" strokeWidth="1.5" />
-              <line x1="1058" y1="108" x2="1122" y2="120" stroke="#ee2737" strokeWidth="1" opacity="0.5" />
-              <circle cx="1140" cy="200" r="8" fill="none" stroke="#ee2737" strokeWidth="1.5" />
-              <line x1="1058" y1="160" x2="1132" y2="198" stroke="#ee2737" strokeWidth="1" opacity="0.5" />
-
-              <circle cx="970" cy="120" r="8" fill="none" stroke="#ee2737" strokeWidth="1.5" />
-              <line x1="1042" y1="108" x2="978" y2="120" stroke="#ee2737" strokeWidth="1" opacity="0.5" />
-              <circle cx="960" cy="200" r="8" fill="none" stroke="#ee2737" strokeWidth="1.5" />
-              <line x1="1042" y1="160" x2="968" y2="198" stroke="#ee2737" strokeWidth="1" opacity="0.5" />
-            </g>
-
-            {/* Document outlines - right */}
-            <g transform="translate(1560, 100)" opacity="0.3">
-              <rect x="0" y="0" width="70" height="90" rx="4" fill="none" stroke="#ee2737" strokeWidth="2" />
-              <line x1="15" y1="20" x2="55" y2="20" stroke="#ee2737" strokeWidth="2" />
-              <line x1="15" y1="35" x2="55" y2="35" stroke="#ee2737" strokeWidth="1.5" opacity="0.6" />
-              <line x1="15" y1="45" x2="45" y2="45" stroke="#ee2737" strokeWidth="1.5" opacity="0.6" />
-              <line x1="15" y1="55" x2="55" y2="55" stroke="#ee2737" strokeWidth="1.5" opacity="0.6" />
-              <line x1="15" y1="65" x2="40" y2="65" stroke="#ee2737" strokeWidth="1.5" opacity="0.6" />
-              <rect x="85" y="10" width="50" height="60" rx="3" fill="none" stroke="#ee2737" strokeWidth="1.5" opacity="0.5" />
-              <rect x="150" y="20" width="40" height="50" rx="3" fill="none" stroke="#ee2737" strokeWidth="1" opacity="0.3" />
-            </g>
-
-            {/* Decorative horizontal lines */}
-            <line x1="100" y1="50" x2="450" y2="50" stroke="#ee2737" strokeWidth="1" opacity="0.15" />
-            <line x1="1650" y1="370" x2="2000" y2="370" stroke="#ee2737" strokeWidth="1" opacity="0.15" />
-
-            {/* Corner accents */}
-            <rect x="30" y="30" width="40" height="3" fill="#ee2737" opacity="0.4" />
-            <rect x="30" y="30" width="3" height="40" fill="#ee2737" opacity="0.4" />
-            <rect x="2070" y="30" width="3" height="40" fill="#ee2737" opacity="0.4" />
-            <rect x="2067" y="30" width="40" height="3" fill="#ee2737" opacity="0.4" />
-            <rect x="30" y="387" width="40" height="3" fill="#ee2737" opacity="0.4" />
-            <rect x="30" y="350" width="3" height="40" fill="#ee2737" opacity="0.4" />
-            <rect x="2070" y="350" width="3" height="40" fill="#ee2737" opacity="0.4" />
-            <rect x="2067" y="387" width="40" height="3" fill="#ee2737" opacity="0.4" />
-
-            {/* Centered text */}
-            <text
-              x="1050"
-              y="205"
-              textAnchor="middle"
-              dominantBaseline="middle"
-              fill="#ee2737"
-              fontFamily="'Playfair Display', Georgia, serif"
-              fontSize="36"
-              fontWeight="bold"
-              letterSpacing="6"
-            >
-              LEGAL SUPPORT TEAM
-            </text>
-
-            {/* Decorative line under text */}
-            <line x1="650" y1="235" x2="1450" y2="235" stroke="#ee2737" strokeWidth="1.5" opacity="0.5" />
-            <circle cx="1050" cy="235" r="4" fill="#ee2737" opacity="0.6" />
-            <circle cx="1050" cy="235" r="8" fill="none" stroke="#ee2737" strokeWidth="1" opacity="0.3" />
-
-            {/* Subtitle decorative bars */}
-            <rect x="780" y="255" width="60" height="2" fill="#ee2737" opacity="0.3" />
-            <rect x="1160" y="255" width="60" height="2" fill="#ee2737" opacity="0.3" />
-
-            {/* Bottom decorative element */}
-            <g transform="translate(960, 320)" opacity="0.15">
-              <path d="M0,0 L45,-30 L90,0 L45,30 Z" fill="none" stroke="#ee2737" strokeWidth="1.5" />
-              <path d="M90,0 L135,-30 L180,0 L135,30 Z" fill="none" stroke="#ee2737" strokeWidth="1" />
-            </g>
-          </svg>
         </div>
       </div>
     </section>

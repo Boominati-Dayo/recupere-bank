@@ -27,7 +27,6 @@ interface WithdrawalRequest {
   paymentMethodId: string;
   amount: number;
   currency?: string;
-  screenshot?: string;
   accountDetails: {
     accountName: string;
     accountNumber: string;

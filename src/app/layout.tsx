@@ -8,8 +8,8 @@ import { Toaster } from 'react-hot-toast';
 import './globals.css';
 
 export const metadata = {
-  title: 'RecupereBank | Secure Private Banking & Wealth Management',
-  description: 'Secure your capital with RecupereBank. We provide elite private banking services alongside asset recovery and wealth management to protect and grow your wealth.',
+  title: 'RecupereBank | Banking & Asset Recovery',
+  description: 'RecupereBank combines a secure bank account with a legal team that recovers money lost to scams.',
   keywords: ['private banking', 'secure banking', 'wealth management', 'asset recovery', 'financial services', 'investment banking'],
   authors: [{ name: 'RecupereBank' }],
   creator: 'RecupereBank',
@@ -23,8 +23,8 @@ export const metadata = {
     locale: 'en_AU',
     url: 'https://recuperebank.com',
     siteName: 'RecupereBank',
-    title: 'RecupereBank - Secure Banking & Wealth Management',
-    description: 'Elite private banking and wealth management. Protect your capital with Swiss-level security.',
+    title: 'RecupereBank - Banking & Asset Recovery',
+    description: 'A secure bank account and an expert legal team working together to recover money lost to scams.',
     images: [
       {
         url: '/thumbnail.png',
@@ -36,8 +36,8 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'RecupereBank - Absolute Wealth Security',
-    description: 'Secure private banking and wealth management for global capital protection.',
+    title: 'RecupereBank - Banking & Asset Recovery',
+    description: 'A secure bank account and an expert legal team working together to recover money lost to scams.',
     images: ['/thumbnail.png'],
   },
   robots: {

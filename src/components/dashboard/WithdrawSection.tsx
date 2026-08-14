@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { ArrowUpDown, CheckCircle, AlertCircle, CreditCard, DollarSign, Clock, Calendar, ShieldCheck } from 'lucide-react';
+import { ArrowUpDown, CreditCard, Clock, Calendar, ShieldCheck } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { showSuccess, showError } from '@/utils/toast';
 import { getPaymentMethods, PaymentMethod } from '@/lib/services/PaymentMethodService';

@@ -558,7 +558,7 @@ const SignupForm = () => {
                 Global Private <span className="text-navy-600">Banking</span>
               </h3>
               <p className="text-gray-600 mb-8 text-lg">
-                Join thousands of clients worldwide who trust RecupereBank with their wealth management and asset recovery needs.
+                Join thousands of clients worldwide who trust RecupereBank with their banking and asset recovery needs.
               </p>
 
               <div className="space-y-6">
