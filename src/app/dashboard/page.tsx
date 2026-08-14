@@ -456,10 +456,10 @@ const DashboardContent = () => {
             <div className="flex flex-col h-full">
               <div className="p-3 bg-white flex items-center justify-between">
                 <Image
-                  src="/NexusLogo.png"
-                  alt="Nexus Banking"
-                  width={200}
-                  height={56}
+                  src="/RecupereLogoNameForLightBG.png"
+                  alt="RecupereBank"
+                  width={769}
+                  height={123}
                   className="h-12 mobile:h-14 w-auto object-contain"
                   priority
                 />
@@ -611,10 +611,10 @@ const DashboardContent = () => {
               <div className="flex items-center space-x-4">
                 <div className="lg:hidden">
                   <Image
-                    src="/NexusLogo.png"
-                    alt="Nexus Banking"
-                    width={200}
-                    height={56}
+                    src="/RecupereLogoNameForLightBG.png"
+                    alt="RecupereBank"
+                    width={769}
+                    height={123}
                     className="h-12 mobile:h-14 w-auto object-contain"
                     priority
                   />
@@ -1193,7 +1193,7 @@ export default function DashboardPage() {
       <div className="min-h-screen flex items-center justify-center bg-[#0b1626]">
         <div className="flex flex-col items-center space-y-4">
           <div className="w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-primary-500 font-bold tracking-widest uppercase text-xs">Nexus Secure Login...</p>
+          <p className="text-primary-500 font-bold tracking-widest uppercase text-xs">RecupereBank Secure Login...</p>
         </div>
       </div>
     }>

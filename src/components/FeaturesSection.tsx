@@ -48,14 +48,14 @@ const FeaturesSection = () => {
     {
       icon: <ThumbsUp className="w-6 h-6" />,
       title: 'Highly Recommended',
-      description: 'Nexus is highly recommended and well appreciated in the industry. You are safe with us.',
+      description: 'RecupereBank is highly recommended and well appreciated in the industry. You are safe with us.',
       image: '/DrawKit - Economy & Finance/PNG/6 - FINANCES.png',
       color: 'bg-primary-100 text-[#ee2737]',
     },
     {
       icon: <Globe className="w-6 h-6" />,
       title: 'Join a Growing Community',
-      description: 'Join a community of Nexus investors to increase and diversify your investment portfolio.',
+      description: 'Join a community of RecupereBank investors to increase and diversify your investment portfolio.',
       image: '/DrawKit - Economy & Finance/PNG/5 - RECRUITING.png',
       color: 'bg-indigo-100 text-indigo-600',
     },
@@ -92,11 +92,11 @@ const FeaturesSection = () => {
             className="flex justify-center mb-8"
           >
             <Image
-              src="/NexusLogo.png"
-              alt="Nexus Logo"
-              width={100}
-              height={100}
-              className="rounded-2xl shadow-lg"
+              src="/RecupereLogoNameForLightBG.png"
+              alt="RecupereBank"
+              width={769}
+              height={123}
+              className="h-12 w-auto"
             />
           </motion.div>
           <motion.h2
@@ -106,7 +106,7 @@ const FeaturesSection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-2xl mobile:text-3xl lg:text-5xl font-bold text-gray-900 mb-4 mobile:mb-6"
           >
-            Why Choose Nexus?
+            Why Choose RecupereBank?
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
@@ -173,11 +173,11 @@ const FeaturesSection = () => {
           <div className="relative z-10">
             <div className="text-center mb-10 mobile:mb-16">
               <h2 className="text-2xl mobile:text-3xl lg:text-4xl font-bold mb-4 mobile:mb-6">
-                How Nexus Works
+                How RecupereBank Works
               </h2>
               <p className="text-base mobile:text-xl text-gray-300 max-w-3xl mx-auto">
                 Our streamlined investment process is designed to be simple, secure, and profitable.
-                Here&apos;s how you can start building your wealth with Nexus.
+                Here&apos;s how you can start building your wealth with RecupereBank.
               </p>
             </div>
 

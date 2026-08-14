@@ -184,7 +184,7 @@ const SignupForm = () => {
           >
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Create Your Account</h2>
-              <p className="text-gray-600">Join Nexus and start your journey today</p>
+              <p className="text-gray-600">Join RecupereBank and start your journey today</p>
 
               {/* Step Indicator */}
               <div className="flex items-center justify-center mt-6 mb-4">
@@ -493,7 +493,7 @@ const SignupForm = () => {
                 Global Private <span className="text-navy-600">Banking</span>
               </h3>
               <p className="text-gray-600 mb-8 text-lg">
-                Join thousands of clients worldwide who trust Nexus with their wealth management and asset recovery needs.
+                Join thousands of clients worldwide who trust RecupereBank with their wealth management and asset recovery needs.
               </p>
 
               <div className="space-y-6">
@@ -536,7 +536,7 @@ const SignupForm = () => {
               className="mt-auto"
             >
               <div className="w-full h-48 bg-navy-900 flex items-center justify-center rounded-xl border border-navy-800">
-                <span className="text-primary-500/30 text-xs font-bold uppercase tracking-widest">Nexus Secure Infrastructure</span>
+                <span className="text-primary-500/30 text-xs font-bold uppercase tracking-widest">RecupereBank Secure Infrastructure</span>
               </div>
             </motion.div>
           </div>

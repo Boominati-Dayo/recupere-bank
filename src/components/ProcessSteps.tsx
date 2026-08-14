@@ -14,7 +14,7 @@ const steps = [
   {
     num: '03',
     title: 'Deposit & Grow',
-    desc: 'Fund your account and immediately access the full suite of Nexus banking, investment, and security services.',
+    desc: 'Fund your account and immediately access the full suite of RecupereBank banking, investment, and security services.',
   },
 ];
 

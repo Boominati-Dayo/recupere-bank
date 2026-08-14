@@ -18,7 +18,7 @@ const services = [
   },
   {
     num: '03',
-    title: 'Nexus Safe Vault',
+    title: 'RecupereBank Safe Vault',
     desc: 'Encrypted digital vault for sensitive assets, documents, and high-value holdings with multi-layer authentication — globally distributed security operations.',
     href: '/banking',
   },

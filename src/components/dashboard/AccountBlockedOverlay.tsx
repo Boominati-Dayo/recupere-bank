@@ -16,7 +16,7 @@ const AccountBlockedOverlay: React.FC<AccountBlockedOverlayProps> = ({ reason, u
         <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="fixed inset-0 z-[100] bg-navy-950/90 backdrop-blur-md flex items-center justify-center p-4 overflow-hidden"
+            className="fixed inset-0 z-[100] bg-[#0d1b2e]/90 backdrop-blur-md flex items-center justify-center p-4 overflow-hidden"
         >
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary-500/10 rounded-full blur-[120px]"></div>
@@ -74,7 +74,7 @@ const AccountBlockedOverlay: React.FC<AccountBlockedOverlayProps> = ({ reason, u
                 </button>
 
                 <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-8">
-                    Nexus Intelligence Force • Secure Core Compliance
+                    RecupereBank Intelligence Force • Secure Core Compliance
                 </p>
             </motion.div>
         </motion.div>

@@ -41,7 +41,7 @@ const DisclaimerPage = () => {
               <div className="prose prose-lg max-w-none text-gray-700">
                 <h2 className="text-2xl font-bold text-navy-900 mb-6 font-playfair">1. No Legal or Financial Advice</h2>
                 <p className="mb-6">
-                  The information provided by Nexus Banking Worldwide ("Nexus," "we," "us," or "our") on our website is for general informational purposes only. All information is provided in good faith, however, we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information on the site. Nexus is not a licensed legal practice in any specific jurisdiction and this website does not constitute legal advice.
+                  The information provided by RecupereBank Worldwide ("RecupereBank," "we," "us," or "our") on our website is for general informational purposes only. All information is provided in good faith, however, we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information on the site. RecupereBank is not a licensed legal practice in any specific jurisdiction and this website does not constitute legal advice.
                 </p>
 
                 <h2 className="text-2xl font-bold text-navy-900 mb-6 font-playfair">2. Asset Recovery Risks</h2>
@@ -61,7 +61,7 @@ const DisclaimerPage = () => {
 
                 <h2 className="text-2xl font-bold text-navy-900 mb-6 font-playfair">5. Professional Disclaimer</h2>
                 <p className="mb-6">
-                  Nexus operates as a specialised financial services entity under international regulatory oversight. While we employ forensic accountants and legal specialists, our services should not be seen as a replacement for independent legal counsel or financial planning. We encourage you to consult with independent professionals before making significant financial decisions.
+                  RecupereBank operates as a specialised financial services entity under international regulatory oversight. While we employ forensic accountants and legal specialists, our services should not be seen as a replacement for independent legal counsel or financial planning. We encourage you to consult with independent professionals before making significant financial decisions.
                 </p>
 
                 <div className="mt-12 p-6 bg-navy-50 rounded-lg border border-primary-200">

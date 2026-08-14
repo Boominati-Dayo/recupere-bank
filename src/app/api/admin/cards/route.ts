@@ -104,7 +104,7 @@ export const PUT = requireAdmin(async (request) => {
 
       // Send Email
       if (user.email) {
-        const subject = 'Your Virtual Card is Ready - Nexus';
+        const subject = 'Your Virtual Card is Ready - RecupereBank';
         const html = `
           <div style="font-family: Arial, sans-serif; color: #333;">
             <h2 style="color: #ee2737;">Virtual Card Approved</h2>
@@ -115,7 +115,7 @@ export const PUT = requireAdmin(async (request) => {
               <a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard" style="background-color: #ee2737; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">View Your Card</a>
             </div>
             <p>If you did not request this card, please contact our support team immediately.</p>
-            <p>Best regards,<br/>The Nexus Team</p>
+            <p>Best regards,<br/>The RecupereBank Team</p>
           </div>
         `;
         await sendEmail({
@@ -149,7 +149,7 @@ export const PUT = requireAdmin(async (request) => {
 
       // Send Email
       if (user.email) {
-        const subject = 'Virtual Card Request Declined - Nexus';
+        const subject = 'Virtual Card Request Declined - RecupereBank';
         const html = `
           <div style="font-family: Arial, sans-serif; color: #333;">
             <h2 style="color: #d9534f;">Card Request Declined</h2>
@@ -157,7 +157,7 @@ export const PUT = requireAdmin(async (request) => {
             <p>Unfortunately, your application for a <strong>${card.cardLevel}</strong> virtual card was declined.</p>
             ${reason ? `<p><strong>Reason:</strong> ${reason}</p>` : ''}
             <p>If you have any questions, please contact our support team.</p>
-            <p>Best regards,<br/>The Nexus Team</p>
+            <p>Best regards,<br/>The RecupereBank Team</p>
           </div>
         `;
         await sendEmail({

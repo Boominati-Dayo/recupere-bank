@@ -8,15 +8,15 @@ const FAQSection = () => {
 
   const faqs = [
     {
-      question: 'Is Nexus a Bank or a Law Firm?',
-      answer: 'We are both. Nexus Banking operates an internal specialist legal department alongside regulated financial services. This unique structure allows us to hold your funds securely while having the legal authority to fight for your assets — all under international regulatory oversight.',
+      question: 'Is RecupereBank a Bank or a Law Firm?',
+      answer: 'We are both. RecupereBank operates an internal specialist legal department alongside regulated financial services. This unique structure allows us to hold your funds securely while having the legal authority to fight for your assets — all under international regulatory oversight.',
     },
     {
       question: 'How does the "No Win, No Fee" recovery service work?',
       answer: 'For asset recovery cases, we charge $0 upfront. We only take a percentage fee (typically 10-20%) from the funds we successfully recover for you. If we fail to get your money back, you owe us nothing.',
     },
     {
-      question: 'Is my money safe with Nexus Banking?',
+      question: 'Is my money safe with RecupereBank?',
       answer: 'Absolutely. All client deposits are held with internationally regulated institutions and protected under deposit guarantee schemes up to USD $250,000. Our infrastructure uses military-grade encryption with 24/7 fraud monitoring from our global security operations centre.',
     },
     {

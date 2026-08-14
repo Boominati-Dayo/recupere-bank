@@ -39,13 +39,13 @@ const TermsPage = () => {
               className="bg-white rounded-2xl shadow-lg p-8 lg:p-12"
             >
               <div className="prose prose-lg max-w-none">
-                <h2 className="text-3xl font-bold text-gray-900 mb-6">1. About Nexus</h2>
+                <h2 className="text-3xl font-bold text-gray-900 mb-6">1. About RecupereBank</h2>
                 <p className="text-gray-700 mb-6">
-                  Nexus is a specialised financial institution and asset recovery agency that facilitates secure banking
+                  RecupereBank is a specialised financial institution and asset recovery agency that facilitates secure banking
                   operations and fund reclamation. We manage your financial assets through regulated banking procedures and
                   leverage our global network for efficient asset recovery. Our expert team handles all financial analysis,
                   security monitoring, and reclamation operations. You simply choose a financial plan, deposit your funds,
-                  and watch your balance grow through our automated banking systems. Nexus does all the
+                  and watch your balance grow through our automated banking systems. RecupereBank does all the
                   complex work while you benefit from our secure financial infrastructure.
                 </p>
 
@@ -53,7 +53,7 @@ const TermsPage = () => {
                 <p className="text-gray-700 mb-6">
                   <strong>Daily Rate and Yield:</strong> Yield represents the total percentage growth
                   you&apos;ll earn over the entire duration of your financial plan. Daily Rate is calculated by dividing the
-                  total yield by the number of days in your plan. Nexus calculates these rates based on our banking
+                  total yield by the number of days in your plan. RecupereBank calculates these rates based on our banking
                   performance and successful recovery operations. The rates reflect our expertise in
                   managing secure financial pathways and executing complex asset reclamation.
                 </p>
@@ -69,7 +69,7 @@ const TermsPage = () => {
 
                 <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">3. How Your Assets Grow</h2>
                 <p className="text-gray-700 mb-6">
-                  Nexus manages your funds through high-efficiency banking operations and asset recovery strategies.
+                  RecupereBank manages your funds through high-efficiency banking operations and asset recovery strategies.
                   We strategically allocate resources to ensure stable growth and maximise the success of reclamation activities.
                   Your account balance grows through these secure banking processes and professional recovery operations.
                   We then return your funds with the agreed-upon yield based on the plan you selected. This creates a
@@ -87,7 +87,7 @@ const TermsPage = () => {
 
                 <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">5. Financial Considerations</h2>
                 <p className="text-gray-700 mb-6">
-                  While Nexus employs secure banking strategies and advanced recovery techniques, all financial
+                  While RecupereBank employs secure banking strategies and advanced recovery techniques, all financial
                   activities are subject to market conditions and regulatory changes. Recovery operations depend on
                   external factors and cross-border financial protocols. Past performance does not guarantee future results.
                   You should only allocate funds that align with your financial capacity.
@@ -109,7 +109,7 @@ const TermsPage = () => {
 
                 <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">8. Modifications to Terms</h2>
                 <p className="text-gray-700 mb-6">
-                  Nexus reserves the right to modify these terms at any time. Users will be notified of significant
+                  RecupereBank reserves the right to modify these terms at any time. Users will be notified of significant
                   changes. Continued use of the platform constitutes acceptance of modified terms.
                 </p>
 

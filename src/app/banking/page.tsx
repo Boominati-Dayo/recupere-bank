@@ -6,14 +6,14 @@ import Image from 'next/image';
 import FraudInvestigationImg from '@/assets/images_for_pages/financialfraudinvestigation.png';
 
 export const metadata: Metadata = {
-    title: 'Private Digital Banking | Nexus Banking',
+    title: 'Private Digital Banking | RecupereBank',
     description: 'A modern, digital-only bank designed to support sustainable growth, commercial property investment, and secure asset recovery.',
 };
 
 const services = [
     { number: '01', title: 'Digital Private Banking', description: 'Full-spectrum private banking entirely online. Secure, compliant, and built for high-net-worth individuals.' },
     { number: '02', title: 'Commercial Property & Investment', description: 'Access institutional-grade property financing and structured investment vehicles for portfolio growth.' },
-    { number: '03', title: 'Nexus Safe Vault', description: 'Encrypted digital vault for sensitive assets, documents, and high-value holdings with multi-layer authentication.' },
+    { number: '03', title: 'RecupereBank Safe Vault', description: 'Encrypted digital vault for sensitive assets, documents, and high-value holdings with multi-layer authentication.' },
     { number: '04', title: 'Multi-Currency Accounts', description: 'Hold, convert and transact in 40+ currencies with competitive FX rates and real-time global settlements.' },
     { number: '05', title: 'Wealth Management', description: 'Dedicated advisors delivering bespoke investment strategies, estate planning, and long-term capital preservation.' },
     { number: '06', title: 'Bank-Grade Cyber Security', description: 'AES-256 encryption, biometric authentication, real-time fraud detection, and 24/7 threat monitoring.' },
@@ -102,7 +102,7 @@ export default function BankingServicesPage() {
                             <span className="text-[11px] font-bold tracking-[0.22em] text-secondary-500 uppercase">Private Banking</span>
                         </div>
                         <h1 className="text-5xl md:text-6xl xl:text-7xl font-['Playfair_Display'] font-black leading-[1.05] tracking-tight text-black mb-3">
-                            Welcome to<br />Nexus Finance
+                            Welcome to<br />RecupereBank Finance
                         </h1>
                         <p className="text-2xl md:text-3xl font-['Playfair_Display'] italic text-black/65 leading-tight mb-7">
                             A Modern, Digital-Only Private Bank.
@@ -172,7 +172,7 @@ export default function BankingServicesPage() {
                         </h2>
                         <div className="text-[15px] font-semibold text-white/70 mb-5">Tailored Account Types</div>
                         <p className="text-[13.5px] leading-relaxed text-white/60 mb-10">
-                            Every client&apos;s financial landscape is unique. Nexus Banking designs account structures that align with your goals — whether personal wealth preservation, corporate treasury, or international diversification.
+                            Every client&apos;s financial landscape is unique. RecupereBank designs account structures that align with your goals — whether personal wealth preservation, corporate treasury, or international diversification.
                         </p>
                         <Link
                             href="/signup"
@@ -216,7 +216,7 @@ export default function BankingServicesPage() {
                             {[
                                 { num: '01', title: 'Submit Documents', desc: 'Upload government-issued identification and proof of address securely through our encrypted client portal.' },
                                 { num: '02', title: 'KYC Verification', desc: 'Globally compliant identity verification conducted by our compliance team in line with international AML/CTF regulations.' },
-                                { num: '03', title: 'Deposit & Grow', desc: 'Fund your account and immediately access the full suite of Nexus banking, investment, and security services.' },
+                                { num: '03', title: 'Deposit & Grow', desc: 'Fund your account and immediately access the full suite of RecupereBank banking, investment, and security services.' },
                             ].map((step, i) => (
                                 <React.Fragment key={step.num}>
                                     <div className="flex-1 bg-white border-l-4 border-secondary-500 px-9 py-11 transition-all hover:shadow-[0_12px_40px_rgba(35,91,168,0.12)] hover:-translate-y-1">
@@ -255,7 +255,7 @@ export default function BankingServicesPage() {
                                 Banking Meets<br />Cyber Recovery.
                             </h2>
                             <p className="text-[15px] leading-relaxed text-white/55 max-w-[500px] mb-11">
-                                Nexus uniquely combines private banking infrastructure with a forensic recovery division — protecting your wealth and restoring it if compromised. No other institution offers this convergence of financial security and digital forensics.
+                                RecupereBank uniquely combines private banking infrastructure with a forensic recovery division — protecting your wealth and restoring it if compromised. No other institution offers this convergence of financial security and digital forensics.
                             </p>
                             <Link
                                 href="/asset-recovery"
@@ -283,7 +283,7 @@ export default function BankingServicesPage() {
                         Protect Your Capital Today.
                     </h2>
                     <p className="text-base font-light text-white/80 tracking-wide mb-12">
-                        Join thousands of clients who trust Nexus Banking with their most valuable financial assets.
+                        Join thousands of clients who trust RecupereBank with their most valuable financial assets.
                     </p>
                     <div className="flex flex-wrap gap-5 justify-center">
                         <Link

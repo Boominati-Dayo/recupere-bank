@@ -21,7 +21,7 @@ export default function BlogPage() {
               transition={{ duration: 0.8 }}
             >
               <h1 className="text-4xl lg:text-6xl font-bold mb-6">
-                Nexus <span className="text-red-400">Blog</span>
+                RecupereBank <span className="text-red-400">Blog</span>
               </h1>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
                 Stay informed with the latest insights, market analysis, and investment strategies 

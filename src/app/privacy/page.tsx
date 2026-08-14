@@ -41,7 +41,7 @@ const PrivacyPage = () => {
               <div className="prose prose-lg max-w-none">
                 <h2 className="text-3xl font-bold text-gray-900 mb-6">1. Information We Collect</h2>
                 <p className="text-gray-700 mb-6">
-                  Nexus collects information necessary to provide our banking and recovery services. This includes personal
+                  RecupereBank collects information necessary to provide our banking and recovery services. This includes personal
                   information such as name, email address, contact information, and financial details required for
                   secure deposits and withdrawals. We also collect information about your account activities, balances,
                   and transaction history.
@@ -61,13 +61,13 @@ const PrivacyPage = () => {
                   <li>Comply with international banking and recovery regulations</li>
                 </ul>
 
-                <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">3. How Nexus Operates</h2>
+                <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">3. How RecupereBank Operates</h2>
                 <p className="text-gray-700 mb-6">
-                  Nexus operates as a specialised bank and recovery agency. We manage your funds through secure
+                  RecupereBank operates as a specialised bank and recovery agency. We manage your funds through secure
                   financial pathways and leverage our global infrastructure for asset reclamation.
                   Our expert team handles all technical aspects, financial analysis, and recovery operations.
                   Growth is generated through these optimized banking processes and successful reclamation projects.
-                  Nexus retains a portion of the generated proceeds as a service fee for our infrastructure and expertise.
+                  RecupereBank retains a portion of the generated proceeds as a service fee for our infrastructure and expertise.
                   This arrangement allows you to benefit from our secure financial systems without managing technical
                   banking or recovery complexities yourself.
                 </p>
@@ -76,13 +76,13 @@ const PrivacyPage = () => {
                 <p className="text-gray-700 mb-6">
                   We track your account performance, daily yields, plan status, and balances. This data is
                   used to manage your returns based on the banking plans you select. Daily rates and yield percentages
-                  are determined by Nexus based on our banking performance and successful recovery
+                  are determined by RecupereBank based on our banking performance and successful recovery
                   operations. This data helps us ensure the stability and growth of each plan.
                 </p>
 
                 <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">5. Data Security</h2>
                 <p className="text-gray-700 mb-6">
-                  Nexus employs industry-standard security measures to protect your personal and financial
+                  RecupereBank employs industry-standard security measures to protect your personal and financial
                   information. We use encryption, secure servers, and access controls to safeguard your data. However,
                   no system is 100% secure, and you acknowledge that transmission of data over the internet carries inherent risks.
                 </p>
@@ -118,19 +118,19 @@ const PrivacyPage = () => {
 
                 <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">9. Children&apos;s Privacy</h2>
                 <p className="text-gray-700 mb-6">
-                  Nexus services are not intended for individuals under 18 years of age. We do not knowingly collect
+                  RecupereBank services are not intended for individuals under 18 years of age. We do not knowingly collect
                   personal information from children.
                 </p>
 
                 <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">10. International Users</h2>
                 <p className="text-gray-700 mb-6">
-                  If you are using Nexus from outside the country where our servers are located, your information
+                  If you are using RecupereBank from outside the country where our servers are located, your information
                   may be transferred across international borders. By using our services, you consent to such transfers.
                 </p>
 
                 <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">11. Changes to Privacy Policy</h2>
                 <p className="text-gray-700 mb-6">
-                  Nexus may update this privacy policy from time to time. We will notify users of significant
+                  RecupereBank may update this privacy policy from time to time. We will notify users of significant
                   changes via email or platform notification. Continued use of our services after changes constitutes
                   acceptance of the updated policy.
                 </p>

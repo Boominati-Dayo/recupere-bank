@@ -161,7 +161,7 @@ const SupportSection = () => {
                   </div>
                   <div>
                     <p className="font-medium text-gray-900 text-sm mobile:text-base">Email Support</p>
-                    <p className="text-xs mobile:text-sm text-gray-600">support@nexusbanking.com</p>
+                    <p className="text-xs mobile:text-sm text-gray-600">support@recuperebank.com</p>
                     <p className="text-[10px] mobile:text-xs text-gray-500">Response within 24 hours</p>
                   </div>
                 </div>
@@ -197,7 +197,7 @@ const SupportSection = () => {
                 <div className="flex items-start space-x-2.5 mobile:space-x-3">
                   <MapPin className="w-4 h-4 mobile:w-5 mobile:h-5 text-gray-400 mt-1 shrink-0" />
                   <div>
-                    <p className="font-medium text-gray-900 text-sm mobile:text-base">Nexus Banking Worldwide</p>
+                    <p className="font-medium text-gray-900 text-sm mobile:text-base">RecupereBank Worldwide</p>
                     <p className="text-xs mobile:text-sm text-gray-600">Global Headquarters</p>
                     <p className="text-xs mobile:text-sm text-gray-600">Digital-first, worldwide</p>
                   </div>

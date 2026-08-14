@@ -34,7 +34,7 @@ const AssetRecoverySection = () => {
           Banking Meets<br />Cyber Recovery.
         </h2>
         <p className="text-sm leading-relaxed text-white/55 max-w-md mb-11">
-          Nexus uniquely combines private banking infrastructure with a forensic recovery division — protecting your wealth and restoring it if compromised. No other institution offers this convergence of financial security and digital forensics.
+          RecupereBank uniquely combines private banking infrastructure with a forensic recovery division — protecting your wealth and restoring it if compromised. No other institution offers this convergence of financial security and digital forensics.
         </p>
         <Link
           href="/asset-recovery/report"

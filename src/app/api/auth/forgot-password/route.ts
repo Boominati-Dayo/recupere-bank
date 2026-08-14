@@ -26,15 +26,15 @@ export async function POST(request: NextRequest) {
 
     // Send password reset email
     try {
-      const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://nexusbanking.com'}/reset-password/${resetToken}`;
+      const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://recuperebank.com'}/reset-password/${resetToken}`;
 
       await sendEmail({
         to: email,
-        subject: 'Reset Your Password - Nexus',
+        subject: 'Reset Your Password - RecupereBank',
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
             <h2 style="color: #dc2626;">Password Reset Request</h2>
-            <p>You requested a password reset for your Nexus account.</p>
+            <p>You requested a password reset for your RecupereBank account.</p>
             <p>Click the button below to reset your password:</p>
             <div style="text-align: center; margin: 30px 0;">
               <a href="${resetUrl}" style="background-color: #dc2626; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">Reset Password</a>
@@ -44,12 +44,12 @@ export async function POST(request: NextRequest) {
             <p>This link will expire in 1 hour.</p>
             <p>If you didn't request a password reset, please ignore this email.</p>
             <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
-            <p style="color: #666; font-size: 12px;">© 2024 Nexus. All rights reserved.</p>
+            <p style="color: #666; font-size: 12px;">© 2024 RecupereBank. All rights reserved.</p>
           </div>
         `,
         text: `Password Reset Request
 
-You requested a password reset for your Nexus account.
+You requested a password reset for your RecupereBank account.
 
 Click the link below to reset your password:
 ${resetUrl}
@@ -58,7 +58,7 @@ This link will expire in 1 hour.
 
 If you didn't request a password reset, please ignore this email.
 
-© 2024 Nexus. All rights reserved.`
+© 2024 RecupereBank. All rights reserved.`
       });
 
       console.log('Password reset email sent successfully to:', email);

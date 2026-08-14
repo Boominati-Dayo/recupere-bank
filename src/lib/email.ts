@@ -40,7 +40,7 @@ export const sendEmail = async (options: EmailOptions): Promise<void> => {
       return;
     }
 
-    const from = process.env.EMAIL_FROM || `"Nexus - Trust Bank" <${process.env.SMTP_USER}>`;
+    const from = process.env.EMAIL_FROM || `"RecupereBank - Trust Bank" <${process.env.SMTP_USER}>`;
 
     const info = await transporter.sendMail({
       from,
@@ -61,9 +61,9 @@ export const sendEmail = async (options: EmailOptions): Promise<void> => {
 // Base HTML template wrapper
 export const getBaseTemplate = (title: string, content: string, userName?: string) => {
   const year = new Date().getFullYear();
-  const appName = 'Nexus';
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://nexusbanking.com';
-  const logoUrl = `${appUrl}/NexusLogo.png`;
+  const appName = 'RecupereBank';
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://recuperebank.com';
+  const logoUrl = `${appUrl}/RecupereLogoNameForLightBG.png`;
 
   return `
     <!DOCTYPE html>
@@ -220,11 +220,11 @@ export const getBaseTemplate = (title: string, content: string, userName?: strin
 export const emailTemplates = {
   // 1. Email Verification
   emailVerification: (userName: string, verifyUrl: string) => ({
-    subject: 'Verify Your Email - Nexus',
+    subject: 'Verify Your Email - RecupereBank',
     html: getBaseTemplate(
       'Verify Your Email',
       `
-      <p>Welcome to Nexus! We're excited to have you on board.</p>
+      <p>Welcome to RecupereBank! We're excited to have you on board.</p>
       <p>To get started and access all our private banking features, please verify your email address by clicking the button below:</p>
       <div class="button-container">
         <a href="${verifyUrl}" class="button">Verify Email Address</a>
@@ -234,16 +234,16 @@ export const emailTemplates = {
       `,
       userName
     ),
-    text: `Hello ${userName}, Welcome to Nexus! Please verify your email by following this link: ${verifyUrl}`
+    text: `Hello ${userName}, Welcome to RecupereBank! Please verify your email by following this link: ${verifyUrl}`
   }),
 
   // 2. Password Reset
   passwordReset: (userName: string, resetUrl: string) => ({
-    subject: 'Reset Your Password - Nexus',
+    subject: 'Reset Your Password - RecupereBank',
     html: getBaseTemplate(
       'Reset Your Password',
       `
-      <p>We received a request to reset your password for your Nexus account.</p>
+      <p>We received a request to reset your password for your RecupereBank account.</p>
       <p>If you made this request, click the button below to set a new password:</p>
       <div class="button-container">
         <a href="${resetUrl}" class="button">Reset Password</a>
@@ -253,17 +253,17 @@ export const emailTemplates = {
       `,
       userName
     ),
-    text: `Hello ${userName}, someone requested a password reset for your Nexus account. Use this link: ${resetUrl}`
+    text: `Hello ${userName}, someone requested a password reset for your RecupereBank account. Use this link: ${resetUrl}`
   }),
 
   // 3. Welcome (Sign up)
   welcome: (userName: string) => ({
-    subject: 'Welcome to Nexus! 🚀',
+    subject: 'Welcome to RecupereBank! 🚀',
     html: getBaseTemplate(
       'Welcome Aboard!',
       `
       <p>Your account has been successfully created. We're thrilled to have you join our community!</p>
-      <p>With Nexus, you can:</p>
+      <p>With RecupereBank, you can:</p>
       <ul>
         <li>Securely hold and manage assets</li>
         <li>Track recovery progress in real-time</li>
@@ -277,14 +277,14 @@ export const emailTemplates = {
       `,
       userName
     ),
-    text: `Hello ${userName}, Welcome to Nexus! Your account has been created successfully.`
+    text: `Hello ${userName}, Welcome to RecupereBank! Your account has been created successfully.`
   }),
 
   // 4. Deposit Confirmation
   depositConfirmation: (userName: string, amount: number, transactionId: string, status: string = 'approved', paymentMethodName: string = 'Bank Transfer', currency: string = 'USD') => {
     const sym = getCurrencySymbol(currency);
     return {
-    subject: `Deposit ${status === 'approved' ? 'Successful' : 'Pending'} - Nexus`,
+    subject: `Deposit ${status === 'approved' ? 'Successful' : 'Pending'} - RecupereBank`,
     html: getBaseTemplate(
       `Deposit ${status === 'approved' ? 'Confirmed' : 'Received'}`,
       `
@@ -311,7 +311,7 @@ export const emailTemplates = {
   withdrawalConfirmation: (userName: string, amount: number, transactionId: string, status: string = 'pending', paymentMethodName: string = 'Bank Transfer', currency: string = 'USD') => {
     const sym = getCurrencySymbol(currency);
     return {
-    subject: `Withdrawal ${status === 'approved' ? 'Processed' : 'Request Received'} - Nexus`,
+    subject: `Withdrawal ${status === 'approved' ? 'Processed' : 'Request Received'} - RecupereBank`,
     html: getBaseTemplate(
       `Withdrawal ${status === 'approved' ? 'Successful' : 'Request'}`,
       `
@@ -338,7 +338,7 @@ export const emailTemplates = {
   moneyTransfer: (userName: string, amount: number, recipientEmail: string, type: 'sent' | 'received', currency: string = 'USD') => {
     const sym = getCurrencySymbol(currency);
     return {
-    subject: `Money Transfer ${type === 'sent' ? 'to' : 'from'} ${recipientEmail} - Nexus`,
+    subject: `Money Transfer ${type === 'sent' ? 'to' : 'from'} ${recipientEmail} - RecupereBank`,
     html: getBaseTemplate(
       `Money ${type === 'sent' ? 'Sent' : 'Received'}`,
       `
@@ -362,7 +362,7 @@ export const emailTemplates = {
   dailyEarnings: (userName: string, amount: number, planName: string, currency: string = 'USD') => {
     const sym = getCurrencySymbol(currency);
     return {
-    subject: `Daily Update Credited: ${sym}${amount.toFixed(2)} - Nexus`,
+    subject: `Daily Update Credited: ${sym}${amount.toFixed(2)} - RecupereBank`,
     html: getBaseTemplate(
       'Daily Progress Credited',
       `
@@ -372,7 +372,7 @@ export const emailTemplates = {
         <tr><td>Amount:</td><td class="highlight">${sym}${amount.toFixed(2)}</td></tr>
         <tr><td>Date:</td><td>${new Date().toLocaleDateString()}</td></tr>
       </table>
-      <p>Your balance has been updated. Keep growing with Nexus!</p>
+      <p>Your balance has been updated. Keep growing with RecupereBank!</p>
       <div class="button-container">
         <a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard" class="button">View Details</a>
       </div>
@@ -387,7 +387,7 @@ export const emailTemplates = {
   planSubscription: (userName: string, amount: number, planName: string, currency: string = 'USD') => {
     const sym = getCurrencySymbol(currency);
     return {
-    subject: `Account Activated: ${planName} - Nexus`,
+    subject: `Account Activated: ${planName} - RecupereBank`,
     html: getBaseTemplate(
       'Account Strategy Started!',
       `
@@ -412,7 +412,7 @@ export const emailTemplates = {
   planChange: (userName: string, oldPlan: string, newPlan: string, amount: number, currency: string = 'USD') => {
     const sym = getCurrencySymbol(currency);
     return {
-    subject: `Account Plan Updated - Nexus`,
+    subject: `Account Plan Updated - RecupereBank`,
     html: getBaseTemplate(
       'Plan Successfully Updated',
       `
@@ -464,7 +464,7 @@ export const emailTemplates = {
   planCompleted: (userName: string, planName: string, amount: number, capitalReturned: boolean, currency: string = 'USD') => {
     const sym = getCurrencySymbol(currency);
     return {
-    subject: `Account Strategy Completed: ${planName} - Nexus`,
+    subject: `Account Strategy Completed: ${planName} - RecupereBank`,
     html: getBaseTemplate(
       'Account Strategy Completed',
       `
@@ -500,12 +500,12 @@ export const emailTemplates = {
       </p>
       `
     ),
-    text: `Nexus Intelligence Update: ${subject}`
+    text: `RecupereBank Intelligence Update: ${subject}`
   }),
 
   // 13. Support Response Protocol
   supportResponse: (userName: string, subject: string, reply: string) => ({
-    subject: `Secure Response: ${subject} - Nexus`,
+    subject: `Secure Response: ${subject} - RecupereBank`,
     html: getBaseTemplate(
       'Authorised Intelligence Response',
       `
@@ -525,7 +525,7 @@ export const emailTemplates = {
 
   // 14. Recovery Claim Confirmation
   recoveryClaimConfirmation: (userName: string, claimNumber: string, scamType: string) => ({
-    subject: `Claim Received: Case #${claimNumber} - Nexus`,
+    subject: `Claim Received: Case #${claimNumber} - RecupereBank`,
     html: getBaseTemplate(
       'Recovery Claim Filed',
       `
@@ -575,7 +575,7 @@ export const emailTemplates = {
 
   // 16. Recovery Claim Status Update
   recoveryClaimStatusUpdate: (userName: string, claimNumber: string, status: string, message: string) => ({
-    subject: `Case Update: Case #${claimNumber} Status Shift - Nexus`,
+    subject: `Case Update: Case #${claimNumber} Status Shift - RecupereBank`,
     html: getBaseTemplate(
       'Forensic Case Intelligence Update',
       `
@@ -602,7 +602,7 @@ export const emailTemplates = {
   recoveryClaimCompletion: (userName: string, claimNumber: string, recoveredAmount: number, serviceFee: number, currency: string = 'USD') => {
     const sym = getCurrencySymbol(currency);
     return {
-    subject: `FINAL AUTHORIZATION: Case #${claimNumber} Funds Ready - Nexus`,
+    subject: `FINAL AUTHORIZATION: Case #${claimNumber} Funds Ready - RecupereBank`,
     html: getBaseTemplate(
       'Funds Recovery Protocol Finalized',
       `
@@ -613,7 +613,7 @@ export const emailTemplates = {
         <tr><td>Service Fee:</td><td>${sym}${serviceFee.toLocaleString()}</td></tr>
         <tr><td>Net Payout:</td><td class="highlight" style="color: #10b981;">${sym}${(recoveredAmount - serviceFee).toLocaleString()}</td></tr>
       </table>
-      <p><strong>Action Required:</strong> To receive your funds, you must have an active Nexus account. If you haven't created one, please use the button below to register. Once your account is active and the service fee is cleared, the funds will be instantly credited to your Safe Vault.</p>
+      <p><strong>Action Required:</strong> To receive your funds, you must have an active RecupereBank account. If you haven't created one, please use the button below to register. Once your account is active and the service fee is cleared, the funds will be instantly credited to your Safe Vault.</p>
       <div class="button-container">
         <a href="${process.env.NEXT_PUBLIC_APP_URL}/signup" class="button">Create Account / Login</a>
       </div>
@@ -647,7 +647,7 @@ export const emailTemplates = {
     };
 
     return {
-      subject: `Account Status Update: ${status.toUpperCase()} - Nexus`,
+      subject: `Account Status Update: ${status.toUpperCase()} - RecupereBank`,
       html: getBaseTemplate(
         statusTitles[status],
         `

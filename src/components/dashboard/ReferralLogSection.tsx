@@ -22,7 +22,7 @@ const ReferralLogSection = () => {
   const [referralStats, setReferralStats] = useState<ReferralStats | null>(null);
   const [loading, setLoading] = useState(true);
   
-  const referralLink = `https://nexusbanking.com/ref/${userProfile?.userCode || 'loading...'}`;
+  const referralLink = `https://recuperebank.com/ref/${userProfile?.userCode || 'loading...'}`;
 
   // Fetch referral stats
   useEffect(() => {

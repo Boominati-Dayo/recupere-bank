@@ -23,7 +23,7 @@ const testimonialData: TestimonialData[] = [
     image: Proof1,
     title: 'Crypto Romance Recovery',
     tag: 'Case Log #4492 - USD $85,000 Recovered',
-    description: 'A victim lost their life savings to a "Liquidity Mining" scam. Nexus traced the funds across three international exchanges, issued a legal freeze via international courts, and successfully repatriated USD $85,400 within 14 days.'
+    description: 'A victim lost their life savings to a "Liquidity Mining" scam. RecupereBank traced the funds across three international exchanges, issued a legal freeze via international courts, and successfully repatriated USD $85,400 within 14 days.'
   },
   {
     image: Proof2,
@@ -35,7 +35,7 @@ const testimonialData: TestimonialData[] = [
     image: Proof3,
     title: 'Phishing Asset Reclamation',
     tag: 'Case Log #3981 - Full Payout Secured',
-    description: 'After a sophisticated phishing attack drained a client\'s safe vault, Nexus\'s forensic accountants provided incontrovertible evidence of illegal access, forcing the custodial platform to honour a full loss reimbursement.'
+    description: 'After a sophisticated phishing attack drained a client\'s safe vault, RecupereBank\'s forensic accountants provided incontrovertible evidence of illegal access, forcing the custodial platform to honour a full loss reimbursement.'
   },
   {
     image: Proof4,

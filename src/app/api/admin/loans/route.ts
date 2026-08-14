@@ -107,13 +107,13 @@ export const PUT = requireAdmin(async (request) => {
           <div style="background: #fdf6ec; border: 1px solid #faecc5; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <p style="margin: 0; font-weight: bold; color: #8a6d3b;">Next Steps:</p>
             <ol>
-              <li>Log in to your Nexus Dashboard.</li>
+              <li>Log in to your RecupereBank Dashboard.</li>
               <li>Navigate to the "Loan Services" section.</li>
               <li>Follow the disbursement instructions provided in your active loan details.</li>
             </ol>
           </div>
           <p>If you have any questions, please contact our financial services department.</p>
-          <p>Best regards,<br/>The Nexus Team</p>
+          <p>Best regards,<br/>The RecupereBank Team</p>
         </div>
       `;
 
@@ -151,7 +151,7 @@ export const PUT = requireAdmin(async (request) => {
           <p>We regret to inform you that your recent loan application for <strong>${loan.currency || user.currency || 'USD'} ${loan.amount.toLocaleString()}</strong> (${loan.facility}) has been <strong>REJECTED</strong>.</p>
           ${rejectionReason ? `<p><strong>Reason provided:</strong> ${rejectionReason}</p>` : ''}
           <p>If you have any questions or wish to appeal this decision, please contact our support team.</p>
-          <p>Best regards,<br/>The Nexus Team</p>
+          <p>Best regards,<br/>The RecupereBank Team</p>
         </div>
       `;
 

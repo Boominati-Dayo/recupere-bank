@@ -197,7 +197,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-500">Email (PGP Available)</p>
-                    <a href="mailto:admin@nexusbanking.com" className="text-lg font-bold text-navy-900 hover:text-primary-500 transition-colors lowercase">admin@nexusbanking.com</a>
+                    <a href="mailto:admin@recuperebank.com" className="text-lg font-bold text-navy-900 hover:text-primary-500 transition-colors lowercase">admin@recuperebank.com</a>
                   </div>
                 </div>
 

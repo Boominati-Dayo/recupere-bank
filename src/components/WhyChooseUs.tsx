@@ -239,7 +239,7 @@ export default function WhyChooseUs() {
           Tailored Account Types
         </p>
         <p className="text-sm leading-relaxed text-white/60 mb-10">
-          Every client financial landscape is unique. Nexus designs account structures that align with your goals — whether personal wealth preservation, corporate treasury, or international diversification.
+          Every client financial landscape is unique. RecupereBank designs account structures that align with your goals — whether personal wealth preservation, corporate treasury, or international diversification.
         </p>
         <Link
           href="/signup"

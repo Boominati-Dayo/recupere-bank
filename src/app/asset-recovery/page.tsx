@@ -6,7 +6,7 @@ import Image from 'next/image';
 import FraudInvestigationImg from '@/assets/images_for_pages/financialfraudinvestigation.png';
 
 export const metadata: Metadata = {
-    title: 'Asset Recovery | Nexus Banking',
+    title: 'Asset Recovery | RecupereBank',
     description: 'Specialized forensic analysis and legal recovery for victims of crypto, forex, and romance scams. Get your cashback.',
 };
 
@@ -245,10 +245,10 @@ export default function AssetRecoveryPage() {
                         </h2>
                         <div className="w-40 h-1 bg-primary-500 my-6" />
                         <p className="text-base leading-relaxed text-gray-600 max-w-[480px] mb-7 relative z-20">
-                            Our engagement model is built entirely around your outcome. Nexus Banking assumes full operational cost — forensic analysis, legal filings, and international coordination — with zero upfront charges to you. We only collect a success-based fee when funds are confirmed recovered and returned to your account.
+                            Our engagement model is built entirely around your outcome. RecupereBank assumes full operational cost — forensic analysis, legal filings, and international coordination — with zero upfront charges to you. We only collect a success-based fee when funds are confirmed recovered and returned to your account.
                         </p>
                         <p className="text-[11px] text-gray-400 leading-relaxed max-w-[460px] italic relative z-20">
-                            *Success fees vary between 15–25% depending on case complexity, jurisdiction, and recovery amount. All fee structures are confirmed in writing prior to engagement commencement. Nexus Banking operates under international regulatory oversight.
+                            *Success fees vary between 15–25% depending on case complexity, jurisdiction, and recovery amount. All fee structures are confirmed in writing prior to engagement commencement. RecupereBank operates under international regulatory oversight.
                         </p>
                     </div>
                     <div className="w-full lg:w-[40%] bg-primary-500 flex flex-col justify-center items-start px-8 md:px-16 py-20 relative overflow-hidden">

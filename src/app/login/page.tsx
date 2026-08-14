@@ -105,7 +105,7 @@ const LoginPage = () => {
           >
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome Back</h2>
-              <p className="text-gray-600">Sign in to your Nexus account</p>
+              <p className="text-gray-600">Sign in to your RecupereBank account</p>
             </div>
 
             {!showForgotPassword ? (
@@ -347,9 +347,9 @@ const LoginPage = () => {
                 <img src="https://placehold.co/800x400/0b1626/c9933a?text=Private+Banking+Network" alt="Private Banking Pattern" className="w-full h-full object-cover" />
               </div>
               <div className="relative z-10">
-                <h3 className="text-xl font-bold mb-3 text-primary-500">New to Nexus?</h3>
+                <h3 className="text-xl font-bold mb-3 text-primary-500">New to RecupereBank?</h3>
                 <p className="text-gray-300 mb-6 leading-relaxed">
-                  Join thousands of clients who trust Nexus for their financial and legal security. Experience private banking designed for asset protection.
+                  Join thousands of clients who trust RecupereBank for their financial and legal security. Experience private banking designed for asset protection.
                 </p>
                 <button
                   onClick={() => router.push('/signup')}
@@ -376,7 +376,7 @@ const LoginPage = () => {
                   <div className="w-8 h-8 rounded-full bg-navy-50 flex items-center justify-center">
                     <Mail className="h-4 w-4 text-navy-600" />
                   </div>
-                  <span className="text-sm font-medium text-gray-700">support@nexusbanking.com</span>
+                  <span className="text-sm font-medium text-gray-700">support@recuperebank.com</span>
                 </div>
                 <div className="flex items-center space-x-3 mt-3">
                   <div className="w-8 h-8 rounded-full bg-navy-50 flex items-center justify-center">

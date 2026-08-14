@@ -10,12 +10,12 @@ import LegalOfficeImg from '@/assets/images_for_pages/legalOffice600-800.png';
 
 
 export const metadata: Metadata = {
-    title: 'About Us | Nexus Banking',
+    title: 'About Us | RecupereBank',
     description: 'Founded by ex-prosecutors and forensic accountants to bridge the gap between law enforcement and banking.',
 };
 
 const team = [
-    { name: 'Jonathan Sterling', role: 'CEO', bio: 'Former federal prosecutor with 20 years prosecuting complex financial crime. Sterling architected Nexus Banking\'s legal strategy framework and drives the firm\'s international expansion.', title: 'Jonathan<br>Sterling' },
+    { name: 'Jonathan Sterling', role: 'CEO', bio: 'Former federal prosecutor with 20 years prosecuting complex financial crime. Sterling architected RecupereBank\'s legal strategy framework and drives the firm\'s international expansion.', title: 'Jonathan<br>Sterling' },
     { name: 'Elena Rostova', role: 'Head of Forensic Accounting', bio: 'Previously a Senior Director at a Big Four forensic practice, Elena has led asset-tracing engagements across 30+ jurisdictions involving cumulative losses exceeding USD $4 billion.', title: 'Elena<br>Rostova' },
     { name: 'Marcus Chen', role: 'Chief Legal Officer', bio: 'An expert in cross-border banking litigation and international arbitration, Marcus has represented sovereign wealth funds and high-net-worth individuals before leading financial dispute tribunals worldwide.', title: 'Marcus<br>Chen' },
 ];
@@ -31,7 +31,7 @@ const timelinePhases = [
     { label: 'Phase II', title: 'International Legal Team Assembled' },
     { label: 'Phase III', title: 'Licensed Banking Infrastructure Built' },
     { label: 'Phase IV', title: 'Global Network Created' },
-    { label: 'Phase V', title: 'Nexus Banking Worldwide Launch' },
+    { label: 'Phase V', title: 'RecupereBank Worldwide Launch' },
 ];
 
 const networkStats = [
@@ -48,7 +48,7 @@ export default function AboutPage() {
                 {/* ─── SECTION 1: HERO SPLIT ─── */}
                 <section className="flex flex-col lg:flex-row min-h-screen">
                     <div className="w-full lg:w-[60%] bg-white px-8 md:px-16 lg:px-20 xl:px-24 py-24 lg:py-0 flex flex-col justify-center">
-                        <div className="text-[11px] font-bold tracking-[0.25em] text-primary-500 uppercase mb-7">About Nexus</div>
+                        <div className="text-[11px] font-bold tracking-[0.25em] text-primary-500 uppercase mb-7">About RecupereBank</div>
                         <h1 className="text-6xl md:text-7xl xl:text-[120px] font-['Playfair_Display'] font-black leading-[0.95] tracking-tight text-black mb-7">
                             Our Mission.
                         </h1>
@@ -104,13 +104,13 @@ export default function AboutPage() {
                             <h2 className="text-4xl md:text-5xl xl:text-6xl font-['Playfair_Display'] font-black tracking-tight text-black mb-4">The Origin</h2>
                             <p className="text-xl font-bold text-secondary-500 mb-7 tracking-tight">Built by Investigators.</p>
                             <p className="text-[15px] leading-relaxed text-gray-600 max-w-[440px]">
-                                Nexus Banking was founded by a coalition of former prosecutors, forensic accountants, and senior banking compliance officers who recognised a critical gap in global financial dispute resolution. Frustrated by siloed systems that allowed bad actors to exploit the seams between local jurisdictions and international banking protocol, our founders built a firm that operates fluently across both worlds — combining investigative rigour with institutional-grade financial authority to recover assets where others simply cannot reach.
+                                RecupereBank was founded by a coalition of former prosecutors, forensic accountants, and senior banking compliance officers who recognised a critical gap in global financial dispute resolution. Frustrated by siloed systems that allowed bad actors to exploit the seams between local jurisdictions and international banking protocol, our founders built a firm that operates fluently across both worlds — combining investigative rigour with institutional-grade financial authority to recover assets where others simply cannot reach.
                             </p>
                         </div>
                     </div>
                     <div className="w-full lg:w-1/2 bg-muted-400 flex items-center justify-center px-8 py-16">
                         <div className="relative w-full max-w-[520px] aspect-[4/3] overflow-hidden bg-navy-800">
-                            <Image src={LegalOfficeImg} alt="Nexus Banking legal office" fill className="object-cover" />
+                            <Image src={LegalOfficeImg} alt="RecupereBank legal office" fill className="object-cover" />
                         </div>
                     </div>
                 </section>
@@ -172,7 +172,7 @@ export default function AboutPage() {
                         <h2 className="text-4xl md:text-5xl xl:text-[56px] font-['Playfair_Display'] font-black text-white tracking-tight leading-[1.05] mb-6">Leadership Team</h2>
                         <p className="text-base font-light text-white/75 leading-relaxed mb-7">Professionals from law, finance, and forensic intelligence.</p>
                         <p className="text-sm leading-relaxed text-white/60">
-                            Each member of the Nexus Banking leadership team brings decades of frontline experience — drawn from global regulatory agencies, tier-one investment banks, and forensic consultancies — to bear on the most complex financial recovery mandates in the world.
+                            Each member of the RecupereBank leadership team brings decades of frontline experience — drawn from global regulatory agencies, tier-one investment banks, and forensic consultancies — to bear on the most complex financial recovery mandates in the world.
                         </p>
                     </div>
                     <div className="w-full lg:w-[60%] bg-white px-8 md:px-16 lg:px-[72px] py-24 flex items-center">
@@ -237,7 +237,7 @@ export default function AboutPage() {
                                 ))}
                             </div>
                             <p className="text-[15px] leading-relaxed text-gray-600 max-w-[540px]">
-                                The Nexus Banking network spans six continents and more than forty legal jurisdictions, anchored by our global headquarters and permanent offices in the world&apos;s most critical financial centres. Our banking relationships cover every major correspondent banking corridor, and our legal affiliates are qualified practitioners under international law — enabling seamless, enforceable recovery operations wherever your assets reside.
+                                The RecupereBank network spans six continents and more than forty legal jurisdictions, anchored by our global headquarters and permanent offices in the world&apos;s most critical financial centres. Our banking relationships cover every major correspondent banking corridor, and our legal affiliates are qualified practitioners under international law — enabling seamless, enforceable recovery operations wherever your assets reside.
                             </p>
                         </div>
                     </div>

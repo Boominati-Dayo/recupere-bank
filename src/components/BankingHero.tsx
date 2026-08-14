@@ -5,7 +5,7 @@ import FinanceHeroImg from '@/assets/images_for_pages/finance-hero.jpg';
 
 const BankingHero = () => {
   return (
-    <section className="relative min-h-[90vh] flex items-center pt-24 pb-12 overflow-hidden bg-navy-950">
+    <section className="relative min-h-[90vh] flex items-center pt-36 pb-28 mobile:pt-44 mobile:pb-32 overflow-hidden bg-[#0d1b2e]">
       {/* Finance background image */}
       <Image
         src={FinanceHeroImg}
@@ -18,8 +18,8 @@ const BankingHero = () => {
 
       {/* Animated gradient background */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-navy-950 via-navy-950 to-navy-950" />
-        <div className="absolute inset-0 bg-navy-950/70" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0d1b2e] via-[#0d1b2e] to-[#0d1b2e]" />
+        <div className="absolute inset-0 bg-[#0d1b2e]/70" />
         <div className="absolute top-1/4 -left-32 w-[500px] h-[500px] bg-primary-600/10 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '8s' }} />
         <div className="absolute bottom-1/4 -right-32 w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '6s' }} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary-500/5 rounded-full blur-[150px] animate-pulse" style={{ animationDuration: '10s' }} />
@@ -32,7 +32,7 @@ const BankingHero = () => {
         <div className="absolute bottom-0 left-0 w-[300px] h-[1px] bg-gradient-to-r from-transparent via-blue-500/30 to-transparent -rotate-12 -translate-y-32" />
 
         {/* Gradient fade */}
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-950 via-navy-950/80 to-navy-950" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0d1b2e] via-[#0d1b2e]/80 to-[#0d1b2e]" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -60,7 +60,7 @@ const BankingHero = () => {
             <div className="flex flex-col mobile:flex-row items-center justify-center gap-5">
               <Link
                 href="/signup"
-                className="group relative w-full mobile:w-auto px-10 py-5 bg-primary-500 text-navy-950 rounded-2xl font-black text-sm uppercase tracking-widest overflow-hidden transition-all hover:shadow-[0_0_30px_rgba(238,39,55,0.4)] active:scale-95"
+                className="group relative w-full mobile:w-auto px-10 py-5 bg-primary-500 text-[#0d1b2e] rounded-2xl font-black text-sm uppercase tracking-widest overflow-hidden transition-all hover:shadow-[0_0_30px_rgba(238,39,55,0.4)] active:scale-95"
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   Open Private Account{' '}

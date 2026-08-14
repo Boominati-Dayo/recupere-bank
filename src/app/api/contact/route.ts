@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     }
 
     // Prepare email to admin
-    const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER || 'admin@nexusbanking.com';
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER || 'admin@recuperebank.com';
     
     const emailSubject = `Web Enquiry: ${scamType} - from ${name}`;
     const emailText = `
@@ -27,7 +27,7 @@ Amount Lost: ${amount}
 Message:
 ${message}
 
-Sent via Nexus Contact Form.
+Sent via RecupereBank Contact Form.
     `;
 
     const emailHtml = `
@@ -41,7 +41,7 @@ Sent via Nexus Contact Form.
           <strong>Message:</strong><br/>
           ${message.replace(/\n/g, '<br/>')}
         </div>
-        <p style="font-size: 12px; color: #777; margin-top: 20px;">This message was sent securely via the Nexus Contact Form.</p>
+        <p style="font-size: 12px; color: #777; margin-top: 20px;">This message was sent securely via the RecupereBank Contact Form.</p>
       </div>
     `;
 

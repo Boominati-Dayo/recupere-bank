@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
 
     // Send verification email
     try {
-      const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://nexusbanking.com'}/verify-email?token=${result.emailVerificationToken}`;
+      const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://recuperebank.com'}/verify-email?token=${result.emailVerificationToken}`;
       const template = emailTemplates.emailVerification(result.user.firstName, verificationUrl);
 
       await sendEmail({

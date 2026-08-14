@@ -2,31 +2,11 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { User, LogOut, Bell, Shield } from 'lucide-react';
 import NotificationDropdown from './NotificationDropdown';
-
-const ShieldLogo = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <clipPath id="logo-shield">
-      <path d="M18 2L4 7.8V17.5C4 25.8 10.3 33.4 18 35.2C25.7 33.4 32 25.8 32 17.5V7.8L18 2Z" />
-    </clipPath>
-    <rect x="4" y="2" width="14" height="34" clipPath="url(#logo-shield)" fill="rgba(238,39,55,0.18)" />
-    <rect x="18" y="2" width="14" height="34" clipPath="url(#logo-shield)" fill="rgba(35,91,168,0.18)" />
-    <path d="M18 2L4 7.8V17.5C4 25.8 10.3 33.4 18 35.2" fill="none" stroke="#ee2737" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M18 2L32 7.8V17.5C32 25.8 25.7 33.4 18 35.2" fill="none" stroke="#235ba8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <line x1="18" y1="2" x2="18" y2="35.2" stroke="rgba(255,255,255,0.10)" strokeWidth="0.8" />
-    <line x1="11" y1="15" x2="25" y2="15" stroke="rgba(255,255,255,0.85)" strokeWidth="1.2" strokeLinecap="round" />
-    <line x1="18" y1="12.5" x2="18" y2="25" stroke="rgba(255,255,255,0.85)" strokeWidth="1.2" strokeLinecap="round" />
-    <line x1="11" y1="15" x2="11" y2="19.5" stroke="rgba(255,255,255,0.70)" strokeWidth="0.9" strokeLinecap="round" />
-    <line x1="25" y1="15" x2="25" y2="19.5" stroke="rgba(255,255,255,0.70)" strokeWidth="0.9" strokeLinecap="round" />
-    <path d="M8.5 19.5 Q11 22.5 13.5 19.5" stroke="rgba(255,255,255,0.70)" strokeWidth="0.9" fill="none" strokeLinecap="round" />
-    <path d="M22.5 19.5 Q25 22.5 27.5 19.5" stroke="rgba(255,255,255,0.70)" strokeWidth="0.9" fill="none" strokeLinecap="round" />
-    <line x1="15.5" y1="25" x2="20.5" y2="25" stroke="rgba(255,255,255,0.85)" strokeWidth="1.2" strokeLinecap="round" />
-    <circle cx="18" cy="12" r="1.1" fill="#ffffff" />
-  </svg>
-);
 
 const DotIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0">
@@ -134,12 +114,15 @@ const Header = () => {
           ? 'max-w-[1200px] bg-[#0d1b2e] shadow-[0_8px_32px_rgba(238,39,55,0.12),0_4px_16px_rgba(35,91,168,0.14),0_2px_8px_rgba(0,0,0,0.18)] px-[18px] mobile:px-[28px] mobile:pl-[24px]'
           : 'max-w-full bg-transparent shadow-none px-6 mobile:px-10'
         }`}>
-        <Link href="/" className="flex items-center gap-[9px] mobile:gap-[11px] shrink-0" aria-label="Nexus Banking Home">
-          <ShieldLogo className="w-[30px] h-[30px] mobile:w-[36px] mobile:h-[36px] shrink-0" />
-          <div className="flex flex-col leading-none gap-[2px]">
-            <span className="text-[14px] mobile:text-[17px] font-extrabold tracking-[0.20em] text-white uppercase leading-none">Nexus</span>
-            <span className="text-[7.5px] mobile:text-[9px] font-medium tracking-[0.36em] text-[#cfd6e0] uppercase leading-none">Banking</span>
-          </div>
+        <Link href="/" className="flex items-center shrink-0" aria-label="RecupereBank Home">
+          <Image
+            src="/RecupereLogoNameForDarkBG.png"
+            alt="RecupereBank"
+            width={769}
+            height={123}
+            priority
+            className="h-[22px] mobile:h-[30px] w-auto object-contain"
+          />
         </Link>
 
         <ul className="hidden mobile:flex items-center gap-[38px] absolute left-1/2 -translate-x-1/2 list-none">

@@ -212,7 +212,7 @@ export class NotificationService {
     // Email user
     await sendEmail({
       to: userEmail,
-      subject: 'Deposit Declined - Nexus',
+      subject: 'Deposit Declined - RecupereBank',
       html: `
         <h2>Deposit Declined</h2>
         <p>We regret to inform you that your deposit of ${sym}${amount} has been declined.</p>
@@ -271,7 +271,7 @@ export class NotificationService {
     // Email user
     await sendEmail({
       to: userEmail,
-      subject: 'Withdrawal Declined - Nexus',
+      subject: 'Withdrawal Declined - RecupereBank',
       html: `
         <h2>Withdrawal Declined</h2>
         <p>We regret to inform you that your withdrawal of ${sym}${amount} has been declined.</p>
@@ -330,7 +330,7 @@ export class NotificationService {
     // Email user
     await sendEmail({
       to: userEmail,
-      subject: 'Referral Bonus Earned - Nexus',
+      subject: 'Referral Bonus Earned - RecupereBank',
       html: getBaseTemplate(
         'Referral Bonus Earned!',
         `
@@ -584,8 +584,8 @@ export class NotificationService {
     const userName = user?.firstName || userEmail;
 
     await this.createNotification({
-      title: 'Welcome to Nexus!',
-      message: 'Welcome to Nexus! Your account has been created successfully. Start investing and grow your wealth.',
+      title: 'Welcome to RecupereBank!',
+      message: 'Welcome to RecupereBank! Your account has been created successfully. Start investing and grow your wealth.',
       type: 'welcome',
       recipients: [userId],
       sentBy: 'system',
@@ -705,7 +705,7 @@ export class NotificationService {
     // Email user
     await sendEmail({
       to: userEmail,
-      subject: 'Support Reply Received - Nexus',
+      subject: 'Support Reply Received - RecupereBank',
       html: getBaseTemplate(
         'Support Reply Received',
         `
@@ -794,7 +794,7 @@ export class NotificationService {
     // Email user
     await sendEmail({
       to: userEmail,
-      subject: 'Identity Verified - Nexus',
+      subject: 'Identity Verified - RecupereBank',
       html: getBaseTemplate(
         'Identity Verified',
         `
@@ -828,7 +828,7 @@ export class NotificationService {
     // Email user
     await sendEmail({
       to: userEmail,
-      subject: 'Identity Verification Update - Nexus',
+      subject: 'Identity Verification Update - RecupereBank',
       html: getBaseTemplate(
         'Identity Verification Failed',
         `

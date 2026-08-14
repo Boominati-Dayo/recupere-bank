@@ -205,7 +205,7 @@ export async function PUT(request: NextRequest) {
           if (user?.email) {
             const { sendEmail, getBaseTemplate } = await import('@/lib/email');
             const sym = getCurrencySymbol(depositRequest.currency || user.currency || 'USD');
-            const subject = 'Deposit Instructions Ready - Nexus';
+            const subject = 'Deposit Instructions Ready - RecupereBank';
             const html = getBaseTemplate(subject, `
               <p>Your deposit request of <strong>${sym}${depositRequest.amount.toLocaleString()}</strong> has been reviewed.</p>
               <div style="background-color: #f9fafb; padding: 25px; border-radius: 12px; border: 1px solid #e5e7eb; margin: 30px 0;">
@@ -226,7 +226,7 @@ export async function PUT(request: NextRequest) {
           if (user?.email) {
             const { sendEmail, getBaseTemplate } = await import('@/lib/email');
             const sym = getCurrencySymbol(depositRequest.currency || user.currency || 'USD');
-            const subject = 'Payment Proof Verifying - Nexus';
+            const subject = 'Payment Proof Verifying - RecupereBank';
             const html = getBaseTemplate(subject, `
               <p>We received your payment proof for the deposit of <strong>${sym}${depositRequest.amount.toLocaleString()}</strong>.</p>
               <p>Our financial team is currently verifying the transaction. Your balance will be credited shortly upon successful confirmation.</p>

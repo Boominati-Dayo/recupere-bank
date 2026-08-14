@@ -99,13 +99,13 @@ export const PUT = requireAdmin(async (request) => {
     let emailContent = '';
 
     if (status === 'approved') {
-      subject = 'Tax Refund Approved - Nexus';
+      subject = 'Tax Refund Approved - RecupereBank';
       emailContent = `We are pleased to inform you that your Tax Refund request has been approved.<br><br>An amount of <strong>${user.currency || 'USD'} ${amountToCredit ? amountToCredit.toLocaleString() : '0'}</strong> has been successfully credited to your main balance.`;
     } else if (status === 'rejected') {
-      subject = 'Tax Refund Rejected - Nexus';
+      subject = 'Tax Refund Rejected - RecupereBank';
       emailContent = `Unfortunately, your Tax Refund request has been rejected.<br><br><strong>Reason:</strong> ${rejectionReason || 'No specific reason provided.'}`;
     } else if (status === 'processing') {
-      subject = 'Tax Refund Processing - Nexus';
+      subject = 'Tax Refund Processing - RecupereBank';
       emailContent = 'Your Tax Refund request is currently being processed by our forensic team. We will notify you once a final decision has been made.';
     }
 

@@ -7,35 +7,35 @@ import { Toaster } from 'react-hot-toast';
 import './globals.css';
 
 export const metadata = {
-  title: 'Nexus Banking | Secure Private Banking & Wealth Management',
-  description: 'Secure your capital with Nexus Banking. We provide elite private banking services alongside asset recovery and wealth management to protect and grow your wealth.',
+  title: 'RecupereBank | Secure Private Banking & Wealth Management',
+  description: 'Secure your capital with RecupereBank. We provide elite private banking services alongside asset recovery and wealth management to protect and grow your wealth.',
   keywords: ['private banking', 'secure banking', 'wealth management', 'asset recovery', 'financial services', 'investment banking'],
-  authors: [{ name: 'Nexus Banking' }],
-  creator: 'Nexus Banking',
-  publisher: 'Nexus Banking',
-  metadataBase: new URL('https://nexusbanking.com'),
+  authors: [{ name: 'RecupereBank' }],
+  creator: 'RecupereBank',
+  publisher: 'RecupereBank',
+  metadataBase: new URL('https://recuperebank.com'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     type: 'website',
     locale: 'en_AU',
-    url: 'https://nexusbanking.com',
-    siteName: 'Nexus Banking',
-    title: 'Nexus Banking - Secure Banking & Wealth Management',
+    url: 'https://recuperebank.com',
+    siteName: 'RecupereBank',
+    title: 'RecupereBank - Secure Banking & Wealth Management',
     description: 'Elite private banking and wealth management. Protect your capital with Swiss-level security.',
     images: [
       {
         url: '/thumbnail.png',
         width: 1200,
         height: 630,
-        alt: 'Nexus Banking',
+        alt: 'RecupereBank',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Nexus Banking - Absolute Wealth Security',
+    title: 'RecupereBank - Absolute Wealth Security',
     description: 'Secure private banking and wealth management for global capital protection.',
     images: ['/thumbnail.png'],
   },

@@ -77,7 +77,7 @@ const HeroSection = () => {
                 <span className="block text-white" style={{ fontVariationSettings: '"wght" 800' }}>Game</span>
               </h1>
               <p className="text-base mobile:text-xl text-gray-300 max-w-lg leading-relaxed">
-                <strong>Nexus</strong> transforms your financial future with
+                <strong>RecupereBank</strong> transforms your financial future with
                 <span className="text-red-400 font-semibold"> explosive returns</span> and
                 <span className="text-red-400 font-semibold"> bulletproof security</span>.
                 Join the elite investors already crushing their goals.

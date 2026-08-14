@@ -4,7 +4,7 @@ import PublicRoute from '@/components/PublicRoute';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Page Not Found | Nexus Banking',
+  title: 'Page Not Found | RecupereBank',
   description: 'The page you are looking for has been moved or deleted.',
 };
 

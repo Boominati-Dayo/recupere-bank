@@ -699,7 +699,7 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
                     </div>
                     <div className="bg-blue-50 rounded-lg p-3 mt-2 mb-2">
                       <p className="text-xs text-blue-800">
-                        <strong>Note:</strong> Yield is calculated by Nexus based on our actual
+                        <strong>Note:</strong> Yield is calculated by RecupereBank based on our actual
                         banking performance and recovery operations. Daily Rate = Yield ÷ Duration days.
                         Your first daily earning comes the next day after activation.
                       </p>
@@ -871,7 +871,7 @@ const InvestmentPlans = ({ isDashboard = false }: InvestmentPlansProps) => {
                 {!user ? (
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                     <p className="text-blue-800 text-sm">
-                      Please log in to start investing with Nexus.
+                      Please log in to start investing with RecupereBank.
                     </p>
                   </div>
                 ) : !user.emailVerified ? (

@@ -1,8 +1,8 @@
-# Nexus Banking
+# RecupereBank
 
 ## About Us
 
-Nexus Banking is a digital-first, internationally regulated private banking and asset recovery platform. Operating on a worldwide basis with a global headquarters and a legal network spanning London, New York, Singapore, and Dubai, we combine institutional-grade security, forensic asset tracing, and cross-border recovery expertise to protect and grow client wealth.
+RecupereBank is a digital-first, internationally regulated private banking and asset recovery platform. Operating on a worldwide basis with a global headquarters and a legal network spanning London, New York, Singapore, and Dubai, we combine institutional-grade security, forensic asset tracing, and cross-border recovery expertise to protect and grow client wealth.
 
 ## Our Aims
 

@@ -87,7 +87,7 @@ const TrustedPartnersSection = () => {
             Our Global Financial Network
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Nexus collaborates with the world&apos;s leading financial institutions and corporations
+            RecupereBank collaborates with the world&apos;s leading financial institutions and corporations
             to ensure secure asset management and efficient recovery processes. Our network provides
             the stable foundation for all your banking and recovery needs.
           </p>
@@ -111,7 +111,7 @@ const TrustedPartnersSection = () => {
 
         <div className="mt-8 text-center">
           <p className="text-gray-600 text-sm max-w-2xl mx-auto">
-            <strong>How it works:</strong> Nexus manages your funds through secure banking
+            <strong>How it works:</strong> RecupereBank manages your funds through secure banking
             operations and leverages our global network for advanced asset reclamation. Our expert
             team monitors financial trends and identifies the best pathways for asset recovery.
             All you do is choose the plan that fits your needs and watch your account balance
