@@ -20,18 +20,23 @@ const KYCSection = () => {
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, type: 'front' | 'back' | 'selfie') => {
         const file = e.target.files?.[0];
         if (file) {
-            if (file.size > 15 * 1024 * 1024) {
-                showError('File size too large. Maximum 15MB allowed.');
+            // Allow very large files; compressImage will always shrink them to under 800KB.
+            if (file.size > 50 * 1024 * 1024) {
+                showError('File is too large. Maximum 50MB allowed.');
+                e.target.value = '';
                 return;
             }
             try {
-                const compressedBase64 = await compressImage(file, { maxWidth: 1400, maxHeight: 1400, quality: 0.75 });
+                // Cap each image at ~700KB so three KYC images stay well under the 4MB Next.js body limit
+                const compressedBase64 = await compressImage(file, { maxWidth: 1400, maxHeight: 1400, quality: 0.75, maxBytes: 700 * 1024 });
                 if (type === 'front') setIdFront(compressedBase64);
                 if (type === 'back') setIdBack(compressedBase64);
                 if (type === 'selfie') setSelfie(compressedBase64);
             } catch (error) {
+                const message = error instanceof Error ? error.message : 'Failed to process image. Please try another.';
                 console.error("Image compression error:", error);
-                showError('Failed to process image. Please try another.');
+                showError(message);
+                e.target.value = '';
             }
         }
     };

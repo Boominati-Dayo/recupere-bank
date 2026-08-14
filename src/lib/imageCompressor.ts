@@ -5,7 +5,7 @@ export interface CompressImageOptions {
   maxBytes?: number;
 }
 
-const DEFAULT_MAX_BYTES = 1.5 * 1024 * 1024; // 1.5 MB
+const DEFAULT_MAX_BYTES = 800 * 1024; // 800 KB — keeps multi-image form payloads well under the 4MB Next.js API body limit
 
 function estimateBytes(dataUrl: string): number {
   const commaIndex = dataUrl.indexOf(',');
@@ -20,27 +20,48 @@ function estimateBytes(dataUrl: string): number {
  */
 export function compressImage(file: File, options: CompressImageOptions = {}): Promise<string> {
   const {
-    maxWidth = 1600,
-    maxHeight = 1600,
-    quality = 0.8,
+    maxWidth = 1400,
+    maxHeight = 1400,
+    quality = 0.75,
     maxBytes = DEFAULT_MAX_BYTES,
   } = options;
 
   return new Promise((resolve, reject) => {
+    if (!file) {
+      reject(new Error('No file was provided'));
+      return;
+    }
+    if (!file.type || (!file.type.startsWith('image/') && file.type !== 'image/heic' && file.type !== 'image/heif')) {
+      reject(new Error('Only image files are supported'));
+      return;
+    }
+
     const reader = new FileReader();
-    reader.onerror = () => reject(new Error('Could not read the selected file'));
+    reader.onerror = () => reject(new Error('Could not read the selected file. Please try a different image.'));
     reader.onload = (event) => {
       const src = event.target?.result as string;
       const image = new window.Image();
-      image.onerror = () => reject(new Error('Could not decode the selected image'));
-      image.onload = () => {
-        try {
-          resolve(processImage(image, { maxWidth, maxHeight, quality, maxBytes }));
-        } catch (error) {
-          reject(error instanceof Error ? error : new Error('Failed to compress image'));
-        }
+      let attempts = 0;
+      const loadWithFallback = (url: string) => {
+        attempts++;
+        image.onerror = () => {
+          if (attempts === 1 && file.type === 'image/heic') {
+            // Some browsers can't decode HEIC directly. Surface a clear message.
+            reject(new Error('HEIC photos from iPhone are not supported. Please change your camera to "Most Compatible" or take a screenshot.'));
+            return;
+          }
+          reject(new Error('Could not decode the selected image. Please try a JPG or PNG.'));
+        };
+        image.onload = () => {
+          try {
+            resolve(processImage(image, { maxWidth, maxHeight, quality, maxBytes }));
+          } catch (error) {
+            reject(error instanceof Error ? error : new Error('Failed to compress image'));
+          }
+        };
+        image.src = url;
       };
-      image.src = src;
+      loadWithFallback(src);
     };
     reader.readAsDataURL(file);
   });
@@ -54,7 +75,15 @@ function processImage(
   let height = image.naturalHeight;
   let quality = opts.quality;
 
-  for (let iteration = 0; iteration < 8; iteration++) {
+  // Cap starting dimensions to avoid OOM on huge images from modern phones
+  const STARTING_MAX_DIM = 2400;
+  if (width > STARTING_MAX_DIM || height > STARTING_MAX_DIM) {
+    const scale = STARTING_MAX_DIM / Math.max(width, height);
+    width = Math.round(width * scale);
+    height = Math.round(height * scale);
+  }
+
+  for (let iteration = 0; iteration < 10; iteration++) {
     const scale = Math.min(1, opts.maxWidth / width, opts.maxHeight / height);
     const canvasWidth = Math.max(1, Math.round(width * scale));
     const canvasHeight = Math.max(1, Math.round(height * scale));
@@ -64,7 +93,7 @@ function processImage(
     canvas.height = canvasHeight;
     const context = canvas.getContext('2d');
     if (!context) {
-      throw new Error('Canvas is not supported in this browser');
+      throw new Error('Your browser does not support image processing. Please update your browser.');
     }
 
     // White background ensures JPEG transparency renders correctly
@@ -77,14 +106,15 @@ function processImage(
       return dataUrl;
     }
 
-    if (quality > 0.45) {
+    if (quality > 0.4) {
       quality -= 0.1;
       continue;
     }
 
     // Still too large at minimum quality - reduce dimensions and retry
     width = Math.round(width * 0.8);
-    height = Math.round(height * 0.8);
+    height = Math.round(height * scale);
+    if (width < 320 || height < 320) break;
     quality = opts.quality;
   }
 
@@ -95,10 +125,10 @@ function processImage(
   canvas.height = Math.max(1, Math.round(height * scale));
   const context = canvas.getContext('2d');
   if (!context) {
-    throw new Error('Canvas is not supported in this browser');
+    throw new Error('Your browser does not support image processing. Please update your browser.');
   }
   context.fillStyle = '#ffffff';
   context.fillRect(0, 0, canvas.width, canvas.height);
   context.drawImage(image, 0, 0, canvas.width, canvas.height);
-  return canvas.toDataURL('image/jpeg', 0.5);
+  return canvas.toDataURL('image/jpeg', 0.45);
 }

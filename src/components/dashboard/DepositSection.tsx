@@ -103,14 +103,15 @@ const DepositSection: React.FC<DepositSectionProps> = ({ initialAmount, isFixedA
   const handleUploadProof = async (depositId: string, proofFile: File) => {
     setIsSubmitting(true);
     try {
-      if (proofFile.size > 15 * 1024 * 1024) {
-        showError('File size too large. Maximum 15MB allowed.');
+      // Allow very large files; compressImage will always shrink them under the target size.
+      if (proofFile.size > 50 * 1024 * 1024) {
+        showError('File is too large. Maximum 50MB allowed.');
         setIsSubmitting(false);
         return;
       }
-      
-      const base64Screenshot = await compressImage(proofFile, { maxWidth: 1400, maxHeight: 1400, quality: 0.75 });
-      
+
+      const base64Screenshot = await compressImage(proofFile, { maxWidth: 1400, maxHeight: 1400, quality: 0.75, maxBytes: 800 * 1024 });
+
       const response = await fetch('/api/transactions', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -132,8 +133,9 @@ const DepositSection: React.FC<DepositSectionProps> = ({ initialAmount, isFixedA
         showError(result.error || 'Failed to upload proof');
       }
     } catch (e) {
+      const message = e instanceof Error ? e.message : 'An error occurred during upload';
       console.error("Upload error:", e);
-      showError('An error occurred during upload');
+      showError(message);
     } finally {
       setIsSubmitting(false);
     }
