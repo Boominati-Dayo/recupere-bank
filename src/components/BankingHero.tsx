@@ -12,14 +12,14 @@ const BankingHero = () => {
         alt="Global finance and wealth"
         fill
         priority
-        className="object-cover object-center opacity-30"
+        className="object-cover object-center opacity-60"
         sizes="100vw"
       />
 
       {/* Animated gradient background */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0d1b2e] via-[#0d1b2e] to-[#0d1b2e]" />
-        <div className="absolute inset-0 bg-[#0d1b2e]/70" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0d1b2e]/70 via-[#0d1b2e]/50 to-[#0d1b2e]/70" />
+        <div className="absolute inset-0 bg-[#0d1b2e]/30" />
         <div className="absolute top-1/4 -left-32 w-[500px] h-[500px] bg-primary-600/10 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '8s' }} />
         <div className="absolute bottom-1/4 -right-32 w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '6s' }} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary-500/5 rounded-full blur-[150px] animate-pulse" style={{ animationDuration: '10s' }} />
@@ -32,7 +32,7 @@ const BankingHero = () => {
         <div className="absolute bottom-0 left-0 w-[300px] h-[1px] bg-gradient-to-r from-transparent via-blue-500/30 to-transparent -rotate-12 -translate-y-32" />
 
         {/* Gradient fade */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0d1b2e] via-[#0d1b2e]/80 to-[#0d1b2e]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0d1b2e]/80 via-transparent to-[#0d1b2e]/80" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
