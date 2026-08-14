@@ -64,9 +64,18 @@ function VerifyEmailForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: resendEmail }),
       });
-      const result = await response.json();
+      let result: { error?: string; message?: string; success?: boolean } = {};
+      try {
+        result = await response.json();
+      } catch {
+        // Non-JSON response (e.g. HTML error page) — treat as generic failure
+      }
       if (response.ok) {
         showSuccess('A new verification email has been sent. Check your inbox.');
+      } else if (response.status === 404) {
+        showError('No account found with that email address.');
+      } else if (response.status === 200 && result.message?.toLowerCase().includes('already verified')) {
+        showSuccess('This email is already verified. You can log in.');
       } else {
         showError(result.error || 'Failed to send verification email');
       }

@@ -31,6 +31,7 @@ export const POST = requireAdmin(async (request) => {
 
         let notificationTitle = '';
         let notificationMessage = '';
+        let notificationType: 'account_blocked' | 'account_restricted' | 'account_unblocked' = 'account_unblocked';
         let activityAction = '';
 
         if (action === 'block') {
@@ -41,6 +42,7 @@ export const POST = requireAdmin(async (request) => {
 
             notificationTitle = 'ACCOUNT TEMPORARILY BLOCKED';
             notificationMessage = `Your account has been temporarily blocked for security reasons: ${updateData.accountBlockReason}. A safety release fee of ${user.currency || 'USD'} ${updateData.accountUnblockFee} is required.`;
+            notificationType = 'account_blocked';
             activityAction = `Account blocked by admin. Reason: ${updateData.accountBlockReason}. Fee: ${user.currency || 'USD'} ${updateData.accountUnblockFee}`;
         } else if (action === 'restrict') {
             updateData.isAccountRestricted = true;
@@ -50,6 +52,7 @@ export const POST = requireAdmin(async (request) => {
 
             notificationTitle = 'ACCOUNT ACTIVITY RESTRICTED';
             notificationMessage = `Your account functionality has been restricted: ${updateData.accountBlockReason}. You can still view your dashboard, but financial actions are disabled until a release fee of ${user.currency || 'USD'} ${updateData.accountUnblockFee} is processed.`;
+            notificationType = 'account_restricted';
             activityAction = `Account restricted by admin. Reason: ${updateData.accountBlockReason}. Fee: ${user.currency || 'USD'} ${updateData.accountUnblockFee}`;
         } else {
             // normal (this is essentially unblock but without the refund logic of the other API)
@@ -61,6 +64,7 @@ export const POST = requireAdmin(async (request) => {
 
             notificationTitle = 'ACCOUNT STATUS UPDATED';
             notificationMessage = `Your account status has been updated to Normal by the administration.`;
+            notificationType = 'account_unblocked';
             activityAction = `Account status reset to Normal by admin manually.`;
         }
 
@@ -82,7 +86,7 @@ export const POST = requireAdmin(async (request) => {
         const notificationData = {
             title: notificationTitle,
             message: notificationMessage,
-            type: 'individual',
+            type: notificationType,
             recipients: [userId],
             sentBy: 'admin',
             createdAt: new Date()

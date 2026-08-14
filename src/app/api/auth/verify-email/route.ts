@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import jwt, { TokenExpiredError } from 'jsonwebtoken';
 import { verifyEmailVerificationToken } from '@/lib/auth/jwt';
 import { UserService } from '@/lib/auth/user';
 import { NotificationService } from '@/lib/notifications/NotificationService';
@@ -9,7 +10,7 @@ export async function POST(request: NextRequest) {
 
     if (!token) {
       return NextResponse.json(
-        { success: false, error: 'Verification token is required' },
+        { success: false, code: 'missing_token', error: 'Verification token is required' },
         { status: 400 }
       );
     }
@@ -17,8 +18,21 @@ export async function POST(request: NextRequest) {
     // Verify token
     const payload = verifyEmailVerificationToken(token);
     if (!payload) {
+      // Try to differentiate "expired" vs "invalid" so the UI can show useful messaging.
+      let code = 'invalid_token';
+      try {
+        jwt.verify(token, process.env.JWT_SECRET || '');
+      } catch (err) {
+        if (err instanceof TokenExpiredError) code = 'expired_token';
+      }
       return NextResponse.json(
-        { success: false, error: 'Invalid or expired verification token' },
+        {
+          success: false,
+          code,
+          error: code === 'expired_token'
+            ? 'Verification link has expired. Enter your email below to receive a new one.'
+            : 'This verification link is invalid. Enter your email below to receive a new one.'
+        },
         { status: 400 }
       );
     }

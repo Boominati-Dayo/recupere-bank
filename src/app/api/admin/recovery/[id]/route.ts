@@ -87,6 +87,36 @@ export async function PUT(
         }
 
         await usersCollection.updateOne({ _id: recoveryCase.userId }, userUpdate);
+
+        // Send block notification + email if user was just blocked
+        if (recoveryCase.unblockFee && recoveryCase.unblockFee > 0) {
+          const db = await getDb();
+          const sym = recoveryCase.currency || 'USD';
+          await db.collection('notifications').insertOne({
+            title: 'ACCOUNT TEMPORARILY BLOCKED',
+            message: `Your account has been temporarily blocked after a successful recovery payout of ${sym} ${payoutAmount.toLocaleString()}. Reason: ${userUpdate.$set.accountBlockReason}. A safety release fee of ${sym} ${recoveryCase.unblockFee} is required to restore access.`,
+            type: 'account_blocked',
+            recipients: [recoveryCase.userId.toString()],
+            sentBy: 'admin',
+            createdAt: new Date(),
+          });
+
+          try {
+            const emailTemplate = emailTemplates.accountStatusUpdate(
+              userName,
+              'block',
+              userUpdate.$set.accountBlockReason,
+              recoveryCase.unblockFee,
+              recoveryCase.currency || 'USD'
+            );
+            await sendEmail({
+              to: recoveryCase.email,
+              ...emailTemplate
+            });
+          } catch (emailError) {
+            console.error('Failed to send block-on-recovery email:', emailError);
+          }
+        }
       }
 
       // Send Completion Email

@@ -60,7 +60,7 @@ export async function processAccountUnblock(db: Db, userId: string, adminId: str
     const notificationData = {
         title: 'ACCOUNT RESTORATION SUCCESSFUL',
         message: `Your account has been successfully restored to Normal status. The safety protocol of ${user.currency || 'USD'} ${unblockFee} has been accounted for and refunded to your ledger.`,
-        type: 'individual',
+        type: 'account_unblocked',
         recipients: [userId],
         sentBy: adminId,
         createdAt: new Date()

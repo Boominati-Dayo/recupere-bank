@@ -1,7 +1,20 @@
-import jwt from 'jsonwebtoken';
+import jwt, { TokenExpiredError, JsonWebTokenError, NotBeforeError } from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-in-production';
+const RAW_SECRET = process.env.JWT_SECRET;
+if (!RAW_SECRET || RAW_SECRET.startsWith('<') || RAW_SECRET === 'your-super-secret-jwt-key-change-in-production') {
+  console.warn(
+    '[jwt] JWT_SECRET is not set or is still the placeholder. ' +
+    'Tokens issued in this process will not be verifiable after a restart, ' +
+    'and any other process using a different (or missing) secret will reject them. ' +
+    'Set JWT_SECRET in .env.local to a long random string and restart the dev server.'
+  );
+}
+const JWT_SECRET = RAW_SECRET || 'recupere-dev-fallback-secret-do-not-use-in-production';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
+
+// 30 seconds of clock-skew tolerance so that a slightly fast or slow issuer
+// doesn't make tokens look "expired" or "not yet valid" to the verifier.
+const VERIFY_OPTIONS = { clockTolerance: 30 } as const;
 
 export interface JWTPayload {
   userId: string;
@@ -15,10 +28,10 @@ export function generateToken(payload: JWTPayload): string {
 
 export function verifyToken(token: string): JWTPayload | null {
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as JWTPayload;
+    const decoded = jwt.verify(token, JWT_SECRET, VERIFY_OPTIONS) as JWTPayload;
     return decoded;
   } catch (error) {
-    console.error('JWT verification failed:', error);
+    logVerifyFailure('JWT', error, token);
     return null;
   }
 }
@@ -33,38 +46,51 @@ export function generatePasswordResetToken(userId: string): string {
 
 export function verifyEmailVerificationToken(token: string): { userId: string } | null {
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string; type: string; iat?: number; exp?: number };
-    if (decoded.type === 'email-verification') {
+    const decoded = jwt.verify(token, JWT_SECRET, VERIFY_OPTIONS) as { userId: string; type?: string };
+    if (decoded && decoded.type === 'email-verification' && typeof decoded.userId === 'string') {
       return { userId: decoded.userId };
     }
+    console.warn(
+      '[jwt] Email verification token has wrong type or missing userId:',
+      JSON.stringify({ type: decoded?.type, hasUserId: !!decoded?.userId })
+    );
     return null;
   } catch (error) {
-    if (error instanceof jwt.TokenExpiredError) {
-      console.warn('Email verification token expired');
-    } else if (error instanceof jwt.JsonWebTokenError) {
-      console.warn('Email verification token invalid:', error.message);
-    } else {
-      console.error('Email verification token verification failed:', error);
-    }
+    logVerifyFailure('Email verification', error, token);
     return null;
   }
 }
 
 export function verifyPasswordResetToken(token: string): { userId: string } | null {
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string; type: string; iat?: number; exp?: number };
-    if (decoded.type === 'password-reset') {
+    const decoded = jwt.verify(token, JWT_SECRET, VERIFY_OPTIONS) as { userId: string; type?: string };
+    if (decoded && decoded.type === 'password-reset' && typeof decoded.userId === 'string') {
       return { userId: decoded.userId };
     }
+    console.warn(
+      '[jwt] Password reset token has wrong type or missing userId:',
+      JSON.stringify({ type: decoded?.type, hasUserId: !!decoded?.userId })
+    );
     return null;
   } catch (error) {
-    if (error instanceof jwt.TokenExpiredError) {
-      console.warn('Password reset token expired');
-    } else if (error instanceof jwt.JsonWebTokenError) {
-      console.warn('Password reset token invalid:', error.message);
-    } else {
-      console.error('Password reset token verification failed:', error);
-    }
+    logVerifyFailure('Password reset', error, token);
     return null;
+  }
+}
+
+function logVerifyFailure(label: string, error: unknown, token: string) {
+  const len = token?.length ?? 0;
+  const head = token ? token.slice(0, 12) : '';
+  const tail = token ? token.slice(-12) : '';
+  if (error instanceof TokenExpiredError) {
+    console.warn(`[jwt] ${label} token expired (length=${len}, head=${head}…, tail=…${tail})`);
+  } else if (error instanceof NotBeforeError) {
+    console.warn(`[jwt] ${label} token not yet valid (length=${len}, head=${head}…, tail=…${tail})`);
+  } else if (error instanceof JsonWebTokenError) {
+    console.warn(
+      `[jwt] ${label} token invalid: ${error.message} (length=${len}, head=${head}…, tail=…${tail})`
+    );
+  } else {
+    console.error(`[jwt] ${label} token verification threw`, error, `(length=${len})`);
   }
 }

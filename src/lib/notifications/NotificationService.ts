@@ -6,7 +6,7 @@ import { getCurrencySymbol } from '@/lib/currencies';
 interface NotificationData {
   title: string;
   message: string;
-  type: 'deposit_request' | 'withdrawal_request' | 'deposit_approval' | 'deposit_decline' | 'withdrawal_approval' | 'withdrawal_decline' | 'referral_gain' | 'broadcast' | 'individual' | 'transfer_sent' | 'transfer_received' | 'welcome' | 'support_sent' | 'support_reply' | 'login' | 'logout' | 'user_activity' | 'kyc_approval' | 'kyc_decline';
+  type: 'deposit_request' | 'withdrawal_request' | 'deposit_approval' | 'deposit_decline' | 'withdrawal_approval' | 'withdrawal_decline' | 'referral_gain' | 'broadcast' | 'individual' | 'transfer_sent' | 'transfer_received' | 'welcome' | 'support_sent' | 'support_reply' | 'login' | 'logout' | 'user_activity' | 'kyc_approval' | 'kyc_decline' | 'account_blocked' | 'account_unblocked' | 'account_restricted';
   recipients: string[] | 'all';
   sentBy: string;
   metadata?: {
