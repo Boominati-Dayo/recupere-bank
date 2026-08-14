@@ -127,7 +127,7 @@ export class UserService {
       userCode: userCode!,
       emailVerified: false,
       emailVerificationToken,
-      emailVerificationExpires: new Date(now.getTime() + 24 * 60 * 60 * 1000), // 24 hours
+      emailVerificationExpires: new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000), // 7 days
       isAdmin: false,
       isActive: true,
       totalInvested: 0,
@@ -302,7 +302,7 @@ export class UserService {
     }
 
     const passwordResetToken = generatePasswordResetToken(user._id!.toString());
-    const passwordResetExpires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+    const passwordResetExpires = new Date(Date.now() + 4 * 60 * 60 * 1000); // 4 hours
 
     await usersCollection.updateOne(
       { _id: user._id },

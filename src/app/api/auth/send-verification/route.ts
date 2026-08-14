@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendEmail, emailTemplates } from '@/lib/email';
 import { UserService } from '@/lib/auth/user';
+import { generateEmailVerificationToken } from '@/lib/auth/jwt';
+import { ObjectId } from 'mongodb';
+import { getDb } from '@/lib/mongodb';
 
 export async function POST(request: NextRequest) {
   try {
@@ -22,8 +25,32 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Send verification email
-    const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://recuperebank.com'}/verify-email?token=${user.emailVerificationToken || 'no-token'}`;
+    // If user is already verified, no need to send another link
+    if (user.emailVerified) {
+      return NextResponse.json(
+        { message: 'This email is already verified. Please log in.' },
+        { status: 200 }
+      );
+    }
+
+    // Make sure the user has a valid verification token; regenerate if missing
+    let token = user.emailVerificationToken;
+    if (!token) {
+      token = generateEmailVerificationToken(user._id!.toString());
+      const db = await getDb();
+      await db.collection('users').updateOne(
+        { _id: new ObjectId(user._id!.toString()) },
+        {
+          $set: {
+            emailVerificationToken: token,
+            emailVerificationExpires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+            updatedAt: new Date(),
+          },
+        }
+      );
+    }
+
+    const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://recuperebank.com'}/verify-email?token=${token}`;
     const template = emailTemplates.emailVerification(user.firstName, verificationUrl);
 
     // Send email

@@ -24,35 +24,47 @@ export function verifyToken(token: string): JWTPayload | null {
 }
 
 export function generateEmailVerificationToken(userId: string): string {
-  return jwt.sign({ userId, type: 'email-verification' }, JWT_SECRET, { expiresIn: '24h' } as Record<string, unknown>);
+  return jwt.sign({ userId, type: 'email-verification' }, JWT_SECRET, { expiresIn: '7d' } as Record<string, unknown>);
 }
 
 export function generatePasswordResetToken(userId: string): string {
-  return jwt.sign({ userId, type: 'password-reset' }, JWT_SECRET, { expiresIn: '1h' } as Record<string, unknown>);
+  return jwt.sign({ userId, type: 'password-reset' }, JWT_SECRET, { expiresIn: '4h' } as Record<string, unknown>);
 }
 
 export function verifyEmailVerificationToken(token: string): { userId: string } | null {
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string; type: string };
+    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string; type: string; iat?: number; exp?: number };
     if (decoded.type === 'email-verification') {
       return { userId: decoded.userId };
     }
     return null;
   } catch (error) {
-    console.error('Email verification token verification failed:', error);
+    if (error instanceof jwt.TokenExpiredError) {
+      console.warn('Email verification token expired');
+    } else if (error instanceof jwt.JsonWebTokenError) {
+      console.warn('Email verification token invalid:', error.message);
+    } else {
+      console.error('Email verification token verification failed:', error);
+    }
     return null;
   }
 }
 
 export function verifyPasswordResetToken(token: string): { userId: string } | null {
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string; type: string };
+    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string; type: string; iat?: number; exp?: number };
     if (decoded.type === 'password-reset') {
       return { userId: decoded.userId };
     }
     return null;
   } catch (error) {
-    console.error('Password reset token verification failed:', error);
+    if (error instanceof jwt.TokenExpiredError) {
+      console.warn('Password reset token expired');
+    } else if (error instanceof jwt.JsonWebTokenError) {
+      console.warn('Password reset token invalid:', error.message);
+    } else {
+      console.error('Password reset token verification failed:', error);
+    }
     return null;
   }
 }
