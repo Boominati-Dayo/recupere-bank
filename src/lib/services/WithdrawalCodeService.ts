@@ -210,26 +210,9 @@ export async function issueCode(userId: string, draftId: string, codeType: Withd
           $inc: { totalFeesPaid: price }
         }
       );
-      // Email the code
-      try {
-        const userRecord = await db.collection('users').findOne({ _id: new ObjectId(userId) });
-        const userName = (userRecord as { firstName?: string; email?: string } | null)?.firstName || 'Customer';
-        const userEmail = (userRecord as { email?: string } | null)?.email;
-        if (userEmail) {
-          const expiresAt = new Date(now.getTime() + CODE_TTL_MINUTES * 60_000);
-          const emailData = emailTemplates.withdrawalCode(
-            userName,
-            codeType,
-            code,
-            expiresAt.toISOString(),
-            price,
-            draft.currency
-          );
-          await sendEmail({ to: userEmail, ...emailData });
-        }
-      } catch (e) {
-        console.error('Failed to email withdrawal code:', e);
-      }
+      // Email the code for this code type. Fire-and-forget so the
+      // API responds immediately instead of waiting on SMTP.
+      void sendWithdrawalCodeEmail(userId, codeType, code, now, price, draft.currency);
     } else {
       // Free code: just issue the code, no charge
       const code = generateCode();
@@ -244,29 +227,41 @@ export async function issueCode(userId: string, draftId: string, codeType: Withd
           }
         }
       );
-      // Email the code
-      try {
-        const userRecord = await db.collection('users').findOne({ _id: new ObjectId(userId) });
-        const userName = (userRecord as { firstName?: string; email?: string } | null)?.firstName || 'Customer';
-        const userEmail = (userRecord as { email?: string } | null)?.email;
-        if (userEmail) {
-          const expiresAt = new Date(now.getTime() + CODE_TTL_MINUTES * 60_000);
-          const emailData = emailTemplates.withdrawalCode(
-            userName,
-            codeType,
-            code,
-            expiresAt.toISOString(),
-            0,
-            draft.currency
-          );
-          await sendEmail({ to: userEmail, ...emailData });
-        }
-      } catch (e) {
-        console.error('Failed to email withdrawal code:', e);
-      }
+      // Email the code for this code type. Fire-and-forget.
+      void sendWithdrawalCodeEmail(userId, codeType, code, now, 0, draft.currency);
     }
   }
   return db.collection('withdrawalDrafts').findOne({ _id: new ObjectId(draftId) });
+}
+
+async function sendWithdrawalCodeEmail(
+  userId: string,
+  codeType: WithdrawalCodeType,
+  code: string,
+  issuedAt: Date,
+  price: number,
+  currency: string
+) {
+  try {
+    const db = await getDb();
+    const userRecord = await db.collection('users').findOne({ _id: new ObjectId(userId) });
+    const userName = (userRecord as { firstName?: string; email?: string } | null)?.firstName || 'Customer';
+    const userEmail = (userRecord as { email?: string } | null)?.email;
+    if (!userEmail) return;
+    if (codeType === 'TPIN') return;
+    const expiresAt = new Date(issuedAt.getTime() + CODE_TTL_MINUTES * 60_000);
+    const emailData = emailTemplates.withdrawalCode(
+      userName,
+      codeType,
+      code,
+      expiresAt.toISOString(),
+      price,
+      currency
+    );
+    await sendEmail({ to: userEmail, ...emailData });
+  } catch (e) {
+    console.error(`Failed to email ${codeType} code:`, e);
+  }
 }
 
 export async function verifyCode(
