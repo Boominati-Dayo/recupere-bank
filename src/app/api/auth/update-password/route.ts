@@ -3,7 +3,7 @@ import { requireAuth } from '@/middleware/auth';
 import { UserService } from '@/lib/auth/user';
 import { verifyPassword, hashPassword } from '@/lib/auth/password';
 
-export const POST = requireAuth(async (request) => {
+export const POST = requireAuth(async (request, context) => {
   try {
     const { currentPassword, newPassword } = await request.json();
     const userId = request.user!.id;

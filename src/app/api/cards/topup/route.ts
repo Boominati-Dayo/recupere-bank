@@ -5,7 +5,7 @@ import { requireAuth } from '@/middleware/auth';
 import { NotificationService } from '@/lib/notifications/NotificationService';
 import { verifyPinForUser } from '@/lib/auth/pin';
 
-export const POST = requireAuth(async (request) => {
+export const POST = requireAuth(async (request, context) => {
   try {
     const db = await getDb();
     const userId = request.user!.id;

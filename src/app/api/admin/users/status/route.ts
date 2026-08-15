@@ -3,7 +3,7 @@ import { requireAdmin } from '@/middleware/auth';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 
-export const POST = requireAdmin(async (request) => {
+export const POST = requireAdmin(async (request, context) => {
     try {
         const { userId, action, fee, reason } = await request.json();
 

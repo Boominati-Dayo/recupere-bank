@@ -13,7 +13,7 @@ import {
 // GET /api/admin/user-codes?id=<userId>
 // Returns the per-user pricing for the 5 codes. If no pricing is set
 // yet, returns the default pricing (TPIN enabled free, others off).
-export const GET = requireAdmin(async (request: NextRequest) => {
+export const GET = requireAdmin(async (request: NextRequest, context: any) => {
   try {
     const url = new URL(request.url);
     const userId = url.searchParams.get('id');
@@ -52,7 +52,7 @@ export const GET = requireAdmin(async (request: NextRequest) => {
 // Persists the admin's per-user pricing. Server enforces the hard
 // price cap and the TPIN-is-always-on invariant. The admin's email is
 // recorded in the activity log so the change is auditable.
-export const PUT = requireAdmin(async (request: NextRequest) => {
+export const PUT = requireAdmin(async (request: NextRequest, context: any) => {
   try {
     const body = await request.json();
     const userId = String(body.userId || '');

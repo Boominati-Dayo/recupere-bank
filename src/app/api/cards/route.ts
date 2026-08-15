@@ -5,7 +5,7 @@ import { requireAuth } from '@/middleware/auth';
 import { NotificationService } from '@/lib/notifications/NotificationService';
 import { verifyPinForUser } from '@/lib/auth/pin';
 
-export const GET = requireAuth(async (request) => {
+export const GET = requireAuth(async (request, context) => {
   try {
     const db = await getDb();
     const userId = request.user!.id;
@@ -25,7 +25,7 @@ export const GET = requireAuth(async (request) => {
   }
 });
 
-export const POST = requireAuth(async (request) => {
+export const POST = requireAuth(async (request, context) => {
   try {
     const db = await getDb();
     const userId = request.user!.id;

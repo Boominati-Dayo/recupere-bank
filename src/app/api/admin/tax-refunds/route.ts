@@ -3,7 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { requireAdmin } from '@/middleware/auth';
 
-export const GET = requireAdmin(async (request) => {
+export const GET = requireAdmin(async (request, context) => {
   try {
     const db = await getDb();
 
@@ -44,7 +44,7 @@ export const GET = requireAdmin(async (request) => {
   }
 });
 
-export const PUT = requireAdmin(async (request) => {
+export const PUT = requireAdmin(async (request, context) => {
   try {
     const db = await getDb();
     const { id, status, rejectionReason, amountToCredit } = await request.json();

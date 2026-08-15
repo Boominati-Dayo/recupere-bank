@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { requireAuth, AuthenticatedRequest } from '@/middleware/auth';
 import { getDb } from '@/lib/mongodb';
 
-export const POST = requireAuth(async (request: AuthenticatedRequest) => {
+export const POST = requireAuth(async (request: AuthenticatedRequest, context: any) => {
   try {
     const { userCode } = await request.json();
     const userId = request.user!.id;

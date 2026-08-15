@@ -3,7 +3,7 @@ import { requireAuth, AuthenticatedRequest } from '@/middleware/auth';
 import { UserService } from '@/lib/auth/user';
 import { hashPin, validatePin, verifyTransactionPin } from '@/lib/auth/pin';
 
-export const POST = requireAuth(async (request: AuthenticatedRequest) => {
+export const POST = requireAuth(async (request: AuthenticatedRequest, context: any) => {
   try {
     const { currentPin, newPin } = await request.json();
 

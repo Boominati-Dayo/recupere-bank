@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { requireAdmin } from '@/middleware/auth';
 import { getDb } from '@/lib/mongodb';
 
-export const GET = requireAdmin(async () => {
+export const GET = requireAdmin(async (_request, _context) => {
   try {
     const db = await getDb();
     const scheduleCollection = db.collection('withdrawalSchedule');
@@ -30,7 +30,7 @@ export const GET = requireAdmin(async () => {
   }
 });
 
-export const POST = requireAdmin(async (request) => {
+export const POST = requireAdmin(async (request, context) => {
   try {
     const { enabled, allowedDays, allowedTimes, timezone } = await request.json();
     

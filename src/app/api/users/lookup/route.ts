@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { requireAuth, AuthenticatedRequest } from '@/middleware/auth';
 import { UserService } from '@/lib/auth/user';
 
-export const POST = requireAuth(async (request: AuthenticatedRequest) => {
+export const POST = requireAuth(async (request: AuthenticatedRequest, context: any) => {
   try {
     const { email, userCode } = await request.json();
 

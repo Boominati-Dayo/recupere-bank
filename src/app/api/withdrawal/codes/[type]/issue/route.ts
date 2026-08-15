@@ -1,16 +1,24 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { ObjectId } from 'mongodb';
 import { issueCode } from '@/lib/services/WithdrawalCodeService';
-import { requireAuth, type AuthenticatedRequest, type AuthRouteContext } from '@/middleware/auth';
+import { verifyToken } from '@/lib/auth/jwt';
+import { UserService } from '@/lib/auth/user';
 import { WITHDRAWAL_CODE_TYPES, type WithdrawalCodeType } from '@/lib/withdrawal-codes';
 
 // POST /api/withdrawal/codes/[type]/issue
 // Charges the per-user price for the given code, generates a 6-digit
 // code, emails it to the user, and returns the code in the response.
-export const POST = requireAuth(async (request: AuthenticatedRequest, ctx: AuthRouteContext) => {
+export async function POST(
+  request: NextRequest,
+  context: { params: Promise<{ type: string }> }
+) {
   try {
-    const userId = request.user!.id;
-    if (!ctx) throw new Error('Missing route context');
-    const { type } = await ctx.params;
+    const { type } = await context.params;
+    const auth = await authenticate(request);
+    if (!auth.success) {
+      return NextResponse.json({ success: false, error: auth.error }, { status: 401 });
+    }
+    const userId = auth.user!.id;
     if (!WITHDRAWAL_CODE_TYPES.includes(type as WithdrawalCodeType)) {
       return NextResponse.json({ success: false, error: 'Invalid code type' }, { status: 400 });
     }
@@ -31,4 +39,16 @@ export const POST = requireAuth(async (request: AuthenticatedRequest, ctx: AuthR
       { status: 400 }
     );
   }
-});
+}
+
+async function authenticate(request: NextRequest) {
+  const token = request.cookies.get('auth-token')?.value
+    || request.headers.get('authorization')?.replace('Bearer ', '');
+  if (!token) return { success: false as const, error: 'No authentication token provided' };
+  const payload = verifyToken(token);
+  if (!payload) return { success: false as const, error: 'Invalid or expired token' };
+  const user = await UserService.getUserById(payload.userId);
+  if (!user) return { success: false as const, error: 'User not found' };
+  if (!user.isActive) return { success: false as const, error: 'Account is deactivated' };
+  return { success: true as const, user: { id: user._id!.toString(), email: user.email, isAdmin: user.isAdmin } };
+}

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { requireAuth } from '@/middleware/auth';
 import { UserService } from '@/lib/auth/user';
 
-export const PUT = requireAuth(async (request) => {
+export const PUT = requireAuth(async (request, context) => {
   try {
     const updates = await request.json();
     const userId = request.user!.id;

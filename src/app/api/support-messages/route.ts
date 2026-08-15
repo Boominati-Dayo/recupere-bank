@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { requireAuth } from '@/middleware/auth';
 
-export const POST = requireAuth(async (request) => {
+export const POST = requireAuth(async (request, context) => {
   try {
     const { subject, message, priority = 'normal' } = await request.json();
     const userId = request.user!.id;
@@ -64,7 +64,7 @@ export const POST = requireAuth(async (request) => {
   }
 });
 
-export const GET = requireAuth(async (request) => {
+export const GET = requireAuth(async (request, context) => {
   try {
     const userId = request.user!.id;
     const db = await getDb();

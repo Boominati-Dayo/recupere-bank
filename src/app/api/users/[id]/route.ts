@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { requireAdmin, AuthenticatedRequest } from '@/middleware/auth';
 import { UserService } from '@/lib/auth/user';
 
-export const GET = requireAdmin(async (request: AuthenticatedRequest) => {
+export const GET = requireAdmin(async (request: AuthenticatedRequest, context: any) => {
   try {
     const url = new URL(request.url);
     const pathSegments = url.pathname.split('/');
@@ -29,7 +29,7 @@ export const GET = requireAdmin(async (request: AuthenticatedRequest) => {
   }
 });
 
-export const PUT = requireAdmin(async (request: AuthenticatedRequest) => {
+export const PUT = requireAdmin(async (request: AuthenticatedRequest, context: any) => {
   try {
     const url = new URL(request.url);
     const pathSegments = url.pathname.split('/');
@@ -131,7 +131,7 @@ export const PUT = requireAdmin(async (request: AuthenticatedRequest) => {
   }
 });
 
-export const DELETE = requireAdmin(async (request: AuthenticatedRequest) => {
+export const DELETE = requireAdmin(async (request: AuthenticatedRequest, context: any) => {
   try {
     const url = new URL(request.url);
     const pathSegments = url.pathname.split('/');

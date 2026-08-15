@@ -3,7 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { requireAuth } from '@/middleware/auth';
 
-export const GET = requireAuth(async (request) => {
+export const GET = requireAuth(async (request, context) => {
   try {
     const userId = request.user!.id;
     const db = await getDb();

@@ -4,7 +4,7 @@ import { requireAdmin } from '@/middleware/auth';
 import { sendEmail, emailTemplates } from '@/lib/email';
 import { ObjectId } from 'mongodb';
 
-export const GET = requireAdmin(async (request) => {
+export const GET = requireAdmin(async (request, context) => {
   try {
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status') || 'all';
@@ -41,7 +41,7 @@ export const GET = requireAdmin(async (request) => {
   }
 });
 
-export const PUT = requireAdmin(async (request) => {
+export const PUT = requireAdmin(async (request, context) => {
   try {
     const { messageId, status, adminReply } = await request.json();
     const adminId = request.user!.id;

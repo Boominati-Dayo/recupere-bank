@@ -7,7 +7,7 @@ import { NotificationService } from '@/lib/notifications/NotificationService';
 import { verifyPinForUser } from '@/lib/auth/pin';
 import { sendEmail, emailTemplates } from '@/lib/email';
 
-export const POST = requireAuth(async (request: AuthenticatedRequest) => {
+export const POST = requireAuth(async (request: AuthenticatedRequest, context: any) => {
   try {
     const { receiverEmail, receiverUserCode, amount, pin } = await request.json();
     const senderId = request.user!.id;

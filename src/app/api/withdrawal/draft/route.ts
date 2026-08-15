@@ -6,7 +6,7 @@ import { requireAuth, type AuthenticatedRequest } from '@/middleware/auth';
 // Returns the user's current active draft (if any) and the per-user
 // preflight info (pricing, codeState shape, total max fees) so the
 // client can render the multi-step wizard.
-export const GET = requireAuth(async (request: AuthenticatedRequest) => {
+export const GET = requireAuth(async (request: AuthenticatedRequest, context: any) => {
   try {
     const userId = request.user!.id;
     const url = new URL(request.url);
@@ -36,7 +36,7 @@ export const GET = requireAuth(async (request: AuthenticatedRequest) => {
 // record, verifies the amount, computes the per-code pricing for the
 // requested amount (with server-side hard cap clamp), and returns the
 // draft.
-export const POST = requireAuth(async (request: AuthenticatedRequest) => {
+export const POST = requireAuth(async (request: AuthenticatedRequest, context: any) => {
   try {
     const userId = request.user!.id;
     const body = await request.json();
@@ -69,7 +69,7 @@ export const POST = requireAuth(async (request: AuthenticatedRequest) => {
 
 // DELETE /api/withdrawal/draft
 // Cancels the current active draft and refunds all paid code fees.
-export const DELETE = requireAuth(async (request: AuthenticatedRequest) => {
+export const DELETE = requireAuth(async (request: AuthenticatedRequest, context: any) => {
   try {
     const userId = request.user!.id;
     const url = new URL(request.url);

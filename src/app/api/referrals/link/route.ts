@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { requireAuth } from '@/middleware/auth';
 import { UserService } from '@/lib/auth/user';
 
-export const GET = requireAuth(async (request) => {
+export const GET = requireAuth(async (request, context) => {
   try {
     const userId = request.user!.id;
     const user = await UserService.getUserById(userId);

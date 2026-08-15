@@ -11,7 +11,7 @@ import { getCurrencySymbol } from '@/lib/currencies';
 // Finalises the draft into a real withdrawalRequest. The user must
 // supply their TPIN (so the TPIN gate is verified here, not as a paid
 // code). All required paid codes must already be verified.
-export const POST = requireAuth(async (request: AuthenticatedRequest) => {
+export const POST = requireAuth(async (request: AuthenticatedRequest, context: any) => {
   try {
     const userId = request.user!.id;
     const body = await request.json();

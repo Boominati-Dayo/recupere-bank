@@ -55,17 +55,8 @@ export async function authenticateRequest(request: NextRequest): Promise<{
   }
 }
 
-// Use a flexible second-argument type so handlers that don't use
-// dynamic route params still type-check alongside handlers that do.
-// (We deliberately avoid the name `RouteContext` here because Next.js
-// defines its own RouteContext type for the second arg of route
-// handlers and we don't want to clobber it.)
-export type AuthRouteContext = { params: Promise<Record<string, string>> } | undefined;
-
-export function requireAuth(
-  handler: (request: AuthenticatedRequest, ctx: AuthRouteContext) => Promise<NextResponse>
-) {
-  return async (request: NextRequest, ctx: AuthRouteContext) => {
+export function requireAuth(handler: (request: AuthenticatedRequest, context: any) => Promise<NextResponse>) {
+  return async (request: NextRequest, context: any) => {
     const authResult = await authenticateRequest(request);
 
     if (!authResult.success) {
@@ -75,17 +66,14 @@ export function requireAuth(
       );
     }
 
-    // Add user to request object
     (request as AuthenticatedRequest).user = authResult.user;
 
-    return handler(request as AuthenticatedRequest, ctx);
+    return handler(request as AuthenticatedRequest, context);
   };
 }
 
-export function requireAdmin(
-  handler: (request: AuthenticatedRequest, ctx: AuthRouteContext) => Promise<NextResponse>
-) {
-  return async (request: NextRequest, ctx: AuthRouteContext) => {
+export function requireAdmin(handler: (request: AuthenticatedRequest, context: any) => Promise<NextResponse>) {
+  return async (request: NextRequest, context: any) => {
     const authResult = await authenticateRequest(request);
 
     if (!authResult.success) {
@@ -102,9 +90,8 @@ export function requireAdmin(
       );
     }
 
-    // Add user to request object
     (request as AuthenticatedRequest).user = authResult.user;
 
-    return handler(request as AuthenticatedRequest, ctx);
+    return handler(request as AuthenticatedRequest, context);
   };
 }

@@ -3,7 +3,7 @@ import { requireAuth, AuthenticatedRequest } from '@/middleware/auth';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 
-export const GET = requireAuth(async (request: AuthenticatedRequest) => {
+export const GET = requireAuth(async (request: AuthenticatedRequest, context: any) => {
   try {
     const { searchParams } = new URL(request.url);
     const userCode = searchParams.get('userCode');
@@ -63,7 +63,7 @@ export const GET = requireAuth(async (request: AuthenticatedRequest) => {
   }
 });
 
-export const PUT = requireAuth(async (request: AuthenticatedRequest) => {
+export const PUT = requireAuth(async (request: AuthenticatedRequest, context: any) => {
   try {
     const { notificationId, userCode } = await request.json();
     const userId = request.user!.id;
@@ -114,7 +114,7 @@ export const PUT = requireAuth(async (request: AuthenticatedRequest) => {
   }
 });
 
-export const DELETE = requireAuth(async (request: AuthenticatedRequest) => {
+export const DELETE = requireAuth(async (request: AuthenticatedRequest, context: any) => {
   try {
     const { notificationId } = await request.json();
     const userId = request.user!.id;
