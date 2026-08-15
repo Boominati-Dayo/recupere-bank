@@ -83,6 +83,29 @@ const WithdrawSection = () => {
   const [wizardDepositStatus, setWizardDepositStatus] = useState<string | null>(null);
   const [wizardPollCancel, setWizardPollCancel] = useState<(() => void) | null>(null);
 
+  // Active draft detection — show a "Resume withdrawal" banner if the
+  // user has an in-progress draft from a previous session.
+  const [activeDraft, setActiveDraft] = useState<{
+    _id: string;
+    amount: number;
+    currency: string;
+    codeState: Record<string, { paid: boolean; verified: boolean; required: boolean; price: number }>;
+  } | null>(null);
+
+  const refreshActiveDraft = async () => {
+    try {
+      const res = await fetch('/api/withdrawal/draft?amount=0&currency=' + encodeURIComponent(currencyCode));
+      const json = await res.json();
+      if (json.success && json.data?.draft) {
+        setActiveDraft(json.data.draft);
+      } else {
+        setActiveDraft(null);
+      }
+    } catch {
+      setActiveDraft(null);
+    }
+  };
+
   useEffect(() => {
     const fetchWithdrawalSchedule = async () => {
       try {
@@ -98,7 +121,8 @@ const WithdrawSection = () => {
       }
     };
     fetchWithdrawalSchedule();
-  }, []);
+    refreshActiveDraft();
+  }, [currencyCode]);
 
   const isWithdrawalAllowed = () => {
     if (!withdrawalSchedule || !withdrawalSchedule.enabled) return true;
@@ -243,28 +267,37 @@ const WithdrawSection = () => {
 
     // 2) Create draft if needed (also re-uses an active draft if one is open)
     let draftId: string;
+    let resumeIndex = 0;
+    let resumeCodeState: Record<string, { paid: boolean; code?: string | null; verified: boolean }> | undefined;
     if (existingDraft && existingDraft.codeState) {
-      const stillUsable = finalOrder.every((k) => {
-        const s = existingDraft.codeState[k];
-        return s && !s.verified;
-      });
-      if (stillUsable) {
-        draftId = existingDraft._id;
-      } else {
-        await cancelDraft(existingDraft._id);
-        draftId = await createDraftWithPin(pin);
+      // Resume the existing draft: skip already-verified codes, keep
+      // paid-but-unverified codes intact (no need to pay again).
+      const allVerified = finalOrder.every((k) => existingDraft.codeState[k]?.verified);
+      if (allVerified) {
+        // All done — jump to final submit step.
+        setWizardDraftId(existingDraft._id);
+        setWizardOrder(finalOrder);
+        setWizardIndex(finalOrder.length);
+        setWizardOpen(true);
+        if (preflight?.codeState) initWizardPrices(preflight);
+        setWizardStep('verify');
+        return;
       }
+      // Find the first unverified code to resume at.
+      resumeIndex = finalOrder.findIndex((k) => !existingDraft.codeState[k]?.verified);
+      resumeCodeState = existingDraft.codeState;
+      draftId = existingDraft._id;
     } else {
       draftId = await createDraftWithPin(pin);
     }
 
     setWizardDraftId(draftId);
     setWizardOrder(finalOrder);
-    setWizardIndex(0);
+    setWizardIndex(resumeIndex);
     setWizardOpen(true);
     if (preflight?.codeState) initWizardPrices(preflight);
 
-    beginCodeStep(draftId, finalOrder, 0);
+    beginCodeStep(draftId, finalOrder, resumeIndex, resumeCodeState);
   };
 
   const createDraftWithPin = async (pin: string): Promise<string> => {
@@ -292,7 +325,14 @@ const WithdrawSection = () => {
 
   // Begin a code step. For paid codes, create a deposit request tagged
   // for this draftId+codeType. For free codes, jump straight to issue.
-  const beginCodeStep = (draftId: string, order: CodeType[], index: number) => {
+  // If the slot is already paid (code issued but not yet verified), go
+  // straight to the enter step — the user already paid and got the code.
+  const beginCodeStep = (
+    draftId: string,
+    order: CodeType[],
+    index: number,
+    draftCodeState?: Record<string, { paid: boolean; code?: string | null; verified: boolean }>
+  ) => {
     if (index >= order.length) {
       setWizardStep('verify');
       return;
@@ -305,6 +345,26 @@ const WithdrawSection = () => {
     setWizardDepositId(null);
     setWizardDepositStatus(null);
 
+    const slot = draftCodeState?.[codeType];
+    const alreadyPaidAndIssued = !!slot && slot.paid && !!slot.code && !slot.verified;
+    const alreadyVerified = !!slot && slot.verified;
+    if (alreadyVerified) {
+      // shouldn't happen but skip defensively
+      beginCodeStep(draftId, order, index + 1, draftCodeState);
+      return;
+    }
+    if (alreadyPaidAndIssued) {
+      // Code already issued for this slot — show the enter step using
+      // the stored code so the user doesn't have to pay again.
+      setWizardIssueData({
+        code: slot!.code ?? undefined,
+        price: preflightPrice(codeType),
+        free: preflightPrice(codeType) === 0
+      });
+      setWizardStep('enter');
+      setWizardProcessing(false);
+      return;
+    }
     const draftPrice = preflightPrice(codeType);
     if (draftPrice > 0) {
       setWizardStep('deposit');
@@ -538,6 +598,55 @@ const WithdrawSection = () => {
     }
   };
 
+  // Resume an in-progress withdrawal draft. Hydrates the wizard from
+  // the draft's current state and jumps straight to the right step.
+  const resumeActiveDraft = async () => {
+    if (!activeDraft) return;
+    const order: CodeType[] = (['SAC', 'TVC', 'MFA', 'TAC'] as CodeType[]).filter((k) => {
+      const s = activeDraft.codeState[k];
+      return s && s.required;
+    });
+    if (order.length === 0) {
+      // No required codes for this draft — go straight to final submit
+      setWizardDraftId(activeDraft._id);
+      setWizardOrder(order);
+      setWizardIndex(0);
+      setWizardOpen(true);
+      setWizardStep('verify');
+      return;
+    }
+    const resumeIndex = order.findIndex((k) => !activeDraft.codeState[k]?.verified);
+    if (resumeIndex === -1) {
+      // All verified — go to final submit
+      setWizardDraftId(activeDraft._id);
+      setWizardOrder(order);
+      setWizardIndex(order.length);
+      setWizardOpen(true);
+      setWizardStep('verify');
+      return;
+    }
+    // Populate price cache from current draft so the deposit step
+    // shows the right amount without re-fetching preflight.
+    const priceMap: Record<string, number> = {};
+    order.forEach((k) => {
+      const s = activeDraft.codeState[k];
+      if (s) priceMap[k] = s.price;
+    });
+    setWizardPriceCache(priceMap as Record<CodeType, number>);
+    setWizardDraftId(activeDraft._id);
+    setWizardOrder(order);
+    setWizardIndex(resumeIndex);
+    setWizardOpen(true);
+    beginCodeStep(activeDraft._id, order, resumeIndex, activeDraft.codeState);
+  };
+
+  const cancelActiveDraft = async () => {
+    if (!activeDraft) return;
+    await cancelDraft(activeDraft._id);
+    setActiveDraft(null);
+    showSuccess('In-progress withdrawal cancelled.');
+  };
+
   const currentCodeType = wizardIssuedType;
   const currentLabel = currentCodeType ? CODE_LABELS[currentCodeType] : null;
   const totalSteps = wizardOrder.length;
@@ -552,6 +661,43 @@ const WithdrawSection = () => {
             <p className="text-xs mobile:text-sm text-gray-600">Withdraw funds to your preferred payment method</p>
           </div>
         </div>
+
+        {/* Resume in-progress withdrawal banner */}
+        {activeDraft && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+            <div className="flex items-start justify-between">
+              <div className="flex items-start space-x-3">
+                <ArrowUpDown className="w-5 h-5 text-blue-600 mt-0.5" />
+                <div>
+                  <h3 className="font-semibold text-blue-900 mb-1">You have an in-progress withdrawal</h3>
+                  <p className="text-sm text-blue-800">
+                    Amount: <strong>{getCurrencySymbol(activeDraft.currency || 'USD')}{(activeDraft.amount || 0).toLocaleString()}</strong>
+                    {' — '}
+                    {(() => {
+                      const codes = (['SAC', 'TVC', 'MFA', 'TAC'] as CodeType[]).filter((k) => activeDraft.codeState[k]?.required);
+                      const verifiedCount = codes.filter((k) => activeDraft.codeState[k]?.verified).length;
+                      return `${verifiedCount} of ${codes.length} security codes verified`;
+                    })()}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={resumeActiveDraft}
+                  className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg"
+                >
+                  Resume
+                </button>
+                <button
+                  onClick={cancelActiveDraft}
+                  className="px-3 py-1.5 border border-blue-300 text-blue-700 hover:bg-blue-100 text-sm font-semibold rounded-lg"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {scheduleLoading ? (
           <div className="bg-gray-50 rounded-lg p-4 mb-6">
