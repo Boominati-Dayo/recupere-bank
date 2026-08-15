@@ -82,7 +82,7 @@ const WithdrawSection = () => {
   const [wizardDepositId, setWizardDepositId] = useState<string | null>(null);
   const [wizardDepositStatus, setWizardDepositStatus] = useState<string | null>(null);
   const [wizardPollCancel, setWizardPollCancel] = useState<(() => void) | null>(null);
-  const [cancelConfirmOpen, setCancelConfirmOpen] = useState<null | 'wizard' | 'resume'>(null);
+  const [cancelConfirmOpen, setCancelConfirmOpen] = useState<null | 'resume'>(null);
 
   // Active draft detection — show a "Resume withdrawal" banner if the
   // user has an in-progress draft from a previous session.
@@ -590,16 +590,13 @@ const WithdrawSection = () => {
     }
   };
 
-  const handleWizardCancel = () => {
-    setCancelConfirmOpen('wizard');
-  };
-
-  const confirmWizardCancel = async () => {
-    setCancelConfirmOpen(null);
-    if (wizardDraftId) {
-      await cancelDraft(wizardDraftId);
-    }
+  // Close the wizard modal without cancelling the withdrawal. The draft
+  // stays active and can be resumed via the banner. To actually cancel,
+// the user must use the Cancel button next to Resume (or the explicit
+// cancel flow opened from there).
+const handleWizardClose = () => {
     resetWizard();
+    refreshActiveDraft();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -983,7 +980,7 @@ const WithdrawSection = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
-            onClick={(e) => { if (e.target === e.currentTarget && wizardStep !== 'awaiting_deposit' && !wizardProcessing) handleWizardCancel(); }}
+            onClick={(e) => { if (e.target === e.currentTarget && wizardStep !== 'awaiting_deposit' && !wizardProcessing) handleWizardClose(); }}
           >
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
@@ -992,7 +989,7 @@ const WithdrawSection = () => {
               className="bg-white rounded-xl shadow-2xl w-full max-w-md p-6 mobile:p-8 relative"
             >
               <button
-                onClick={handleWizardCancel}
+                onClick={handleWizardClose}
                 disabled={wizardProcessing}
                 className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 disabled:opacity-50"
                 aria-label="Close"
@@ -1273,7 +1270,7 @@ const WithdrawSection = () => {
                   Keep Withdrawal
                 </button>
                 <button
-                  onClick={cancelConfirmOpen === 'wizard' ? confirmWizardCancel : confirmResumeCancel}
+                  onClick={confirmResumeCancel}
                   className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold"
                 >
                   Yes, Cancel
