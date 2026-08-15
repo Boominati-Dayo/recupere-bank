@@ -99,6 +99,7 @@ export const POST = requireAuth(async (request: AuthenticatedRequest, context: a
       status: 'pending' as const,
       codeState: codeStateAudit,
       totalCodeFees: draft.totalFeesPaid,
+      draftId: draftId.toString(),
       createdAt: now,
       updatedAt: now
     };

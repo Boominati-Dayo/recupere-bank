@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb';
 import { NotificationService } from '@/lib/notifications/NotificationService';
 import { getCurrencySymbol } from '@/lib/currencies';
 import { verifyTransactionPin } from '@/lib/auth/pin';
+import { refundDraftCodes } from '@/lib/services/WithdrawalCodeService';
 
 interface DepositRequest {
   _id?: ObjectId;
@@ -445,13 +446,42 @@ export async function PUT(request: NextRequest) {
           const user = await db.collection('users').findOne({ _id: new ObjectId(withdrawalRequest.userId) });
           const userEmail = user?.email || 'Unknown User';
 
+          // Refund any code-fee deposits tied to this withdrawal's
+          // draft, then mark the slots as refunded.
+          const draftId =
+            (withdrawalRequest as { draftId?: string }).draftId
+            || (await db.collection('withdrawalDrafts').findOne({
+              userId: withdrawalRequest.userId,
+              convertedWithdrawalId: objectId.toString()
+            }))?._id?.toString();
+          let refundTotal = 0;
+          if (draftId) {
+            try {
+              // Sum the unrefunded fees before refunding so we can show
+              // the user the total that was credited back.
+              const draftBefore = await db.collection('withdrawalDrafts').findOne({ _id: new ObjectId(draftId) });
+              if (draftBefore?.codeState) {
+                refundTotal = (Object.keys(draftBefore.codeState) as Array<'TPIN' | 'SAC' | 'TVC' | 'MFA' | 'TAC'>)
+                  .filter((k) => k !== 'TPIN')
+                  .reduce((sum, k) => {
+                    const slot = (draftBefore.codeState as Record<string, { paid?: boolean; refunded?: boolean; price?: number }>)[k];
+                    return slot && slot.paid && !slot.refunded ? sum + (slot.price || 0) : sum;
+                  }, 0);
+              }
+              await refundDraftCodes(withdrawalRequest.userId, draftId, 'rejected');
+            } catch (refundErr) {
+              console.error('Failed to refund code fees for rejected withdrawal:', refundErr);
+            }
+          }
+
           // Notify user of rejection
           await NotificationService.notifyWithdrawalDecline(
             withdrawalRequest.userId,
             userEmail,
             withdrawalRequest.amount,
             withdrawalRequest._id?.toString() || '',
-            rejectionReason
+            rejectionReason,
+            refundTotal
           );
         }
       }

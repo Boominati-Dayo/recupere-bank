@@ -1161,7 +1161,7 @@ const handleWizardClose = () => {
                         <p>
                           Pay <strong>{currencySymbol}{preflightPrice(wizardIssuedType).toFixed(2)}</strong> via the payment method you selected. Once your deposit is verified, your security code will be issued automatically.
                         </p>
-                        <p className="mt-1 text-xs text-orange-700">Fees are non-refundable.</p>
+                        <p className="mt-1 text-xs text-orange-700">If your withdrawal is later declined by an admin, these fees are refunded to your balance.</p>
                       </div>
                     </div>
                   </div>
@@ -1363,7 +1363,7 @@ const handleWizardClose = () => {
                 This will discard your current progress, including any verified security codes for this withdrawal.
               </p>
               <p className="text-xs text-gray-500 mb-5">
-                Note: any code-fee deposits you've already paid are non-refundable. You can start a new withdrawal at any time.
+                Note: any code-fee deposits you've already paid are refunded to your balance if your withdrawal is declined by an admin. You can start a new withdrawal at any time.
               </p>
               <div className="flex items-center justify-end space-x-3">
                 <button

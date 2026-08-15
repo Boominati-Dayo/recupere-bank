@@ -333,28 +333,68 @@ export async function refundDraftCodes(userId: string, draftId: string, reason: 
   const refundTotal = totalUnrefundedFees(draft.codeState);
   if (refundTotal <= 0) return;
   const now = new Date();
-  await db.collection('users').updateOne(
-    { _id: new ObjectId(userId) },
-    {
-      $inc: { 'balances.main': refundTotal },
-      $set: { updatedAt: now },
-      $push: {
-        transactions: {
-          type: 'refund',
-          amount: refundTotal,
-          date: now,
-          status: 'completed',
-          description: `Refund of withdrawal code fees (${reason})`,
-          metadata: { draftId: draftId.toString() }
-        },
-        activityLog: {
-          action: `Refunded ${refundTotal} in withdrawal code fees (${reason})`,
-          timestamp: now.toISOString()
+
+  // For each paid-but-unrefunded code slot, find the matched
+  // code-fee deposit and credit the user's main balance back. Mark
+  // the deposit as refunded so it isn't used again.
+  for (const key of Object.keys(draft.codeState) as WithdrawalCodeType[]) {
+    if (key === 'TPIN') continue;
+    const slot = draft.codeState[key];
+    if (!slot.paid || slot.refunded) continue;
+
+    const feeDeposit = await db.collection('depositRequests').findOne({
+      userId,
+      status: 'completed',
+      'metadata.purpose': 'withdrawal_code_fee',
+      'metadata.draftId': draftId.toString(),
+      'metadata.codeType': key
+    });
+    if (!feeDeposit) continue;
+
+    const refundAmount = slot.price;
+    if (refundAmount > 0) {
+      await db.collection('users').updateOne(
+        { _id: new ObjectId(userId) },
+        {
+          $inc: { 'balances.main': refundAmount },
+          $set: { updatedAt: now },
+          $push: {
+            transactions: {
+              type: 'refund',
+              amount: refundAmount,
+              date: now,
+              status: 'completed',
+              description: `Refund of ${key} fee (${reason})`,
+              metadata: {
+                draftId: draftId.toString(),
+                codeType: key,
+                matchedDepositId: feeDeposit._id.toString()
+              }
+            },
+            activityLog: {
+              action: `Refunded ${key} fee of ${refundAmount} (${reason})`,
+              timestamp: now.toISOString()
+            }
+          } as any
+        } as any
+      );
+      // Mark the deposit as refunded so the platform knows not to
+      // re-credit or re-refund it.
+      await db.collection('depositRequests').updateOne(
+        { _id: feeDeposit._id },
+        {
+          $set: {
+            refunded: true,
+            refundedAt: now,
+            refundReason: `withdrawal_${reason}`,
+            updatedAt: now
+          }
         }
-      } as any
-    } as any
-  );
-  // Mark every paid-but-unrefunded slot as refunded
+      );
+    }
+  }
+
+  // Mark every paid-but-unrefunded slot as refunded on the draft.
   const update: Record<string, unknown> = { updatedAt: now };
   (Object.keys(draft.codeState) as WithdrawalCodeType[]).forEach((key) => {
     const slot = draft.codeState[key];

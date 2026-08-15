@@ -28,6 +28,7 @@ interface NotificationData {
     capitalReturned?: boolean;
     balanceType?: string;
     action?: string;
+    refundTotal?: number;
   };
 }
 
@@ -258,20 +259,24 @@ export class NotificationService {
   }
 
   // Withdrawal Decline Notifications
-  static async notifyWithdrawalDecline(userId: string, userEmail: string, amount: number, transactionId: string, reason?: string) {
+  static async notifyWithdrawalDecline(userId: string, userEmail: string, amount: number, transactionId: string, reason?: string, refundTotal: number = 0) {
     const db = await getDb();
     const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
     const userName = user?.firstName || userEmail;
     const userCurrency = user?.currency || 'USD';
     const sym = getCurrencySymbol(userCurrency);
 
+    const refundNote = refundTotal > 0
+      ? ` Your code fees of ${sym}${refundTotal.toFixed(2)} have been refunded to your balance.`
+      : '';
+
     await this.createNotification({
       title: 'Withdrawal Declined',
-      message: `Your withdrawal of ${sym}${amount} has been declined.${reason ? ` Reason: ${reason}` : ''}`,
+      message: `Your withdrawal of ${sym}${amount} has been declined.${reason ? ` Reason: ${reason}` : ''}${refundNote}`,
       type: 'withdrawal_decline',
       recipients: [userId],
       sentBy: 'system',
-      metadata: { transactionId, amount, reason }
+      metadata: { transactionId, amount, reason, refundTotal }
     });
 
     // Email user
@@ -283,6 +288,7 @@ export class NotificationService {
         `
         <p>We regret to inform you that your withdrawal of <strong>${sym}${amount}</strong> has been declined.</p>
         ${reason ? `<p><strong>Reason:</strong> ${reason}</p>` : ''}
+        ${refundTotal > 0 ? `<p>Your code fees of <strong>${sym}${refundTotal.toFixed(2)}</strong> have been refunded to your balance.</p>` : ''}
         <p>Transaction ID: <span style="font-family: monospace;">${transactionId}</span></p>
         <p>If you believe this is an error, please contact our support team.</p>
         <div class="button-container">
@@ -291,7 +297,7 @@ export class NotificationService {
         `,
         userName
       ),
-      text: `Your withdrawal of ${sym}${amount} has been declined. ${reason ? `Reason: ${reason}` : ''} Transaction ID: ${transactionId}`
+      text: `Your withdrawal of ${sym}${amount} has been declined. ${reason ? `Reason: ${reason}` : ''}${refundTotal > 0 ? ` Code fees of ${sym}${refundTotal.toFixed(2)} have been refunded to your balance.` : ''} Transaction ID: ${transactionId}`
     });
   }
 
