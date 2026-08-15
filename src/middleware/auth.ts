@@ -57,12 +57,15 @@ export async function authenticateRequest(request: NextRequest): Promise<{
 
 // Use a flexible second-argument type so handlers that don't use
 // dynamic route params still type-check alongside handlers that do.
-export type RouteContext = { params: Promise<Record<string, string>> } | undefined;
+// (We deliberately avoid the name `RouteContext` here because Next.js
+// defines its own RouteContext type for the second arg of route
+// handlers and we don't want to clobber it.)
+export type AuthRouteContext = { params: Promise<Record<string, string>> } | undefined;
 
 export function requireAuth(
-  handler: (request: AuthenticatedRequest, ctx: RouteContext) => Promise<NextResponse>
+  handler: (request: AuthenticatedRequest, ctx: AuthRouteContext) => Promise<NextResponse>
 ) {
-  return async (request: NextRequest, ctx: RouteContext) => {
+  return async (request: NextRequest, ctx: AuthRouteContext) => {
     const authResult = await authenticateRequest(request);
 
     if (!authResult.success) {
@@ -80,9 +83,9 @@ export function requireAuth(
 }
 
 export function requireAdmin(
-  handler: (request: AuthenticatedRequest, ctx: RouteContext) => Promise<NextResponse>
+  handler: (request: AuthenticatedRequest, ctx: AuthRouteContext) => Promise<NextResponse>
 ) {
-  return async (request: NextRequest, ctx: RouteContext) => {
+  return async (request: NextRequest, ctx: AuthRouteContext) => {
     const authResult = await authenticateRequest(request);
 
     if (!authResult.success) {

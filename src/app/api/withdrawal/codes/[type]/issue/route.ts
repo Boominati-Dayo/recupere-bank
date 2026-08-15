@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 import { issueCode } from '@/lib/services/WithdrawalCodeService';
-import { requireAuth, type AuthenticatedRequest, type RouteContext } from '@/middleware/auth';
+import { requireAuth, type AuthenticatedRequest, type AuthRouteContext } from '@/middleware/auth';
 import { WITHDRAWAL_CODE_TYPES, type WithdrawalCodeType } from '@/lib/withdrawal-codes';
 
 // POST /api/withdrawal/codes/[type]/issue
 // Charges the per-user price for the given code, generates a 6-digit
 // code, emails it to the user, and returns the code in the response.
-export const POST = requireAuth(async (request: AuthenticatedRequest, ctx: RouteContext) => {
+export const POST = requireAuth(async (request: AuthenticatedRequest, ctx: AuthRouteContext) => {
   try {
     const userId = request.user!.id;
     if (!ctx) throw new Error('Missing route context');

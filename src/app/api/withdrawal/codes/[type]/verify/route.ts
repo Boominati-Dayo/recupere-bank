@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 import { verifyCode } from '@/lib/services/WithdrawalCodeService';
-import { requireAuth, type AuthenticatedRequest, type RouteContext } from '@/middleware/auth';
+import { requireAuth, type AuthenticatedRequest, type AuthRouteContext } from '@/middleware/auth';
 import { WITHDRAWAL_CODE_TYPES, type WithdrawalCodeType } from '@/lib/withdrawal-codes';
 
 // POST /api/withdrawal/codes/[type]/verify
 // Matches a user-entered 6-digit code against the issued code on the
 // draft and marks the slot verified.
-export const POST = requireAuth(async (request: AuthenticatedRequest, ctx: RouteContext) => {
+export const POST = requireAuth(async (request: AuthenticatedRequest, ctx: AuthRouteContext) => {
   try {
     const userId = request.user!.id;
     if (!ctx) throw new Error('Missing route context');
