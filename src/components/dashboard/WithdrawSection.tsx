@@ -37,12 +37,14 @@ interface WithdrawalSchedule {
 
 type CodeType = 'TPIN' | 'TAC' | 'MFA' | 'TVC' | 'SAC';
 
+// Users only ever see the abbreviation. The full meaning (used by the
+// admin panel) is intentionally hidden from end users.
 const CODE_LABELS: Record<CodeType, { name: string; description: string }> = {
-  TPIN: { name: 'Transaction PIN', description: 'Your 4-digit security PIN.' },
-  SAC: { name: 'Secure Access Code', description: 'A code required to access the withdrawal flow.' },
-  TVC: { name: 'Transaction Verification Code', description: 'Confirms the specific withdrawal details.' },
-  MFA: { name: 'Multi-Factor Authentication', description: 'A second-factor code sent to your verified contact.' },
-  TAC: { name: 'Transaction Authorization Code', description: 'A final code authorizing the withdrawal.' }
+  TPIN: { name: 'TPIN', description: 'Your 4-digit security PIN.' },
+  SAC: { name: 'SAC', description: 'A code required to access the withdrawal flow.' },
+  TVC: { name: 'TVC', description: 'Confirms the specific withdrawal details.' },
+  MFA: { name: 'MFA', description: 'A second-factor code sent to your verified contact.' },
+  TAC: { name: 'TAC', description: 'A final code authorizing the withdrawal.' }
 };
 
 const CODE_FLOW_ORDER: CodeType[] = ['SAC', 'TVC', 'MFA', 'TAC'];
