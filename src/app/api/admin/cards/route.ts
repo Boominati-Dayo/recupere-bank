@@ -1,20 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
-import { requireAuth } from '@/middleware/auth';
+import { requireAdmin } from '@/middleware/auth';
 import { NotificationService } from '@/lib/notifications/NotificationService';
 import { generateCardNumber, generateCVV, generateExpiryDate } from '@/lib/utils/cardUtils';
 import { sendEmail, emailTemplates } from '@/lib/email';
-
-// Helper to check for admin access
-const requireAdmin = (handler: (req: any) => Promise<NextResponse>) => {
-  return requireAuth(async (req) => {
-    if (!req.user?.isAdmin) {
-      return NextResponse.json({ success: false, error: 'Admin access required' }, { status: 403 });
-    }
-    return handler(req);
-  });
-};
 
 export const GET = requireAdmin(async (request) => {
   try {
