@@ -346,8 +346,7 @@ const UserCodesManager: React.FC = () => {
                     Server Hard Cap: ${hardCapUsd} per code (USD)
                   </p>
                   <p className="text-xs text-amber-700/80 font-medium mt-1">
-                    Prices you enter are clamped to this cap on save. TPIN is
-                    always free and always required.
+                    Prices you enter are stored as-is, up to this cap. The user pays exactly the fee you set for each gate when they withdraw. TPIN is always free and always required.
                   </p>
                 </div>
               </div>

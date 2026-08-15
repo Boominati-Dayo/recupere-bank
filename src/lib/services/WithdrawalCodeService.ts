@@ -69,7 +69,7 @@ function generateCode(): string {
 
 export async function preflight(userId: string, amount: number, currency: string): Promise<PreflightResult> {
   const pricing = await getUserPricing(userId);
-  const clamped = clampPricing(pricing, amount);
+  const clamped = clampPricing(pricing);
   const codeState = buildInitialCodeState(clamped, amount);
   const totalMaxFees = (Object.keys(codeState) as WithdrawalCodeType[])
     .filter((k) => k !== 'TPIN')
@@ -128,7 +128,7 @@ export async function createDraft(input: CreateDraftInput) {
   }
 
   const pricing = await getUserPricing(input.userId);
-  const clamped = clampPricing(pricing, input.amount);
+  const clamped = clampPricing(pricing);
   const codeState = buildInitialCodeState(clamped, input.amount);
 
   const now = new Date();
