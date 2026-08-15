@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import jwt, { TokenExpiredError } from 'jsonwebtoken';
+import jwt, { TokenExpiredError, JsonWebTokenError } from 'jsonwebtoken';
 import { verifyEmailVerificationToken } from '@/lib/auth/jwt';
 import { UserService } from '@/lib/auth/user';
 import { NotificationService } from '@/lib/notifications/NotificationService';
+import { getDb } from '@/lib/mongodb';
+import { ObjectId } from 'mongodb';
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,10 +17,32 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Verify token
-    const payload = verifyEmailVerificationToken(token);
+    // 1. Primary path: signature + expiry + type check
+    let payload = verifyEmailVerificationToken(token);
+    let usedFallback = false;
+
+    // 2. Graceful fallback: if the server's JWT_SECRET was rotated after the
+    //    link was issued, signature verification will fail. We can still
+    //    trust the link if the user document stores the *exact same* token
+    //    (DB is the source of truth, not the JWT signature in this case).
     if (!payload) {
-      // Try to differentiate "expired" vs "invalid" so the UI can show useful messaging.
+      const decoded = jwt.decode(token);
+      if (decoded && typeof decoded === 'object' && decoded.type === 'email-verification' && typeof decoded.userId === 'string') {
+        const db = await getDb();
+        const stored = await db.collection('users').findOne(
+          { _id: new ObjectId(decoded.userId) },
+          { projection: { emailVerificationToken: 1, emailVerified: 1 } }
+        );
+        if (stored && stored.emailVerificationToken === token && !stored.emailVerified) {
+          payload = { userId: decoded.userId };
+          usedFallback = true;
+          console.warn(`[verify-email] Accepted token via DB match (server JWT_SECRET may have been rotated). userId=${decoded.userId}`);
+        }
+      }
+    }
+
+    if (!payload) {
+      // Distinguish "expired" from "invalid" so the UI can show useful messaging.
       let code = 'invalid_token';
       try {
         jwt.verify(token, process.env.JWT_SECRET || '');
@@ -87,7 +111,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Email verified successfully'
+      message: 'Email verified successfully',
+      // Surface the source so the client can show a useful hint if the
+      // link only verified because the DB matched a pre-rotation token.
+      via: usedFallback ? 'db-fallback' : 'jwt'
     });
 
   } catch (error) {
