@@ -2972,8 +2972,24 @@ const AdminSection = () => {
                           </button>
                         )}
                       </>
-                    ) : selectedTransaction.status === 'pending' ? (
+                    ) : ['pending', 'processing'].includes(selectedTransaction.status) ? (
                       <>
+                        {selectedTransaction.status === 'pending' && (
+                          <button
+                            onClick={() => {
+                              if (selectedTransaction._id) {
+                                updateTransactionStatus(selectedTransaction._id, 'withdrawal', 'processing');
+                              }
+                              setShowTransactionModal(false);
+                              setSelectedTransaction(null);
+                              setRejectionReason('');
+                            }}
+                            className="order-1 sm:flex-1 bg-gray-50 hover:bg-gray-100 text-gray-500 px-6 sm:px-8 py-4 sm:py-5 rounded-xl sm:rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2"
+                          >
+                            <Clock className="w-3.5 h-3.5" />
+                            Mark Processing
+                          </button>
+                        )}
                         <button
                           onClick={() => {
                             if (selectedTransaction._id) {
@@ -2983,24 +2999,10 @@ const AdminSection = () => {
                             setSelectedTransaction(null);
                             setRejectionReason('');
                           }}
-                          className="order-1 sm:flex-[2] bg-navy-900 hover:bg-navy-800 text-primary-500 px-6 sm:px-8 py-4 sm:py-5 rounded-xl sm:rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all shadow-xl shadow-navy-900/10 flex items-center justify-center gap-3"
+                          className={`order-2 ${selectedTransaction.status === 'pending' ? 'sm:flex-[2]' : 'sm:flex-1'} bg-navy-900 hover:bg-navy-800 text-primary-500 px-6 sm:px-8 py-4 sm:py-5 rounded-xl sm:rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all shadow-xl shadow-navy-900/10 flex items-center justify-center gap-3`}
                         >
                           <ShieldCheck className="w-4 h-4" />
-                          Approve & Complete
-                        </button>
-                        <button
-                          onClick={() => {
-                            if (selectedTransaction._id) {
-                              updateTransactionStatus(selectedTransaction._id, 'withdrawal', 'processing');
-                            }
-                            setShowTransactionModal(false);
-                            setSelectedTransaction(null);
-                            setRejectionReason('');
-                          }}
-                          className="order-2 sm:flex-1 bg-gray-50 hover:bg-gray-100 text-gray-400 px-6 sm:px-8 py-4 sm:py-5 rounded-xl sm:rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2"
-                        >
-                          <Clock className="w-3.5 h-3.5" />
-                          Process Only
+                          {selectedTransaction.status === 'processing' ? 'Mark Completed' : 'Approve & Complete'}
                         </button>
                         <button
                           onClick={() => {
@@ -3020,25 +3022,6 @@ const AdminSection = () => {
                       </>
                     ) : null}
                   </div>
-
-                  {selectedTransactionType === 'withdrawals' && selectedTransaction.status === 'processing' && (
-                    <div className="mt-3">
-                      <button
-                        onClick={() => {
-                          if (selectedTransaction._id) {
-                            updateTransactionStatus(selectedTransaction._id, 'withdrawal', 'completed');
-                          }
-                          setShowTransactionModal(false);
-                          setSelectedTransaction(null);
-                          setRejectionReason('');
-                        }}
-                        className="w-full bg-green-500 hover:bg-green-600 text-white px-6 py-4 rounded-xl font-black uppercase tracking-widest text-[11px] transition-all shadow-xl shadow-green-900/10 flex items-center justify-center gap-3"
-                      >
-                        <CheckCircle className="w-4 h-4" />
-                        Complete Sequence
-                      </button>
-                    </div>
-                  )}
 
                   <div className="mt-3 pt-3 border-t border-gray-100">
                     <button
