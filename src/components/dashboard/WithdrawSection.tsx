@@ -82,6 +82,7 @@ const WithdrawSection = () => {
   const [wizardDepositId, setWizardDepositId] = useState<string | null>(null);
   const [wizardDepositStatus, setWizardDepositStatus] = useState<string | null>(null);
   const [wizardPollCancel, setWizardPollCancel] = useState<(() => void) | null>(null);
+  const [cancelConfirmOpen, setCancelConfirmOpen] = useState<null | 'wizard' | 'resume'>(null);
 
   // Active draft detection — show a "Resume withdrawal" banner if the
   // user has an in-progress draft from a previous session.
@@ -582,7 +583,12 @@ const WithdrawSection = () => {
     }
   };
 
-  const handleWizardCancel = async () => {
+  const handleWizardCancel = () => {
+    setCancelConfirmOpen('wizard');
+  };
+
+  const confirmWizardCancel = async () => {
+    setCancelConfirmOpen(null);
     if (wizardDraftId) {
       await cancelDraft(wizardDraftId);
     }
@@ -660,9 +666,19 @@ const WithdrawSection = () => {
     beginCodeStep(activeDraft._id, order, resumeIndex, activeDraft.codeState);
   };
 
-  const cancelActiveDraft = async () => {
+  const cancelActiveDraft = () => {
     if (!activeDraft) return;
-    await cancelDraft(activeDraft._id);
+    setCancelConfirmOpen('resume');
+  };
+
+  const confirmResumeCancel = async () => {
+    if (!activeDraft) {
+      setCancelConfirmOpen(null);
+      return;
+    }
+    const draftId = activeDraft._id;
+    setCancelConfirmOpen(null);
+    await cancelDraft(draftId);
     setActiveDraft(null);
     showSuccess('In-progress withdrawal cancelled.');
   };
@@ -1209,6 +1225,53 @@ const WithdrawSection = () => {
                   <p className="text-sm text-gray-600">Your request has been sent for admin processing.</p>
                 </div>
               )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Cancel-confirmation modal */}
+      <AnimatePresence>
+        {cancelConfirmOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[60] bg-black/60 flex items-center justify-center p-4"
+            onClick={(e) => { if (e.target === e.currentTarget) setCancelConfirmOpen(null); }}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="bg-white rounded-xl shadow-2xl w-full max-w-sm p-6 mobile:p-8"
+            >
+              <div className="flex items-center space-x-3 mb-3">
+                <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+                  <X className="w-5 h-5 text-red-600" />
+                </div>
+                <h3 className="text-lg font-bold text-gray-900">Cancel this withdrawal?</h3>
+              </div>
+              <p className="text-sm text-gray-700 mb-2">
+                This will discard your current progress, including any verified security codes for this withdrawal.
+              </p>
+              <p className="text-xs text-gray-500 mb-5">
+                Note: any code-fee deposits you've already paid are non-refundable. You can start a new withdrawal at any time.
+              </p>
+              <div className="flex items-center justify-end space-x-3">
+                <button
+                  onClick={() => setCancelConfirmOpen(null)}
+                  className="px-4 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg font-semibold"
+                >
+                  Keep Withdrawal
+                </button>
+                <button
+                  onClick={cancelConfirmOpen === 'wizard' ? confirmWizardCancel : confirmResumeCancel}
+                  className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold"
+                >
+                  Yes, Cancel
+                </button>
+              </div>
             </motion.div>
           </motion.div>
         )}
