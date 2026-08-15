@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useCallback, useContext, useRef, useState, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Eye, EyeOff, Lock, ShieldCheck, X } from 'lucide-react';
 
@@ -26,6 +26,7 @@ export function PinPromptProvider({ children }: { children: ReactNode }) {
   const [showPin, setShowPin] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
   const resolverRef = useRef<((value: string | null) => void) | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const promptForPin = useCallback((descriptionText = 'Enter your 4-digit transaction PIN to confirm this action.') => {
     return new Promise<string | null>((resolve) => {
@@ -37,6 +38,13 @@ export function PinPromptProvider({ children }: { children: ReactNode }) {
       setIsOpen(true);
     });
   }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      const t = setTimeout(() => inputRef.current?.focus(), 100);
+      return () => clearTimeout(t);
+    }
+  }, [isOpen]);
 
   const close = useCallback((value: string | null) => {
     setIsOpen(false);
@@ -124,7 +132,11 @@ export function PinPromptProvider({ children }: { children: ReactNode }) {
               <div className="p-6">
                 <p className="text-sm text-gray-600 font-medium mb-5">{description}</p>
 
-                <div className="flex justify-center gap-3 mb-5">
+                <button
+                  type="button"
+                  onClick={() => inputRef.current?.focus()}
+                  className="w-full flex justify-center gap-3 mb-5 cursor-text"
+                >
                   {[0, 1, 2, 3].map((index) => (
                     <div
                       key={index}
@@ -137,10 +149,10 @@ export function PinPromptProvider({ children }: { children: ReactNode }) {
                       {showPin ? (pin[index] || '') : pin.length > index ? '•' : ''}
                     </div>
                   ))}
-                </div>
+                </button>
 
                 <input
-                  autoFocus
+                  ref={inputRef}
                   type={showPin ? 'text' : 'password'}
                   inputMode="numeric"
                   pattern="[0-9]*"
@@ -151,7 +163,9 @@ export function PinPromptProvider({ children }: { children: ReactNode }) {
                     setPin(e.target.value.replace(/\D/g, ''));
                     setError('');
                   }}
-                  className="sr-only"
+                  className="absolute opacity-0 pointer-events-none"
+                  style={{ left: '-9999px' }}
+                  aria-label="Transaction PIN"
                 />
 
                 {error && (

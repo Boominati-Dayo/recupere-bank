@@ -679,6 +679,9 @@ export const emailTemplates = {
   },
 
   // 19. Withdrawal code issuance
+  // For users: only show the abbreviation (TAC, MFA, TVC, SAC). The full
+  // meaning of these codes is intentionally hidden from end users — admins
+  // see the full labels in the admin UI.
   withdrawalCode: (
     userName: string,
     codeType: 'TAC' | 'MFA' | 'TVC' | 'SAC',
@@ -688,26 +691,20 @@ export const emailTemplates = {
     currency: string = 'USD'
   ) => {
     const sym = getCurrencySymbol(currency);
-    const typeLabel: Record<string, string> = {
-      TAC: 'Transaction Authorization Code',
-      MFA: 'Multi-Factor Authentication Code',
-      TVC: 'Transaction Verification Code',
-      SAC: 'Secure Access Code'
-    };
     return {
-      subject: `Your ${typeLabel[codeType]} - RecupereBank`,
+      subject: `Your ${codeType} - RecupereBank`,
       html: getBaseTemplate(
-        `${typeLabel[codeType]}`,
+        `${codeType}`,
         `
         <p>Hello ${userName},</p>
-        <p>You requested a <strong>${typeLabel[codeType]}</strong> to continue a withdrawal. Use the code below to verify the corresponding step in the dashboard.</p>
+        <p>You requested a <strong>${codeType}</strong> to continue a withdrawal. Use the code below to verify the corresponding step in the dashboard.</p>
         <div style="text-align: center; margin: 30px 0;">
           <div style="display: inline-block; padding: 18px 32px; border-radius: 12px; background-color: #0b1626; color: #ee2737; font-size: 28px; font-weight: 800; letter-spacing: 0.3em; font-family: 'Courier New', monospace;">
             ${code}
           </div>
         </div>
         <table class="data-table">
-          <tr><td>Code Type:</td><td class="highlight">${codeType} (${typeLabel[codeType]})</td></tr>
+          <tr><td>Code Type:</td><td class="highlight">${codeType}</td></tr>
           <tr><td>Expires:</td><td>${expiresAtIso}</td></tr>
           ${fee > 0 ? `<tr><td>Fee Charged:</td><td class="highlight">${sym}${fee.toLocaleString()}</td></tr>` : '<tr><td>Fee:</td><td>None</td></tr>'}
         </table>
