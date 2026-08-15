@@ -35,10 +35,18 @@ function VerifyEmailForm() {
         if (success) {
           setStatus('success');
           setMessage('Email verified successfully! You can now access all features.');
-          // Redirect to dashboard after 3 seconds
+          // Hard navigation so the dashboard re-runs /me and re-reads the
+          // fresh emailVerified state. A soft router.push() can keep a
+          // stale userProfile cached in memory and re-trigger the
+          // "Email Verification Required" banner.
+          const target = new URL(window.location.href);
+          target.pathname = '/dashboard';
+          target.search = '?verified=1';
+          target.hash = '';
+          // Defer slightly so the user can read the success message.
           setTimeout(() => {
-            router.push('/dashboard');
-          }, 3000);
+            window.location.replace(target.toString());
+          }, 800);
         } else {
           setStatus('error');
           setMessage('This verification link is invalid or has expired. Enter your email below to receive a new one.');
@@ -112,10 +120,16 @@ function VerifyEmailForm() {
                 <h3 className="text-lg font-medium text-gray-900">Email Verified!</h3>
                 <p className="text-gray-600">{message}</p>
                 <p className="text-sm text-gray-500">
-                  Redirecting to dashboard in 3 seconds...
+                  Taking you to the dashboard...
                 </p>
                 <button
-                  onClick={() => router.push('/dashboard')}
+                  onClick={() => {
+                    const target = new URL(window.location.href);
+                    target.pathname = '/dashboard';
+                    target.search = '?verified=1';
+                    target.hash = '';
+                    window.location.replace(target.toString());
+                  }}
                   className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-navy-600 hover:bg-navy-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-navy-500"
                 >
                   Go to Dashboard

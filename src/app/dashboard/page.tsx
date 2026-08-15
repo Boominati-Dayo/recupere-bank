@@ -316,6 +316,25 @@ const DashboardContent = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [pendingDepositAmount, setPendingDepositAmount] = useState<number | undefined>(undefined);
+  // When the verify-email page redirects here with ?verified=1, suppress
+  // the "Email Verification Required" banner for a short grace period
+  // so the user isn't sent to /activate-email while their /me cache is
+  // still stale.
+  const [suppressEmailBanner, setSuppressEmailBanner] = useState(() => searchParams.get('verified') === '1');
+
+  useEffect(() => {
+    if (searchParams.get('verified') === '1') {
+      setSuppressEmailBanner(true);
+      const timer = setTimeout(() => setSuppressEmailBanner(false), 30_000);
+      // Clear the ?verified=1 query so a hard refresh doesn't keep hiding it.
+      const url = new URL(window.location.href);
+      if (url.searchParams.get('verified')) {
+        url.searchParams.delete('verified');
+        window.history.replaceState({}, '', url.toString());
+      }
+      return () => clearTimeout(timer);
+    }
+  }, [searchParams]);
 
   const { formattedDate, formattedTime } = DashboardClock();
 
@@ -726,13 +745,16 @@ const DashboardContent = () => {
 
             {/* Scrollable Area */}
             <div className="flex-1 overflow-y-auto p-3.5 mobile:p-6 bg-white space-y-4 mobile:space-y-8 pb-48 mobile:pb-48 relative">
-              <VerificationBanner onNavigate={(section) => {
-                if (section === 'activate-email') {
-                  router.push('/activate-email');
-                } else {
-                  setActiveSection(section);
-                }
-              }} />
+              <VerificationBanner
+                hideEmail={suppressEmailBanner}
+                onNavigate={(section) => {
+                  if (section === 'activate-email') {
+                    router.push('/activate-email');
+                  } else {
+                    setActiveSection(section);
+                  }
+                }}
+              />
               {activeSection === 'dashboard' ? (
                 <>
                   {/* Top Stats Cards Removed per request - replaced by slideshow in Welcome section */}

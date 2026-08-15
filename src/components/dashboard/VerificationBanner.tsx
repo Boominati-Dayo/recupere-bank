@@ -6,14 +6,15 @@ import { useAuth } from '@/contexts/AuthContext';
 
 interface VerificationBannerProps {
     onNavigate: (section: string) => void;
+    hideEmail?: boolean;
 }
 
-const VerificationBanner: React.FC<VerificationBannerProps> = ({ onNavigate }) => {
+const VerificationBanner: React.FC<VerificationBannerProps> = ({ onNavigate, hideEmail = false }) => {
     const { userProfile } = useAuth();
 
     if (!userProfile) return null;
 
-    const showEmailBanner = !userProfile.emailVerified;
+    const showEmailBanner = !userProfile.emailVerified && !hideEmail;
     const showKycBanner = userProfile.kycStatus !== 'verified';
 
     if (!showEmailBanner && !showKycBanner) return null;
