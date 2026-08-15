@@ -99,6 +99,16 @@ const WithdrawSection = () => {
     codeState: Record<string, { paid: boolean; verified: boolean; required: boolean; price: number }>;
   } | null>(null);
 
+  // Pending committed withdrawal requests (pending/processing). When
+  // this is non-empty, the user cannot start a new withdrawal.
+  const [pendingWithdrawals, setPendingWithdrawals] = useState<Array<{
+    _id: string;
+    amount: number;
+    currency?: string;
+    status: 'pending' | 'processing';
+    createdAt: string;
+  }>>([]);
+
   const refreshActiveDraft = async () => {
     try {
       const res = await fetch('/api/withdrawal/draft?amount=0&currency=' + encodeURIComponent(currencyCode));
@@ -110,6 +120,20 @@ const WithdrawSection = () => {
       }
     } catch {
       setActiveDraft(null);
+    }
+  };
+
+  const refreshPendingWithdrawals = async () => {
+    try {
+      const res = await fetch('/api/user/withdrawals?status=open');
+      const json = await res.json();
+      if (json.success && Array.isArray(json.data)) {
+        setPendingWithdrawals(json.data);
+      } else {
+        setPendingWithdrawals([]);
+      }
+    } catch {
+      setPendingWithdrawals([]);
     }
   };
 
@@ -129,6 +153,7 @@ const WithdrawSection = () => {
     };
     fetchWithdrawalSchedule();
     refreshActiveDraft();
+    refreshPendingWithdrawals();
   }, [currencyCode]);
 
   const isWithdrawalAllowed = () => {
@@ -174,7 +199,8 @@ const WithdrawSection = () => {
   };
 
   const isAmountValid = withdrawalAmount <= availableBalance && withdrawalAmount > 0;
-  const isFormValid = isAmountValid && selectedMethod && accountName && accountNumber && isWithdrawalAllowed();
+  const isFormValid = isAmountValid && selectedMethod && accountName && accountNumber && isWithdrawalAllowed() && pendingWithdrawals.length === 0;
+  const hasPendingWithdrawal = pendingWithdrawals.length > 0;
 
   useEffect(() => {
     loadPaymentMethods();
@@ -612,6 +638,7 @@ const WithdrawSection = () => {
       showSuccess('Withdrawal request submitted successfully! Please wait for admin processing.');
       resetForm();
       await forceRefresh();
+      await refreshPendingWithdrawals();
       setTimeout(() => resetWizard(), 1200);
     } catch (e) {
       setWizardError(e instanceof Error ? e.message : 'Failed to submit');
@@ -631,6 +658,10 @@ const handleWizardClose = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (pendingWithdrawals.length > 0) {
+      showError('You already have a pending withdrawal request. Please wait for it to be processed.');
+      return;
+    }
     if (!selectedMethod || !amount || !accountName || !accountNumber) {
       showError('Please fill in all required fields');
       return;
@@ -733,6 +764,39 @@ const handleWizardClose = () => {
             <p className="text-xs mobile:text-sm text-gray-600">Withdraw funds to your preferred payment method</p>
           </div>
         </div>
+
+        {/* Pending withdrawal requests — blocks new ones */}
+        {pendingWithdrawals.length > 0 && (
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+            <div className="flex items-start space-x-3">
+              <Clock className="w-5 h-5 text-yellow-600 mt-0.5 shrink-0" />
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-yellow-900 mb-1">
+                  You have {pendingWithdrawals.length} pending withdrawal request{pendingWithdrawals.length === 1 ? '' : 's'}
+                </h3>
+                <p className="text-sm text-yellow-800">
+                  A new withdrawal cannot be submitted until your pending request{pendingWithdrawals.length === 1 ? ' is' : 's are'} processed by an admin.
+                </p>
+                <ul className="mt-3 space-y-2">
+                  {pendingWithdrawals.map((w) => (
+                    <li key={w._id} className="flex items-center justify-between bg-white border border-yellow-100 rounded-lg px-3 py-2">
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-gray-900">
+                          {getCurrencySymbol(w.currency || currencyCode)}{(w.amount || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          Status: <strong className="capitalize">{w.status}</strong>
+                          {' · '}
+                          Submitted {new Date(w.createdAt).toLocaleString()}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Resume in-progress withdrawal banner */}
         {activeDraft && (
@@ -863,7 +927,7 @@ const handleWizardClose = () => {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className={`space-y-4 mobile:space-y-6 transition-all duration-700 ${(!isWithdrawalAllowed() && !scheduleLoading) || userProfile?.kycStatus !== 'verified'
+        <form onSubmit={handleSubmit} className={`space-y-4 mobile:space-y-6 transition-all duration-700 ${(!isWithdrawalAllowed() && !scheduleLoading) || userProfile?.kycStatus !== 'verified' || hasPendingWithdrawal
           ? 'blur-md grayscale pointer-events-none opacity-40'
           : ''
           }`}>

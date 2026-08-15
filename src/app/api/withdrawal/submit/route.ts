@@ -29,6 +29,20 @@ export const POST = requireAuth(async (request: AuthenticatedRequest, context: a
       return NextResponse.json({ success: false, error: 'Draft has expired. Please start a new withdrawal.' }, { status: 400 });
     }
 
+    // Block if the user already has a pending or processing withdrawal
+    // request. They must wait for it to be approved/rejected before
+    // starting a new one.
+    const pendingWithdrawal = await db.collection('withdrawalRequests').findOne({
+      userId,
+      status: { $in: ['pending', 'processing'] }
+    });
+    if (pendingWithdrawal) {
+      return NextResponse.json(
+        { success: false, error: 'You already have a pending withdrawal request. Please wait for it to be processed before starting a new one.' },
+        { status: 400 }
+      );
+    }
+
     // Verify TPIN against user FIRST. TPIN verification is what marks
     // the TPIN slot as verified — it has to happen before the
     // "all required codes verified" gate check, otherwise that check

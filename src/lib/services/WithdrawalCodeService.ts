@@ -112,6 +112,17 @@ export async function createDraft(input: CreateDraftInput) {
     throw new Error('A withdrawal is already in progress. Complete or cancel it before starting a new one.');
   }
 
+  // Block if the user already has a pending or processing withdrawal
+  // request — they must wait for admin to process it before starting
+  // another one.
+  const pendingWithdrawal = await db.collection('withdrawalRequests').findOne({
+    userId: input.userId,
+    status: { $in: ['pending', 'processing'] }
+  });
+  if (pendingWithdrawal) {
+    throw new Error('You already have a pending withdrawal request. Please wait for it to be processed before starting a new one.');
+  }
+
   // Verify PIN against stored hash. We don't require auth here; the
   // caller passes the PIN and the userId is from the session.
   const user = await db.collection('users').findOne({ _id: new ObjectId(input.userId) });
