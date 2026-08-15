@@ -346,13 +346,13 @@ const WithdrawSection = () => {
     setWizardDepositStatus(null);
 
     const slot = draftCodeState?.[codeType];
-    const alreadyPaidAndIssued = !!slot && slot.paid && !!slot.code && !slot.verified;
     const alreadyVerified = !!slot && slot.verified;
     if (alreadyVerified) {
       // shouldn't happen but skip defensively
       beginCodeStep(draftId, order, index + 1, draftCodeState);
       return;
     }
+    const alreadyPaidAndIssued = !!slot && slot.paid && !!slot.code && !slot.verified;
     if (alreadyPaidAndIssued) {
       // Code already issued for this slot — show the enter step using
       // the stored code so the user doesn't have to pay again.
@@ -363,6 +363,15 @@ const WithdrawSection = () => {
       });
       setWizardStep('enter');
       setWizardProcessing(false);
+      return;
+    }
+    // Slot is paid but no code was issued yet (e.g. user closed the
+    // modal right after the fee deposit was approved before issue ran).
+    // Re-call issue — the backend will detect the matched completed
+    // deposit and generate the code without charging the user again.
+    const alreadyPaidButNotIssued = !!slot && slot.paid && !slot.code && !slot.verified;
+    if (alreadyPaidButNotIssued) {
+      issueCurrentCode(draftId, codeType);
       return;
     }
     const draftPrice = preflightPrice(codeType);
@@ -471,11 +480,15 @@ const WithdrawSection = () => {
     setWizardProcessing(true);
     setWizardError(null);
     try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 15_000);
       const res = await fetch(`/api/withdrawal/codes/${codeType}/issue`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ draftId })
+        body: JSON.stringify({ draftId }),
+        signal: controller.signal
       });
+      clearTimeout(timeout);
       const json = await res.json();
       if (!json.success) throw new Error(json.error || 'Failed to issue code');
 
@@ -491,8 +504,15 @@ const WithdrawSection = () => {
       setWizardStep('enter');
       setWizardProcessing(false);
     } catch (e) {
-      setWizardError(e instanceof Error ? e.message : 'Failed to issue code');
+      const message = e instanceof Error
+        ? (e.name === 'AbortError' ? 'Code issuance timed out. Please try again.' : e.message)
+        : 'Failed to issue code';
+      setWizardError(message);
       setWizardProcessing(false);
+      // If the slot was already paid but we couldn't get a code (e.g.
+      // server error), bounce back to the enter step so the user can
+      // retry issue rather than being stuck on the spinner.
+      setWizardStep((current) => (current === 'issue' ? 'deposit' : current));
     }
   };
 
@@ -989,8 +1009,22 @@ const WithdrawSection = () => {
 
               {wizardStep === 'issue' && (
                 <div className="text-center py-6">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#ee2737] mx-auto mb-3"></div>
-                  <p className="text-sm text-gray-600">Preparing your security code…</p>
+                  {wizardProcessing && !wizardError ? (
+                    <>
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#ee2737] mx-auto mb-3"></div>
+                      <p className="text-sm text-gray-600">Preparing your security code…</p>
+                    </>
+                  ) : (
+                    <>
+                      {wizardError && <p className="text-sm text-[#ee2737] mb-3">{wizardError}</p>}
+                      <button
+                        onClick={() => wizardDraftId && wizardIssuedType && issueCurrentCode(wizardDraftId, wizardIssuedType)}
+                        className="bg-[#0b1626] hover:bg-[#1a2b45] text-white py-2.5 px-6 rounded-lg font-semibold"
+                      >
+                        Retry Issuing Code
+                      </button>
+                    </>
+                  )}
                 </div>
               )}
 
@@ -1032,19 +1066,38 @@ const WithdrawSection = () => {
 
               {wizardStep === 'awaiting_deposit' && (
                 <div className="space-y-4 text-center py-4">
-                  <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#ee2737] mx-auto"></div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">Awaiting fee deposit verification</h4>
-                    <p className="text-sm text-gray-600">
-                      Complete the {currencySymbol}{preflightPrice(wizardIssuedType!).toFixed(2)} payment using the instructions sent to you, then upload your proof of payment. Your code will appear here as soon as it's verified.
-                    </p>
-                    {wizardDepositStatus && (
-                      <p className="text-xs text-gray-500 mt-2">Status: <strong>{wizardDepositStatus.replace('_', ' ')}</strong></p>
-                    )}
-                  </div>
-
-                  {wizardError && (
-                    <p className="text-sm text-[#ee2737]">{wizardError}</p>
+                  {wizardDepositStatus !== 'rejected' && !wizardError ? (
+                    <>
+                      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#ee2737] mx-auto"></div>
+                      <div>
+                        <h4 className="font-semibold text-gray-900 mb-1">Awaiting fee deposit verification</h4>
+                        <p className="text-sm text-gray-600">
+                          Complete the {currencySymbol}{preflightPrice(wizardIssuedType!).toFixed(2)} payment using the instructions sent to you, then upload your proof of payment. Your code will appear here as soon as it's verified.
+                        </p>
+                        {wizardDepositStatus && (
+                          <p className="text-xs text-gray-500 mt-2">Status: <strong>{wizardDepositStatus.replace('_', ' ')}</strong></p>
+                        )}
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {wizardError && (
+                        <p className="text-sm text-[#ee2737]">{wizardError}</p>
+                      )}
+                      <button
+                        onClick={() => {
+                          if (wizardPollCancel) wizardPollCancel();
+                          setWizardPollCancel(null);
+                          setWizardDepositId(null);
+                          setWizardDepositStatus(null);
+                          setWizardError(null);
+                          setWizardStep('deposit');
+                        }}
+                        className="bg-[#0b1626] hover:bg-[#1a2b45] text-white py-2.5 px-6 rounded-lg font-semibold"
+                      >
+                        Try Again
+                      </button>
+                    </>
                   )}
                 </div>
               )}
