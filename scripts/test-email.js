@@ -4,10 +4,10 @@ console.log('Current directory:', process.cwd());
 require('dotenv').config({ path: '.env.local' });
 
 async function testEmail() {
-    const host = process.env.SMTP_HOST || 'smtp.gmail.com';
+    const host = process.env.SMTP_HOST || 'smtp.zoho.com';
     const port = parseInt(process.env.SMTP_PORT || '465');
     const user = process.env.SMTP_USER;
-    const pass = process.env.SMTP_PASSWORD;
+    const pass = process.env.SMTP_PASS || process.env.SMTP_PASSWORD;
 
     console.log('Testing email with credentials:');
     console.log('Host:', host);
@@ -32,11 +32,11 @@ async function testEmail() {
 
     try {
         const info = await transporter.sendMail({
-            from: `"Tesla Capital Test" <${user}>`,
+            from: `"RecupereBank Test" <${user}>`,
             to: user, // Send to self
-            subject: "Tesla Capital Email Test",
-            text: "This is a test email from Tesla Capital's new Node mailer service.",
-            html: "<b>This is a test email from Tesla Capital's new Node mailer service.</b>",
+            subject: "RecupereBank Email Test",
+            text: "This is a test email from RecupereBank's Node mailer service.",
+            html: "<b>This is a test email from RecupereBank's Node mailer service.</b>",
         });
 
         console.log("Message sent: %s", info.messageId);
