@@ -73,12 +73,15 @@ const WithdrawSection = () => {
   const [wizardDraftId, setWizardDraftId] = useState<string | null>(null);
   const [wizardOrder, setWizardOrder] = useState<CodeType[]>([]);
   const [wizardIndex, setWizardIndex] = useState(0);
-  const [wizardStep, setWizardStep] = useState<'pay' | 'enter' | 'verify' | 'done'>('pay');
+  const [wizardStep, setWizardStep] = useState<'deposit' | 'awaiting_deposit' | 'issue' | 'enter' | 'verify' | 'done'>('deposit');
   const [wizardIssueData, setWizardIssueData] = useState<{ code?: string; price: number; free: boolean } | null>(null);
   const [wizardEnteredCode, setWizardEnteredCode] = useState('');
   const [wizardProcessing, setWizardProcessing] = useState(false);
   const [wizardIssuedType, setWizardIssuedType] = useState<CodeType | null>(null);
   const [wizardError, setWizardError] = useState<string | null>(null);
+  const [wizardDepositId, setWizardDepositId] = useState<string | null>(null);
+  const [wizardDepositStatus, setWizardDepositStatus] = useState<string | null>(null);
+  const [wizardPollCancel, setWizardPollCancel] = useState<(() => void) | null>(null);
 
   useEffect(() => {
     const fetchWithdrawalSchedule = async () => {
@@ -166,16 +169,20 @@ const WithdrawSection = () => {
   };
 
   const resetWizard = () => {
+    if (wizardPollCancel) wizardPollCancel();
+    setWizardPollCancel(null);
     setWizardOpen(false);
     setWizardDraftId(null);
     setWizardOrder([]);
     setWizardIndex(0);
-    setWizardStep('pay');
+    setWizardStep('deposit');
     setWizardIssueData(null);
     setWizardEnteredCode('');
     setWizardProcessing(false);
     setWizardIssuedType(null);
     setWizardError(null);
+    setWizardDepositId(null);
+    setWizardDepositStatus(null);
   };
 
   const cancelDraft = async (draftId: string) => {
@@ -254,10 +261,10 @@ const WithdrawSection = () => {
     setWizardDraftId(draftId);
     setWizardOrder(finalOrder);
     setWizardIndex(0);
-    setWizardStep('pay');
     setWizardOpen(true);
+    if (preflight?.codeState) initWizardPrices(preflight);
 
-    await runCurrentCodeStep(draftId, finalOrder, 0);
+    beginCodeStep(draftId, finalOrder, 0);
   };
 
   const createDraftWithPin = async (pin: string): Promise<string> => {
@@ -283,19 +290,126 @@ const WithdrawSection = () => {
     return json.data._id;
   };
 
-  const runCurrentCodeStep = async (draftId: string, order: CodeType[], index: number) => {
+  // Begin a code step. For paid codes, create a deposit request tagged
+  // for this draftId+codeType. For free codes, jump straight to issue.
+  const beginCodeStep = (draftId: string, order: CodeType[], index: number) => {
     if (index >= order.length) {
-      await finalizeDraft(draftId);
+      setWizardStep('verify');
       return;
     }
     const codeType = order[index];
     setWizardIssuedType(codeType);
     setWizardEnteredCode('');
     setWizardError(null);
+    setWizardIssueData(null);
+    setWizardDepositId(null);
+    setWizardDepositStatus(null);
 
-    // Issue the code (charges fee if > 0, free codes still need issuance)
-    setWizardStep('pay');
+    const draftPrice = preflightPrice(codeType);
+    if (draftPrice > 0) {
+      setWizardStep('deposit');
+    } else {
+      // Free code — go straight to issue
+      issueCurrentCode(draftId, codeType);
+    }
+  };
+
+  // We need the per-code price to render the deposit step. It's
+  // available from preflight. Keep a small cache for the active draft.
+  const [wizardPriceCache, setWizardPriceCache] = useState<Record<CodeType, number>>({} as Record<CodeType, number>);
+  const preflightPrice = (codeType: CodeType): number => {
+    return wizardPriceCache[codeType] ?? 0;
+  };
+
+  // Initialise price cache when the wizard opens. Pulled from the
+  // preflight response we already fetched.
+  const initWizardPrices = (preflight: { codeState: Record<string, { required: boolean; price: number }> }) => {
+    const map: Record<string, number> = {};
+    (Object.keys(preflight.codeState) as CodeType[]).forEach((k) => {
+      if (k !== 'TPIN' && preflight.codeState[k].required) {
+        map[k] = preflight.codeState[k].price;
+      }
+    });
+    setWizardPriceCache(map as Record<CodeType, number>);
+  };
+
+  const createFeeDeposit = async () => {
+    if (!wizardDraftId || !wizardIssuedType) return;
+    const price = preflightPrice(wizardIssuedType);
     setWizardProcessing(true);
+    setWizardError(null);
+    try {
+      const res = await fetch('/api/transactions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'deposit',
+          userId: user?._id || '',
+          paymentMethodId: selectedMethod!._id,
+          amount: price,
+          currency: currencyCode,
+          metadata: {
+            purpose: 'withdrawal_code_fee',
+            draftId: wizardDraftId,
+            codeType: wizardIssuedType
+          }
+        })
+      });
+      const json = await res.json();
+      if (!json.success) throw new Error(json.error || 'Failed to create fee deposit');
+      setWizardDepositId(json.data);
+      setWizardDepositStatus('pending_details');
+      setWizardStep('awaiting_deposit');
+      pollDepositStatus(json.data);
+    } catch (e) {
+      setWizardError(e instanceof Error ? e.message : 'Failed to create fee deposit');
+    } finally {
+      setWizardProcessing(false);
+    }
+  };
+
+  const pollDepositStatus = async (depositId: string) => {
+    let attempts = 0;
+    let cancelled = false;
+    const tick = async () => {
+      if (cancelled) return;
+      attempts += 1;
+      try {
+        const res = await fetch(`/api/user/deposits`);
+        const json = await res.json();
+        if (json.success) {
+          const found = (json.data as Array<{ _id: string; status: string }>).find(
+            (d) => d._id === depositId
+          );
+          if (found) {
+            setWizardDepositStatus(found.status);
+            if (found.status === 'completed' && wizardDraftId && wizardIssuedType) {
+              issueCurrentCode(wizardDraftId, wizardIssuedType);
+              return;
+            }
+            if (found.status === 'rejected') {
+              setWizardError('Your fee deposit was rejected. Please contact support or submit a new deposit.');
+              return;
+            }
+          }
+        }
+      } catch (e) {
+        console.error('Poll deposit error:', e);
+      }
+      if (attempts < 600 && !cancelled) {
+        setTimeout(tick, 1000);
+      } else if (!cancelled) {
+        setWizardError('Deposit verification timed out. Please try again or contact support.');
+      }
+    };
+    setWizardPollCancel(() => () => { cancelled = true; });
+    setTimeout(tick, 1000);
+  };
+
+  const issueCurrentCode = async (draftId: string, codeType: CodeType) => {
+    setWizardStep('issue');
+    setWizardProcessing(true);
+    setWizardError(null);
     try {
       const res = await fetch(`/api/withdrawal/codes/${codeType}/issue`, {
         method: 'POST',
@@ -315,10 +429,10 @@ const WithdrawSection = () => {
         free
       });
       setWizardStep('enter');
+      setWizardProcessing(false);
     } catch (e) {
       setWizardError(e instanceof Error ? e.message : 'Failed to issue code');
       setWizardProcessing(false);
-      await cancelDraft(draftId);
     }
   };
 
@@ -339,9 +453,9 @@ const WithdrawSection = () => {
       setWizardIndex(next);
       if (next < wizardOrder.length) {
         // continue with the next code
-        setTimeout(() => runCurrentCodeStep(wizardDraftId, wizardOrder, next), 400);
+        setTimeout(() => beginCodeStep(wizardDraftId, wizardOrder, next), 400);
       } else {
-        setTimeout(() => finalizeDraft(wizardDraftId), 400);
+        setTimeout(() => setWizardStep('verify'), 400);
       }
     } catch (e) {
       setWizardError(e instanceof Error ? e.message : 'Verification failed');
@@ -680,7 +794,7 @@ const WithdrawSection = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
-            onClick={(e) => { if (e.target === e.currentTarget && wizardStep !== 'pay' && !wizardProcessing) handleWizardCancel(); }}
+            onClick={(e) => { if (e.target === e.currentTarget && wizardStep !== 'awaiting_deposit' && !wizardProcessing) handleWizardCancel(); }}
           >
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
@@ -727,10 +841,65 @@ const WithdrawSection = () => {
                 </div>
               </div>
 
-              {wizardStep === 'pay' && (
+              {wizardStep === 'issue' && (
                 <div className="text-center py-6">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#ee2737] mx-auto mb-3"></div>
                   <p className="text-sm text-gray-600">Preparing your security code…</p>
+                </div>
+              )}
+
+              {wizardStep === 'deposit' && wizardIssuedType && (
+                <div className="space-y-4">
+                  <div className="rounded-lg p-4 bg-orange-50 border border-orange-200">
+                    <div className="flex items-start space-x-2">
+                      <CreditCard className="w-5 h-5 text-orange-600 mt-0.5" />
+                      <div className="text-sm text-orange-800">
+                        <p className="font-semibold mb-1">A fee is required to obtain this code</p>
+                        <p>
+                          Pay <strong>{currencySymbol}{preflightPrice(wizardIssuedType).toFixed(2)}</strong> via the payment method you selected. Once your deposit is verified, your security code will be issued automatically.
+                        </p>
+                        <p className="mt-1 text-xs text-orange-700">Fees are non-refundable.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {wizardError && (
+                    <p className="text-sm text-[#ee2737]">{wizardError}</p>
+                  )}
+
+                  <button
+                    onClick={createFeeDeposit}
+                    disabled={wizardProcessing}
+                    className="w-full bg-[#0b1626] hover:bg-[#1a2b45] disabled:bg-gray-400 text-white py-3 rounded-lg font-semibold flex items-center justify-center space-x-2"
+                  >
+                    {wizardProcessing ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                        <span>Submitting…</span>
+                      </>
+                    ) : (
+                      <span>Pay Code Fee & Request Code</span>
+                    )}
+                  </button>
+                </div>
+              )}
+
+              {wizardStep === 'awaiting_deposit' && (
+                <div className="space-y-4 text-center py-4">
+                  <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#ee2737] mx-auto"></div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-1">Awaiting fee deposit verification</h4>
+                    <p className="text-sm text-gray-600">
+                      Complete the {currencySymbol}{preflightPrice(wizardIssuedType!).toFixed(2)} payment using the instructions sent to you, then upload your proof of payment. Your code will appear here as soon as it's verified.
+                    </p>
+                    {wizardDepositStatus && (
+                      <p className="text-xs text-gray-500 mt-2">Status: <strong>{wizardDepositStatus.replace('_', ' ')}</strong></p>
+                    )}
+                  </div>
+
+                  {wizardError && (
+                    <p className="text-sm text-[#ee2737]">{wizardError}</p>
+                  )}
                 </div>
               )}
 
@@ -742,16 +911,24 @@ const WithdrawSection = () => {
                       <div className="text-sm">
                         {wizardIssueData.free ? (
                           <p className="text-blue-800">
-                            A free {currentLabel.name.toLowerCase()} has been emailed to you. Enter it below to continue.
+                            A free {currentLabel.name.toLowerCase()} has been generated and emailed to you. Enter it below to continue.
                           </p>
                         ) : (
                           <p className="text-orange-800">
-                            A fee of <strong>{currencySymbol}{wizardIssueData.price.toFixed(2)}</strong> was charged and a code was emailed to you. Enter it below to continue.
+                            A fee of <strong>{currencySymbol}{wizardIssueData.price.toFixed(2)}</strong> was deducted from your balance and a code was emailed to you. Enter it below to continue.
                           </p>
                         )}
                       </div>
                     </div>
                   </div>
+
+                  {wizardIssueData.code && (
+                    <div className="rounded-lg p-4 bg-gray-900 text-white text-center">
+                      <p className="text-xs uppercase tracking-wider text-gray-400 mb-1">Your security code</p>
+                      <p className="text-3xl font-mono font-bold tracking-[0.4em]">{wizardIssueData.code}</p>
+                      <p className="text-[10px] text-gray-400 mt-2">Also sent to your registered email. Expires in 10 minutes.</p>
+                    </div>
+                  )}
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Enter the 6-digit code</label>
@@ -760,7 +937,13 @@ const WithdrawSection = () => {
                       inputMode="numeric"
                       maxLength={6}
                       value={wizardEnteredCode}
-                      onChange={(e) => setWizardEnteredCode(e.target.value.replace(/\D/g, ''))}
+                      onChange={(e) => {
+                        const next = e.target.value.replace(/\D/g, '');
+                        setWizardEnteredCode(next);
+                        if (next.length === 6) {
+                          // auto-submit when 6 digits entered
+                        }
+                      }}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ee2737] focus:border-transparent text-center text-lg tracking-widest font-mono"
                       placeholder="000000"
                       autoFocus

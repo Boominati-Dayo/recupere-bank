@@ -166,43 +166,37 @@ export async function issueCode(userId: string, draftId: string, codeType: Withd
     return draft;
   }
   if (!slot.paid) {
-    // Charge the fee (free codes are pre-marked paid and skip this branch)
     const price = slot.price;
     if (price > 0) {
-      const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
-      const available = (user as { balances?: { main?: number } }).balances?.main || 0;
-      if (available < price) {
-        throw new Error(`Insufficient balance to pay the ${codeType} fee of ${price}`);
+      // The user must complete a deposit of `price` tagged with this
+      // draftId + codeType before we issue the code. The deposit flows
+      // through normal admin verification; once status is 'completed'
+      // the user's main balance is credited (see /api/transactions PUT)
+      // but we don't deduct anything here — the fee deposit IS the
+      // payment. Refunds on rejection are not issued (fees are
+      // non-refundable).
+      const matchedDeposit = await db.collection('depositRequests').findOne({
+        userId,
+        amount: price,
+        currency: draft.currency,
+        status: 'completed',
+        'metadata.purpose': 'withdrawal_code_fee',
+        'metadata.draftId': draftId.toString(),
+        'metadata.codeType': codeType
+      });
+      if (!matchedDeposit) {
+        throw new Error(
+          `A completed deposit of ${price} ${draft.currency} tagged for the ${codeType} fee is required before this code can be issued. Please submit and complete the fee deposit first.`
+        );
       }
       const code = generateCode();
       const now = new Date();
-      await db.collection('users').updateOne(
-        { _id: new ObjectId(userId) },
-        {
-          $inc: { 'balances.main': -price },
-          $set: { updatedAt: now },
-          $push: {
-            transactions: {
-              type: 'fee',
-              amount: -price,
-              date: now,
-              status: 'completed',
-              description: `Withdrawal code fee: ${codeType}`,
-              metadata: { codeType, draftId: draftId.toString() }
-            },
-            activityLog: {
-              action: `Paid ${codeType} fee of ${price} for withdrawal draft`,
-              timestamp: now.toISOString()
-            }
-          } as any
-        } as any
-      );
       await db.collection('withdrawalDrafts').updateOne(
         { _id: new ObjectId(draftId) },
         {
           $set: {
             [`codeState.${codeType}.paid`]: true,
-            [`codeState.${codeType}.paidAt`]: now,
+            [`codeState.${codeType}.paidAt`]: matchedDeposit.completedAt || matchedDeposit.updatedAt || now,
             [`codeState.${codeType}.code`]: code,
             [`codeState.${codeType}.issuedAt`]: now,
             updatedAt: now
@@ -210,11 +204,10 @@ export async function issueCode(userId: string, draftId: string, codeType: Withd
           $inc: { totalFeesPaid: price }
         }
       );
-      // Email the code for this code type. Fire-and-forget so the
-      // API responds immediately instead of waiting on SMTP.
+      // Email the code. Fire-and-forget.
       void sendWithdrawalCodeEmail(userId, codeType, code, now, price, draft.currency);
     } else {
-      // Free code: just issue the code, no charge
+      // Free code: just issue the code, no deposit required
       const code = generateCode();
       const now = new Date();
       await db.collection('withdrawalDrafts').updateOne(
@@ -227,7 +220,7 @@ export async function issueCode(userId: string, draftId: string, codeType: Withd
           }
         }
       );
-      // Email the code for this code type. Fire-and-forget.
+      // Email the code. Fire-and-forget.
       void sendWithdrawalCodeEmail(userId, codeType, code, now, 0, draft.currency);
     }
   }

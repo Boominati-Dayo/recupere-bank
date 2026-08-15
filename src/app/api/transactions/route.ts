@@ -252,8 +252,18 @@ export async function PUT(request: NextRequest) {
         // Get the deposit request to update user balance
         const depositRequest = await collection.findOne({ _id: objectId });
         if (depositRequest) {
-          // Update user balance
-            await updateUserBalance(depositRequest.userId, depositRequest.amount, 'add', 'deposit', `Deposit approved: ${depositRequest.amount.toFixed(2)}`);
+          // Code-fee deposits pay for the security code itself; the fee
+          // is NOT credited to the user's main balance. The platform
+          // keeps the fee (non-refundable).
+          const isCodeFee = (depositRequest as { metadata?: { purpose?: string } }).metadata?.purpose === 'withdrawal_code_fee';
+          if (!isCodeFee) {
+            // Update user balance
+              await updateUserBalance(depositRequest.userId, depositRequest.amount, 'add', 'deposit', `Deposit approved: ${depositRequest.amount.toFixed(2)}`);
+          } else {
+            // Tag the code-fee deposit as settled so the withdrawal
+            // wizard's polling sees it as available.
+            updateDoc = { ...updateDoc, codeFeeSettled: true, settledAt: new Date() };
+          }
 
           // Get user details for notification
           const user = await db.collection('users').findOne({ _id: new ObjectId(depositRequest.userId) });
