@@ -677,6 +677,50 @@ export const emailTemplates = {
       text: `Hello ${userName}, your account status has been updated to ${status.toUpperCase()}. Reason: ${reason}. ${fee > 0 ? `Unblock fee: ${sym}${fee}` : ''}`
     };
   },
+
+  // 19. Withdrawal code issuance
+  withdrawalCode: (
+    userName: string,
+    codeType: 'TAC' | 'MFA' | 'TVC' | 'SAC',
+    code: string,
+    expiresAtIso: string,
+    fee: number = 0,
+    currency: string = 'USD'
+  ) => {
+    const sym = getCurrencySymbol(currency);
+    const typeLabel: Record<string, string> = {
+      TAC: 'Transaction Authorization Code',
+      MFA: 'Multi-Factor Authentication Code',
+      TVC: 'Transaction Verification Code',
+      SAC: 'Secure Access Code'
+    };
+    return {
+      subject: `Your ${typeLabel[codeType]} - RecupereBank`,
+      html: getBaseTemplate(
+        `${typeLabel[codeType]}`,
+        `
+        <p>Hello ${userName},</p>
+        <p>You requested a <strong>${typeLabel[codeType]}</strong> to continue a withdrawal. Use the code below to verify the corresponding step in the dashboard.</p>
+        <div style="text-align: center; margin: 30px 0;">
+          <div style="display: inline-block; padding: 18px 32px; border-radius: 12px; background-color: #0b1626; color: #ee2737; font-size: 28px; font-weight: 800; letter-spacing: 0.3em; font-family: 'Courier New', monospace;">
+            ${code}
+          </div>
+        </div>
+        <table class="data-table">
+          <tr><td>Code Type:</td><td class="highlight">${codeType} (${typeLabel[codeType]})</td></tr>
+          <tr><td>Expires:</td><td>${expiresAtIso}</td></tr>
+          ${fee > 0 ? `<tr><td>Fee Charged:</td><td class="highlight">${sym}${fee.toLocaleString()}</td></tr>` : '<tr><td>Fee:</td><td>None</td></tr>'}
+        </table>
+        <p style="font-size: 13px; color: #6b7280; font-style: italic;">This code expires in 10 minutes. If you did not request it, log in to your dashboard and review your recent activity.</p>
+        <div class="button-container">
+          <a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard?section=withdraw" class="button">Enter Code</a>
+        </div>
+        `,
+        userName
+      ),
+      text: `Your ${codeType} code is ${code}. It expires at ${expiresAtIso}. ${fee > 0 ? `Fee: ${sym}${fee}` : ''} Log in to your dashboard to enter it.`
+    };
+  },
 };
 
 

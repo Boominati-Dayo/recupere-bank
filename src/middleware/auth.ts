@@ -55,10 +55,16 @@ export async function authenticateRequest(request: NextRequest): Promise<{
   }
 }
 
-export function requireAuth(handler: (request: AuthenticatedRequest) => Promise<NextResponse>) {
-  return async (request: NextRequest) => {
+// Use a flexible second-argument type so handlers that don't use
+// dynamic route params still type-check alongside handlers that do.
+export type RouteContext = { params: Promise<Record<string, string>> } | undefined;
+
+export function requireAuth(
+  handler: (request: AuthenticatedRequest, ctx: RouteContext) => Promise<NextResponse>
+) {
+  return async (request: NextRequest, ctx: RouteContext) => {
     const authResult = await authenticateRequest(request);
-    
+
     if (!authResult.success) {
       return NextResponse.json(
         { success: false, error: authResult.error },
@@ -68,15 +74,17 @@ export function requireAuth(handler: (request: AuthenticatedRequest) => Promise<
 
     // Add user to request object
     (request as AuthenticatedRequest).user = authResult.user;
-    
-    return handler(request as AuthenticatedRequest);
+
+    return handler(request as AuthenticatedRequest, ctx);
   };
 }
 
-export function requireAdmin(handler: (request: AuthenticatedRequest) => Promise<NextResponse>) {
-  return async (request: NextRequest) => {
+export function requireAdmin(
+  handler: (request: AuthenticatedRequest, ctx: RouteContext) => Promise<NextResponse>
+) {
+  return async (request: NextRequest, ctx: RouteContext) => {
     const authResult = await authenticateRequest(request);
-    
+
     if (!authResult.success) {
       return NextResponse.json(
         { success: false, error: authResult.error },
@@ -93,7 +101,7 @@ export function requireAdmin(handler: (request: AuthenticatedRequest) => Promise
 
     // Add user to request object
     (request as AuthenticatedRequest).user = authResult.user;
-    
-    return handler(request as AuthenticatedRequest);
+
+    return handler(request as AuthenticatedRequest, ctx);
   };
 }

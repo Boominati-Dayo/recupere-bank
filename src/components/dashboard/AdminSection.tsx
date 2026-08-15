@@ -428,12 +428,37 @@ const AdminSection = () => {
     };
   };
 
+  // Group deposit statuses into human-readable buckets for the filter
+  // and the list/status badges. New deposits are created with
+  // 'pending_details' so the 'pending' filter has to be a union.
+  const DEPOSIT_STATUS_GROUPS: Record<string, string[]> = {
+    pending: ['pending_details', 'awaiting_payment', 'verifying', 'pending'],
+    approved: ['approved', 'completed'],
+    rejected: ['rejected']
+  };
+  const formatDepositStatus = (status: string) => {
+    switch (status) {
+      case 'pending_details': return 'Awaiting Details';
+      case 'awaiting_payment': return 'Awaiting Payment';
+      case 'verifying': return 'Verifying Payment';
+      case 'approved': return 'Approved';
+      case 'completed': return 'Completed';
+      case 'rejected': return 'Rejected';
+      default: return status.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+    }
+  };
+  const depositsInGroup = (group: string) => {
+    const statuses = DEPOSIT_STATUS_GROUPS[group] || [];
+    return depositRequests.filter((d) => statuses.includes(d.status));
+  };
+
   const getFilteredDeposits = () => {
     let filtered = depositRequests;
 
-    // Filter by status
+    // Filter by status (group-aware so 'pending' shows all open deposits)
     if (depositFilter !== 'all') {
-      filtered = filtered.filter(deposit => deposit.status === depositFilter);
+      const statuses = DEPOSIT_STATUS_GROUPS[depositFilter] || [depositFilter];
+      filtered = filtered.filter(deposit => statuses.includes(deposit.status));
     }
 
     // Filter by search term
@@ -1853,18 +1878,24 @@ const AdminSection = () => {
             {/* Filter Options */}
             <div className="flex items-center justify-center gap-2 mobile:gap-3 flex-wrap">
               {selectedTransactionType === 'deposits' ? (
-                (['all', 'pending', 'approved', 'rejected'] as const).map((filter) => (
-                  <button
-                    key={filter}
-                    onClick={() => setDepositFilter(filter)}
-                    className={`px-3 py-2 mobile:px-5 mobile:py-2.5 rounded-lg mobile:rounded-xl text-[8px] mobile:text-[10px] font-black uppercase tracking-widest transition-all ${depositFilter === filter
-                      ? 'bg-primary-50 text-primary-600 border border-primary-200 shadow-sm'
-                      : 'bg-white text-gray-400 border border-gray-100 hover:border-gray-200'
-                      }`}
-                  >
-                    {filter}
-                  </button>
-                ))
+                (['all', 'pending', 'approved', 'rejected'] as const).map((filter) => {
+                  const count = filter === 'all'
+                    ? depositRequests.length
+                    : depositsInGroup(filter).length;
+                  return (
+                    <button
+                      key={filter}
+                      onClick={() => setDepositFilter(filter)}
+                      className={`px-3 py-2 mobile:px-5 mobile:py-2.5 rounded-lg mobile:rounded-xl text-[8px] mobile:text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2 ${depositFilter === filter
+                        ? 'bg-primary-50 text-primary-600 border border-primary-200 shadow-sm'
+                        : 'bg-white text-gray-400 border border-gray-100 hover:border-gray-200'
+                        }`}
+                    >
+                      <span>{filter}</span>
+                      <span className={`px-1.5 py-0.5 rounded-full text-[7px] ${depositFilter === filter ? 'bg-primary-200 text-primary-700' : 'bg-gray-100 text-gray-500'}`}>{count}</span>
+                    </button>
+                  );
+                })
               ) : (
                 (['all', 'pending', 'processing', 'completed', 'rejected'] as const).map((filter) => (
                   <button
@@ -1897,11 +1928,11 @@ const AdminSection = () => {
                         </div>
                         <span className="text-[9px] mobile:text-[10px] font-black text-navy-900 uppercase tracking-widest">Inbound Deposit</span>
                       </div>
-                      <span className={`px-3 mobile:px-4 py-1 mobile:py-1.5 text-[8px] mobile:text-[9px] font-black uppercase tracking-widest rounded-full border transition-all ${deposit.status === 'approved' ? 'bg-green-50 text-green-500 border-green-100' :
+                      <span className={`px-3 mobile:px-4 py-1 mobile:py-1.5 text-[8px] mobile:text-[9px] font-black uppercase tracking-widest rounded-full border transition-all ${deposit.status === 'approved' || deposit.status === 'completed' ? 'bg-green-50 text-green-500 border-green-100' :
                         deposit.status === 'rejected' ? 'bg-red-50 text-red-500 border-red-100' :
                           'bg-primary-50 text-primary-600 border-primary-100 animate-pulse'
                         }`}>
-                        {deposit.status}
+                        {formatDepositStatus(deposit.status)}
                       </span>
                     </div>
 
@@ -2835,23 +2866,35 @@ const AdminSection = () => {
                   </>
                 )}
 
-                {/* Audit Actions */}
-                <div className="space-y-6 pt-8 border-t border-gray-100">
-                  {['pending', 'pending_details', 'verifying', 'processing'].includes(selectedTransaction.status) && (
-                    <div className="group">
-                      <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 ml-1 group-focus-within:text-primary-500 transition-colors">Audit Discrepancy Note (Rejection Reason)</label>
+                {/* Audit Actions - sticky footer so the action buttons are always visible */}
+                <div className="sticky bottom-0 -mx-10 -mb-10 mt-6 bg-white border-t-4 border-primary-500 shadow-[0_-8px_24px_rgba(0,0,0,0.06)] px-10 py-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="w-8 h-8 bg-primary-500 rounded-xl flex items-center justify-center shadow-lg shadow-primary-500/30">
+                      <ShieldCheck className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-black text-navy-900 uppercase tracking-widest">Take Action</p>
+                      <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">
+                        {selectedTransactionType === 'deposits' ? 'Send payment instructions, approve, or reject this deposit' : 'Approve, process, or reject this withdrawal'}
+                      </p>
+                    </div>
+                  </div>
+
+                  {['pending', 'pending_details', 'verifying', 'awaiting_payment', 'processing'].includes(selectedTransaction.status) && (
+                    <div className="group mb-4">
+                      <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1 group-focus-within:text-primary-500 transition-colors">Rejection Reason (Required if rejecting)</label>
                       <textarea
                         value={rejectionReason}
                         onChange={(e) => setRejectionReason(e.target.value)}
-                        className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold min-h-[100px]"
+                        className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold min-h-[80px]"
                         placeholder="Detail specific failures or inconsistencies..."
                       />
                     </div>
                   )}
 
                   {selectedTransactionType === 'deposits' && selectedTransaction.status === 'pending_details' && (
-                    <div className="group">
-                      <label className="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-3 ml-1">Secure Payment Instructions</label>
+                    <div className="group mb-4">
+                      <label className="block text-[10px] font-black text-navy-900 uppercase tracking-widest mb-2 ml-1">Payment Instructions (account / wallet the user should send funds to)</label>
                       <textarea
                         value={adminPaymentDetails}
                         onChange={(e) => setAdminPaymentDetails(e.target.value)}
@@ -2861,7 +2904,14 @@ const AdminSection = () => {
                     </div>
                   )}
 
-                  <div className="flex gap-4">
+                  {selectedTransactionType === 'deposits' && selectedTransaction.status !== 'pending_details' && (selectedTransaction as any).paymentDetailsString && (
+                    <div className="mb-4 p-4 bg-primary-50/30 border border-primary-200 rounded-2xl">
+                      <p className="text-[10px] font-black text-primary-600 uppercase tracking-widest mb-2">Payment Instructions (Sent to User)</p>
+                      <p className="text-sm text-navy-900 whitespace-pre-wrap">{(selectedTransaction as any).paymentDetailsString}</p>
+                    </div>
+                  )}
+
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                     {selectedTransactionType === 'deposits' ? (
                       <>
                         {selectedTransaction.status === 'pending_details' && (
@@ -2875,13 +2925,13 @@ const AdminSection = () => {
                               setSelectedTransaction(null);
                               setAdminPaymentDetails('');
                             }}
-                            className="flex-[2] bg-navy-900 hover:bg-navy-800 disabled:bg-gray-400 text-primary-500 px-8 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all shadow-xl flex items-center justify-center gap-3"
+                            className="order-1 sm:flex-[2] bg-navy-900 hover:bg-navy-800 disabled:bg-gray-400 text-primary-500 px-6 sm:px-8 py-4 sm:py-5 rounded-xl sm:rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all shadow-xl flex items-center justify-center gap-3"
                           >
                             <MessageSquare className="w-4 h-4" />
                             Send Payment Credentials
                           </button>
                         )}
-                        {(selectedTransaction.status === 'pending' || selectedTransaction.status === 'verifying') && (
+                        {(selectedTransaction.status === 'pending' || selectedTransaction.status === 'verifying' || selectedTransaction.status === 'awaiting_payment') && (
                           <button
                             onClick={() => {
                               if (selectedTransaction._id) {
@@ -2891,14 +2941,15 @@ const AdminSection = () => {
                               setSelectedTransaction(null);
                               setRejectionReason('');
                             }}
-                            className="flex-[2] bg-navy-900 hover:bg-navy-800 text-primary-500 px-8 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all shadow-xl shadow-navy-900/10 flex items-center justify-center gap-3"
+                            className="order-1 sm:flex-[2] bg-green-600 hover:bg-green-700 text-white px-6 sm:px-8 py-4 sm:py-5 rounded-xl sm:rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all shadow-xl shadow-green-600/20 flex items-center justify-center gap-3"
                           >
                             <CheckCircle className="w-4 h-4" />
-                            {selectedTransaction.status === 'verifying' ? 'Confirm Payment & Credit' : 'Authorise'}
+                            {selectedTransaction.status === 'verifying' ? 'Confirm Payment & Credit' : 'Approve & Credit'}
                           </button>
                         )}
-                        {['pending', 'pending_details', 'verifying'].includes(selectedTransaction.status) && (
+                        {['pending', 'pending_details', 'verifying', 'awaiting_payment'].includes(selectedTransaction.status) && (
                           <button
+                            disabled={!rejectionReason.trim()}
                             onClick={() => {
                               if (selectedTransaction._id) {
                                 updateTransactionStatus(selectedTransaction._id, 'deposit', 'rejected', rejectionReason);
@@ -2907,14 +2958,14 @@ const AdminSection = () => {
                               setSelectedTransaction(null);
                               setRejectionReason('');
                             }}
-                            className="flex-1 bg-red-50 hover:bg-red-100 text-red-500 px-8 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all flex items-center justify-center gap-3"
+                            className="order-2 sm:flex-1 bg-red-50 hover:bg-red-100 text-red-500 px-6 sm:px-8 py-4 sm:py-5 rounded-xl sm:rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all flex items-center justify-center gap-3 disabled:opacity-40 disabled:cursor-not-allowed"
                           >
                             <XCircle className="w-4 h-4" />
                             Reject
                           </button>
                         )}
                       </>
-                    ) : (selectedTransaction.status === 'pending' || selectedTransaction.status === 'processing' || selectedTransaction.status === 'completed' || selectedTransaction.status === 'rejected') && selectedTransaction.status === 'pending' ? (
+                    ) : selectedTransaction.status === 'pending' ? (
                       <>
                         <button
                           onClick={() => {
@@ -2925,7 +2976,7 @@ const AdminSection = () => {
                             setSelectedTransaction(null);
                             setRejectionReason('');
                           }}
-                          className="flex-[2] bg-navy-900 hover:bg-navy-800 text-primary-500 px-8 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all shadow-xl shadow-navy-900/10 flex items-center justify-center gap-3"
+                          className="order-1 sm:flex-[2] bg-navy-900 hover:bg-navy-800 text-primary-500 px-6 sm:px-8 py-4 sm:py-5 rounded-xl sm:rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all shadow-xl shadow-navy-900/10 flex items-center justify-center gap-3"
                         >
                           <ShieldCheck className="w-4 h-4" />
                           Approve & Complete
@@ -2939,7 +2990,7 @@ const AdminSection = () => {
                             setSelectedTransaction(null);
                             setRejectionReason('');
                           }}
-                          className="flex-1 bg-gray-50 hover:bg-gray-100 text-gray-400 px-4 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2"
+                          className="order-2 sm:flex-1 bg-gray-50 hover:bg-gray-100 text-gray-400 px-6 sm:px-8 py-4 sm:py-5 rounded-xl sm:rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2"
                         >
                           <Clock className="w-3.5 h-3.5" />
                           Process Only
@@ -2953,7 +3004,8 @@ const AdminSection = () => {
                             setSelectedTransaction(null);
                             setRejectionReason('');
                           }}
-                          className="flex-1 bg-red-50 hover:bg-red-100 text-red-500 px-8 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all flex items-center justify-center gap-3"
+                          className="order-3 sm:flex-1 bg-red-50 hover:bg-red-100 text-red-500 px-6 sm:px-8 py-4 sm:py-5 rounded-xl sm:rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all flex items-center justify-center gap-3 disabled:opacity-40"
+                          disabled={!rejectionReason.trim()}
                         >
                           <XCircle className="w-4 h-4" />
                           Reject
@@ -2963,32 +3015,37 @@ const AdminSection = () => {
                   </div>
 
                   {selectedTransactionType === 'withdrawals' && selectedTransaction.status === 'processing' && (
+                    <div className="mt-3">
+                      <button
+                        onClick={() => {
+                          if (selectedTransaction._id) {
+                            updateTransactionStatus(selectedTransaction._id, 'withdrawal', 'completed');
+                          }
+                          setShowTransactionModal(false);
+                          setSelectedTransaction(null);
+                          setRejectionReason('');
+                        }}
+                        className="w-full bg-green-500 hover:bg-green-600 text-white px-6 py-4 rounded-xl font-black uppercase tracking-widest text-[11px] transition-all shadow-xl shadow-green-900/10 flex items-center justify-center gap-3"
+                      >
+                        <CheckCircle className="w-4 h-4" />
+                        Complete Sequence
+                      </button>
+                    </div>
+                  )}
+
+                  <div className="mt-3 pt-3 border-t border-gray-100">
                     <button
                       onClick={() => {
-                        if (selectedTransaction._id) {
-                          updateTransactionStatus(selectedTransaction._id, 'withdrawal', 'completed');
-                        }
                         setShowTransactionModal(false);
                         setSelectedTransaction(null);
                         setRejectionReason('');
+                        setAdminPaymentDetails('');
                       }}
-                      className="flex-[2] bg-green-500 hover:bg-green-600 text-white px-8 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all shadow-xl shadow-green-900/10 flex items-center justify-center gap-3"
+                      className="w-full bg-gray-50 hover:bg-gray-100 text-gray-400 px-6 py-3 rounded-xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center"
                     >
-                      <CheckCircle className="w-4 h-4" />
-                      Complete Sequence
+                      Exit Audit
                     </button>
-                  )}
-
-                  <button
-                    onClick={() => {
-                      setShowTransactionModal(false);
-                      setSelectedTransaction(null);
-                      setRejectionReason('');
-                    }}
-                    className="flex-1 bg-gray-50 hover:bg-gray-100 text-gray-400 px-8 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all flex items-center justify-center"
-                  >
-                    Exit Audit
-                  </button>
+                  </div>
                 </div>
               </div>
             </div>
