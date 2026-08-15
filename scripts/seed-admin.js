@@ -12,7 +12,7 @@ if (!uri) {
   process.exit(1);
 }
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@recuperebank.com';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'support@recuperebank.com';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Admin@2026!';
 const ADMIN_PIN = process.env.ADMIN_PIN || '1234';
 

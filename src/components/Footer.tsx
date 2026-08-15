@@ -85,8 +85,8 @@ const Footer = () => {
                 </div>
                 <div className="flex flex-col gap-[3px]">
                   <span className="text-[9px] font-bold tracking-[0.20em] uppercase text-[#cfd6e0]/55 leading-none">Email</span>
-                  <a href="mailto:admin@recuperebank.com" className="text-[13.5px] font-medium text-white no-underline hover:text-primary-500 transition-colors duration-200">
-                    admin@recuperebank.com
+                  <a href="mailto:support@recuperebank.com" className="text-[13.5px] font-medium text-white no-underline hover:text-primary-500 transition-colors duration-200">
+                    support@recuperebank.com
                   </a>
                 </div>
               </div>
@@ -200,7 +200,7 @@ const Footer = () => {
                 <div className="flex-1 h-[1px] bg-primary-500/22" />
               </div>
 
-              <a href="mailto:admin@recuperebank.com" className="flex items-center gap-[14px] py-[14px] border-b border-white/6 no-underline">
+              <a href="mailto:support@recuperebank.com" className="flex items-center gap-[14px] py-[14px] border-b border-white/6 no-underline">
                 <div className="w-[40px] h-[40px] rounded-full bg-[#235ba8]/18 border border-[#235ba8]/40 flex items-center justify-center shrink-0 hover:bg-[#235ba8]/30 hover:border-[#235ba8]/70 hover:scale-105 transition-all duration-200">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5b9bd5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
@@ -208,7 +208,7 @@ const Footer = () => {
                 </div>
                 <div className="flex flex-col gap-[2px]">
                   <span className="text-[9.5px] font-bold tracking-[0.16em] uppercase text-[#cfd6e0]/55">Email</span>
-                  <span className="text-[14px] font-medium text-[#cfd6e0]">admin@recuperebank.com</span>
+                  <span className="text-[14px] font-medium text-[#cfd6e0]">support@recuperebank.com</span>
                 </div>
               </a>
 

@@ -40,7 +40,7 @@ export const sendEmail = async (options: EmailOptions): Promise<void> => {
       return;
     }
 
-    const from = process.env.EMAIL_FROM || `"RecupereBank - Trust Bank" <${process.env.SMTP_USER}>`;
+    const from = process.env.EMAIL_FROM || `"RecupereBank" <${process.env.SMTP_USER || 'support@recuperebank.com'}>`;
 
     const info = await transporter.sendMail({
       from,

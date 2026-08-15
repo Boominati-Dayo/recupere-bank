@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     }
 
     // Prepare email to admin
-    const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER || 'admin@recuperebank.com';
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER || 'support@recuperebank.com';
     
     const emailSubject = `Web Enquiry: ${scamType} - from ${name}`;
     const emailText = `
