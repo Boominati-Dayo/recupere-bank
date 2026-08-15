@@ -29,16 +29,32 @@ export const POST = requireAuth(async (request: AuthenticatedRequest, context: a
       return NextResponse.json({ success: false, error: 'Draft has expired. Please start a new withdrawal.' }, { status: 400 });
     }
 
-    // Verify all required paid codes are verified
-    if (!areAllRequiredCodesVerified(draft.codeState)) {
-      return NextResponse.json({ success: false, error: 'All required security codes must be verified before submission.' }, { status: 400 });
-    }
-
-    // Verify TPIN against user
+    // Verify TPIN against user FIRST. TPIN verification is what marks
+    // the TPIN slot as verified — it has to happen before the
+    // "all required codes verified" gate check, otherwise that check
+    // would always fail on TPIN.
     const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
     if (!user) return NextResponse.json({ success: false, error: 'User not found' }, { status: 404 });
     const pinOk = await verifyTransactionPin(pin, (user as { transactionPin?: string }).transactionPin);
-    if (!pinOk) return NextResponse.json({ success: false, error: 'Invalid transaction PIN' }, { status: 401 });
+    if (!pinOk) {
+      return NextResponse.json({ success: false, error: 'Invalid transaction PIN' }, { status: 401 });
+    }
+
+    // Mark TPIN slot verified on the draft so the audit snapshot
+    // reflects the user's actual submission state.
+    if (draft.codeState?.TPIN && !draft.codeState.TPIN.verified) {
+      await db.collection('withdrawalDrafts').updateOne(
+        { _id: new ObjectId(draftId) },
+        { $set: { 'codeState.TPIN.verified': true, 'codeState.TPIN.verifiedAt': new Date(), updatedAt: new Date() } }
+      );
+      draft.codeState.TPIN.verified = true;
+    }
+
+    // Now check all required codes (paid + verified for non-TPIN,
+    // verified for TPIN — which we just set).
+    if (!areAllRequiredCodesVerified(draft.codeState)) {
+      return NextResponse.json({ success: false, error: 'All required security codes must be verified before submission.' }, { status: 400 });
+    }
 
     // Insert the real withdrawal request. Snapshot the code state for
     // audit but drop the codes themselves (we don't want to store
