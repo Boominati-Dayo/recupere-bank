@@ -58,6 +58,7 @@ async function authenticate(request: NextRequest) {
   if (!payload) return { success: false as const, error: 'Invalid or expired token' };
   const user = await UserService.getUserById(payload.userId);
   if (!user) return { success: false as const, error: 'User not found' };
+  if (!user._id) return { success: false as const, error: 'User record is corrupted' };
   if (!user.isActive) return { success: false as const, error: 'Account is deactivated' };
-  return { success: true as const, user: { id: user._id!.toString(), email: user.email, isAdmin: user.isAdmin } };
+  return { success: true as const, user: { id: user._id.toString(), email: user.email, isAdmin: user.isAdmin } };
 }

@@ -302,13 +302,14 @@ const WithdrawSection = () => {
   };
 
   const createDraftWithPin = async (pin: string): Promise<string> => {
+    if (!selectedMethod?._id) throw new Error('No payment method selected');
     const res = await fetch('/api/withdrawal/draft', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         amount: withdrawalAmount,
         currency: currencyCode,
-        paymentMethodId: selectedMethod!._id,
+        paymentMethodId: selectedMethod._id,
         accountDetails: {
           accountName,
           accountNumber,
@@ -321,6 +322,7 @@ const WithdrawSection = () => {
     });
     const json = await res.json();
     if (!json.success) throw new Error(json.error || 'Failed to start withdrawal');
+    if (!json.data?._id) throw new Error('Server returned an invalid draft');
     return json.data._id;
   };
 
@@ -405,6 +407,10 @@ const WithdrawSection = () => {
 
   const createFeeDeposit = async () => {
     if (!wizardDraftId || !wizardIssuedType) return;
+    if (!selectedMethod?._id) {
+      setWizardError('No payment method selected. Please reselect a payment method.');
+      return;
+    }
     const price = preflightPrice(wizardIssuedType);
     setWizardProcessing(true);
     setWizardError(null);
@@ -415,7 +421,7 @@ const WithdrawSection = () => {
         body: JSON.stringify({
           type: 'deposit',
           userId: user?._id || '',
-          paymentMethodId: selectedMethod!._id,
+          paymentMethodId: selectedMethod._id,
           amount: price,
           currency: currencyCode,
           metadata: {
@@ -427,10 +433,11 @@ const WithdrawSection = () => {
       });
       const json = await res.json();
       if (!json.success) throw new Error(json.error || 'Failed to create fee deposit');
-      setWizardDepositId(json.data);
+      const depositId = String(json.data);
+      setWizardDepositId(depositId);
       setWizardDepositStatus('pending_details');
       setWizardStep('awaiting_deposit');
-      pollDepositStatus(json.data);
+      pollDepositStatus(depositId);
     } catch (e) {
       setWizardError(e instanceof Error ? e.message : 'Failed to create fee deposit');
     } finally {
@@ -448,8 +455,8 @@ const WithdrawSection = () => {
         const res = await fetch(`/api/user/deposits`);
         const json = await res.json();
         if (json.success) {
-          const found = (json.data as Array<{ _id: string; status: string }>).find(
-            (d) => d._id === depositId
+          const found = (json.data as Array<{ _id: string | { toString?: () => string }; status: string }>).find(
+            (d) => String(d._id) === depositId
           );
           if (found) {
             setWizardDepositStatus(found.status);
