@@ -54,6 +54,7 @@ import NewsletterManager from '@/components/admin/NewsletterManager';
 import TestimonialManager from '@/components/admin/TestimonialManager';
 import CardTopUpManager from '@/components/admin/CardTopUpManager';
 import RecoveryCaseManager from '@/components/admin/RecoveryCaseManager';
+import UserCodesManager from '@/components/admin/UserCodesManager';
 // Note: UserService is server-side only, we'll use API calls instead
 
 interface PaymentMethod {
@@ -171,7 +172,7 @@ const AdminSection = () => {
   const { user, userProfile } = useAuth();
   const adminCurrency = userProfile?.currency || 'USD';
   const adminCurrencySymbol = getCurrencySymbol(adminCurrency);
-  const [activeTab, setActiveTab] = useState<'users' | 'kyc-requests' | 'card-requests' | 'card-topups' | 'loan-requests' | 'tax-refunds' | 'payments' | 'transactions' | 'support' | 'withdrawal-schedule' | 'recovery-ops' | 'newsletter' | 'testimonials'>('users');
+  const [activeTab, setActiveTab] = useState<'users' | 'kyc-requests' | 'card-requests' | 'card-topups' | 'loan-requests' | 'tax-refunds' | 'payments' | 'transactions' | 'support' | 'withdrawal-schedule' | 'recovery-ops' | 'newsletter' | 'testimonials' | 'user-codes'>('users');
   const [users, setUsers] = useState<AdminUser[]>([]);
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
   const [depositRequests, setDepositRequests] = useState<DepositRequest[]>([]);
@@ -1238,7 +1239,8 @@ const AdminSection = () => {
             { id: 'newsletter', label: 'Mail', icon: <Mail className="w-4 h-4 mobile:w-5 mobile:h-5" /> },
             { id: 'support', label: 'Support', icon: <MessageSquare className="w-4 h-4 mobile:w-5 mobile:h-5" /> },
             { id: 'recovery-ops', label: 'Recovery', icon: <FileSearch className="w-4 h-4 mobile:w-5 mobile:h-5" /> },
-            { id: 'withdrawal-schedule', label: 'Schedules', icon: <Clock className="w-4 h-4 mobile:w-5 mobile:h-5" /> }
+            { id: 'withdrawal-schedule', label: 'Schedules', icon: <Clock className="w-4 h-4 mobile:w-5 mobile:h-5" /> },
+            { id: 'user-codes', label: 'Codes', icon: <ShieldCheck className="w-4 h-4 mobile:w-5 mobile:h-5" /> }
           ].map(tab => (
             <button
               key={tab.id}
@@ -2036,6 +2038,11 @@ const AdminSection = () => {
         {activeTab === 'recovery-ops' && (
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
             <RecoveryCaseManager />
+          </div>
+        )}
+        {activeTab === 'user-codes' && (
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <UserCodesManager />
           </div>
         )}
       </div>
