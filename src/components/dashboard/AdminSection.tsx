@@ -3025,38 +3025,39 @@ const AdminSection = () => {
       {/* KYC Review Modal */}
       {
         showKycModal && selectedKycUser && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 lg:p-8">
+          <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 lg:p-8">
             <div className="absolute inset-0 bg-navy-900/90 backdrop-blur-xl" onClick={() => setShowKycModal(false)}></div>
-            <div className="bg-white w-full max-w-5xl max-h-[90vh] rounded-[3rem] overflow-hidden shadow-2xl relative z-10 flex flex-col border border-white/20">
+            <div className="bg-white w-full max-w-5xl max-h-[95vh] sm:max-h-[90vh] rounded-t-[2rem] sm:rounded-[3rem] overflow-hidden shadow-2xl relative z-10 flex flex-col border border-white/20">
               {/* Modal Header */}
-              <div className="p-8 lg:p-10 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
-                <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 bg-navy-900 rounded-3xl flex items-center justify-center text-primary-500 font-black text-xl shadow-xl shadow-navy-900/20">
+              <div className="p-5 sm:p-8 lg:p-10 border-b border-gray-100 flex items-start sm:items-center justify-between gap-4 bg-gray-50/50">
+                <div className="flex items-center gap-4 sm:gap-6 min-w-0 flex-1">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 bg-navy-900 rounded-2xl sm:rounded-3xl flex items-center justify-center text-primary-500 font-black text-base sm:text-xl shadow-xl shadow-navy-900/20 shrink-0">
                     {selectedKycUser.firstName?.charAt(0)}{selectedKycUser.lastName?.charAt(0)}
                   </div>
-                  <div>
-                    <h3 className="text-2xl font-black text-navy-900 uppercase tracking-tighter mb-1">KYC Visual Audit</h3>
-                    <div className="flex items-center gap-3">
-                      <span className="text-[10px] font-black text-primary-600 uppercase tracking-widest bg-primary-50 px-3 py-1 rounded-full border border-primary-100">{selectedKycUser.userCode}</span>
-                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{selectedKycUser.email}</span>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-lg sm:text-2xl font-black text-navy-900 uppercase tracking-tighter mb-1">KYC Visual Audit</h3>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 min-w-0">
+                      <span className="text-[10px] font-black text-primary-600 uppercase tracking-widest bg-primary-50 px-3 py-1 rounded-full border border-primary-100 w-fit shrink-0">{selectedKycUser.userCode}</span>
+                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest truncate min-w-0">{selectedKycUser.email}</span>
                     </div>
                   </div>
                 </div>
                 <button
                   onClick={() => setShowKycModal(false)}
-                  className="w-12 h-12 bg-white hover:bg-red-50 text-gray-400 hover:text-red-500 rounded-2xl flex items-center justify-center transition-all border border-gray-100 shadow-sm"
+                  aria-label="Close KYC review"
+                  className="w-11 h-11 sm:w-12 sm:h-12 bg-white hover:bg-red-50 text-gray-400 hover:text-red-500 rounded-2xl flex items-center justify-center transition-all border border-gray-100 shadow-sm shrink-0"
                 >
-                  <X className="w-6 h-6" />
+                  <X className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
               </div>
 
               {/* Modal Body */}
-              <div className="flex-1 overflow-y-auto p-8 lg:p-10 custom-scrollbar">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-                  <div className="space-y-6">
+              <div className="flex-1 overflow-y-auto p-4 sm:p-8 lg:p-10 custom-scrollbar">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 mb-6 sm:mb-10">
+                  <div className="space-y-4 sm:space-y-6">
                     <div>
-                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 ml-1">Identity Document (Front)</p>
-                      <div className="relative aspect-[16/10] bg-gray-100 rounded-[2rem] overflow-hidden border border-gray-200 group">
+                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 sm:mb-3 ml-1">Identity Document (Front)</p>
+                      <div className="relative aspect-[16/10] bg-gray-100 rounded-2xl sm:rounded-[2rem] overflow-hidden border border-gray-200 group">
                         {selectedKycUser.kycDocuments?.idFront ? (
                           <img src={selectedKycUser.kycDocuments.idFront} alt="ID Front" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                         ) : (
@@ -3065,8 +3066,8 @@ const AdminSection = () => {
                       </div>
                     </div>
                     <div>
-                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 ml-1">Identity Document (Back)</p>
-                      <div className="relative aspect-[16/10] bg-gray-100 rounded-[2rem] overflow-hidden border border-gray-200 group">
+                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 sm:mb-3 ml-1">Identity Document (Back)</p>
+                      <div className="relative aspect-[16/10] bg-gray-100 rounded-2xl sm:rounded-[2rem] overflow-hidden border border-gray-200 group">
                         {selectedKycUser.kycDocuments?.idBack ? (
                           <img src={selectedKycUser.kycDocuments.idBack} alt="ID Back" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                         ) : (
@@ -3075,10 +3076,10 @@ const AdminSection = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="space-y-6">
+                  <div className="space-y-4 sm:space-y-6">
                     <div>
-                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 ml-1">Verification Selfie</p>
-                      <div className="relative aspect-square bg-gray-100 rounded-[2.5rem] overflow-hidden border border-gray-200 group">
+                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 sm:mb-3 ml-1">Verification Selfie</p>
+                      <div className="relative aspect-square bg-gray-100 rounded-2xl sm:rounded-[2.5rem] overflow-hidden border border-gray-200 group">
                         {selectedKycUser.kycDocuments?.selfie ? (
                           <img src={selectedKycUser.kycDocuments.selfie} alt="Selfie" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                         ) : (
@@ -3089,18 +3090,18 @@ const AdminSection = () => {
                   </div>
                 </div>
 
-                <div className="bg-gray-50 p-8 rounded-[2.5rem] border border-gray-100 space-y-6">
+                <div className="bg-gray-50 p-4 sm:p-8 rounded-2xl sm:rounded-[2.5rem] border border-gray-100 space-y-4 sm:space-y-6">
                   <div className="group">
-                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 ml-1 group-focus-within:text-primary-500 transition-colors">Audit Discrepancy Note (Rejection Reason)</label>
+                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 sm:mb-3 ml-1 group-focus-within:text-primary-500 transition-colors">Audit Discrepancy Note (Rejection Reason)</label>
                     <textarea
                       value={kycRejectionReason}
                       onChange={(e) => setKycRejectionReason(e.target.value)}
-                      className="w-full px-6 py-4 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold min-h-[100px] text-navy-900"
+                      className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-white border border-gray-200 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-bold min-h-[100px] text-sm sm:text-base text-navy-900"
                       placeholder="Specify failure reasons (e.g. Blurry photo, Expired ID)..."
                     />
                   </div>
 
-                  <div className="flex gap-4">
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                     <button
                       onClick={() => {
                         updateKycRequestStatus(selectedKycUser._id!, 'approve');
@@ -3108,7 +3109,7 @@ const AdminSection = () => {
                         setSelectedKycUser(null);
                         setKycRejectionReason('');
                       }}
-                      className="flex-[2] bg-navy-900 hover:bg-navy-800 text-primary-500 px-8 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all shadow-xl shadow-navy-900/10 flex items-center justify-center gap-3 active:scale-95"
+                      className="order-1 sm:flex-[2] bg-navy-900 hover:bg-navy-800 text-primary-500 px-6 sm:px-8 py-4 sm:py-5 rounded-xl sm:rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all shadow-xl shadow-navy-900/10 flex items-center justify-center gap-3 active:scale-95"
                     >
                       <CheckCircle className="w-5 h-5" />
                       Authorise Identity
@@ -3124,7 +3125,7 @@ const AdminSection = () => {
                         setSelectedKycUser(null);
                         setKycRejectionReason('');
                       }}
-                      className="flex-1 bg-red-50 hover:bg-red-100 text-red-500 px-8 py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all flex items-center justify-center gap-3 active:scale-95"
+                      className="order-2 sm:flex-1 bg-red-50 hover:bg-red-100 text-red-500 px-6 sm:px-8 py-4 sm:py-5 rounded-xl sm:rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all flex items-center justify-center gap-3 active:scale-95"
                     >
                       <XCircle className="w-5 h-5" />
                       Reject

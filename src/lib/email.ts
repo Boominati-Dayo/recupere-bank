@@ -202,7 +202,7 @@ export const getBaseTemplate = (title: string, content: string, userName?: strin
           <p>The smartest way to grow your wealth with advanced technology.</p>
           <div class="footer-links">
             <a href="${appUrl}/dashboard">Dashboard</a> | 
-            <a href="${appUrl}/support">Support</a> | 
+            <a href="${appUrl}/contact">Support</a> | 
             <a href="${appUrl}/terms">Terms of Service</a>
           </div>
           <p>&copy; ${year} ${appName}. All rights reserved.</p>
