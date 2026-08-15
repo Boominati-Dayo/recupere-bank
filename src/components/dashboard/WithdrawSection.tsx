@@ -83,6 +83,12 @@ const WithdrawSection = () => {
   const [wizardDepositStatus, setWizardDepositStatus] = useState<string | null>(null);
   const [wizardPollCancel, setWizardPollCancel] = useState<(() => void) | null>(null);
   const [cancelConfirmOpen, setCancelConfirmOpen] = useState<null | 'resume'>(null);
+  // The locked-in withdrawal amount for the active draft. Set when the
+  // wizard opens (from the draft's amount field), then displayed
+  // throughout the wizard so the user always sees the exact same
+  // figure regardless of what happens to the underlying form state.
+  const [wizardAmount, setWizardAmount] = useState<number>(0);
+  const [wizardCurrency, setWizardCurrency] = useState<string>(currencyCode);
 
   // Active draft detection — show a "Resume withdrawal" banner if the
   // user has an in-progress draft from a previous session.
@@ -208,6 +214,8 @@ const WithdrawSection = () => {
     setWizardError(null);
     setWizardDepositId(null);
     setWizardDepositStatus(null);
+    setWizardAmount(0);
+    setWizardCurrency(currencyCode);
   };
 
   const cancelDraft = async (draftId: string) => {
@@ -281,6 +289,14 @@ const WithdrawSection = () => {
         setWizardIndex(finalOrder.length);
         setWizardOpen(true);
         if (preflight?.codeState) initWizardPrices(preflight);
+        setWizardAmount(existingDraft.amount ?? withdrawalAmount);
+        setWizardCurrency(existingDraft.currency ?? currencyCode);
+        setAmount('');
+        setAccountName('');
+        setAccountNumber('');
+        setBankName('');
+        setNetwork('');
+        setSelectedMethod(null);
         setWizardStep('verify');
         return;
       }
@@ -297,6 +313,20 @@ const WithdrawSection = () => {
     setWizardIndex(resumeIndex);
     setWizardOpen(true);
     if (preflight?.codeState) initWizardPrices(preflight);
+    // Lock in the amount for the wizard. Prefer the existing draft's
+    // stored amount (so resume keeps the same value), otherwise use
+    // the current form amount.
+    const lockedAmount = existingDraft?.amount ?? withdrawalAmount;
+    setWizardAmount(lockedAmount);
+    setWizardCurrency(existingDraft?.currency ?? currencyCode);
+    // Clear the form's amount field so the user can't edit it from
+    // under the wizard.
+    setAmount('');
+    setAccountName('');
+    setAccountNumber('');
+    setBankName('');
+    setNetwork('');
+    setSelectedMethod(null);
 
     beginCodeStep(draftId, finalOrder, resumeIndex, resumeCodeState);
   };
@@ -667,6 +697,8 @@ const handleWizardClose = () => {
     setWizardOrder(order);
     setWizardIndex(resumeIndex);
     setWizardOpen(true);
+    setWizardAmount(activeDraft.amount || 0);
+    setWizardCurrency(activeDraft.currency || currencyCode);
     beginCodeStep(activeDraft._id, order, resumeIndex, activeDraft.codeState);
   };
 
@@ -997,11 +1029,18 @@ const handleWizardClose = () => {
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-4 pr-8">
                 <h3 className="text-lg font-bold text-gray-900">Security Verification</h3>
                 {totalSteps > 1 && (
                   <span className="text-xs text-gray-500">Step {stepNumber} of {totalSteps}</span>
                 )}
+              </div>
+
+              <div className="bg-gray-50 rounded-lg px-4 py-3 mb-4 flex items-center justify-between">
+                <span className="text-xs uppercase tracking-wider text-gray-500 font-semibold">Withdrawal amount</span>
+                <span className="text-lg font-bold text-gray-900">
+                  {getCurrencySymbol(wizardCurrency)}{wizardAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </span>
               </div>
 
               {totalSteps > 1 && (
