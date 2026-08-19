@@ -59,15 +59,9 @@ export interface WithdrawalDraft {
 export const DRAFT_TTL_MINUTES = 30;
 export const MAX_CODE_ATTEMPTS = 5;
 
-// Hard caps reused in the draft service to clamp admin-set prices.
-export { CODE_PRICE_HARD_CAP_USD } from './withdrawal-codes';
-
-import { CODE_PRICE_HARD_CAP_USD } from './withdrawal-codes';
-
 export function clampPricing(pricing: UserCodePricing): UserCodePricing {
   const out: UserCodePricing = { ...pricing };
   (Object.keys(out) as WithdrawalCodeType[]).forEach((key) => {
-    if (out[key].price > CODE_PRICE_HARD_CAP_USD) out[key] = { ...out[key], price: CODE_PRICE_HARD_CAP_USD };
     if (out[key].price < 0) out[key] = { ...out[key], price: 0 };
   });
   return out;

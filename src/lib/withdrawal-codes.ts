@@ -20,11 +20,6 @@ export interface CodePricing {
 
 export type UserCodePricing = Record<WithdrawalCodeType, CodePricing>;
 
-// Hard server-side cap. The admin sets a per-user price; the server
-// then clamps to this so a typo or a hostile admin can't charge more
-// than the platform is willing to allow per code.
-export const CODE_PRICE_HARD_CAP_USD = 500;
-
 export const defaultUserCodePricing = (): UserCodePricing => ({
   TPIN: { enabled: true, price: 0 },
   TAC: { enabled: false, price: 0 },

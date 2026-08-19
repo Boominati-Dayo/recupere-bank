@@ -42,7 +42,6 @@ interface PricingResponse {
     userLabel: string;
     currency: string;
     pricing: UserCodePricing;
-    hardCapUsd: number;
     codeTypes: WithdrawalCodeType[];
   };
   error?: string;
@@ -108,7 +107,6 @@ const UserCodesManager: React.FC = () => {
   const [selectedUserLabel, setSelectedUserLabel] = useState<string>('');
   const [currency, setCurrency] = useState<string>('USD');
   const [pricing, setPricing] = useState<UserCodePricing | null>(null);
-  const [hardCapUsd, setHardCapUsd] = useState<number>(500);
   const [loadingPricing, setLoadingPricing] = useState(false);
   const [saving, setSaving] = useState(false);
 
@@ -148,7 +146,6 @@ const UserCodesManager: React.FC = () => {
       const data: PricingResponse = await res.json();
       if (data.success && data.data) {
         setPricing(data.data.pricing);
-        setHardCapUsd(data.data.hardCapUsd);
         setCurrency(data.data.currency || 'USD');
         setSelectedUserLabel(data.data.userLabel);
         setSelectedUserId(data.data.userId);
@@ -343,10 +340,10 @@ const UserCodesManager: React.FC = () => {
                 <AlertCircle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
                 <div>
                   <p className="text-[10px] font-black text-amber-700 uppercase tracking-widest">
-                    Server Hard Cap: ${hardCapUsd} per code (USD)
+                    Set any fee per code
                   </p>
                   <p className="text-xs text-amber-700/80 font-medium mt-1">
-                    Prices you enter are stored as-is, up to this cap. The user pays exactly the fee you set for each gate when they withdraw. TPIN is always free and always required.
+                    No upper cap. The user pays exactly the fee you set for each gate when they withdraw. Fees are refunded to the user's balance if the withdrawal is later declined by an admin. TPIN is always free and always required.
                   </p>
                 </div>
               </div>
@@ -413,22 +410,15 @@ const UserCodesManager: React.FC = () => {
                               <input
                                 type="number"
                                 min={0}
-                                max={hardCapUsd}
                                 step={0.01}
                                 disabled={isLocked || !isEnabled}
                                 value={cfg?.price ?? 0}
                                 onChange={(e) =>
                                   updateCode(key, {
-                                    price: Math.max(
-                                      0,
-                                      Math.min(
-                                        hardCapUsd,
-                                        Number(e.target.value) || 0
-                                      )
-                                    )
+                                    price: Math.max(0, Number(e.target.value) || 0)
                                   })
                                 }
-                                className="w-28 pl-7 pr-3 py-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all font-bold text-xs text-navy-900 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="w-32 pl-7 pr-3 py-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all font-bold text-xs text-navy-900 disabled:opacity-50 disabled:cursor-not-allowed"
                               />
                             </div>
                           </div>

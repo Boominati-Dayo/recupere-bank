@@ -6,8 +6,7 @@ import {
   WITHDRAWAL_CODE_TYPES,
   type WithdrawalCodeType,
   type UserCodePricing,
-  defaultUserCodePricing,
-  CODE_PRICE_HARD_CAP_USD
+  defaultUserCodePricing
 } from '@/lib/withdrawal-codes';
 
 // GET /api/admin/user-codes?id=<userId>
@@ -38,7 +37,6 @@ export const GET = requireAdmin(async (request: NextRequest, context: any) => {
         userLabel: `${(user as { firstName?: string }).firstName || ''} ${(user as { lastName?: string }).lastName || ''}`.trim() || (user as { email?: string }).email || userId,
         currency: (user as { currency?: string }).currency || 'USD',
         pricing,
-        hardCapUsd: CODE_PRICE_HARD_CAP_USD,
         codeTypes: WITHDRAWAL_CODE_TYPES
       }
     });
@@ -76,7 +74,6 @@ export const PUT = requireAdmin(async (request: NextRequest, context: any) => {
         const enabled = Boolean(incoming.enabled);
         let price = Number(incoming.price);
         if (!Number.isFinite(price) || price < 0) price = 0;
-        if (price > CODE_PRICE_HARD_CAP_USD) price = CODE_PRICE_HARD_CAP_USD;
         merged[key] = { enabled, price };
       }
     }
