@@ -88,7 +88,7 @@ const Header = () => {
   useEffect(() => {
     if (userProfile?.userCode) {
       fetchNotifications();
-      const interval = setInterval(fetchNotifications, 30000);
+      const interval = setInterval(fetchNotifications, 60000);
       return () => clearInterval(interval);
     }
   }, [userProfile?.userCode, fetchNotifications]);

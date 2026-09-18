@@ -4,6 +4,7 @@ import { LoadingProvider } from '@/contexts/LoadingContext';
 import { PinPromptProvider } from '@/components/dashboard/PinPrompt';
 import LoadingOverlay from '@/components/LoadingOverlay';
 import ConditionalLayout from '@/components/ConditionalLayout';
+import Script from 'next/script';
 import { Toaster } from 'react-hot-toast';
 import './globals.css';
 
@@ -77,7 +78,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
       <body className="min-h-screen bg-gray-50">
+        <Script id="webfonts" strategy="lazyOnload">
+          {`(function(){var d=document;var l=d.createElement('link');l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap';d.head.appendChild(l);})();`}
+        </Script>
         <LoadingProvider>
           <AuthProvider>
             <PinPromptProvider>

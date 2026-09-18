@@ -16,8 +16,9 @@ function getClient(): MongoClient {
         strict: true,
         deprecationErrors: true,
       },
-      connectTimeoutMS: 60000,
-      socketTimeoutMS: 60000,
+      connectTimeoutMS: 10000,
+      socketTimeoutMS: 30000,
+      serverSelectionTimeoutMS: 10000,
       maxPoolSize: 10,
       retryWrites: true,
     });

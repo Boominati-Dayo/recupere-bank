@@ -167,14 +167,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // Clear any existing polling
     stopPolling();
 
-    // Poll every 20 seconds for user data updates (reduced frequency to prevent flicker)
+    // Poll every 60 seconds for user data updates (reduced frequency to prevent flicker)
     const interval = setInterval(async () => {
       try {
         await refreshUser();
       } catch (error) {
         console.error('Polling error:', error);
       }
-    }, 20000); // 20 seconds
+    }, 60000); // 60 seconds
 
     setPollingInterval(interval);
   };

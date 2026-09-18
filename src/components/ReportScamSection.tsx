@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 
 export default function ReportScamSection() {
   return (
@@ -13,12 +12,7 @@ export default function ReportScamSection() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           <div className="w-full lg:w-[55%] text-center lg:text-left">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
+            <div>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-['Playfair_Display'] font-black text-white leading-[1.1] tracking-tight mb-5">
                 Report a Scam.<br />
                 <span className="text-primary-500">Start Recovery Today.</span>
@@ -50,17 +44,11 @@ export default function ReportScamSection() {
                 <span className="w-1 h-1 bg-emerald-500" />
                 No upfront fees. Pay only on successful recovery.
               </div>
-            </motion.div>
+            </div>
           </div>
 
           <div className="w-full lg:w-[45%]">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="border border-white/10 bg-white/5"
-            >
+            <div className="border border-white/10 bg-white/5">
               <div className="px-6 py-5 border-b border-white/10">
                 <span className="text-xs font-bold text-white tracking-wider">What happens after you report</span>
               </div>
@@ -81,7 +69,7 @@ export default function ReportScamSection() {
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>
