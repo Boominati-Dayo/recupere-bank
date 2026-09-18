@@ -1,4 +1,3 @@
-import { WalletContextProvider } from '@/contexts/WalletContext';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { LoadingProvider } from '@/contexts/LoadingContext';
 import { PinPromptProvider } from '@/components/dashboard/PinPrompt';
@@ -89,36 +88,34 @@ export default function RootLayout({
         <LoadingProvider>
           <AuthProvider>
             <PinPromptProvider>
-              <WalletContextProvider>
-                <ConditionalLayout>
-                  {children}
-                </ConditionalLayout>
-                <LoadingOverlay />
-                <Toaster
-                  position="top-right"
-                  toastOptions={{
-                    duration: 4000,
-                    style: {
-                      background: '#363636',
-                      color: '#fff',
+              <ConditionalLayout>
+                {children}
+              </ConditionalLayout>
+              <LoadingOverlay />
+              <Toaster
+                position="top-right"
+                toastOptions={{
+                  duration: 4000,
+                  style: {
+                    background: '#363636',
+                    color: '#fff',
+                  },
+                  success: {
+                    duration: 3000,
+                    iconTheme: {
+                      primary: '#10B981',
+                      secondary: '#fff',
                     },
-                    success: {
-                      duration: 3000,
-                      iconTheme: {
-                        primary: '#10B981',
-                        secondary: '#fff',
-                      },
+                  },
+                  error: {
+                    duration: 5000,
+                    iconTheme: {
+                      primary: '#EF4444',
+                      secondary: '#fff',
                     },
-                    error: {
-                      duration: 5000,
-                      iconTheme: {
-                        primary: '#EF4444',
-                        secondary: '#fff',
-                      },
-                    },
-                  }}
-                />
-              </WalletContextProvider>
+                  },
+                }}
+              />
             </PinPromptProvider>
           </AuthProvider>
         </LoadingProvider>

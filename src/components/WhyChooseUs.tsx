@@ -255,7 +255,7 @@ export default function WhyChooseUs() {
           <AnimatePresence mode="wait">
             <motion.div
               key={`top-${page}`}
-              initial={{ opacity: 0, x: -60 }}
+              initial={false}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 60 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
@@ -272,7 +272,7 @@ export default function WhyChooseUs() {
           <AnimatePresence mode="wait">
             <motion.div
               key={`bot-${page}`}
-              initial={{ opacity: 0, x: 60 }}
+              initial={false}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -60 }}
               transition={{ duration: 0.3, ease: 'easeOut', delay: 0.05 }}

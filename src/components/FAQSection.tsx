@@ -52,11 +52,8 @@ const FAQSection = () => {
 
         <div className="space-y-3">
           {faqs.map((faq, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
               className="border border-muted-300 overflow-hidden"
             >
               <button
@@ -94,7 +91,7 @@ const FAQSection = () => {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.div>
+            </div>
           ))}
         </div>
 
