@@ -1,8 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 
 function CheckingDashboard() {
   return (
@@ -214,18 +212,6 @@ const accounts = [
 ];
 
 export default function WhyChooseUs() {
-  const [page, setPage] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPage(prev => (prev + 1) % 2);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const topIdx = page === 0 ? 0 : 2;
-  const bottomIdx = page === 0 ? 1 : 3;
-
   return (
     <section className="flex flex-col lg:flex-row min-h-[560px]">
       <div className="w-full lg:w-[35%] bg-secondary-500 px-8 py-16 lg:px-14 lg:py-20 flex flex-col justify-center">
@@ -250,42 +236,18 @@ export default function WhyChooseUs() {
       </div>
 
       <div className="w-full lg:w-[65%] bg-white px-8 py-16 lg:px-14 lg:py-20 flex flex-col justify-center">
-        {/* Mobile: 2 rows, swipe animation */}
+        {/* Mobile: 2 cards, static */}
         <div className="lg:hidden space-y-5">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`top-${page}`}
-              initial={false}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 60 }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="border border-muted-400 overflow-hidden"
-            >
-              <AccountImage label={accounts[topIdx].img} />
+          {accounts.slice(0, 2).map((a) => (
+            <div key={a.name} className="border border-muted-400 overflow-hidden">
+              <AccountImage label={a.img} />
               <div className="px-5 pt-3 pb-4">
-                <h3 className="text-sm font-bold text-navy-900 tracking-wide mb-2">{accounts[topIdx].name}</h3>
-                <p className="text-xs leading-relaxed text-gray-400">{accounts[topIdx].desc}</p>
-                <div className={`h-1 mt-4 ${accounts[topIdx].bar}`} />
+                <h3 className="text-sm font-bold text-navy-900 tracking-wide mb-2">{a.name}</h3>
+                <p className="text-xs leading-relaxed text-gray-400">{a.desc}</p>
+                <div className={`h-1 mt-4 ${a.bar}`} />
               </div>
-            </motion.div>
-          </AnimatePresence>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`bot-${page}`}
-              initial={false}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -60 }}
-              transition={{ duration: 0.3, ease: 'easeOut', delay: 0.05 }}
-              className="border border-muted-400 overflow-hidden"
-            >
-              <AccountImage label={accounts[bottomIdx].img} />
-              <div className="px-5 pt-3 pb-4">
-                <h3 className="text-sm font-bold text-navy-900 tracking-wide mb-2">{accounts[bottomIdx].name}</h3>
-                <p className="text-xs leading-relaxed text-gray-400">{accounts[bottomIdx].desc}</p>
-                <div className={`h-1 mt-4 ${accounts[bottomIdx].bar}`} />
-              </div>
-            </motion.div>
-          </AnimatePresence>
+            </div>
+          ))}
         </div>
 
         {/* Desktop: grid */}

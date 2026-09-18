@@ -91,7 +91,6 @@ const TestimonialsSection = () => {
                       alt={current.title}
                       fill
                       className="object-contain p-4 transition-transform duration-700 hover:scale-105"
-                      priority
                     />
                   </div>
                 </div>
