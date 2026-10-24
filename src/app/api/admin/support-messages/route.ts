@@ -57,16 +57,20 @@ export const PUT = requireAdmin(async (request, context) => {
     const db = await getDb();
     const supportMessagesCollection = db.collection('supportMessages');
 
-    const updateData: Record<string, unknown> = {
+    const setData: Record<string, unknown> = {
       updatedAt: new Date()
     };
 
     if (status) {
-      updateData.status = status;
+      setData.status = status;
     }
 
+    const updateOperators: Record<string, unknown> = {
+      $set: setData
+    };
+
     if (adminReply) {
-      updateData.$push = {
+      updateOperators.$push = {
         adminReplies: {
           adminId,
           adminEmail,
@@ -78,7 +82,7 @@ export const PUT = requireAdmin(async (request, context) => {
 
     const result = await supportMessagesCollection.updateOne(
       { _id: new ObjectId(messageId) },
-      { $set: updateData }
+      updateOperators
     );
 
     if (result.matchedCount === 0) {
@@ -88,23 +92,26 @@ export const PUT = requireAdmin(async (request, context) => {
       );
     }
 
-    // Create notification and send email for the user about the reply
-    if (adminReply) {
-      const message = await supportMessagesCollection.findOne({ 
-        _id: new ObjectId(messageId)
-      });
-      
-      if (message) {
-        // Fetch User to get email and name
+    const updatedMessage = await supportMessagesCollection.findOne({
+      _id: new ObjectId(messageId)
+    });
+
+    // Notifications and email are best-effort: a failure here must not make the
+    // reply look like it was not saved.
+    if (adminReply && updatedMessage) {
+      try {
         const usersCollection = db.collection('users');
-        const user = await usersCollection.findOne({ _id: new ObjectId(message.userId) });
+        const user =
+          updatedMessage.userId && ObjectId.isValid(updatedMessage.userId)
+            ? await usersCollection.findOne({ _id: new ObjectId(updatedMessage.userId) })
+            : null;
 
         const notificationsCollection = db.collection('notifications');
         await notificationsCollection.insertOne({
           title: 'Support Reply',
-          message: `Admin replied to your support request: "${message.subject}"\n\nReply: ${adminReply}`,
+          message: `Admin replied to your support request: "${updatedMessage.subject}"\n\nReply: ${adminReply}`,
           type: 'individual',
-          recipients: [message.userId],
+          recipients: [updatedMessage.userId],
           sentBy: 'system',
           metadata: {
             supportMessageId: messageId,
@@ -119,7 +126,7 @@ export const PUT = requireAdmin(async (request, context) => {
         if (user && user.email) {
           const emailTemplate = emailTemplates.supportResponse(
             user.firstName || 'Participant',
-            message.subject,
+            updatedMessage.subject,
             adminReply
           );
 
@@ -128,12 +135,15 @@ export const PUT = requireAdmin(async (request, context) => {
             ...emailTemplate
           });
         }
+      } catch (notifyError) {
+        console.error('Support reply saved, but notification/email failed:', notifyError);
       }
     }
 
     return NextResponse.json({
       success: true,
-      message: 'Support message updated successfully'
+      message: 'Support message updated successfully',
+      data: updatedMessage
     });
   } catch (error) {
     console.error('Error updating support message:', error);

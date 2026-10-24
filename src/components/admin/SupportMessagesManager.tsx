@@ -72,17 +72,37 @@ const SupportMessagesManager = () => {
 
       const result = await response.json();
 
-      if (result.success) {
-        setReplyText('');
-        fetchSupportMessages();
-        // Update selected message
-        const updatedMessage = messages.find(m => m._id === selectedMessage._id);
-        if (updatedMessage) {
-          setSelectedMessage(updatedMessage);
-        }
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Failed to send reply');
+      }
+
+      setReplyText('');
+      await fetchSupportMessages();
+
+      if (result.data) {
+        setSelectedMessage(result.data);
+      } else {
+        setSelectedMessage(prev =>
+          prev
+            ? {
+                ...prev,
+                status: 'replied',
+                adminReplies: [
+                  ...prev.adminReplies,
+                  {
+                    adminId: '',
+                    adminEmail: '',
+                    reply: replyText.trim(),
+                    createdAt: new Date().toISOString()
+                  }
+                ]
+              }
+            : prev
+        );
       }
     } catch (error) {
       console.error('Error sending reply:', error);
+      alert(error instanceof Error ? error.message : 'Failed to send reply');
     } finally {
       setReplying(false);
     }
